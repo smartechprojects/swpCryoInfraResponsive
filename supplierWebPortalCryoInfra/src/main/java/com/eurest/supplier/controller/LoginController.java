@@ -30,7 +30,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eurest.supplier.model.Receipt;
-import com.eurest.supplier.model.ReceiptInvoice;
 import com.eurest.supplier.model.Supplier;
 import com.eurest.supplier.model.UDC;
 import com.eurest.supplier.model.Users;
@@ -228,7 +227,7 @@ public class LoginController {
 		model.addAttribute("email", e.getEmail());
 		model.addAttribute("userName", e.getUserName());
 		model.addAttribute("message", "_SUCCESS");
-		return "changePassword";
+		return "login";
 	}
 	
 	@RequestMapping(value="/acceptAgreement.action",method = RequestMethod.POST)
@@ -264,7 +263,7 @@ public class LoginController {
 				msg = "No tiene un correo registrado.";
 			}
 			
-			msg = "La solicitud ha sido enviada exitosamente a su cuenta registrada " + hiddenEmail + ". Cierre esta ventana.";
+			msg = "El correo ha sido enviado exitosamente a su cuenta registrada " + hiddenEmail + ".";
 		}else {
 			msg = response;
 		}

@@ -41,7 +41,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
   
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
-        UDC udcReglas = udcService.searchBySystemAndKey("RULES", "ACCESS");
+        //UDC udcReglas = udcService.searchBySystemAndKey("RULES", "ACCESS");
         Users u = usersService.searchCriteriaUserName(name);
         
         if(u != null) {

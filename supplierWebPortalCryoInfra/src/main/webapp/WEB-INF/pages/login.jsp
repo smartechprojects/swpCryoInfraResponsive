@@ -92,10 +92,10 @@ th {
     
 	<div class="wrap">
   <div style="margin-top:50px;margin-bottom:50px;text-align:center;">
-   <p> <img src="resources/images/hand-click.png" style="width:300px;"></p><br /><br />
+   <p> <img src="resources/images/hand-click.png" style="width:300px;"></p>
 </div>
 		<div class="avatar">
-      <img src="resources/images/CryoInfra-logo-gris.png" style="height:70px;width:250px;">
+      <img src="resources/images/CryoInfra-logo-gris.png" style="height:60px;width:250px;">
 		</div>
 				<c:choose>
 	         <c:when test="${param.error == 'true'}">
@@ -126,7 +126,7 @@ th {
 		</form>
 		<br />
 		<a class="forgetPass" href="${pageContext.request.contextPath}/requestResetPassword.action" style="font-size:13px;text-align:center;"
-		                   onclick="window.open(this.href, 'Envío de contraseña','left=430,top=320,width=400,height=170,scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no'); return false;" >Olvidó su contraseña?</a>
+		                    >Olvidó su contraseña?</a>
 		
 		<p></p><p></p><p></p><p></p><br/>	         
 		<a href="resources/Manual Proveedores V_1.1.pdf" download >
@@ -138,7 +138,7 @@ th {
 
 
 	<div class="footer">
-	    &copy; 2000-2021 Smartech Consulting Group S.A. de C.V. Derechos Reservados.</div>
+	    &copy; 2000-2025 Smartech Consulting Group S.A. de C.V. Derechos Reservados.</div>
 
 </body>
 
