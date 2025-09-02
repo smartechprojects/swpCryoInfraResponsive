@@ -7,7 +7,7 @@ Ext.define('SupplierApp.view.supplier.SupplierPanel' ,{
         Ext.apply(this, {  
             items: [{
            	 xtype: 'supplierGrid',
-           	 height:430
+             layout: 'fit'
             }]
         });
         this.callParent(arguments);

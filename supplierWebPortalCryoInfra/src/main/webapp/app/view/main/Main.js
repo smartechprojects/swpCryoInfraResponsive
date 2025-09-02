@@ -11,8 +11,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'Ext.plugin.Viewport',
         'Ext.window.MessageBox',
         'SupplierApp.controller.Users',
-        'SupplierApp.controller.Udc'/*,
-        'SupplierApp.controller.Supplier',
+        'SupplierApp.controller.Udc',
+        'SupplierApp.controller.Supplier'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -102,13 +102,13 @@ Ext.define('SupplierApp.view.main.Main', {
         iconCls: 'fa-home',
         id:'tabHomeId',
         html:"<div style='display: flex;justify-content: center;vertical-align: middle;padding-top:100px;'><img src='resources/images/CryoInfra-logo-gris.png'></div>"
-    }/*,{
+    },{
     	xtype : 'supplierPanel',
     	iconCls: 'fa-share-alt',
 		title : '',
 		id:'tabSuppliersId',
 		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true
-	},{
+	}/*,{
     	xtype : 'outSourcingPanel',
     	iconCls: 'fa-object-group',
 		title : '',

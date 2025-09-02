@@ -802,7 +802,7 @@ function getPagingContent(){
         xtype: 'pagingtoolbar',
         dock: 'bottom',
         displayInfo: true,
-        displayMsg : 'Mostrando {0} - {1} of {2}',
+        displayMsg : 'Mostrando {0} - {1} de {2}',
         emptyMsg:'Sin datos para mostrar',
         beforePageText:'Página',
         afterPageText: 'de {0}',

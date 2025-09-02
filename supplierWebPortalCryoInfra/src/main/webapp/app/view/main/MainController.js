@@ -11,8 +11,8 @@ Ext.define('SupplierApp.view.main.MainController', {
     init: function() {
         var me = this;
         Ext.getCmp('tabHomeId').setTitle(SuppAppMsg.tabInicio);
-        /*
         Ext.getCmp('tabSuppliersId').setTitle( SuppAppMsg.tabProveedores);
+         /*
         Ext.getCmp('tabnonComplianceSupplierPanelId').setTitle( SuppAppMsg.tabNonComplianceSupplier);
         Ext.getCmp('tabOutSourcingPanelId').setTitle( SuppAppMsg.outSourcingTitle);
         Ext.getCmp('tabCodigosSATPanelId').setTitle( SuppAppMsg.clavesSatTitle);

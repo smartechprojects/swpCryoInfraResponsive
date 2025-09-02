@@ -4,7 +4,7 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
     forceFit: true,
     loadMask: true,
 	frame:false,
-	border:false,
+	border:true,
 	cls: 'extra-large-cell-grid', 
 	scroll : false,
 	viewConfig: {
@@ -12,6 +12,8 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
 		style : { overflow: 'auto', overflowX: 'hidden' }
 	},
     initComponent: function() {
+    	
+    	var supController = SupplierApp.app.getController("SupplierApp.controller.Supplier");
     	
 		this.store =  storeAndModelFactory('SupplierApp.model.SupplierDTO',
                 'supplierModel',
@@ -81,7 +83,7 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
                 width:200,
                 labelWidth:90,
-                margin:'20 20 20 20'
+                margin:'10 20 0 20'
     		},{
     			xtype: 'textfield',
                 fieldLabel: SuppAppMsg.suppliersName,
@@ -93,7 +95,7 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
                 width:500,
                 labelWidth:70,
-                margin:'20 20 20 0'
+                margin:'10 20 0 0'
     		}
               ]},
              {
@@ -105,21 +107,21 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                     text: SuppAppMsg.suppliersSearch,
                     iconCls: 'icon-doSearch',
                     action:'supAddNbrSrch',
-                    margin:'20 20 20 20'
-        		},'-',{
+                    margin:'0 20 10 20'
+        		},{
                		xtype:'button',
                     hidden: role.includes('ROLE_ADMIN')?false:true,
                     text: SuppAppMsg.suppliersLoadFile,
                     iconCls: 'icon-excel',
                     action:'uploadSuppliersFile',
-                    margin:'20 20 20 20'
-        		},'-',{
+                    margin:'0 20 10 20'
+        		},{
                		xtype:'button',
                     hidden: true,
                     text: 'Replicar proveedores',
                     action:'replicateSupplier',
                     iconCls: 'icon-doSearch',
-                    margin:'20 20 20 20'
+                    margin:'0 20 10 20'
                   }
                 	 
               ]},
