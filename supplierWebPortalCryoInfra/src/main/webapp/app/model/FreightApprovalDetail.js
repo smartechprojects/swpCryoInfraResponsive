@@ -1,0 +1,31 @@
+Ext.define('SupplierApp.model.FreightApprovalDetail', {
+    extend: 'Ext.data.Model',
+    fields: [
+			{name:  'id'},
+			{name:  'conceptName'},
+			{name:  'conceptAccount'},
+			{name:  'folio'},
+			{name:  'serie'},
+			{name:  'uuid'},
+			{name:   'uuidFactura'},
+			{name:  'addressNumber'},
+			{name:  'amount'},
+			{name:  'status'},
+			{name:  'subtotal'},
+			{name:  'descuento'},
+			{name:  'impuestos'},
+			{name:  'tipoCambio'},
+			{name:  'rfcEmisor'},
+			{name:  'rfcReceptor'},
+			{name:  'invoiceDate'},
+			{name:  'currencyMode'},
+			{name:  'currencyCode'},
+			{name:  'accountingAccount'},
+			{name:  'glOffset'},
+			{name:  'taxCode'},
+			{name:  'batchID'},
+			{name:  'serieBitacora'},	
+			{name:  'numBitacora'},
+			{name:  'isDocumentType', type:'boolean'}
+        ]
+});

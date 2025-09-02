@@ -1,0 +1,67 @@
+
+body {
+  font: 11px Tahoma, Verdana, sans-serif;
+  background: #fff;
+  color:#666;
+}
+
+.zoom:hover {
+  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.myButton {
+	background-color:#B6985A;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #B6985A;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:font: 18px Tahoma, Verdana, sans-serif;
+	font-size:13px;
+	padding:2px 17px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #B6985A;
+}
+.myButton:hover {
+	background-color:#000;
+}
+
+
+.registerButton {
+	background-color:#333;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #fff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:font: 18px Tahoma, Verdana, sans-serif;
+	font-size:13px;
+	padding:2px 17px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #333;
+}
+
+.registerButton:hover {
+	background-color:#666;
+}
+
+
+.login {
+  position: relative;
+  margin: 0 auto;
+  background: #ffffff;
+  text-align: left;
+  border-radius: 3px;
+
+}
+
+
+.login input[type=text], .login input[type=password] {
+  width: 200px;
+  height:10px;
+  font: 12px Tahoma, Verdana, sans-serif;
+}

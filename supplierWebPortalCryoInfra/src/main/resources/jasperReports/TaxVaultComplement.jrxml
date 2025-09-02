@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxVaultDocument" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEFF0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="logo" class="java.net.URL"/>
+	<parameter name="UUID" class="java.lang.String"/>
+	<parameter name="RFCEmisor" class="java.lang.String"/>
+	<parameter name="RFCReceptor" class="java.lang.String"/>
+	<parameter name="Nombre" class="java.lang.String"/>
+	<parameter name="FechaEmision" class="java.lang.String"/>
+	<parameter name="Total" class="java.lang.Double"/>
+	<parameter name="Serie" class="java.lang.String"/>
+	<parameter name="Folio" class="java.lang.String"/>
+	<parameter name="FechaRecepcion" class="java.lang.String"/>
+	<parameter name="logo2" class="java.net.URL"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<title>
+		<band height="343" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<rectangle>
+				<reportElement x="-1" y="312" width="560" height="24" uuid="074bc8b2-2714-4823-a1e5-1ced4583e4c6"/>
+			</rectangle>
+			<image hAlign="Center">
+				<reportElement x="0" y="0" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="117" y="64" width="316" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALIDACIÓN DE COMPLEMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="312" width="210" height="24" uuid="4c89b686-6ccb-4afe-8e49-1a28e489b86d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total complemento:]]></text>
+			</staticText>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="239" y="313" width="319" height="23" uuid="d339373a-2843-4049-b26e-927580d85f67"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Total}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-1" y="288" width="560" height="24" uuid="ed48344a-9638-4dba-b212-70d77f02c3d8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="-1" y="264" width="560" height="24" uuid="86f9b9dc-0e6d-44fc-8968-1366332696f4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="-1" y="240" width="560" height="24" uuid="a1612943-296c-489e-aa91-1726fc7f2492"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="-1" y="216" width="560" height="24" uuid="1e08773d-d87b-424f-b654-eff0dad917f4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="-1" y="192" width="560" height="24" uuid="d4bc9519-c271-4d6f-94a2-ad5bbfc3b9b4"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="40" y="288" width="190" height="23" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[UUID complemento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="288" width="319" height="23" uuid="5e562537-3aab-4f20-8ef9-343a73aa0ab1"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{UUID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-53" y="264" width="228" height="23" uuid="afdf1683-483d-45c2-9647-e5c5fe340762"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Folio complemento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="264" width="319" height="23" uuid="4229aa59-2eda-408e-9472-9d47665d9ad4"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Folio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-44" y="240" width="220" height="24" uuid="0b3f9342-da78-4cfa-9fc5-2301c4749678"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Serie complemento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="240" width="319" height="24" uuid="3836ce65-eca3-4cad-a6de-b1818def0a2b"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Serie}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="39" y="216" width="120" height="25" uuid="57aed2b1-4f4e-40a3-a6ad-54dae8dd4c5a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RFC emisor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="216" width="319" height="23" uuid="95b785f0-5a1b-47d7-a1e4-a2a29c4f86ae"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RFCEmisor}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-1" y="168" width="560" height="24" uuid="874fb952-5864-47ef-af49-a6d64691e983"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="-1" y="144" width="560" height="24" uuid="deaa63dd-309f-468f-961a-261b77ce2ed1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="39" y="192" width="154" height="25" uuid="139ebe8d-25b0-411e-986c-270015400874">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RFC receptor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="192" width="319" height="24" uuid="a0976ebf-1e69-4288-877b-77cf413b1ab4"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RFCReceptor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="168" width="155" height="24" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Fecha de recepción:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="168" width="319" height="23" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FechaRecepcion}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="-1" y="120" width="560" height="24" uuid="c7f25e7f-47f1-44f7-a5d7-2d8154e01ea8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="38" y="144" width="180" height="23" uuid="e07b579b-5503-4621-907f-c8623e9bf52f"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Fecha de emisión:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="144" width="319" height="23" uuid="7091e8fe-5585-4a20-b2e9-2e2d32a59e3b"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FechaEmision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="39" y="120" width="102" height="23" uuid="b8cc42fd-b569-497d-834d-7e854040ad18"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="120" width="318" height="23" uuid="da1d0b2e-0735-4815-8643-8e54ed0319c9"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Nombre}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center">
+				<reportElement x="490" y="0" width="65" height="60" uuid="5eab0199-874a-4f01-8a1b-ae7f4bddcda5"/>
+				<imageExpression><![CDATA[$P{logo2}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="48">
+			<staticText>
+				<reportElement x="127" y="10" width="326" height="29" uuid="8431fe6d-b5a4-40f4-99ab-d16a2e708791"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[El complemento se validó correctamente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20"/>
+	</detail>
+	<lastPageFooter>
+		<band height="18"/>
+	</lastPageFooter>
+</jasperReport>

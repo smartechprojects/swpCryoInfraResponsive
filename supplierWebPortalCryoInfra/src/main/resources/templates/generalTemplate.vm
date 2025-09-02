@@ -1,0 +1,10 @@
+<html>
+<head>
+</head>
+<body> 
+${emailContent}
+<br /><br /><br />
+
+<img src='cid:imageContent'/> 
+</body>
+</html>

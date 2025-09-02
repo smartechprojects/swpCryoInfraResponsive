@@ -1,0 +1,42 @@
+Ext.define('SupplierApp.model.Receipt', {
+    extend: 'Ext.data.Model',
+    fields: [
+    	{name: 'id'},
+    	{name: 'orderCompany'},
+    	{name: 'orderNumber'},
+    	{name: 'orderType'},
+    	{name: 'addressNumber'},
+    	{name: 'documentNumber'},
+    	{name: 'documentType'},
+    	{name: 'receiptDate', type: 'date', dateFormat: 'c'},
+    	{name: 'lineNumber'},
+    	{name: 'amountReceived'},
+    	{name: 'foreignAmountReceived'},
+    	{name: 'amountOpen'},
+    	{name: 'quantityReceived'},
+    	{name: 'uom'},
+    	{name: 'currencyCode'},
+    	{name: 'transactionOriginator'},
+    	{name: 'uuid'},
+    	{name: 'folio'},
+    	{name: 'serie'},
+    	{name: 'invDate', type: 'date', dateFormat: 'c'},
+    	{name: 'matchType'},
+    	{name: 'status'},
+    	{name: 'estPmtDate'},
+    	{name: 'remark'},
+    	{name: 'receiptLine'},
+    	{name: 'paymentStatus'},
+    	{name: 'paymentAmount'},
+    	{name: 'complPagoUuid'},
+    	{name: 'creditNoteUuid'},
+    	{name: 'paymentDate'},
+		{name:  'receiptType'},
+		{name:  'objectAccount'},
+		{name: 'paymentTerms'},
+		{name: 'uploadComplDate'},
+		{name: 'uploadDate'}
+        ]
+});
+
+

@@ -1,0 +1,90 @@
+<html>
+<head>
+<style>
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding-left:2px;
+  padding-right:2px;
+}
+</style>
+</head>
+  <body>
+  
+Asunto: Universal Music Group - Pago de Factura<br /><br />
+
+TO: ${supplierEmail}<br />
+CC: ${buyerEmail}<br /><br />
+
+
+<br /><br />
+
+Consideramos que la siguiente información le será útil en la preparación de su CFDI de Complemento para recepción de pagos:<br /> <br />
+
+<table style="width:40%;margin-left:160px;">
+    <tr>
+        <td>Número de operación</td>
+        <td>${numOperacion}</td>
+    </tr>
+   <tr>
+        <td>Banco Pagador</td>
+        <td>${bancoPagador}</td>
+    </tr>
+    <tr>
+        <td>Cuenta Pagadora</td>
+        <td>${cuentaPagadora}</td>
+    </tr>
+    <tr>
+        <td>Monto Trasferido</td>
+        <td>${montoTotal}</td>
+    </tr>
+    <tr>
+        <td style="padding-top:20px;">Moneda</td>
+        <td style="padding-top:20px;">${moneda}</td>
+    </tr>
+    <tr>
+        <td>Fecha de pago</td>
+        <td>${fechaPago}</td>
+    </tr>
+</table>
+
+<br /><br />
+
+<table style="width:90%;margin-left:10px;border:1px solid #000;">
+    <tr>
+        <th>Orden de Compra</th>
+        <th>Folio Factura</th>
+        <th>UUID</th>
+        <th>Método de Pago</th>
+        <th>Monto</th>
+        <th>Cuenta Receptora</th>
+        <th>Banco</th>
+    </tr>
+    #foreach($o in $orders)
+    <tr>
+        <td>$o.orderType - $o.orderNumber</td>
+        <td>$o.invoiceNumber</td>
+        <td>$o.invoiceUuid</td>
+        <td>$o.paymentType</td>
+        <td>$o.invoiceAmount</td>
+        <td>$o.deliveryInst1</td>
+        <td>$o.deliveryInst2</td>
+    </tr>
+    #end
+</table>
+
+<br /><br />
+Favor de tomar en cuenta las siguientes consideraciones para la preparación y envío de su CFDI:
+<br />
+<ul style="margin-left:10px;">
+  <li>El CFDI debe ser enviado a más tardar el día ${fechaCargaComplemento} .(Este es la fecha calculada como el décimo día natural del mes siguiente a la fecha de pago).</li>
+</ul>
+
+<br /><br />  
+
+
+</body>
+</html>
