@@ -143,7 +143,8 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				allowBlank : false,
 			    listeners: {
 			    	select: function (comboBox, records, eOpts) {
-			    		var role = records[0].data.strValue1;
+			    		   
+			    		var role = records.data.strValue1;
 			    		if(role == 'ROLE_SUPPLIER'){                            
 			    			Ext.getCmp('usersAddressNumber').show();
 			    			Ext.getCmp('usersAddressNumber').allowBlank=false;

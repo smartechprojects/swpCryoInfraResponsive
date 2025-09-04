@@ -103,12 +103,13 @@ Ext.define('SupplierApp.controller.Users', {
             box.hide();
         }
     },
-    
-    loadSearchList: function (event){
-    	this.getUsersGrid().getStore().getProxy().extraParams={
-    		query:event.getValue()
-    	};
-    	this.getUsersGrid().getStore().load();
+        
+    loadSearchList: function (field, newValue) {
+        var store = this.getUsersGrid().getStore();
+        store.getProxy().extraParams = {
+            query: newValue
+        };
+        store.load();
     },
     
     saveUsers: function (button) {
@@ -133,7 +134,7 @@ Ext.define('SupplierApp.controller.Users', {
         			callback: function (records, o, success, msg) {
 
         				if(success == true){
-        		    		var r1 = Ext.decode(o.response.responseText);
+        		    		var r1 = Ext.decode(o._response.responseText);
         			    	var res = Ext.decode(r1);
         			    	var msgResp = res.message;
         			    	if(msgResp == ''){
@@ -189,6 +190,7 @@ Ext.define('SupplierApp.controller.Users', {
     },
 
     updateUsers: function (button) {
+    	
     	var me = this;
     	var form = this.getUsersForm().getForm();
     	var grid = this.getUsersGrid();

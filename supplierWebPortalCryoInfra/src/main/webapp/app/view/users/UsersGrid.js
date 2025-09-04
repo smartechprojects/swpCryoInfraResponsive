@@ -100,8 +100,8 @@ Ext.define('SupplierApp.view.users.UsersGrid', {
 			width : 400,
 			margin: '5 0 10 0',
 			triggerCls : 'x-form-search-trigger',
-			onTriggerClick : function(e) {
-				userController.loadSearchList(e);
+			onTriggerClick : function() {
+			    userController.loadSearchList(this, this.getValue());
 			},
 			enableKeyEvents : true,
 			listeners : {
