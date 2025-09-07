@@ -36,6 +36,7 @@ Ext.define('SupplierApp.controller.Users', {
     },
 
     gridSelectionChange: function(model, records) {
+    	var me = this;
         if (records[0]) {
         	var form = this.getUsersForm().getForm();
         	var box = Ext.MessageBox.wait(SuppAppMsg.approvalLoadRegistrer, SuppAppMsg.approvalExecution);
@@ -81,17 +82,17 @@ Ext.define('SupplierApp.controller.Users', {
 
         		Ext.getCmp('userMainSupplierUser').show();        		
             	if(uIsMainSupplierUser == true){
-            		this.enableSubUserSupplierUser();
-            		this.disableMainSupplierUser();
+            		me.enableSubUserSupplierUser();
+            		me.disableMainSupplierUser();
             	} else {
-            		this.enableMainSupplierUser();
-            		this.disableSubUserSupplierUser();
+            		me.enableMainSupplierUser();
+            		me.disableSubUserSupplierUser();
             	}
             	
             	Ext.getCmp('userTypeCombo').setDisabled(true);
         	} else {
-        		this.enableSubUserSupplierUser();
-        		this.enableMainSupplierUser();
+        		me.enableSubUserSupplierUser();
+        		me.enableMainSupplierUser();
         		Ext.getCmp('usersAddressNumber').hide();
         		Ext.getCmp('userMainSupplierUser').hide();
         		Ext.getCmp('userMainSupplierUserMsg').hide();
@@ -99,7 +100,7 @@ Ext.define('SupplierApp.controller.Users', {
         	}
         	//Ext.getCmp('usersFormEmail').setReadOnly(true);
         	
-            this.enableUpdate();
+        	me.enableUpdate();
             box.hide();
         }
     },
@@ -189,8 +190,7 @@ Ext.define('SupplierApp.controller.Users', {
     	}
     },
 
-    updateUsers: function (button) {
-    	
+    updateUsers: function (button) {   	
     	var me = this;
     	var form = this.getUsersForm().getForm();
     	var grid = this.getUsersGrid();
@@ -246,7 +246,7 @@ Ext.define('SupplierApp.controller.Users', {
 						    	if(isSubUser == true){
 						    		Ext.getCmp('usersRoleCombo').setDisabled(true);
 						    		Ext.getCmp('userTypeCombo').setDisabled(true);
-						    		this.disableSubUserSupplierUser();
+						    		me.disableSubUserSupplierUser();
 						    	}
 						    	
 						    	var uRole = Ext.getCmp('usersRoleCombo').rawValue;
@@ -256,7 +256,7 @@ Ext.define('SupplierApp.controller.Users', {
 						    	
 						    	var isMainSupplierUser = Ext.getCmp('userMainSupplierUser').getValue();
 						    	if(isMainSupplierUser == true){
-						    		this.disableMainSupplierUser();
+						    		me.disableMainSupplierUser();
 						    	}
 						    	
         			    		return false;
