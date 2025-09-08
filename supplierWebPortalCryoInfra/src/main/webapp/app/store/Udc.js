@@ -28,7 +28,13 @@ Ext.define('SupplierApp.store.Udc', {
         writer: {
         	type: 'json',
             writeAllFields: true,
-            encode: false
+            encode: false,
+            transform: function(data, request) {
+            	if (data.id && (typeof data.id === 'string') && data.id.indexOf('SupplierApp.model.Udc') === 0) {
+                    delete data.id;
+                }
+                return data;
+            }
         }
     }
 });

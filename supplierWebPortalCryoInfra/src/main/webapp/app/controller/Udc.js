@@ -52,18 +52,20 @@ Ext.define('SupplierApp.controller.Udc', {
     	this.getUdcGrid().getStore().load();
     },
     
-    loadSearchList: function (event){
-    	this.getUdcGrid().getStore().getProxy().extraParams={
-    		query:event.getValue(),
-    		udcSystem:'',
-        	udcKey:'',
-        	strValue1:'',
-        	strValue2:''
-    	};
-    	this.getUdcGrid().getStore().load();
+    loadSearchList: function (field, newValue) {
+        var store = this.getUdcGrid().getStore();
+        store.getProxy().extraParams = {
+            query: newValue,
+            udcSystem: '',
+            udcKey: '',
+            strValue1: '',
+            strValue2: ''
+        };
+        store.load();
     },
     
     gridSelectionChange: function(model, records) {
+    	
         if (records[0]) {
         	var form = this.getUdcForm().getForm();
         	form.loadRecord(records[0]);
@@ -72,23 +74,25 @@ Ext.define('SupplierApp.controller.Udc', {
     },
     
     saveUdc: function (button) {
+    	var me = this;
     	var form = this.getUdcForm().getForm();
     	if (form.isValid()) { 
-        	record = Ext.create('SupplierApp.model.Udc');
+    		
+        	var record = Ext.create('SupplierApp.model.Udc');
             values = form.getFieldValues();
             updatedRecord = populateObj(record, values);
-            
             if (values.id > 0){
             	Ext.Msg.alert(SuppAppMsg.usersSaveError, "Error");
-    		} else{
-    			this.getUdcStore().add(updatedRecord);
-        	    this.getUdcStore().sync();
-        	    this.getUdcStore().reload();
+    		} else{        		
+    			me.getUdcStore().add(updatedRecord);
+        	    me.getUdcStore().sync();
+        	    me.getUdcStore().reload();
+        	    Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.udcMsg1);
         	    form.reset();
     		}
     	}
     },
-    
+        
     resetUdcForm: function (button) {
     	var form = this.getUdcForm().getForm();
     	form.reset();
@@ -106,7 +110,8 @@ Ext.define('SupplierApp.controller.Udc', {
  	   this.getUdcStore().reload();
      },
     
-    updateUdc: function (button) {
+   /* updateUdc: function (button) {
+    	debugger
     	var form = this.getUdcForm().getForm();
 		if (form.isValid()) { 
 			record = form.getRecord();
@@ -114,16 +119,87 @@ Ext.define('SupplierApp.controller.Udc', {
 			updatedRecord = populateObj(record, values);
 
 			if (values.id > 0){
-				record.set(updatedRecord);
-				this.getUdcStore().sync();
-				this.getUdcStore().reload();
+				//record.set(updatedRecord);
+				if (this.getUdcStore().indexOf(record) === -1) {
+				    this.getUdcStore().add(record);
+				}
+				record.set(values);
+				//this.getUdcStore().sync();
+				//this.getUdcStore().reload();
 				//form.reset();
 			} else{
 				Ext.Msg.alert(SuppAppMsg.udcMsgError1, "Error");
 			}
 		}
-    },
-    
+    },*/
+     
+     updateUdc: function (button) {
+    	    var me    = this;
+    	    var form  = this.getUdcForm().getForm();
+    	    var store = this.getUdcGrid().getStore(); 
+
+    	    if (!form.isValid()) return;
+
+    	    var values    = form.getValues();
+    	    var updatedId = parseInt(values.id, 10);
+
+    	    if (!updatedId || updatedId <= 0) {
+    	        Ext.Msg.alert(SuppAppMsg.udcMsgError1, "Error: id inválido");
+    	        return;
+    	    }
+
+    	    // obtener el registro actual del store del grid
+    	    var record = store.findRecord('id', updatedId, 0, false, false, true) || form.getRecord();
+
+    	    if (!record) {
+    	        Ext.Msg.alert(SuppAppMsg.udcMsgError1, "No se encontró el registro en el store del grid.");
+    	        return;
+    	    }
+
+    	    record.set(values);
+
+    	    store.sync({
+    	        success: function () {
+    	            Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.udcMsg1);
+
+    	            var searchField = me.getUdcForm().down('#searchUdc');
+    	            var searchValue = searchField ? searchField.getValue() : '';
+
+    	            store.getProxy().extraParams = {
+    	                query: searchValue,
+    	                udcSystem: '',
+    	                udcKey: '',
+    	                strValue1: '',
+    	                strValue2: ''
+    	            };
+
+    	            store.load({
+    	                callback: function (records, operation, success) {
+    	                    var refreshed = store.findRecord('id', updatedId, 0, false, false, true);
+    	                    if (refreshed) {
+    	                        me.getUdcGrid().getSelectionModel().select(refreshed);
+
+    	                        me.gridSelectionChange(
+    	                            me.getUdcGrid().getSelectionModel(),
+    	                            [refreshed]
+    	                        );
+    	                    }
+    	                }
+    	            });
+    	        },
+    	        failure: function (batch) {
+    	            var errorMsg = "Error desconocido";
+    	            if (batch.exceptions && batch.exceptions.length > 0) {
+    	                var op = batch.exceptions[0];
+    	                if (op.error && op.error.statusText) {
+    	                    errorMsg = op.error.statusText;
+    	                }
+    	            }
+    	            Ext.Msg.alert(SuppAppMsg.udcMsgError3, errorMsg);
+    	        }
+    	    });
+    	},
+
     deleteUdc: function (button) {
     	var form = this.getUdcForm().getForm();
 		record = form.getRecord();

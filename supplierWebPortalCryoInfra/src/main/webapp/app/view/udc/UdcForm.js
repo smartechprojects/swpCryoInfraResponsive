@@ -78,7 +78,7 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					fieldLabel: 'strValue1',
 					name: 'strValue1',
 					width:550,
-					listeners:{
+					/*listeners:{
 							change: function(field, newValue, oldValue){
 							var form = me.getForm();
 							var rowSelected = form._record.data;
@@ -89,8 +89,35 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 								}
 							}	
 						}
-					}
+					}*/
+					listeners:{
+				        change: function(field, newValue, oldValue){
+				            var formPanel = field.up('form');       // subir al panel form
+				            if (!formPanel) return;
 
+				            var form = formPanel.getForm();
+				            if (!form) return;
+
+				            // obtener udcSystem directamente del campo
+				            var udcSystemField = form.findField('udcSystem');
+				            var udcSystem = udcSystemField ? udcSystemField.getValue() : null;
+				            if (!udcSystem) return;
+
+				            // convertir a mayúsculas si pertenece a la lista
+				            for (const udc of upperCaseUDC) {
+				                if(udcSystem === udc){
+				                    if (newValue) {
+				                        // evitar recursión
+				                        if (field._settingUpper) return;
+				                        field._settingUpper = true;
+				                        field.setValue(newValue.toUpperCase());
+				                        field._settingUpper = false;
+				                    }
+				                    break;
+				                }
+				            }
+				        }
+				    }
 				},{
 
 					xtype:'textfield',
@@ -99,17 +126,33 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					width:250,
 					padding:'0 0 0 15',
 					listeners:{
-						change: function(field, newValue, oldValue){
-						var form = me.getForm();
-						var rowSelected = form._record.data;
-						for (const udc of upperCaseUDC) {
-							if(rowSelected.udcSystem == udc){
-								field.setValue(newValue.toUpperCase());
-								break;
-							}
-						}	
-					}
-				}
+				        change: function(field, newValue, oldValue){
+				            var formPanel = field.up('form');       // subir al panel form
+				            if (!formPanel) return;
+
+				            var form = formPanel.getForm();
+				            if (!form) return;
+
+				            // obtener udcSystem directamente del campo
+				            var udcSystemField = form.findField('udcSystem');
+				            var udcSystem = udcSystemField ? udcSystemField.getValue() : null;
+				            if (!udcSystem) return;
+
+				            // convertir a mayúsculas si pertenece a la lista
+				            for (const udc of upperCaseUDC) {
+				                if(udcSystem === udc){
+				                    if (newValue) {
+				                        // evitar recursión
+				                        if (field._settingUpper) return;
+				                        field._settingUpper = true;
+				                        field.setValue(newValue.toUpperCase());
+				                        field._settingUpper = false;
+				                    }
+				                    break;
+				                }
+				            }
+				        }
+				    }
 				}
 				]
 			},
@@ -200,9 +243,9 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
                       emptyText: SuppAppMsg.suppliersSearch,
                       xtype: 'trigger',
                       triggerCls: 'x-form-search-trigger',
-                      onTriggerClick: function(e) {
-                    	  udcController.loadSearchList(e);
-                      },
+                      onTriggerClick: function() {
+                    	    udcController.loadSearchList(this, this.getValue());
+                    },
                       enableKeyEvents: true,
                       listeners: {
                     	  specialkey: function (field, e) {
