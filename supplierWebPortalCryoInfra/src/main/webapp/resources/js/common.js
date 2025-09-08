@@ -819,8 +819,17 @@ function uuidv4() {
 	  );
 };
 
-function validarInputIssuer(rfc) {
-	resultado = document.getElementById("resultadoRfc");
+function validarInputIssuer(rfc,field) {
+	//resultado = document.getElementById("resultadoRfc");
+	
+	 var resultado = null;
+	
+    if (field) {
+        var form = field.up('form'); // form contenedor
+        if (form) {
+            resultado = form.down('[name=resultadoRfc]'); // displayfield
+        }
+    }
 
 	if (resultado != null) {
 		var valido = '';
@@ -829,13 +838,17 @@ function validarInputIssuer(rfc) {
 
 		if (rfcCorrecto) {
 			valido = "Válido";
-			resultado.classList.add("ok");
+			//resultado.classList.add("ok");
+			resultado.addCls("ok"); 
 		} else {
 			valido = "No válido"
-			resultado.classList.remove("ok");
+			//resultado.classList.remove("ok");
+			resultado.removeCls("ok");
 		}
 
-		resultado.innerText = "Formato RFC: " + valido;
+		//resultado.innerText = "Formato RFC: " + valido;
+		
+		 resultado.setValue("Formato RFC: " + valido);
 	}
 }
 
@@ -844,6 +857,7 @@ function validarInputIssuer(rfc) {
 //Devuelve false si es inválido
 //(debe estar en mayúsculas, guiones y espacios intermedios opcionales)
 function rfcValido(rfc, aceptarGenerico) {
+	
 	aceptarGenerico = true;
 	const re = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
 	var validado = rfc.match(re);

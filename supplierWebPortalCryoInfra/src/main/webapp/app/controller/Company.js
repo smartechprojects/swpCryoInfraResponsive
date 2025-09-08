@@ -157,8 +157,7 @@ Ext.define('SupplierApp.controller.Company', {
 		}
     },
         
-    gridSelectionChange: function(model, records) {
-    	
+    gridSelectionChange: function(model, records) {   	
         if (records[0]) {
         	var form = this.getCompanyForm().getForm();
         	var box = Ext.MessageBox.wait(SuppAppMsg.approvalLoadRegistrer, SuppAppMsg.approvalExecution);
@@ -187,7 +186,7 @@ Ext.define('SupplierApp.controller.Company', {
     	this.getCompanyGrid().getStore().load();
     },
 
-    saveCompany: function (button) {
+    saveCompany: function (button) {  	
     	var form = this.getCompanyForm().getForm();
     	var grid = this.getCompanyGrid();
     	
@@ -210,7 +209,8 @@ Ext.define('SupplierApp.controller.Company', {
     	    	record.set(updatedRecord);
     	    	record.save({callback: function (records, o, success) { 
 			    	if(success){
-				    	var res = Ext.decode(o.response.responseText);
+			    		
+				    	//var res = Ext.decode(o.response.responseText);
 		        	    grid.store.load();
 		        	    form.reset();
 				    	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.requisition_result, msg:  "La compañía ha sido creada exitosamente"});
@@ -268,13 +268,23 @@ Ext.define('SupplierApp.controller.Company', {
 	enableUpdate: function(){
 		Ext.getCmp('saveCompany').setDisabled(true);
 		Ext.getCmp('updateCompany').setDisabled(false);
-		Ext.getCmp('idCompany').setReadOnly(true);
+		//Ext.getCmp('idCompany').setReadOnly(true);
+		var form = this.getCompanyForm(); // tu ref al formulario
+		var field = form.down('#idCompany');
+		if (field) {
+		    field.setReadOnly(true);
+		}
 	},
 
 	enableSave: function(){
 		Ext.getCmp('saveCompany').setDisabled(false);
 		Ext.getCmp('updateCompany').setDisabled(true);
-		Ext.getCmp('idCompany').setReadOnly(false);
+		//Ext.getCmp('idCompany').setReadOnly(false);
+		var form = this.getCompanyForm(); // tu ref al formulario
+		var field = form.down('#idCompany');
+		if (field) {
+		    field.setReadOnly(false);
+		}
 	},
 	
 	initController: function(){

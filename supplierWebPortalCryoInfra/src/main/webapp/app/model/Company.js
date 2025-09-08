@@ -11,7 +11,8 @@ Ext.define('SupplierApp.model.Company', {
 	    	{name: 'status'},
 	    	{name: 'attachId'},
 	    	{name: 'creationDate', type: 'date', dateFormat: 'c'},
-			{name: 'active', type:'boolean'}			
+			//{name: 'active', type:'boolean'}			
+	    	{name: 'active', type: 'boolean', convert: function(v) { return v === true || v === 'true'; }}
         ],
         proxy: {
             type: 'ajax',

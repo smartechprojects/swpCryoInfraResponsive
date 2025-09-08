@@ -31,19 +31,20 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 									xtype:'textfield',
 									fieldLabel : SuppAppMsg.supplierForm6,
 									name : 'company',
-									id : 'idCompany',
+									itemId : 'idCompany',
 									labelWidth : 120,
 									width : 250,
 									allowBlank : false,
 									listeners:{
 										change: function(field, newValue, oldValue){
 											field.setValue(newValue.toUpperCase());
-											validarInputIssuer(newValue);
+											validarInputIssuer(newValue,field);
 										}
 									}
 								},{
 									xtype:'textfield',
-									id : 'resultadoRfc',
+									name : 'resultadoRfc',
+									itemId : 'resultadoRfc',
 									margin:'0 0 0 15',
 									width : 200,
 									readOnly:true,
@@ -72,7 +73,10 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 							fieldLabel : SuppAppMsg.companys2,
 							name : 'active',
 							width : 300,
-							checked: false
+							checked: false,
+							itemId: 'activeCheckbox', 
+							inputValue: 'true',      // valor que se guarda cuando está marcado
+							uncheckedValue: 'false'  // valor que se guarda cuando no está marcado							 
 						},/*{
 							xtype:'container',
 							layout:'hbox',

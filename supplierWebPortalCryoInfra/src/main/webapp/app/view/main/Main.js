@@ -12,7 +12,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'Ext.window.MessageBox',
         'SupplierApp.controller.Users',
         'SupplierApp.controller.Udc',
-        'SupplierApp.controller.Supplier'/*,
+        'SupplierApp.controller.Supplier',
+        'SupplierApp.controller.Company'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -175,6 +176,13 @@ Ext.define('SupplierApp.view.main.Main', {
 		id:'tabUsersId',
 		itemId:'usersPanelTab',
 		hidden:true
+	},{
+		xtype : 'companyPanel',
+		iconCls: 'fa-building',
+		id:'tabCompanyId',
+		itemId:'companyPanelTab',
+		hidden:true
+		
 	}/*,{
 		xtype : 'panel',
 		id:'tabNoticePrivacyId',
@@ -200,6 +208,7 @@ Ext.define('SupplierApp.view.main.Main', {
                     var tabs = tab.up();
                     var users = tabs.child('#usersPanelTab');
                     var udc = tabs.child('#udcPanelTab');
+                    var company = tabs.child('#companyPanelTab');
                     var xy = this.getXY();
                     xy[1]=xy[1] + 50;
                     var menu = Ext.create('Ext.menu.Menu', {
@@ -225,7 +234,18 @@ Ext.define('SupplierApp.view.main.Main', {
                                     click: function(){
                                     	 tabs.setActiveTab(udc);
                                     }
-                                }}
+                                }
+                            },
+                            { 
+                            	text: SuppAppMsg.companys,
+                            	iconCls: 'x-fa fa-building',
+                            	style: 'margin-left:40px;background-color: #3D72A4;padding:2px;',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(company);
+                                    }
+                                }
+                            }
                         ]
                     });
                     menu.showAt(xy); // Show menu at mouse position
