@@ -4,6 +4,11 @@ Ext.define('SupplierApp.view.users.UsersPanel' ,{
     border:true,
     frame:false,
     title:'Usuarios',
+    layout: 'fit', 
+    scrollable: {
+        x: true,
+        y: true
+    },
 	initComponent: function () {
         Ext.apply(this, {
         	layout: {

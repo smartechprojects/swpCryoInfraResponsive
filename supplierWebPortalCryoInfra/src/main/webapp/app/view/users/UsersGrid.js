@@ -29,33 +29,39 @@ Ext.define('SupplierApp.view.users.UsersGrid', {
 
 		this.columns = [ {
 			text : SuppAppMsg.suppliersName,
-			width : 200,
+			//width : 200,
+			flex: 1,
 			dataIndex : 'name'
 		},{
 			text : SuppAppMsg.usersUser,
-			width : 120,
+			//width : 120,
+			flex: 1,
 			dataIndex : 'userName'
 		}, {
 			text : SuppAppMsg.usersRole,
-			width : 100,
+			//width : 100,
+			flex: 1,
 			dataIndex : 'userRole.id',
 			renderer:function (value,metaData,record,row,col,store,gridView){
            	 return record.data.userRole.strValue1;
 			 }
 		}, {
 			text : SuppAppMsg.usersUserType,
-			width : 100,
+			//width : 100,
+			flex: 1,
 			dataIndex : 'userType.id',
 			renderer:function (value,metaData,record,row,col,store,gridView){
            	 return record.data.userType.strValue1;
 			 }
 		},{
 			text : SuppAppMsg.usersSupplier,
-			width : 100,
+			//width : 100,
+			flex: 1,
 			dataIndex : 'addressNumber'
 		},{
 			text : SuppAppMsg.usersMainUser,
-			width : 100,
+			//width : 100,
+			flex: 1,
 			dataIndex : 'mainSupplierUser',
 			renderer:function (value,metaData,record,row,col,store,gridView){
 				if(value == true){
@@ -67,7 +73,8 @@ Ext.define('SupplierApp.view.users.UsersGrid', {
 			align: 'center'
 		},{
 			text : SuppAppMsg.usersActivo,
-			width : 50,
+			//width : 50,
+			flex: 1,
 			dataIndex : 'enabled',
 			renderer:function (value,metaData,record,row,col,store,gridView){
 				if(value == true){
@@ -79,15 +86,18 @@ Ext.define('SupplierApp.view.users.UsersGrid', {
 			align: 'center'
 		},{
 			hidden:true,
-			width : 50,
+			//width : 50,
+			flex: 1,
 			dataIndex : 'openOrders'
 		},{
 			hidden:true,
-			width : 50,
+			//width : 50,
+			flex: 1,
 			dataIndex : 'logged'
 		},{
 			hidden:true,
-			width : 50,
+			//width : 50,
+			flex: 1,
 			dataIndex : 'agreementAccept'
 		}  ];
 
@@ -97,7 +107,8 @@ Ext.define('SupplierApp.view.users.UsersGrid', {
 			itemId : 'searchUsers',
 			emptyText : SuppAppMsg.suppliersSearch,
 			xtype : 'trigger',
-			width : 400,
+			//width : 400,
+			flex: 1,
 			margin: '5 0 10 0',
 			triggerCls : 'x-form-search-trigger',
 			onTriggerClick : function() {

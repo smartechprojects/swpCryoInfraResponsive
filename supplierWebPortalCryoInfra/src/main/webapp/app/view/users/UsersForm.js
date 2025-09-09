@@ -5,6 +5,10 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 	frame : false,
 	style: 'border: solid #ccc 1px',
 	autoScroll : true,
+	layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
 	initComponent : function() {
 		this.items = [ {
 			xtype : 'container',
@@ -15,7 +19,8 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				labelWidth : 150,
 				margin : '5 15 5 0',
 				xtype : 'textfield',
-				labelAlign: 'left'
+				labelAlign: 'left',
+				 anchor: '100%'
 			},
 			items : [ {
 				xtype : 'hidden',
@@ -24,7 +29,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersUserId,
 				name : 'userName',
 				id : 'usersFormUserName',
-				width : 300,
+				//width : 300,
 				allowBlank:false,
 				maskRe: /[A-Za-z\d-]/,
 				stripCharsRe: /[^A-Za-z\d-]/,
@@ -39,7 +44,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersFullName,
 				name : 'name',
 				id : 'usersFormName',
-				width : 600,
+				//width : 600,
 				allowBlank:false,
 				maskRe: /[A-Za-z \d]/,
 				stripCharsRe: /[^A-Za-z \d]/,
@@ -53,7 +58,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				name : 'email',
 				id : 'usersFormEmail',
 				vtype : 'email',
-				width : 400,
+				//width : 400,
 				allowBlank : false,
 	            listeners:{
 					change: function(field, newValue, oldValue){
@@ -63,7 +68,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 			}, {
 				fieldLabel : SuppAppMsg.usersPass,
 				name : 'password',
-				width : 300,
+				//width : 300,
 				enforceMaxLength :8,
 				maxLength : 8,
 				vtype:'secPass', 
@@ -75,7 +80,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersSubUser,
 				id : 'usersIsSubUser',
 				name : 'subUser',
-				width : 300,
+				//width : 300,
 				listeners: {
                     change: function (checkbox, newVal, oldVal) {
                     	
@@ -139,7 +144,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				valueField : 'id',
 				displayField : 'strValue1',
 				emptyText : 'Selecciona...',
-				width : 350,
+				//width : 350,
 				allowBlank : false,
 			    listeners: {
 			    	select: function (comboBox, records, eOpts) {
@@ -183,14 +188,14 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				valueField : 'id',
 				displayField : 'strValue1',
 				emptyText : 'Selecciona...',
-				width : 399,
+				//width : 399,
 				allowBlank : false
 			}, {
 				xtype: 'numberfield',
 				fieldLabel : SuppAppMsg.suppliersNumber,
 				name : 'addressNumber',
 				id : 'usersAddressNumber',
-				width : 300,
+				//width : 300,
 				allowBlank : true,
 				hidden: true,
 				useThousandSeparator: false,
@@ -218,42 +223,42 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersMainSupplierUser,
 				id : 'userMainSupplierUser',
 				name : 'mainSupplierUser',
-				width : 300,
+				//width : 300,
 				hidden: true
 			},{
 				xtype : 'checkbox',
 				fieldLabel : SuppAppMsg.usersActivo,
 				name : 'enabled',
-				width : 300,
+				//width : 300,
 				checked: true
 			},{
 				xtype : 'checkbox',
 				fieldLabel : SuppAppMsg.usersSystem,
 				name : 'logged',
-				width : 400,
+				//width : 400,
 				readOnly:true
 			},{
 				xtype : 'checkbox',
 				fieldLabel : 'Ha aceptado el acuerdo',
 				name : 'agreementAccept',
-				width : 400,
+				//width : 400,
 				readOnly: true,
 				hidden : true
 			},{
 				xtype : 'checkbox',
 				id : 'userIsSupplierUser',
 				name : 'supplier',
-				width : 400,
+				//width : 400,
 				hidden: true
 			}, {
 				name : 'notes',
-				width : 600,
+				//width : 600,
 				hidden : true
 			},{
 				xtype : 'checkbox',
 				fieldLabel : SuppAppMsg.usersExepAcces,
 				name : 'exepAccesRule',
-				width : 400
+				//width : 400
 			},{
 				xtype: 'textareafield',
 				readOnly:true,
@@ -261,7 +266,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				value : SuppAppMsg.usersSupplierMainUserMessage,
 				id : 'userMainSupplierUserMsg',
 				name : 'mainSupplierUserMsg',
-				width : 700,
+				//width : 700,
 				maxRows: 5,
 				hidden : true
 			}
