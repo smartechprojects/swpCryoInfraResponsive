@@ -86,7 +86,8 @@ Ext.define('SupplierApp.view.main.Main', {
         	style: {
                 'background-color': '#3D72A4',
                 'text-align':'left',
-                'width':'165px'
+                'width':'210px'//,
+               // 'min-height': '60px'
             },
             listeners: {
                 click: function(tab) {
@@ -118,6 +119,13 @@ Ext.define('SupplierApp.view.main.Main', {
 		itemId:'approvalPanelTab',
 		title : '',
 		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' ||role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER'?false:true
+	},{
+    	xtype : 'approvalSearchPanel',
+    	iconCls: 'fa-tasks',		
+		id:'tabApprovalSearchPanelId',
+		itemId:'approvalSearchPanelTab',
+		title : '',
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_TAX' || role=='ROLE_TREASURY' || role=='ROLE_PURCHASE_READ' || role=='ROLE_ACCOUNTING' || role=='ROLE_MANAGER'?false:true
 	}
 	/*,{
     	xtype : 'outSourcingPanel',

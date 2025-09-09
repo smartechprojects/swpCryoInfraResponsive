@@ -83,46 +83,56 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
         this.columns = [
         	{   
         	   text: SuppAppMsg.approvalTicket,
-               width: 100,
+               //width: 100,
+        	   flex: 1,
                dataIndex: 'ticketId'
            },{   
         	   text: SuppAppMsg.suppliersNumber ,
-               width: 100,
+               //width: 100,
+               flex: 1,
                dataIndex: 'addresNumber'
            },{
         	   text     : SuppAppMsg.suppliersNameSupplier,
-        	   width: 300,
+        	   //width: 300,
+        	   flex: 2,
         	   dataIndex: 'razonSocial'
 	       },{
 	            text     : SuppAppMsg.approvalLevel,
-	            width: 120,
+	            //width: 120,
+	            flex: 1,
 	            dataIndex: 'approvalStep'
 	       },{
 	            text     : SuppAppMsg.approvalCurrentApprover,
-	            width: 120,
+	            //width: 120,
+	            flex: 1,
 	            dataIndex: 'currentApprover'
 	       },{
 	            text     : SuppAppMsg.approvalNextApprover,
-	            width: 120,
+	            //width: 120,
+	            flex: 1,
 	            dataIndex: 'nextApprover'
 	       },{
 	            text     : 'Status',
-	            width: 90,
+	            //width: 90,
+	            flex: 1,
 	            dataIndex: 'approvalStatus'
 	       },{
 	            text     : SuppAppMsg.approvalRequestDate,
-	            width: 90,
+	            //width: 90,
+	            flex: 1,
 	            dataIndex: 'fechaSolicitud',
 	            renderer : Ext.util.Format.dateRenderer("d-m-Y")
 	       },{
 	            text     : SuppAppMsg.purchaseTitle30,
-	            width: 300,
+	            //width: 300,
+	            flex: 2,
 	            dataIndex: 'approvalNotes'
 	       },{
 	        	xtype: 'actioncolumn',
 	        	hidden:true,
 	        	//hidden:role=='ROLE_ADMIN'?false:true,
 	            width: 90,
+	            flex: 1,
 	            header: SuppAppMsg.reasignRequest,
 	            align: 'center',
 				name : 'reasignRequest',
@@ -227,7 +237,8 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 id: 'supSearchName',
                 itemId: 'supSearchName',
                 name:'supSearchName',
-                width:200,
+                //width:200,
+                flex: 1,
                 labelWidth:70,
                 labelAlign:'top',
                 margin:'10 20 10 5',
@@ -242,7 +253,8 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 id: 'supSearchTicket',
                 itemId: 'supSearchTicket',
                 name:'supSearchTicket',
-                width:120,
+                //width:120,
+                flex: 1,
                 labelWidth:70,
                 labelAlign:'top',
                 margin:'0 20 10 10',
@@ -260,7 +272,8 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
     			store : ticketSatusStore,
                 displayField: 'description',
                 valueField: 'status',
-                width : 150,
+                //width : 150,
+                flex: 1,
                 labelAlign:'top'
     		},{
     			fieldLabel : SuppAppMsg.approvalLevel,
@@ -271,7 +284,8 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
     			store : apprLevelStore,
                 displayField: 'description',
                 valueField: 'status',
-                width : 150,
+                //width : 150,
+                flex: 1,
                 labelAlign:'top',
                 margin:'0 20 10 20',
     		},{
@@ -280,7 +294,8 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 id: 'supSearchApprover',
                 itemId: 'supSearchApprover',
                 name:'supSearchApprover',
-                width:120,
+                //width:120,
+                flex: 1,
                 labelWidth:70,
                 labelAlign:'top',
                 margin:'0 20 10 10'

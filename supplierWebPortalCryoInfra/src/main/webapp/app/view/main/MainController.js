@@ -13,6 +13,7 @@ Ext.define('SupplierApp.view.main.MainController', {
         Ext.getCmp('tabHomeId').setTitle(SuppAppMsg.tabInicio);
         Ext.getCmp('tabSuppliersId').setTitle( SuppAppMsg.tabProveedores);
         Ext.getCmp('tabApprovalPanelId').setTitle( SuppAppMsg.tabApproval);
+        Ext.getCmp('tabApprovalSearchPanelId').setTitle( SuppAppMsg.tabSearchApproval);
          /*
         Ext.getCmp('tabnonComplianceSupplierPanelId').setTitle( SuppAppMsg.tabNonComplianceSupplier);
         Ext.getCmp('tabOutSourcingPanelId').setTitle( SuppAppMsg.outSourcingTitle);
