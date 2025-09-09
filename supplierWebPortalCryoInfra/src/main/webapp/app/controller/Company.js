@@ -83,10 +83,22 @@ Ext.define('SupplierApp.controller.Company', {
             break;
     	};
 
+    	var winAlertWidth = Ext.Element.getViewportWidth();
+    	var boxAlertWidth = Math.min(Math.max(winWidth * 0.5, 300), 500); // 50% de la pantalla, mínimo 300, máximo 500
+
     	var filePanel = Ext.create(
     					'Ext.form.Panel',
     					{
-    						width : 900,	
+    						//width : 900,	
+    						layout: {
+    			                type: 'vbox',
+    			                align: 'stretch'
+    			            },
+    			            bodyPadding: 10,
+    			            defaults: {
+    			                anchor: '100%',
+    			                margin: '5 0'
+    			            },
     						items : [{
     									xtype : 'textfield',
     									name : 'company',
@@ -107,7 +119,7 @@ Ext.define('SupplierApp.controller.Company', {
     									msgTarget : 'side',
     									allowBlank : false,
     									margin:'20 0 70 0',
-    									anchor : '90%',
+    									//anchor : '90%',
     									buttonText : SuppAppMsg.suppliersSearch
     								} ],
 
@@ -122,14 +134,14 @@ Ext.define('SupplierApp.controller.Company', {
     												waitMsg : SuppAppMsg.supplierLoadFile,
     												success : function(fp, o) {
     													var res = Ext.decode(o.response.responseText);
-    													Ext.MessageBox.alert({ maxWidth: 400, minWidth: 400, title: SuppAppMsg.supplierMsgValidationLoad, msg: 'El archivo ha sido validado de forma exitosa' });
+    													Ext.MessageBox.alert({ maxWidth: 400, minWidth: 400, width: boxWidth, title: SuppAppMsg.supplierMsgValidationLoad, msg: 'El archivo ha sido validado de forma exitosa' });
     													cForm.findField(supField).setValue(res.fileName);
     													me.getCompanyGrid().getStore().load();
     													me.winLoadCompany.close();
     												},       // If you don't pass success:true, it will always go here
     										        failure: function(fp, o) {
     										        	var res = Ext.decode(o.response.responseText);
-    										        	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  res.message});
+    										        	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, width: boxWidth, title: SuppAppMsg.supplierMsgValidationLoad, msg:  res.message});
     										        }
     											});
     								}
@@ -137,12 +149,23 @@ Ext.define('SupplierApp.controller.Company', {
     						} ]
     					});
 
+    	var winWidth = Ext.Element.getViewportWidth();
+    	var boxWidth = Math.min(Math.max(winWidth * 0.5, 400), 600); 
+    	var winHeight = Ext.Element.getViewportHeight();
+    	var boxHeight = Math.min(Math.max(winHeight * 0.3, 150), 300); // altura entre 150 y 300
+    	 
     	this.winLoadCompany = new Ext.Window({
     		layout : 'fit',
     		title : 'Carga de archivos',
-    		width : 600,
-    		height : 160,
+    		//width : 600,
+    		//height : 160,
     		modal : true,
+    		layout: 'fit',
+    		width : boxWidth,
+    		height: boxHeight,
+            height: 180,
+    		minHeight: 150,
+            scrollable: true,
     		closeAction : 'destroy',
     		resizable : false,
     		minimizable : false,
