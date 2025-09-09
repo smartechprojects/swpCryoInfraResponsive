@@ -36,7 +36,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					fieldLabel: 'System',
 					name: 'udcSystem',
 					id: 'udcSystem',
-					width:300,
+					//width:300,
+					flex: 1,
 					disabled:false,
 					allowBlank:false,
 					fieldCls: 'outlineField',
@@ -52,7 +53,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					fieldLabel: SuppAppMsg.udcKey,
 					name: 'udcKey',
 					id: 'udcKey',
-					width:200,
+					//width:200,
+					flex: 1,
 					padding:'0 0 0 35',
 					disabled:false,
 					allowBlank:false,
@@ -77,7 +79,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					xtype:'textfield',
 					fieldLabel: 'strValue1',
 					name: 'strValue1',
-					width:550,
+					//width:550,
+					flex: 1,
 					/*listeners:{
 							change: function(field, newValue, oldValue){
 							var form = me.getForm();
@@ -123,7 +126,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					xtype:'textfield',
 					fieldLabel: 'strValue2',
 					name: 'strValue2',
-					width:250,
+					//width:250,
+					flex: 1,
 					padding:'0 0 0 15',
 					listeners:{
 				        change: function(field, newValue, oldValue){
@@ -168,7 +172,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					xtype: 'numberfield',
 					fieldLabel: 'intValue',
 					name: 'intValue',
-					width:150,
+					//width:150,
+					flex: 1,
 					padding:'0 0 0 10',
 					hideTrigger : true
 				},
@@ -177,7 +182,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					fieldLabel: 'dateValue',
 					name: 'dateValue',
 					id: 'dateValue',
-					width: 200,
+					//width: 200,
+					flex: 1,
 					dateFormat: 'd-m-Y',
 					//dateFormat: 'Y-M-d',
 					
@@ -191,7 +197,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 				    	   xtype:'textfield',
 				    	   fieldLabel: 'KeyRef',
 				    	   name: 'keyRef',
-				    	   width:250,
+				    	   //width:250,
+				    	   flex: 1,
 				    	   padding:'0 0 0 25',
 				            listeners:{
 								change: function(field, newValue, oldValue){
@@ -202,7 +209,8 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 				    	   xtype:'textfield',
 				    	   fieldLabel: 'SysRef',
 				    	   name: 'systemRef',
-				    	   width:250,
+				    	   //width:250,
+				    	   flex: 1,
 				    	   padding:'0 0 0 30'
 				       }]
 			}];

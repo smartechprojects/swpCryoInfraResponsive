@@ -2,7 +2,6 @@ Ext.define('SupplierApp.view.udc.UdcGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.udcGrid',
     loadMask: true,
-    forceFit: true,
 	frame:false,
 	border:false,
 	id:'udcgrid',
@@ -10,7 +9,7 @@ Ext.define('SupplierApp.view.udc.UdcGrid' ,{
 	store : {
 		type:'udcstore'
 	},
-	scroll : false,
+	scrollable: true, 
 	dockedItems: [
     	getPagingContent()
     ],
