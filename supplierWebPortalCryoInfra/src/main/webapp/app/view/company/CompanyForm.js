@@ -5,6 +5,10 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 	frame : false,
 	style: 'border: solid #ccc 1px',
 	autoScroll : true,
+	layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
 	initComponent : function() {
 		this.items = [ {
 			name:'id',
@@ -19,12 +23,19 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 			    {
 			    	xtype:'container',
 			    	layout:'vbox',
-			    	defaults:{labelWidth : 120, width : 350, labelAlign: 'left', xtype:'textfield', margin:'10 0 0 10'},
+			    	margin : '15 15 0 10',
+			    	style : 'border-bottom: 1px dotted #fff;padding-bottom:10px',
+			    	defaults:{
+			    		labelWidth : 120,
+			    		/*width : 350,*/ 
+			    		labelAlign: 'left', 
+			    		xtype:'textfield', 
+			    		margin:'10 0 0 10'},
 			    	items:[
 			    		{
 							xtype:'container',
 							layout:'hbox',
-							width : 500,
+							//width : 500,
 							margin:'10 0 0 10',
 							items:[
 								{
@@ -33,7 +44,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 									name : 'company',
 									itemId : 'idCompany',
 									labelWidth : 120,
-									width : 250,
+									//width : 250,
 									allowBlank : false,
 									listeners:{
 										change: function(field, newValue, oldValue){
@@ -46,7 +57,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 									name : 'resultadoRfc',
 									itemId : 'resultadoRfc',
 									margin:'0 0 0 15',
-									width : 200,
+									//width : 200,
 									readOnly:true,
 									fieldStyle: 'border:none;background-image: none;font-weight:bold;',
 								}
@@ -55,7 +66,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 							xtype:'textfield',
 							fieldLabel : SuppAppMsg.suppliersName,
 							name : 'companyName',
-							width : 550,
+							//width : 550,
 							allowBlank : false,
 							listeners:{
 								change: function(field, newValue, oldValue){
@@ -66,13 +77,13 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 							xtype:'textfield',
 							fieldLabel : SuppAppMsg.companys3,
 							name : 'notificationEmail',
-							width : 550,
+							//width : 550,
 							allowBlank : false
 						},{
 							xtype : 'checkbox',
 							fieldLabel : SuppAppMsg.companys2,
 							name : 'active',
-							width : 300,
+							//width : 300,
 							checked: false,
 							itemId: 'activeCheckbox', 
 							inputValue: 'true',      // valor que se guarda cuando está marcado
@@ -108,8 +119,8 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						},*/{
 							xtype : 'displayfield',
 							value : SuppAppMsg.supplierFile+' .PFX',
-							height:20,
-							width : 500,
+							//height:20,
+							//width : 500,
 							margin: '15 0 0 10',
 							colspan:3,
 							id:'pfxTitle',
@@ -117,7 +128,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						},{
 							xtype:'container',
 							layout:'hbox',
-							width : 500,
+							//width : 500,
 							defaults : {
 								labelWidth : 80,
 								xtype : 'textfield'
@@ -128,12 +139,12 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 										fieldLabel : SuppAppMsg.supplierFile+' .pfx',
 										name : 'taxFileRef',
 										id:'taxFileRef',
-										width:400,
+										//width:400,
 										readOnly:true
 								    },{
 										xtype: 'button',
-										width:90,
-										height:22,
+										//width:90,
+										//height:22,
 										itemId : 'loadTaxFileRef',
 										id : 'loadTaxFileRef',
 										text : SuppAppMsg.supplierLoad,
@@ -144,14 +155,14 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						}, {
 							fieldLabel : 'Password .pfx',
 							name : 'secretPass',
-							width : 300,
-							labelWidth : 80,
+							//width : 300,
+							//labelWidth : 80,
 							inputType: 'password',
 							allowBlank : true
 						},{
 							xtype : 'displayfield',
 							value : SuppAppMsg.companys4,
-							height:20,
+							//height:20,
 							id:'cerTitle',
 							margin: '15 0 0 10',
 							colspan:3,
@@ -159,7 +170,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						},{
 							xtype:'container',
 							layout:'hbox',
-							width : 500,
+							//width : 500,
 							defaults : {
 								labelWidth : 80,
 								xtype : 'textfield'
@@ -170,12 +181,12 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 										fieldLabel : SuppAppMsg.supplierFile+' .cer',
 										name : 'cerFileRef',
 										id:'cerFileRef',
-										width:400,
+										//width:400,
 										readOnly:true
 								    },{
 										xtype: 'button',
-										width:90,
-										height:22,
+										//width:90,
+										//height:22,
 										itemId : 'loadCerFileRef',
 										id : 'loadCerFileRef',
 										text : SuppAppMsg.companys5,
@@ -186,7 +197,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						},{
 							xtype:'container',
 							layout:'hbox',
-							width : 500,
+							//width : 500,
 							defaults : {
 								labelWidth : 80,
 								xtype : 'textfield'
@@ -197,12 +208,12 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 										fieldLabel : SuppAppMsg.supplierFile+' .key',
 										name : 'keyFileRef',
 										id:'keyFileRef',
-										width:400,
+										//width:400,
 										readOnly:true
 								    },{
 										xtype: 'button',
-										width:90,
-										height:22,
+										//width:90,
+										//height:22,
 										itemId : 'loadKeyFileRef',
 										id : 'loadKeyFileRef',
 										text : SuppAppMsg.companys5,
@@ -213,7 +224,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						}, {
 							fieldLabel : 'Password',
 							name : 'secretPassCer',
-							width : 300,
+							//idth : 300,
 							labelWidth : 80,
 							inputType: 'password',
 							allowBlank : true

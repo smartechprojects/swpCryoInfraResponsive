@@ -3,6 +3,8 @@ Ext.define('SupplierApp.view.company.CompanyPanel' ,{
     alias : 'widget.companyPanel',
     border:false,
     frame:false,
+    layout: 'fit', 
+    scrollable: true,
 	initComponent: function () {
         Ext.apply(this, {
         	layout: {
@@ -11,12 +13,10 @@ Ext.define('SupplierApp.view.company.CompanyPanel' ,{
             },   
             items: [{
             	xtype: 'companyForm',
-            	flex:4,
-            	height:400
-
+            	flex:5
             },{
            	 xtype: 'companyGrid',
-           	flex:6
+           	flex:5
             }]
         });
         this.callParent(arguments);

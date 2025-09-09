@@ -2,6 +2,7 @@ Ext.application({
     name: 'SupplierApp',
     extend: 'SupplierApp.Application',
     requires: [
-        'SupplierApp.view.main.Main'
+        'SupplierApp.view.main.Main',
+        'Ext.plugin.Responsive'
     ]
 });
