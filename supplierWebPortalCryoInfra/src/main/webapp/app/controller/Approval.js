@@ -36,7 +36,9 @@ Ext.define('SupplierApp.controller.Approval', {
     
     approveSupplier : function(grid, rowIndex, colIndex, record) {
     	var record = grid.store.getAt(rowIndex);
-debugger
+    	var winWidth = Ext.Element.getViewportWidth();
+    	var boxWidth = Math.min(Math.max(winWidth * 0.5, 400), 500); // ancho mínimo 400, máximo 600, 50% pantalla
+    	
     	Ext.Ajax.request({
 			url : 'supplier/getById.action',
 			method : 'GET',
@@ -108,7 +110,7 @@ debugger
 					}
 					
 				}
-					debugger
+					
 					var dto = Ext.create('SupplierApp.model.SupplierDTO',record.data);
 			    	var currentApprover = addressNumber;
 			    	var status ="APROBADO";
@@ -119,7 +121,8 @@ debugger
 						msg : SuppAppMsg.approvalNoteAcept,
 						buttons : Ext.MessageBox.YESNO,
 						multiline: true,
-						width:500,
+						//width:500,
+						width: boxWidth, 
 						buttonText : {
 							yes : SuppAppMsg.approvalAcept,
 							no : SuppAppMsg.approvalExit
@@ -180,7 +183,7 @@ debugger
 			    	dlgAccept.textArea.inputEl.set({
 					    maxLength: 255
 					});
-					
+			    	dlgAccept.textArea.setWidth(boxWidth - 40);
 				},
 				failure : function() {
 					 box.hide();
@@ -269,6 +272,9 @@ debugger
     	var status ="RECHAZADO";
     	var step = record.data.approvalStep;
     	
+    	var winWidth = Ext.Element.getViewportWidth();
+    	var boxWidth = Math.min(Math.max(winWidth * 0.5, 400), 500); // ancho mínimo 400, máximo 600, 50% pantalla
+    	
     	var dlgRejected = Ext.MessageBox.show({
 			title : SuppAppMsg.approvalAceptSupp,
 			msg : SuppAppMsg.approvalNoteReject,
@@ -276,7 +282,8 @@ debugger
 			maxLength : 255,
 			enforceMaxLength : true,
 			multiline: true,
-			width:500,
+			//width:500,
+			width: boxWidth, 
 			buttonText : {
 				yes : SuppAppMsg.approvalAcept,
 				no : SuppAppMsg.approvalExit
@@ -336,18 +343,24 @@ debugger
     	dlgRejected.textArea.inputEl.set({
 		    maxLength: 255
 		});
-    	
+    	dlgRejected.textArea.setWidth(boxWidth - 40);
     },
     
     gridSelectionChange: function(model, record) {
         if (record) {
         	var box = Ext.MessageBox.wait(SuppAppMsg.approvalLoadRegistrer , SuppAppMsg.approvalExecution);
         	var me = this;
+        	
+        	var winWidth = Ext.Element.getViewportWidth();
+        	var winHeight = Ext.Element.getViewportHeight();
+        	
         	me.supDetailWindow = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.approvalDetailsSupplier ,
-        		width : 1200,
-        		height : 550,
+        		//width : 1200,
+        		//height : 550,
+        		width: Math.min(winWidth * 0.9, 1200),  // 90% de pantalla, máximo 1200
+        	    height: Math.min(winHeight * 0.85, 550), // 85% de pantalla, máximo 700
         		modal : true,
         		closeAction : 'destroy',
         		resizable : true,
@@ -357,7 +370,8 @@ debugger
         		items : [ {
         			xtype : 'supplierPanelDetail',
         			border : true,
-        			height : 415
+        			//height : 415
+        			layout: 'fit' 
         		} ]
 
         	});

@@ -13,7 +13,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.Users',
         'SupplierApp.controller.Udc',
         'SupplierApp.controller.Supplier',
-        'SupplierApp.controller.Company'/*,
+        'SupplierApp.controller.Company',
+        'SupplierApp.controller.Approval'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -109,7 +110,16 @@ Ext.define('SupplierApp.view.main.Main', {
 		title : '',
 		id:'tabSuppliersId',
 		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true
-	}/*,{
+	},
+	{
+    	xtype : 'approvalPanel',
+    	iconCls: 'fa-check-circle',
+		id:'tabApprovalPanelId',
+		itemId:'approvalPanelTab',
+		title : '',
+		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' ||role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER'?false:true
+	}
+	/*,{
     	xtype : 'outSourcingPanel',
     	iconCls: 'fa-object-group',
 		title : '',
