@@ -14,7 +14,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.Udc',
         'SupplierApp.controller.Supplier',
         'SupplierApp.controller.Company',
-        'SupplierApp.controller.Approval'/*,
+        'SupplierApp.controller.Approval',
+        'SupplierApp.controller.PaymentsSuppliers'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -126,6 +127,12 @@ Ext.define('SupplierApp.view.main.Main', {
 		itemId:'approvalSearchPanelTab',
 		title : '',
 		hidden:role=='ROLE_ADMIN' || role=='ROLE_TAX' || role=='ROLE_TREASURY' || role=='ROLE_PURCHASE_READ' || role=='ROLE_ACCOUNTING' || role=='ROLE_MANAGER'?false:true
+	}, {
+		xtype : 'paymentsSuppliersPanel',
+		iconCls: 'fa-money',	
+		id:'tabPaymentsSuppliersPanelId',
+		itemId: 'paymentsSuppliersPanelTab',
+		title : ''
 	}
 	/*,{
     	xtype : 'outSourcingPanel',

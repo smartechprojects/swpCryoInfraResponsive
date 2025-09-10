@@ -46,7 +46,12 @@ Ext.define('SupplierApp.controller.PaymentsSuppliers', {
                         title:   SuppAppMsg.paymentsSuppliersDetailoPay,
                         width: 600,
                         height: 400,
+                        maxWidth: '600',
+                        maxHeight: '400',
                         modal: true,
+                        autoScroll: true, 
+                        bodyPadding: 5,
+                        layout: 'fit',
                         items: [
                             {
                                 xtype: 'grid',
@@ -57,25 +62,28 @@ Ext.define('SupplierApp.controller.PaymentsSuppliers', {
                                     {
                                         text: 'ID',
                                         dataIndex: 'id',
-                                        width: 50,
+                                        //width: 50,
                                         hidden:true
                                         
                                     },
                                     {
                                         text: 'ID de Pago',
                                         dataIndex: 'idPayment',
-                                        width: 80,
+                                        //width: 80,
                                         hidden:true
                                     },
                                     {
                                         text:SuppAppMsg.paymentsSuppliersTypePasive,
                                         dataIndex: 'typDocPas',
-                                        width: 120
+                                        //width: 120
+                                        flex: 1, 
+                                        minWidth: 120
                                     },
                                     {
                                         text: SuppAppMsg.paymentsSuppliersNumDocPasive,
                                         dataIndex: 'docPasiveNumber',
-                                        width: 100
+                                       // width: 100
+                                        flex: 1
                                     },
                                     {
                                         text: SuppAppMsg.paymentsSuppliersInvoiceNumber,
@@ -85,13 +93,16 @@ Ext.define('SupplierApp.controller.PaymentsSuppliers', {
                                     {
                                         text: SuppAppMsg.paymentsSuppliersAmountInvoice,
                                         dataIndex: 'mountInvoice',
-                                        width: 120,
+                                        //width: 120,
+                                        flex: 1,
                                         align: 'right', // Align to the right
                                         renderer: function(value) {
                                             return Ext.util.Format.currency(value, '$', 2); // Format as currency
                                         }
                                     }
-                                ]
+                                ],
+                                scrollable: true,
+                                forceFit: true 
                             }
                         ]
                     });

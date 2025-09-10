@@ -3,12 +3,12 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchPanel' ,{
     alias : 'widget.approvalSearchPanel',
     border:false,
     frame:false,
-    //layout: 'fit', 
+    layout: 'fit', 
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
            	 xtype: 'approvalSearchGrid',
-           	height:430
+           	//height:430
             }]
         });
         this.callParent(arguments);

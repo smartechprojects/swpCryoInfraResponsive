@@ -9,13 +9,16 @@
 	store : {
 		type:'paymentssuppliers'
 	},
-	forceFit: true,
-	scroll : true,
+	///forceFit: true,
+	 autoScroll: true,
+	 scrollable: true,
 	viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' }
 	},
     initComponent: function() {
+    	
+    	var apController = SupplierApp.app.getController("SupplierApp.controller.PaymentsSuppliers");
     	
     	var tipoDoc = null;
     	
@@ -167,19 +170,22 @@
         this.columns = [
 		        	{
 			            text     : SuppAppMsg.suppliersNumber,
-			            width: 130,
+			            //width: 130,
+			            flex: 1,
 			            dataIndex: 'addressBook',
 			            sortable: true 
 			        },{
 			            text     : SuppAppMsg.plantAccess64,
-			            width: 180,
+			           // width: 180,
+			            flex: 2,
 			            dataIndex: 'suplierCompanyName', 
 			            sortable: true
 			        },
 			        
 			        {
 			            text     : SuppAppMsg.paymentsSuppliersInvoiceNumber,
-			            width: 230,
+			            //width: 230,
+			            flex: 2,
 			            dataIndex: 'invoiceNumber',  renderer: function(value) {
 			                // Verificar si el valor no es nulo ni vacío
 			                if (value && value.trim() !== '') {
@@ -204,12 +210,14 @@
 			            sortable: true
 			        },{
 			            text     : SuppAppMsg.paymentsSuppliersCompany,
-			            width: 130,
+			            //width: 130,
+			            flex: 1,
 			            dataIndex: 'company', 
 			            sortable: true
 			        },{
 			            text     : SuppAppMsg.paymentsSuppliersTypeDocMatch,
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'docCotejo',
 			              renderer: function(value, metaData, record) {
 			                return getTypePayById(value);
@@ -217,14 +225,16 @@
 			            sortable: true	
 			        },{
 			            text     : SuppAppMsg.paymentsSuppliersPayAmount, 
-			            width: 130,
+			            //width: 130,
+			            flex: 1,
 			            dataIndex: 'paymentAmount', 
 			            renderer : Ext.util.Format.numberRenderer('0,000.00'),
 			            align: 'right',
 			            sortable: true
 			        },{
 			            text: SuppAppMsg.paymentsSuppliersCurrency,
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'currencyCode', // Asumiendo que 'currencyCode' es el campo que contiene el ID de la moneda
 			            renderer: function(value, metaData, record) {
 			                return getCurrencyNameById(value);
@@ -233,7 +243,8 @@
 			        },
 			        {
 			            text     : SuppAppMsg.paymentsSuppliersDateAmount,
-			            width: 130,
+			            //width: 130,
+			            flex: 1,
 			            dataIndex: 'paymentDate',
 			            renderer: function(value, metaData, record, row, col, store, gridView){
 			            	
@@ -248,7 +259,8 @@
 			            sortable: true
 			        },{
 			            text     : SuppAppMsg.taxvaulStatus,
-			            width: 130,
+			            //width: 130,
+			            flex: 1,
 			            dataIndex: 'statusPay',
 			            renderer: function(value, metaData, record, row, col, store, gridView){
 			            	debugger
@@ -268,30 +280,40 @@
             {
               xtype: 'toolbar',
               dock: 'top',
+              layout: {
+                  type: 'hbox',
+                  align: 'stretch'
+              },
+              padding: 5, // espacio interno uniforme
+              defaults: {
+                  margin: '0 5 0 0', // separación pequeña horizontal
+                  flex: 1,
+                  labelAlign: 'top'
+              },
               items: [
             	  {
     		          xtype: 'textfield',
     		          fieldLabel: SuppAppMsg.plantAccess51,
-    		          labelAlign: 'top',
+    		          //labelAlign: 'top',
     		          id: 'paymentsSuppliersAddressNumberGrid',
     		          itemId: 'paymentsSuppliersAddressNumberGrid',
     		          name: 'paymentsSuppliersAddressNumberGrid',
     		          value: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? addressNumber : '',
     		          fieldStyle: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? 'border:none;background-color: #ddd; background-image: none;' : '',
     		          readOnly: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? true : false,
-    		          width: 200,
-    		          labelWidth: 70,
-    		          margin: '20 20 10 10'
+    		         // width: 200,
+    		         // labelWidth: 70,
+    		        //  margin: '20 20 10 10'
     		        },
     		        {
     		          xtype: 'tipoDoc',
     		          id: 'paymentsSupplierstipoDocGrid',
     		          itemId: 'paymentsSupplierstipoDocGrid',
     		          name: 'paymentsSupplierstipoDocGrid',
-    		          width: 100,
-    		          labelAlign: 'top',
-    		          labelWidth: 70,
-    		          margin: '20 20 10 10'
+    		          //width: 100,
+    		         // labelAlign: 'top',
+    		          //labelWidth: 70,
+    		         // margin: '20 20 10 10',
     		        }
     		    ,
     		   
@@ -300,49 +322,55 @@
     		          fieldLabel: SuppAppMsg.paymentsSuppliersCurrencyCode,
     		          id: 'paymentsSuppliersCurrencyCodeGrid',
     		          itemId: 'paymentsSuppliersCurrencyCodeGrid',
-    		          name: 'paymentsSuppliersCurrencyCodeGrid',
+    		          name: 'paymentsSuppliersCurrencyCodeGrid'/*,
     		          width: 200,
     		          labelAlign: 'top',
     		          labelWidth: 70,
-    		          margin: '20 20 10 10'
+    		          margin: '20 20 10 10'*/
     		        },
     		        {
     		          xtype: 'statusPayCombo',
     		          fieldLabel: 'Estatus',
     		          id: 'paymentsSuppliersStatusPayGrid',
     		          itemId: 'paymentsSuppliersStatusPayGrid',
-    		          name: 'paymentsSuppliersStatusPayGrid',
+    		          name: 'paymentsSuppliersStatusPayGrid'/*,
     		          width: 100,
     		          labelAlign: 'top',
     		          labelWidth: 70,
-    		          margin: '20 20 10 10'
+    		          margin: '20 20 10 10'*/
     		        },
     		        {
     		          xtype: 'datefield',
     		          fieldLabel: SuppAppMsg.purchaseOrderDesde,
     		          id: 'paymentsSupplierspoFromDate',
     		          itemId: 'paymentsSupplierspoFromDate',
-    		          name: 'paymentsSupplierspoFromDate',
+    		          name: 'paymentsSupplierspoFromDate'/*,
     		          width: 100,
     		          labelAlign: 'top',
     		          labelWidth: 70,
-    		          margin: '20 20 10 10'
+    		          margin: '20 20 10 10'*/
     		        },
     		        {
     		          xtype: 'datefield',
     		          fieldLabel: SuppAppMsg.purchaseOrderHasta,
     		          id: 'paymentsSupplierspoToDate',
     		          itemId: 'paymentsSupplierspoToDate',
-    		          name: 'paymentsSupplierspoToDate',
+    		          name: 'paymentsSupplierspoToDate'/*,
     		          width: 100,
     		          labelAlign: 'top',
     		          labelWidth: 70,
-    		          margin: '20 20 10 10'
+    		          margin: '20 20 10 10',
+    		          flex: 1*/
     		        }
               ]},
              {
                 xtype: 'toolbar',
                 dock: 'top',
+                layout: {
+                    type: 'hbox',
+                    align: 'middle'
+                },
+                padding: 5,
                 items: [
                 	{
       		          xtype: 'button',
@@ -351,10 +379,15 @@
       		          labelAlign: 'top',
       		          action: 'paymentsSupplierSearch',
       		          cls: 'buttonStyle',
-      		          width: 100,
-      		          margin: '38 20 10 10'
-      		        }
-                	 
+      		          //width: 100,
+      		         // margin: '38 20 10 10',
+      		          margin: '0 5 0 0',
+      		          listeners: {
+	                    tap: function (button) {
+	                    	apController.paymentsSupplierSearch(button);
+	                    }
+	                },
+      		        },      	 
               ]},
 		    getPagingContent()
       ];
