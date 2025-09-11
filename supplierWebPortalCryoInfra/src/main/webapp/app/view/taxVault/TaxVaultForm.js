@@ -4,13 +4,21 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultForm',	{
 	border : false,
 	frame : false,
 	style : 'border: solid #ccc 1px',
-	autoScroll : true,
+	scrollable : true,
+	bodyPadding: 10,
+	layout: { 
+		type: 'vbox', 
+		align: 'stretch' 
+			},
 	initComponent : function() {
 	
 		this.items = [
 								{
 									xtype : 'container',
 									layout : 'vbox',
+									defaults: {
+							            anchor: '100%' // se ajusta al ancho disponible
+							        },
 									items : [
 										{
 											
@@ -19,10 +27,11 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultForm',	{
 								            id: 'rfcEmisorDet',
 								            itemId: 'rfcEmisorDet',
 								            name:'rfcEmisorDet',
-								            width:300,
-								            labelWidth:100,
+								            //width:300,
+								            //labelWidth:100,
 								            readOnly: true,
-								            margin:'5 10 0 10'
+								            //margin:'5 10 0 10'
+								            margin:'5 0'
 										},
 										{
 											xtype: 'textfield',
@@ -30,10 +39,11 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultForm',	{
 								            id: 'rfcReceptorDet',
 								            itemId: 'rfcReceptorDet',
 								            name:'rfcReceptorDet',
-								            width:300,
-								            labelWidth:100,
+								            //width:300,
+								            //labelWidth:100,
 								            readOnly: true,
-								            margin:'5 10 0 10'
+								            //margin:'5 10 0 10'
+								            margin:'5 0'
 										},
 										{
 											xtype: 'textfield',
@@ -41,10 +51,11 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultForm',	{
 								            id: 'usuarioDet',
 								            itemId: 'usuarioDet',
 								            name:'usuarioDet',
-								            width:300,
-								            labelWidth:100,
+								            //width:300,
+								            //labelWidth:100,
 								            readOnly: true,
-								            margin:'5 10 0 10'
+								            //margin:'5 10 0 10'
+								            margin:'5 0'
 										}
 										]
 								} ];

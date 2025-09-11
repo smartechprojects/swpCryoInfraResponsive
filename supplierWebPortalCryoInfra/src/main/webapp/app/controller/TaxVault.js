@@ -113,8 +113,12 @@ Ext.define('SupplierApp.controller.TaxVault', {
         	this.winDetail = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.fiscalTitle1,
-        		width : 1180,
-        		height : 200,
+        		//width : 1180,
+        		//height : 200,
+        		width: Ext.Element.getViewportWidth() * 0.45,   // 👈 40% de pantalla
+                minWidth: 680,                                // 👈 ancho mínimo
+                height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+                minHeight: 200,
         		modal : true,
         		closeAction : 'destroy',
         		resizable : false,
@@ -143,18 +147,23 @@ Ext.define('SupplierApp.controller.TaxVault', {
         	this.winDetail = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.taxvaultFiscalPeriods,
-        		width : 1180,
-        		height : 200,
+        		//width : 1180,
+        		//height : 200,
         		modal : true,
+        		scrollable: true,
         		closeAction : 'destroy',
         		resizable : false,
         		minimizable : false,
         		maximizable : false,
+        		width: Ext.Element.getViewportWidth() * 0.4,   // 60% pantalla
+        	    height: Ext.Element.getViewportHeight() * 0.3, // 50% pantalla
+        	    minWidth: 680,                                // 👈 ancho mínimo
+                minHeight: 250,
         		plain : true,
         		items : [ {
         			xtype : 'taxVaultFiscalPeriodPanel',
         			border : true,
-        			height : 415
+        			//height : 415
         		}  ]
 
         	});
@@ -296,18 +305,18 @@ Ext.define('SupplierApp.controller.TaxVault', {
     },
     
     eliminarTaxVaultDocument : function(grid, rowIndex, colIndex, record) {
+    	
     	var me = this;
     	var record = grid.store.getAt(rowIndex);
     	var dto = Ext.create('SupplierApp.model.TaxVault',record.data);
-    	
-    	
-    	
+
     	var dlgRejected = Ext.MessageBox.show({
     		title : SuppAppMsg.taxvaultDeleteInvoice,
 			msg :SuppAppMsg.taxvaultReasonRemoval,
 			buttons : Ext.MessageBox.YESNO,
 			multiline: true,
-			width:500,
+			//width:500,
+			width: Math.min(Ext.Element.getViewportWidth() * 0.3, 500), 
 			buttonText : {
 				yes : SuppAppMsg.approvalAcept,
 				no : SuppAppMsg.approvalExit
@@ -336,17 +345,29 @@ Ext.define('SupplierApp.controller.TaxVault', {
 						    },
 						    failure: function() {
 						    	box.hide();
-						    	Ext.MessageBox.show({
+						    	/*Ext.MessageBox.show({
 					                title: 'Error',
 					                msg: SuppAppMsg.approvalUpdateError,
 					                buttons: Ext.Msg.OK
-					            });
+					            });*/
+						    	Ext.Msg.show({
+			                        title: 'Error',
+			                        msg: SuppAppMsg.approvalUpdateError,
+			                        buttons: Ext.Msg.OK,
+			                        width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
+			                    });
 						    }
 						}); 
 						
 						
 					}else{
-            			Ext.Msg.alert(SuppAppMsg.approvalAlert, SuppAppMsg.approvalMessages);
+            			//Ext.Msg.alert(SuppAppMsg.approvalAlert, SuppAppMsg.approvalMessages);
+						Ext.Msg.show({
+	                        title: SuppAppMsg.approvalAlert,
+	                        msg: SuppAppMsg.approvalMessages,
+	                        buttons: Ext.Msg.OK,
+	                        width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
+	                    });
             		}
 
 				}
@@ -368,7 +389,8 @@ Ext.define('SupplierApp.controller.TaxVault', {
 		    	Ext.MessageBox.show({
 	                title: SuppAppMsg.taxvaultSuccess,
 	                msg: SuppAppMsg.taxvaultSuccessfulForwarding,
-	                buttons: Ext.Msg.OK
+	                buttons: Ext.Msg.OK,
+	                width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
 	            });
 		    	
 		    },
@@ -377,7 +399,8 @@ Ext.define('SupplierApp.controller.TaxVault', {
 		    	Ext.MessageBox.show({
 	                title: 'Error',
 	                msg: SuppAppMsg.approvalUpdateError,
-	                buttons: Ext.Msg.OK
+	                buttons: Ext.Msg.OK,
+	                width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
 	            });
 		    }
 		}); 
@@ -389,7 +412,14 @@ Ext.define('SupplierApp.controller.TaxVault', {
     	var filePanel = Ext.create(
     					'Ext.form.Panel',
     					{
-    						width : 900,
+    						//width : 900,
+    						bodyPadding: 10,
+    				        layout: 'anchor',
+    				        scrollable: true, 
+    				        defaults: {
+    				            anchor: '100%',
+    				            margin: '10 0'
+    				        },
     						items : [
     						        {
     									xtype : 'textfield',
@@ -400,11 +430,11 @@ Ext.define('SupplierApp.controller.TaxVault', {
     									xtype : 'filefield',
     									name : 'file',
     									fieldLabel : SuppAppMsg.taxvaultFile+':',
-    									labelWidth : 120,
+    									//labelWidth : 120,
     									msgTarget : 'side',
     									allowBlank : false,
-    									margin:'15 0 70 0',
-    									anchor : '90%',
+    									//margin:'15 0 70 0',
+    									//anchor : '90%',
     									buttonText : SuppAppMsg.suppliersSearch
     								} ],
 
@@ -436,8 +466,12 @@ Ext.define('SupplierApp.controller.TaxVault', {
     	this.winLoadInv = new Ext.Window({
     		layout : 'fit',
     		title : SuppAppMsg.taxvaultAdditionalInformation,
-    		width : 600,
-    		height : 150,
+    		//width : 600,
+    		//height : 150,
+    		width: Ext.Element.getViewportWidth() * 0.35,   //  40% de pantalla
+            maxWidth: 520,                                //  ancho mínimo
+            height: Ext.Element.getViewportHeight() * 0.35, //  40% de alto
+            maxHeight: 150,
     		modal : true,
     		closeAction : 'destroy',
     		resizable : false,
@@ -3083,20 +3117,27 @@ Ext.define('SupplierApp.controller.TaxVault', {
     	var grid = this.getTaxVaultGrid();
     	var store = grid.getStore();
         var me = this;
-        debugger;
+       
     	var filePanel = Ext.create(
     					'Ext.form.Panel',
     					{
+    						bodyPadding: 10,
+    				        layout: 'anchor',
+    				        scrollable: true, 
+    				        defaults: {
+    				            anchor: '100%',
+    				            margin: '10 0'
+    				        },
     						items : [ {
     							xtype : 'filefield',
     							name : 'uploadedFiles',
     							fieldLabel : SuppAppMsg.taxvaultFile+':',
-    							labelWidth : 70,
+    							//labelWidth : 70,
     							msgTarget : 'side',
     							allowBlank : false,
-    							width:300,
+    							//width:300,
     							buttonText : SuppAppMsg.taxvaultFile,
-    							margin:'10 0 10 10',
+    							//margin:'10 0 10 10',
     							listeners:{
     						        afterrender:function(cmp){
     						            cmp.fileInputEl.set({
@@ -3144,13 +3185,17 @@ Ext.define('SupplierApp.controller.TaxVault', {
     		title : window.navigator.language.startsWith("es", 0)? 'Cargar documento':'Upload document',
     		name:'CargaXML',
     		modal : true,
-    		 id: 'addnameRequestwindow',
-	            itemId: 'addnameRequestwindow',
+    		id: 'addnameRequestwindow',
+	        itemId: 'addnameRequestwindow',
     		closeAction : 'destroy',
     		resizable : false,
     		minimizable : false,
     		maximizable : false,
     		plain : true,
+    		width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+            maxWidth: 320,                                // 👈 ancho mínimo
+            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+            maxHeight: 150,
     		items : [ filePanel ]
 
     	});
@@ -3314,7 +3359,15 @@ Ext.define('SupplierApp.controller.TaxVault', {
 		    
 		    	dote.hide();
 		    	}else{
-		    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg: response.message });
+		    		//Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg: response.message });
+		    		
+		    		Ext.MessageBox.show({
+		    		    title: SuppAppMsg.supplierMsgValidationLoad,
+		    		    msg: response.message,
+		    		    buttons: Ext.MessageBox.OK,
+		    		   // icon: Ext.MessageBox.INFO,
+		    		    width: Math.min(Ext.Element.getViewportWidth() * 0.8, 600) // 80% pantalla, máx 600px
+		    		});
 		    	}
 		    
         

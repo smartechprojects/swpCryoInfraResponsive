@@ -15,7 +15,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.Supplier',
         'SupplierApp.controller.Company',
         'SupplierApp.controller.Approval',
-        'SupplierApp.controller.PaymentsSuppliers'/*,
+        'SupplierApp.controller.PaymentsSuppliers',
+        'SupplierApp.controller.TaxVault'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -112,6 +113,16 @@ Ext.define('SupplierApp.view.main.Main', {
 		title : '',
 		id:'tabSuppliersId',
 		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true
+	},
+	{
+		xtype : 'taxVaultPanel',
+		id:'tabTaxVaultPanelId',
+		itemId: 'taxVaultPanelTab',
+		iconCls: 'fa-lock',
+		title : '',	
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_TAX' || role=='ROLE_TREASURY' || role=='ROLE_ACCOUNTING'
+			|| role=='ROLE_MANAGER' || role=='ROLE_FISCAL_USR' || role=='ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ'
+			|| role=='ROLE_FISCAL_PRD'|| role=='ROLE_BF_ADMIN' || role=='ROLE_AUDIT_USR' ?false:true
 	},
 	{
     	xtype : 'approvalPanel',

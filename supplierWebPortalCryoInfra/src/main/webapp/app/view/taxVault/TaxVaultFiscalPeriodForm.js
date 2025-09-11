@@ -4,7 +4,8 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultFiscalPeriodForm',	{
 	border : false,
 	frame : false,
 	style : 'border: solid #ccc 1px',
-	autoScroll : true,
+	scrollable: true,
+    bodyPadding: 10,
 	initComponent : function() {
 		var invYear=null;
 		
@@ -22,13 +23,14 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultFiscalPeriodForm',	{
     	    allowBlank:false,
     	    editable: false,
     	    displayField: 'optionName',
-			width:180,
-    	    labelWidth:100,
+			//width:180,
+    	    //labelWidth:100,
     	    valueField: 'value',
-    	    margin:'0 20 0 10',
+    	    //margin:'0 20 0 10',
     	    id: 'poFromDateTaxVault',
             itemId: 'poFromDateTaxVault',
             name:'poFromDateTaxVault',
+           // flex: 0.1
     	});
 	
 		
@@ -36,6 +38,10 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultFiscalPeriodForm',	{
 								{
 									xtype : 'container',
 									layout : 'vbox',
+									defaults: {
+						                anchor: '100%',
+						                margin: '5 0'
+						            },
 									items : [
 										,{
 											xtype: 'yearCombo'

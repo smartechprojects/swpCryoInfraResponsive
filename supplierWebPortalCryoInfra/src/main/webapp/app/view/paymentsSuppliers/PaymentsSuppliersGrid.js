@@ -282,7 +282,7 @@
               dock: 'top',
               layout: {
                   type: 'hbox',
-                  align: 'stretch'
+                  align: 'middle'
               },
               padding: 5, // espacio interno uniforme
               defaults: {
@@ -293,7 +293,7 @@
               items: [
             	  {
     		          xtype: 'textfield',
-    		          fieldLabel: SuppAppMsg.plantAccess51,
+    		          fieldLabel: SuppAppMsg.suppliersNumber,
     		          //labelAlign: 'top',
     		          id: 'paymentsSuppliersAddressNumberGrid',
     		          itemId: 'paymentsSuppliersAddressNumberGrid',

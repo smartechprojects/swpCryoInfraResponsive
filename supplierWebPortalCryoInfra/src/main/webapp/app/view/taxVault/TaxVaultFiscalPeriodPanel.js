@@ -3,6 +3,14 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultFiscalPeriodPanel' ,{
     alias : 'widget.taxVaultFiscalPeriodPanel',
     border:false,
     frame:false,
+    scrollable: true,
+    layout: {
+        type: 'hbox',
+        align: 'stretch'
+    },
+    defaults: {
+        margin: 5
+    },
 	initComponent: function () {
 		 Ext.apply(this, {
 	        	layout: {
@@ -10,14 +18,17 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultFiscalPeriodPanel' ,{
 	            },   
 	            items: [{
 				    xtype : 'taxVaultFiscalPeriodForm',
-	            	width:550,
-	            	height:70
+	            	//width:550,
+	            	//height:70
+				    scrollable: true,
+				    flex: 1 
 	            },{
 		           	xtype : 'panel',
 		        	html : SuppAppMsg.taxvaultfiscalPeriods,
-		        	width:600,
-		        	height:160,
-		        	autoScroll: true,
+		        	//width:600,
+		        	//height:160,
+		        	flex: 1,
+		        	scrollable: true,
 		        	scroll: true,
 		        	//border:false,
 		        	id:'ListTaxVaulFiscalPeriodtHtml',

@@ -5,14 +5,19 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 	frame:false,
 	border:false,
 	cls: 'extra-large-cell-grid',  
-    store:'TaxVault',
-	scroll : true,
+    store : {
+		type:'taxvault'
+	},
+	scrollable: true,
 	viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' }
 	},
     initComponent: function() {
     	
+    	var apController = SupplierApp.app.getController("SupplierApp.controller.TaxVault");
+    	
+    	//  this.store = Ext.create('SupplierApp.store.TaxVault');
     	docType = Ext.create('Ext.data.Store', {
     	    fields: ['id', 'name_es','name_en'],
     	    data : [
@@ -52,36 +57,44 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 					},
 					{
 			            text     : 'UUID',
-			            width: 250,
+			           // width: 250,
+			            flex: 2,
 			            dataIndex: 'uuid'
 			        },
 		        	{
 			            text     : SuppAppMsg.taxvaultIssuerRFC,
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'rfcEmisor'
 			        },{
 			            text     : SuppAppMsg.taxvaultreceiverRFC,
-			            width: 150,
+			           // width: 150,
+			            flex: 1,
 			            dataIndex: 'rfcReceptor'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle21,
-			            width: 200,
+			            //width: 200,
+			            flex: 1.5,
 			            dataIndex: 'type'
 			        },{
 			            text     : window.navigator.language.startsWith("es", 0)? 'Fecha de Carga':'Upload date',
-			            width: 200,
+			           // width: 200,
+			            flex: 1.5,
 			            dataIndex: 'origen'
 			        },{
 			            text     : SuppAppMsg.taxvaulUser,
-			            width: 100,
-			            dataIndex: 'usuario' 
+			            //width: 100,
+			            flex: 1,
+			            dataIndex: 'usuario'
 					},{
 						text : SuppAppMsg.usersSupplier,
-						width : 100,
+						//width : 100,
+						flex: 1,
 						dataIndex : 'addressNumber'
 			        },{
 			            text     : SuppAppMsg.taxvaulStatus,
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'documentStatus'
 			        }/*,{
 			            text     : window.navigator.language.startsWith("es", 0)? 'Fecha de carga':'Upload date',
@@ -89,7 +102,8 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			            dataIndex: 'origen'
 			        }*/, 	{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.taxvaulRequest,
 			            align: 'center',
 						name : 'taxVaultReportBatch',
@@ -118,7 +132,8 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			                  }}]
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 150,
+			            //width: 150,
+			        	flex: 1,
 			            header: SuppAppMsg.taxvaultUploandDocuments,
 			            align: 'center',
 						name : 'upFileExtTaxVault',
@@ -145,7 +160,8 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			                  }}]
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.taxvaultResendMail,
 			            align: 'center',
 						name : 'reenvioMailTaxDocument',
@@ -170,7 +186,8 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			                  }}]
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.taxvaultDelete,
 			            align: 'center',
 						name : 'eliminarTaxVaultDocument',
@@ -202,23 +219,41 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
     	this.dockedItems = [
     		{
                 xtype: 'toolbar',
-                height: 60,
+                dock: 'top',
+                layout: { 
+              	  /*type: 'hbox', 
+              	  align: 'middle', 
+              	  pack: 'start',
+              	  overflowHandler: 'menu'*/ 
+                	type: 'hbox',
+                    align: 'middle'
+              		  },
+              		padding: 5,  
+                //height: 60,
                // maxHeight : 50,
                 style: {
                     background: '#d3d3d3'
                   },
-                dock: 'top',
+                   
+                
+                defaults: { 
+                	//margin: '5 10 5 0'
+                	margin: '0 5 0 0',
+                		flex: 1,
+                        labelAlign: 'top'
+                		},
                 items: [
                 	{
 						xtype : 'combo',
 						fieldLabel : SuppAppMsg.taxvaultreceiverRFC,
 						id : 'companyBF',
-						store : 'Company',
+						store: Ext.create('SupplierApp.store.Company'),
 						valueField : 'company',
 						displayField : 'company',
-                        width:200,
-                        labelWidth:70,
-                        margin:'0 20 0 10',
+                        //width:200,
+                        //labelWidth:70,
+                        //margin:'0 20 0 10',
+						//flex: 1,
                         editable:false,
                         hidden:role==('ROLE_SUPPLIER')
                 	},{
@@ -227,9 +262,10 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
                         id: 'rfcEmisor',
                         itemId: 'rfcEmisor',
                         name:'rfcEmisor',
-                        width:200,
-                        labelWidth:70,
-                        margin:'0 20 0 10',
+                        //width:200,
+                        //labelWidth:70,
+                        //margin:'0 20 0 10',
+                        //flex: 1,
                         hidden:role==('ROLE_FISCAL_PRD')
             		},{
             			xtype: 'textfield',
@@ -237,9 +273,10 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
                         id: 'tvUUID',
                         itemId: 'tvUUID',
                         name:'tvUUID',
-                        width:250,
-                        labelWidth:50,
-                        margin:'20 20 0 10',
+                        //width:250,
+                        //labelWidth:50,
+                        //margin:'20 20 0 10',
+                        //flex: 1,
                         //hidden:role==('ROLE_FISCAL_PRD')
             		},{
 						xtype: 'comboType'
@@ -253,9 +290,10 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
                         //minValue: new Date(),
                         maxValue: new Date(), // Fecha máxima, hoy
                         value: Ext.Date.add(new Date(), Ext.Date.MONTH, -3), //Fecha inicial Desde 3 meses hacia atrás
-                        width:160,
-                        labelWidth:35,
-                        margin:'0 20 0 10',
+                        //width:160,
+                        //labelWidth:35,
+                        //margin:'0 20 0 10',
+                        //flex: 1,
                         	listeners:{
             					change: function(field, newValue, oldValue){
             						Ext.getCmp("tvToDate").setMinValue(newValue);
@@ -271,30 +309,43 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
                         maxValue: new Date(), // Fecha máxima, hoy
                         value: new Date(), //Fecha inicial hoy
                         allowBlank:false,
-                        width:160,
-                        labelWidth:35,
-                        margin:'0 40 0 10'
-            		},{
-                   		xtype:'button',
-                        text: SuppAppMsg.suppliersSearch,
-                        iconCls: 'icon-appgo',
-                        action:'parSearch',
-                        cls: 'buttonStyle',
-                        margin:'0 20 0 10',
-                        //hidden:role==('ROLE_FISCAL_PRD')
+                        //width:160,
+                        //labelWidth:35,
+                        //margin:'0 40 0 10'
+                        //flex: 1
             		}
                 ]
     		},
     		{
                 xtype: 'toolbar',
-                height: 25,
+                dock: 'top',
+                layout: {
+                    type: 'hbox',
+                    align: 'middle'
+                },
+                padding: 5,
+               // height: 25,
                // maxHeight : 50,
                 style: {
                     background: '#d3d3d3'
                   },
-                dock: 'top',
+                
                 items: [
                 	{
+                   		xtype:'button',
+                        text: SuppAppMsg.suppliersSearch,
+                        iconCls: 'icon-appgo',
+                        action:'parSearch',
+                        cls: 'buttonStyle',
+                        listeners: {
+    	                    tap: function (button) {
+    	                    	apController.parSearch(button);
+    	                    }
+    	                }
+                        //margin:'0 20 0 10',
+                        //hidden:role==('ROLE_FISCAL_PRD')
+            		},
+            		{
             			iconCls : 'icon-add',
             			itemId : 'addTaxVaultRequest',
             			id : 'addTaxVaultRequest',
@@ -326,16 +377,16 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
     		}		
     	];
     	
+    	getPagingContent()
         
-        
-		this.bbar = Ext.create('Ext.PagingToolbar', {
+		/*this.bbar = Ext.create('Ext.PagingToolbar', {
 			store: this.store,
 			displayInfo : true,
 			beforePageText : SuppAppMsg.page,
 			afterPageText :SuppAppMsg.de + ' {0}',
 			emptyMsg  : SuppAppMsg.emptyMsg ,
 			displayMsg :SuppAppMsg.displayMsg + ' {0} - {1} '+ SuppAppMsg.de +' {2}'
-		});
+		});*/
 		
         this.callParent(arguments);
     }

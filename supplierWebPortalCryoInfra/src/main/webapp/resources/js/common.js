@@ -701,7 +701,7 @@ function reloadPeriodoFiscal(){
 
 				response = Ext.decode(response.responseText);
 				var index = 0;
-				var files = "<table style='display:block;'><tbody style='display: block;height: 500px; overflow-y: auto;'><tr><th>"+SuppAppMsg.taxvaultFiscalPeriods+"</th>    <th>"+SuppAppMsg.taxvaulStatus+"</th>  </tr>";
+				var files = "<table style='display:block;'><tbody style='display: block; overflow-y: auto;'><tr><th>"+SuppAppMsg.taxvaultFiscalPeriods+"</th>    <th>"+SuppAppMsg.taxvaulStatus+"</th>  </tr>";
 				for (index = 0; index < response.data.length; index++) {
 					var fileHref = "<a target='_blank'> " +  response.data[index].intValue+ "</a>";
 					var row=" <tr><td>"+fileHref+"</td><td>" +
