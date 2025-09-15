@@ -4,6 +4,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
     loadMask: true,
 	frame:false,
 	border:false,
+	flex: 1,
+	autoScroll: true,
 	cls: 'extra-large-cell-grid',  
 	store : {
 		type:'freightapproval'
@@ -18,6 +20,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 		style : { overflow: 'auto', overflowX: 'hidden' }
 	},
     initComponent: function() {
+
+    	var apController = SupplierApp.app.getController("SupplierApp.controller.FreightApproval");
     	
     	var docType = null;
     	var banderaAprobacion = false;
@@ -102,10 +106,11 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
     	    allowBlank:false,
     	    editable: false,
     	    displayField: 'name',
-			width:150,
-    	    labelWidth:40,
+			//width:150,
+    	    //labelWidth:40,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
+    	    //margin:'20 20 0 10',
+    	    flex:1,
     	    id:'comboInvoiceStatusFA',
     	   /* listeners: {
     	        afterrender: function() {
@@ -120,7 +125,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
         	
 		        	{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.freightApprovalCover,
 			            align: 'center',
 						name : 'freightApprovalCover',
@@ -152,7 +158,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			                  }}]
 			        }, 	{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.freightApprovalReportBatch,
 			            align: 'center',
 						name : 'freightApprovalReportBatch',
@@ -184,12 +191,14 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			                  }}]
 			        },{
 			            text     : SuppAppMsg.freightApprovalKey,
-			            width: 100,
+			            //width: 100,
+			            flex: 1,
 			            dataIndex: 'id',
 			            hidden:role == 'ROLE_SUPPLIER'
 			        },{
 			            text     : SuppAppMsg.freightApprovalAmount,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'amount',
 			            renderer: function(value) {
 			            	// formateo de dos ceimales	
@@ -199,34 +208,41 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			            align: 'right'
 			        },{
 			            text     : SuppAppMsg.freightApprovalBillToPay,
-			            width: 100,
+			            //width: 100,
+			            flex: 1,
 			            dataIndex: 'serie'
 			        },{
 			            text     : SuppAppMsg.freightApprovalBudgetAccount,
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'accountingAccount',
 			            hidden:role == 'ROLE_SUPPLIER'	
 			        },{
 			            text     : SuppAppMsg.fiscalTitle22,
-			            width: 110,
+			            //width: 110,
+			            flex: 1,
 			            dataIndex: 'status'
 			        },{
 			            text     : SuppAppMsg.approvalLevel,
-			            width: 80,
+			            //width: 80,
+			            flex: 1,
 			            dataIndex: 'approvalStep'
 			        },
 			        {
 			            text     : SuppAppMsg.freightApprovalTitle10,
-			            width: 230,
+			            //width: 230,
+			            flex: 2,
 			            dataIndex: 'semanaPago'
 			        },
 			        {
 			            text     : SuppAppMsg.approvalCurrentApprover,
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'currentApprover'
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.approvalApprove,
 			            align: 'center',
 						name : 'approveInvoiceFDA',
@@ -237,9 +253,9 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			            	{
 			            	icon:'resources/images/accept.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
-			              		  debugger
+			              		  
 			              	          if(role == 'ROLE_SUPPLIER' || r.data.status != "PENDIENTE" || (r.data.status == "PENDIENTE" && !r.data.currentApprover.includes(userName))) {
-			              	              return "x-hide-display";
+			              	              return "x-hidden-display";
 			              	          }else if (r.data.currentApprover.includes(userName)){
 			              	        	banderaAprobacion=true;
 			              	          }
@@ -251,7 +267,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			        },{
 			        	xtype: 'actioncolumn',
 			        	//hidden:role=='ROLE_ADMIN'?false:true,
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.reasignRequest,
 			            align: 'center',
 						name : 'reasignRequest',
@@ -262,7 +279,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			                text: 'REASIGNAR',
 			                iconCls:'user-group',
 			                handler: function(grid, rowIndex, colIndex) {
-			                	debugger
+			                	
 			                	var record = grid.store.getAt(rowIndex);
 			                	var me = this;
 			                    var usrstore = searchByRoleAprover('APPROVALFREIGHT',record.data.approvalStep);
@@ -289,7 +306,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 													iconCls : 'icon-appgo',
 													listeners: {
 													    click: function() {
-													    	debugger
+													    	
 													    	if(Ext.getCmp('newApproverId').getValue() != null && Ext.getCmp('newApproverId').getValue() != ""){
 													    		var box = Ext.MessageBox.wait(
 										    							SuppAppMsg.supplierProcessRequest,
@@ -413,6 +430,16 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
              {
                 xtype: 'toolbar',
                 dock: 'top',
+                layout: {
+                    type: 'hbox',
+                    align: 'middle'
+                },
+                padding: 5,
+                defaults: {
+                    margin: '20 20 0 10', // separación pequeña horizontal
+                    flex: 1,
+                    labelAlign: 'top'
+                },
                 items: [
                 	{
             			xtype: 'textfield',
@@ -420,9 +447,10 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         id: 'semanaPagoFA',
                         itemId: 'semanaPagoFA',
                         name:'semanaPagoFA',
-                        width:300,
-                        labelWidth:120,
-                        margin:'20 20 0 10'
+                        //width:300,
+                        //labelWidth:120,
+                        //margin:'20 20 0 10'
+                        flex:2,
             		},{
             			xtype: 'textfield',
                         fieldLabel: SuppAppMsg.freightApprovalBudgetAccount,
@@ -433,9 +461,10 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                         //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
                         hidden:role == 'ROLE_SUPPLIER',
-                        width:300,
-                        labelWidth:120,
-                        margin:'20 20 0 10'
+                        //width:300,
+                        //labelWidth:120,
+                        //margin:'20 20 0 10'
+                        flex:2,
             		},{
             			xtype: 'textfield',
                         fieldLabel: SuppAppMsg.freightApprovalTitle6,
@@ -446,24 +475,40 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
                         //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                         //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-                        width:300,
-                        labelWidth:120,
-                        margin:'20 20 0 10'
+                        //width:300,
+                        //labelWidth:120,
+                        //margin:'20 20 0 10'
+                        flex:2,
             		},{ 
             			xtype: 'combostatus',
             			value: role == 'ROLE_SUPPLIER'?'APROBADO':'',
-            			readOnly:  role == 'ROLE_SUPPLIER'		
-            		
-            		},{
-                   		xtype:'button',
-                        text: SuppAppMsg.suppliersSearch,
-                        iconCls: 'icon-appgo',
-                        action:'fdSearch',
-                        cls: 'buttonStyle',
-                        margin:'0 20 0 10'
+            			readOnly:  role == 'ROLE_SUPPLIER'		       		
             		}
                 	 
-              ]}
+              ]},
+              {
+                  xtype: 'toolbar',
+                  dock: 'top',
+                  layout: {
+                      type: 'hbox',
+                      align: 'middle'
+                  },
+                  padding: 5,
+                  items: [
+                	  {
+                     		xtype:'button',
+                          text: SuppAppMsg.suppliersSearch,
+                          iconCls: 'icon-appgo',
+                          action:'fdSearch',
+                          cls: 'buttonStyle',
+                          margin:'0 20 0 10',
+                          listeners: {
+      	                    tap: function (button) {
+      	                    	apController.fdSearch(button);
+      	                    }
+      	                },
+              		}     	 
+                ]},
       ];
 
  

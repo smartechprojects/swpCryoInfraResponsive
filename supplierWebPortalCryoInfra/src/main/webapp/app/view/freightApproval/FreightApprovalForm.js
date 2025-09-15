@@ -27,7 +27,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalForm',	{
 											{
 												fieldLabel : SuppAppMsg.freightApprovalTitle6,
 												name : 'idFDC',
-												width : 195,
+												width : 200,
 												labelWidth : 90,
 												itemId : 'idFDC',
 												id: 'idFDC'

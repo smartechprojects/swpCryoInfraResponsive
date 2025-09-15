@@ -3,7 +3,11 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalDetailPanel' ,{
     alias : 'widget.freightApprovalDetailPanel',
     border:false,
     frame:false,
-    width:1400,
+   // width:1400,
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
 	initComponent: function () {
 		 Ext.apply(this, {
 	        	layout: {
@@ -12,11 +16,13 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalDetailPanel' ,{
 	            },   
 	            items: [{
 	            	xtype: 'freightApprovalForm',
-	            	height:100
+	            	//height:100
+	            	flex: 0.3 
 
 	            },{
 	           	 xtype: 'freightApprovalDetailGrid',
-	           	 height:300,
+	          // 	 height:300,
+	           	flex: 0.7,
 	           	 border:true
 	            }]
 	        });

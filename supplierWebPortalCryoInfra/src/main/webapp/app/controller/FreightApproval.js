@@ -105,8 +105,26 @@ Ext.define('SupplierApp.controller.FreightApproval', {
     							this.winDetail = new Ext.Window({
     				        		layout : 'fit',
     				        		title : SuppAppMsg.freightApprovalDetailBatch,
-    				        		width : 1180,
-    				        		height : 550,
+    				        		//width : 1180,
+    				        		//height : 550,
+    				        		minWidth: 400,
+    				        	    minHeight: 300,
+    				        	    width: Ext.Element.getViewportWidth() * 0.4,  // 80% del ancho
+    				        	    height: Ext.Element.getViewportHeight() * 0.4, // 80% del alto
+    				        	    responsiveConfig: {
+    				        	        'width < 600': {
+    				        	            width: '95%',
+    				        	            height: '75%'
+    				        	        },
+    				        	        'width >= 600 && width < 1000': {
+    				        	            width: '85%',
+    				        	            height: '70%'
+    				        	        },
+    				        	        'width >= 1000': {
+    				        	            width: '80%',
+    				        	            height: '80%'
+    				        	        }
+				        	        },    
     				        		modal : true,
     				        		closeAction : 'destroy',
     				        		resizable : false,
@@ -115,8 +133,8 @@ Ext.define('SupplierApp.controller.FreightApproval', {
     				        		plain : true,
     				        		items : [ {
     				        			xtype : 'freightApprovalDetailPanel',
-    				        			border : true,
-    				        			height : 415
+    				        			border : true
+    				        			//height : 415
     				        		}  ]
 
     				        	});
@@ -177,15 +195,26 @@ Ext.define('SupplierApp.controller.FreightApproval', {
     	var filePanel = Ext.create(
 				'Ext.form.Panel',
 				{
-					width: 510,
+					//width: 510,
+					layout: {
+			            type: 'vbox',
+			            align: 'stretch'
+			        },
+			        bodyPadding: 10,
+			        defaults: {
+			            xtype: 'textfield',
+			            anchor: '100%',
+			            margin: '5 0 0 0',
+			            labelWidth: 160
+			        },
 					items : [{
 								fieldLabel : 'Centro de Costos',
 								xtype : 'textfield',
 								name : 'centroCostos',
 								id:'centroCostosFDA',
-								width:300,
-								margin:'5 0 0 5',
-								colspan:3,
+								//width:300,
+								//margin:'5 0 0 5',
+								//colspan:3,
 								//allowBlank:orderNumber==0?false:true,
 								//hidden:orderNumber==0?false:true,
 								hidden:true								
@@ -194,9 +223,9 @@ Ext.define('SupplierApp.controller.FreightApproval', {
 								xtype : 'textfield',
 								name : 'conceptoArticulo',
 								id:'conceptoArticuloFDA',
-								width:300,
-								colspan:3,
-								margin:'5 0 0 5',
+								//width:300,
+								//colspan:3,
+								//margin:'5 0 0 5',
 								//allowBlank:orderNumber==0?false:true,
 								//hidden:orderNumber==0?false:true,
 								hidden:true								
@@ -205,9 +234,9 @@ Ext.define('SupplierApp.controller.FreightApproval', {
 								xtype : 'textfield',
 								name : 'companyFDA',
 								id:'companyFDA',
-								width:300,
-								colspan:3,
-								margin:'5 0 0 5',
+								//width:300,
+								//colspan:3,
+								//margin:'5 0 0 5',
 								//allowBlank:orderNumber==0?false:true,
 								//hidden:orderNumber==0?false:true,
 								hidden:true								
@@ -216,14 +245,14 @@ Ext.define('SupplierApp.controller.FreightApproval', {
 								xtype : 'textfield',
 								name : 'notes',
 								id : 'notesFDA',
-								width:500,
-								colspan:3,
-								margin:'10 0 0 10'
+								//width:500,
+								//colspan:3,
+								//margin:'10 0 0 10'
 							}],
 
 					buttons : [{
 						text : SuppAppMsg.approvalApprove,
-						margin:'0 5 0 0',
+						//margin:'0 5 0 0',
 						handler : function() {
 							var form = this.up('form').getForm();
 							if (form.isValid()) {
@@ -237,7 +266,7 @@ Ext.define('SupplierApp.controller.FreightApproval', {
 									msg : SuppAppMsg.approvalInvRespMessage,
 									buttons : Ext.MessageBox.YESNO,
 									//multiline: true,
-									width:100,
+									//width:100,
 									buttonText : {
 										yes : SuppAppMsg.approvalAcept,
 										no : SuppAppMsg.approvalExit
@@ -313,8 +342,10 @@ Ext.define('SupplierApp.controller.FreightApproval', {
     	me.winLoadInv = new Ext.Window({
     		layout : 'fit',
     		title : SuppAppMsg.taxvaultAdditionalInformation,
-    		width : 550,
-    		height : 100,
+    		maxWidth : 550,
+    		maxHeight : 130,
+    		width: Ext.Element.getViewportWidth() * 0.3,  // 50% del ancho de la pantalla
+            height: Ext.Element.getViewportHeight() * 0.3, // 40% del alto
     		modal : true,
     		closeAction : 'destroy',
     		resizable : false,

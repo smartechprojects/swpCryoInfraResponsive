@@ -16,7 +16,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.Company',
         'SupplierApp.controller.Approval',
         'SupplierApp.controller.PaymentsSuppliers',
-        'SupplierApp.controller.TaxVault'/*,
+        'SupplierApp.controller.TaxVault',
+        'SupplierApp.controller.FreightApproval'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -113,6 +114,13 @@ Ext.define('SupplierApp.view.main.Main', {
 		title : '',
 		id:'tabSuppliersId',
 		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true
+	},{
+		xtype : 'freightApprovalPanel',
+		iconCls: 'fa-truck',
+		itemId: 'freightApprovalPanel',
+		id:'tabFreightApprovalId',
+		title : '',					
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ'|| Flete=='si'?false:true
 	},
 	{
 		xtype : 'taxVaultPanel',

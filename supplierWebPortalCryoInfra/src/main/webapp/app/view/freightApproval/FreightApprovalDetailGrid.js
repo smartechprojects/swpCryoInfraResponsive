@@ -31,7 +31,7 @@ function renderTip(val, meta, rec, rowIndex, colIndex, store) {
 Ext.QuickTips.init();
 
 var store = Ext.create('Ext.data.Store', {
-	model: 'FreightApprovalDetail',
+	model: 'SupplierApp.model.FreightApprovalDetail',
 	autoLoad: false,
 	pageSize: 20,
 	remoteSort: false,
