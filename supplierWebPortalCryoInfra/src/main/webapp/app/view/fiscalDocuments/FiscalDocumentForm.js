@@ -4,31 +4,47 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 	border : false,
 	frame : false,
 	style: 'border: solid #ccc 1px',
-	autoScroll : true,
+	//autoScroll : true,
+	bodyPadding: 10,
+    defaults: {
+        xtype: 'textfield',
+        labelWidth: 120,
+        width: '100%',
+        margin: '5 0',
+        //fieldStyle: 'padding-bottom:5px;font-size:12px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
+        readOnly: true
+    },
 	initComponent : function() {
 		this.items = [{
 						xtype : 'hidden',
 						name : 'id'
 					},{
 					xtype: 'container',
-					layout: 'vbox',
+					//layout: 'vbox',
+					 layout: {
+			                type: 'vbox',
+			                align: 'stretch'
+			            },
 					defaults : {
-						labelWidth : 120,
+						//labelWidth : 120,
 						xtype : 'textfield',
-						margin: '0 0 0 10',
-						align: 'stretch',
-						width:380,
+		                labelWidth: 120,
+		                margin: '5 0',
+		                readOnly: true,
+						//margin: '0 0 0 10',
+						//align: 'stretch',
+						//width:380,
 						fieldStyle: 'padding-bottom:5px;font-size:12px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
-						readOnly:true
+						//readOnly:true
 					},
 			        items:[{
 							fieldLabel : SuppAppMsg.fiscalTitle5,
 							name : 'uuidFactura',
-							width : 500
+							//width : 500
 				        },{
 				        	fieldLabel : SuppAppMsg.suppliersName,
 				            name: 'supplierName',
-				            width: 500
+				            //width: 500
 			        	}, {
 							fieldLabel : SuppAppMsg.suppliersNumber,
 							name : 'addressNumber'
@@ -88,8 +104,9 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlMainInvoice',
-							height: 100,							
+							//height: 100,							
 							margin: '0 0 10 140',
+							scrollable: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, /*{
 							xtype : 'numericfield',
@@ -113,8 +130,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept001',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -131,8 +148,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept002',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -149,8 +166,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept003',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -167,8 +184,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept004',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -185,8 +202,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept005',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -203,8 +220,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept006',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -221,8 +238,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept007',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -239,8 +256,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept008',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -257,8 +274,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept009',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -275,8 +292,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept010',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -293,8 +310,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept011',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -311,8 +328,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept012',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -329,8 +346,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept013',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -347,8 +364,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept014',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -365,8 +382,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept015',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -383,8 +400,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept016',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -401,8 +418,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept017',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -419,8 +436,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept018',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -437,8 +454,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept019',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -455,8 +472,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept020',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -473,8 +490,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept021',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -491,8 +508,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept022',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -509,8 +526,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept023',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -527,8 +544,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept024',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -545,8 +562,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept025',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						}, {
@@ -563,8 +580,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentForm', {
 						},{
 							xtype : 'displayfield',
 							id:'fileListHtmlInvoiceConcept026',
-							height: 30,							
-							margin: '0 0 10 140',
+							//height: 30,							
+							//margin: '0 0 10 140',
 							hidden: true,
 							fieldStyle: 'font-size:12px;color:#blue;padding-bottom:10px;'
 						},/* {

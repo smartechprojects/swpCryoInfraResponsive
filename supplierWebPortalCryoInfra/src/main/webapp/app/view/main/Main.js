@@ -17,7 +17,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.Approval',
         'SupplierApp.controller.PaymentsSuppliers',
         'SupplierApp.controller.TaxVault',
-        'SupplierApp.controller.FreightApproval'/*,
+        'SupplierApp.controller.FreightApproval',
+        'SupplierApp.controller.FiscalDocuments'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -41,7 +42,7 @@ Ext.define('SupplierApp.view.main.Main', {
             align: 'stretchmax'
         },
         title: {
-        	text: '<table style="width:100%;"><tr><td style="width:33%;"><img src="resources/images/hand-click.png" style="width:65%;"></td><td style="width:33%;text-align:center;padding-top:12px;"><img src="resources/images/CryoInfra-logo-gris.png" style="width:20%;"></td><td style="text-align:right;width:33%;padding-right:30px;"><a href="https://www.w3schools.com" class="page-link"><img src="resources/images/profile.png" style="width:45px;padding-right:30px;"></a><a href="https://www.w3schools.com" class="page-link"><img src="resources/images/help-icon.png" style="width:45px;padding-right:30px;"></a><a href="logout" class="page-link"><img src="resources/images/logout-icon.png" style="width:15px;"></a></td></tr></table>',
+        	text: '<table style="width:100%;"><tr><td style="width:33%;"><img src="resources/images/hand-click.png" style="width:65%;"></td><td style="width:33%;text-align:center;padding-top:12px;"><img src="resources/images/CryoInfra-logo-gris.png" style="width:20%;"></td><td style="text-align:right;width:33%;padding-right:30px;"><img src="resources/images/profile.png" style="width:45px;padding-right:30px;"></a><img src="resources/images/help-icon.png" style="width:45px;padding-right:30px;"></a><a href="logout" class="page-link"><img src="resources/images/logout-icon.png" style="width:15px;"></a></td></tr></table>',
             flex: 1,
         }
     },
@@ -114,6 +115,13 @@ Ext.define('SupplierApp.view.main.Main', {
 		title : '',
 		id:'tabSuppliersId',
 		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true
+	},{
+    	xtype : 'fiscalDocumentsPanel',
+    	iconCls: 'fa-file-text',
+    	itemId: 'fiscalDocumentsPanelTab',
+		title : '',
+		id:'tabFiscalDocumentsPanelId',
+		hidden: role=='ROLE_ADMIN' ||  role=='ROLE_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || (role=='ROLE_SUPPLIER' && supplierWithoutOC == 'TRUE') ?false:true
 	},{
 		xtype : 'freightApprovalPanel',
 		iconCls: 'fa-truck',

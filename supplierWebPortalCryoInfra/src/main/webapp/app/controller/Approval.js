@@ -273,7 +273,7 @@ Ext.define('SupplierApp.controller.Approval', {
     	var step = record.data.approvalStep;
     	
     	var winWidth = Ext.Element.getViewportWidth();
-    	var boxWidth = Math.min(Math.max(winWidth * 0.5, 400), 500); // ancho mínimo 400, máximo 600, 50% pantalla
+    	var boxWidth = Math.min(Math.max(winWidth * 0.35, 400), 500); // ancho mínimo 400, máximo 600, 50% pantalla
     	
     	var dlgRejected = Ext.MessageBox.show({
 			title : SuppAppMsg.approvalAceptSupp,

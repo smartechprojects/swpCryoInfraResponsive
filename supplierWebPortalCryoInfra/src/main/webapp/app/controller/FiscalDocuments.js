@@ -169,7 +169,7 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
     							text : SuppAppMsg.supplierLoad,
     							margin:'10 0 0 0',
     							handler : function() {
-    								debugger;
+    								
     								 Ext.getCmp('periodTextVale').setValue(Ext.getCmp('mes').getValue()+","+Ext.getCmp('anio').getValue());
                                      Ext.getCmp('periodText').setValue(peridos(Ext.getCmp('mes').getValue())+Ext.getCmp('anio').getValue());
     								var form = this.up('form').getForm();
@@ -227,8 +227,12 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
         	this.winDetail = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.fiscalTitle1,
-        		width : 550,
-        		height : 550,
+        		//width : 550,
+        		//height : 550,
+        		maxWidth: 550,
+        	    maxHeight: 750,
+        	    width: Ext.Element.getViewportWidth() * 0.25,  // 80% del ancho
+        	    height: Ext.Element.getViewportHeight() * 0.6,
         		modal : true,
         		closeAction : 'destroy',
         		resizable : false,
@@ -238,7 +242,7 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
         		items : [ {
         			xtype : 'fiscalDocumentDetailPanel',
         			border : true,
-        			height : 415
+        			//height : 415
         		}  ]
 
         	});
@@ -263,7 +267,7 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
         	if(role !='ROLE_SUPPLIER') {
         		Ext.getCmp('uploadZipFile').hide();
         	}        	
-        	debugger
+        	
         	Ext.Ajax.request({
 				url : 'documents/listConceptDocumentsByFiscalRef.action',
 				method : 'GET',
@@ -288,6 +292,9 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 							}						
 						
                             if(response.data[index].fiscalType == "Factura" || response.data[index].fiscalType == "Evidencia" || response.data[index].fiscalType == "Otros"|| response.data[index].fiscalType == "NotaCredito"){
+                            	if(index ==0 ){
+                            		Ext.getCmp('fileListHtmlMainInvoice').setValue("");
+                            	}
                             	Ext.getCmp('fileListHtmlMainInvoice').setValue(Ext.getCmp('fileListHtmlMainInvoice').getValue() + fileHref + "<br />");
                             }
                             if(response.data[index].documentType == "CNT"){
@@ -505,7 +512,8 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 					}
 				});        	
             box.hide();
-            Ext.ComponentQuery.query('fiscalDocumentDetailPanel')[0].doLayout();
+            //Ext.ComponentQuery.query('fiscalDocumentDetailPanel')[0].doLayout();
+            Ext.ComponentQuery.query('fiscalDocumentDetailPanel')[0].updateLayout();
         }
     },
     
@@ -522,15 +530,22 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
     	var filePanel = Ext.create(
 				'Ext.form.Panel',
 				{
-					width: 510,
+				//	width: 510,
+					layout: 'anchor',
+			        bodyPadding: 10,
+			        defaults: {
+			            anchor: '100%',
+			            labelWidth: 150,
+			            margin: '5 0 0 0'
+			        },
 					items : [{
 								fieldLabel : 'Centro de Costos',
 								xtype : 'textfield',
 								name : 'centroCostos',
 								id:'centroCostosFD',
-								width:300,
-								margin:'5 0 0 5',
-								colspan:3,
+								//width:300,
+								//margin:'5 0 0 5',
+								//colspan:3,
 								//allowBlank:orderNumber==0?false:true,
 								//hidden:orderNumber==0?false:true,
 								hidden:true								
@@ -539,9 +554,9 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 								xtype : 'textfield',
 								name : 'conceptoArticulo',
 								id:'conceptoArticuloFD',
-								width:300,
-								colspan:3,
-								margin:'5 0 0 5',
+								//width:300,
+								//colspan:3,
+								//margin:'5 0 0 5',
 								//allowBlank:orderNumber==0?false:true,
 								//hidden:orderNumber==0?false:true,
 								hidden:true								
@@ -550,9 +565,9 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 								xtype : 'textfield',
 								name : 'companyFD',
 								id:'companyFD',
-								width:300,
-								colspan:3,
-								margin:'5 0 0 5',
+								//width:300,
+								//colspan:3,
+								//margin:'5 0 0 5',
 								//allowBlank:orderNumber==0?false:true,
 								//hidden:orderNumber==0?false:true,
 								hidden:true								
@@ -561,14 +576,14 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 								xtype : 'textfield',
 								name : 'notes',
 								id : 'notesFD',
-								width:500,
-								colspan:3,
-								margin:'10 0 0 10'
+								//width:500,
+								//colspan:3,
+								//margin:'10 0 0 10'
 							}],
 
 					buttons : [{
 						text : SuppAppMsg.approvalApprove,
-						margin:'0 5 0 0',
+						//margin:'0 5 0 0',
 						handler : function() {
 							var form = this.up('form').getForm();
 							if (form.isValid()) {
@@ -582,7 +597,7 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 									msg : SuppAppMsg.approvalInvRespMessage,
 									buttons : Ext.MessageBox.YESNO,
 									//multiline: true,
-									width:100,
+									//width:100,
 									buttonText : {
 										yes : SuppAppMsg.approvalAcept,
 										no : SuppAppMsg.approvalExit
@@ -659,15 +674,27 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
     	me.winLoadInv = new Ext.Window({
     		layout : 'fit',
     		title : SuppAppMsg.taxvaultAdditionalInformation,
-    		width : 550,
-    		height : 100,
+    		//width : 550,
+    		//height : 100,
+    		width : '30%',   // 
+    	    height : 150,  
     		modal : true,
     		closeAction : 'destroy',
     		resizable : false,
     		minimizable : false,
     		maximizable : false,
     		plain : true,
-    		items : [ filePanel ]
+    		items : [ filePanel ],
+    		 responsiveConfig: {
+    	            'width < 768': {
+    	                width: '95%',
+    	                height: 250
+    	            },
+    	            'width >= 768': {
+    	                width: '60%',
+    	                height: 200
+    	            }
+    	        }
 
     	});
     	me.winLoadInv.show(); 
@@ -684,12 +711,16 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
     	var nextApprover = record.data.nextApprover;
     	var step = record.data.approvalStep;
     	
+    	var winWidth = Ext.Element.getViewportWidth();
+    	var boxWidth = Math.min(Math.max(winWidth * 0.5, 400), 500);
+    	
     	var dlgRejected = Ext.MessageBox.show({
     		title : SuppAppMsg.rejectDoc,
 			msg : SuppAppMsg.approvalNoteReject,
 			buttons : Ext.MessageBox.YESNO,
 			multiline: true,
-			width:500,
+			//width:500,
+			width: boxWidth, 
 			buttonText : {
 				yes : SuppAppMsg.approvalAcept,
 				no : SuppAppMsg.approvalExit
@@ -761,6 +792,7 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
     	dlgRejected.textArea.inputEl.set({
 		    maxLength: 255
 		});
+    	dlgRejected.textArea.setWidth(boxWidth - 40);
     },
     
     invLoad : function(grid, rowIndex, colIndex, record) {

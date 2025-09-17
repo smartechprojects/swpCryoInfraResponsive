@@ -5,8 +5,9 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 	frame:false,
 	border:false,
     forceFit: true,
+    scrollable: true,
 	store : {
-		type:'fiscaldocumentsstore'
+		type:'fiscaldocuments'
 	},
 	cls: 'extra-large-cell-grid',  
 	scroll : true,
@@ -75,7 +76,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
     	    //allowBlank:false,
     	    //editable: false,
     	    displayField: 'name',
-			width:150,
+			//width:150,
+    	    flex: 1,
     	    labelWidth:40,
     	    valueField: 'id',
     	    margin:'20 20 0 10',
@@ -92,38 +94,46 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
         this.columns = [
 			           {
 			            text     : SuppAppMsg.suppliersNumber,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'addressNumber'
 			        },{
 			            text     : SuppAppMsg.suppliersNameSupplier,
-			            width: 230,
+			            //width: 230,
+			            flex: 2,
 			            dataIndex: 'supplierName'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle30,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'rfcReceptor'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle3,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'folio'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle32,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'orderNumber'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle33,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'orderType'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle4,
-			            width: 80,
+			            //width: 80,
+			            flex: 1,
 			            dataIndex: 'serie',
 			            renderer : function(value, metadata, record, rowIndex, colIndex, store){
 			            	return value == null || value == 'null'? "" : value;
 				}
 			        } ,{
 			            text     : SuppAppMsg.fiscalTitle26,
-			            width: 120,
+			            //width: 120,
+			            flex: 1,
 			            dataIndex: 'invoiceUploadDate',
 			            renderer: function(value) {
 			                console.log("valor: "+value); // Imprimir el valor en la consola
@@ -136,7 +146,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 			              }
 			        },{
 			        	  text: 'Fecha/hora Carga Compl.',
-			        	  width: 120,
+			        	  //width: 120,
+			        	  flex: 1,
 			        	  dataIndex: 'fechComple',
 			        	  renderer: function(value, metaData, record, row, col, store, gridView) {
 			        		    var invoiceUploadDate = record.get('fechComple');
@@ -168,7 +179,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 
 			        },{
 			            text     : SuppAppMsg.fiscalTitle29,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'paymentDate',
 						renderer: function(value, metaData, record, row, col, store, gridView){
 							if(value) {
@@ -179,30 +191,35 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 						}
 			        },{
 			            text     : SuppAppMsg.fiscalTitle27,
-			            width: 100,
+			            //width: 100,
+			            flex: 1,
 			            dataIndex: 'amount',
 						align: 'center',
 			            renderer : Ext.util.Format.numberRenderer('0,0.00')
 			        },{
 			            text     : SuppAppMsg.fiscalTitle20,
-			            width: 110,
+			            //width: 110,
+			            flex: 1,
 						align: 'center',
 			            dataIndex: 'conceptTotalAmount',
 			            renderer : Ext.util.Format.numberRenderer('0,0.00')
 			        },{
 			            text     : SuppAppMsg.fiscalTitle28,
-			            width: 100,
+			            //width: 100,
+			            flex: 1,
 						align: 'center',
 			            renderer : function(value, metadata, record, rowIndex, colIndex, store){
 									return Ext.util.Format.number((record.data.amount + record.data.conceptTotalAmount),'0,0.00')
 						}
 			        },{
 			            text     : SuppAppMsg.purchaseOrderCurrency,
-			            width: 90,
+			            //width: 90,
+			            flex: 1,
 			            dataIndex: 'moneda'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle5,
-			            width: 250,
+			            //width: 250,
+			            flex: 2,
 			            dataIndex: 'uuidFactura'
 			        },/*{
 			            text     : 'Uuid nota de credito',
@@ -214,15 +231,18 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 			            dataIndex: 'approvalStatus'
 			        },*/{
 			            text     : SuppAppMsg.fiscalTitle22,
-			            width: 110,
+			            //width: 110,
+			            flex: 1,
 			            dataIndex: 'status'
 			        },{
 			            text     : SuppAppMsg.approvalLevel,
-			            width: 120,
+			            //width: 120,
+			            flex: 1,
 			            dataIndex: 'approvalStep'
 			        },{
 			            text     : "Fecha Aprobación",
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'dateAprov',
 			            renderer :  function(value, metaData, record, row, col, store, gridView){
 							
@@ -234,11 +254,13 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 						}
 			        },{
 			            text     : SuppAppMsg.approvalCurrentApprover,
-			            width: 200,
+			            //width: 200,
+			            flex: 2,
 			            dataIndex: 'currentApprover'
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.approvalApprove,
 			            align: 'center',
 						name : 'approveInvoiceFD',
@@ -260,7 +282,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 			              				 }
 			              			 }
 			              			 if(!contains ||  r.data.status == "CANCELADO" || r.data.approvalStatus == "APROBADO"){
-			              			return "x-hide-display";
+			              			return "x-hidden-display";
 			              			 }
 			              		 /*}else{
 			              	          if(role == 'ROLE_SUPPLIER' || r.data.status != "PENDIENTE" || (r.data.status == "PENDIENTE" && r.data.currentApprover != userName)) {
@@ -274,7 +296,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 			                  }}]
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.approvalReject,
 			            align: 'center',
 						name : 'rejectInvoiceFD',
@@ -296,7 +319,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 				              				 }
 				              			 }
 				              			 if(!contains || r.data.status == "CANCELADO" || r.data.approvalStatus == "APROBADO"){
-				              			return "x-hide-display";
+				              			return "x-hidden-display";
 				              			 }
 				              		 /*}else{
 			              		if(role == 'ROLE_SUPPLIER' || r.data.status != "PENDIENTE" || (r.data.status == "PENDIENTE" && r.data.currentApprover != userName)) {
@@ -317,6 +340,14 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
             {
               xtype: 'toolbar',
               dock: 'top',
+              layout: {
+                  type: 'hbox',
+                  align: 'middle',
+                  pack: 'start'
+              },
+              defaults: {
+                  margin: '5 10 5 0' 
+              },
               items: [
             	  {
           			iconCls : 'icon-save',
@@ -330,8 +361,9 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
           			itemId : 'searchFiscalDocuments',
           			emptyText : SuppAppMsg.fiscalTitle19,
           			xtype : 'trigger',
-          			width : 300,
-          			margin: '5 0 10 0',
+          			//width : 300,
+          			flex: 1,
+          			//margin: '5 0 10 0',
           			hidden:true,
           			triggerCls : 'x-form-search-trigger',
           			onTriggerClick : function(e) {
@@ -356,7 +388,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                       //value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
                       //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                       //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-                      width:300,
+                      //width:300,
+                      flex: 1,
                       labelWidth:30,
                       margin:'20 20 0 10'
           		},{ 
@@ -367,7 +400,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                       id: 'poNumberFD',
                       itemId: 'poNumberFD',
                       name:'poNumberFD',
-                      width:170,
+                      //width:170,
+                      flex: 1,
                       labelWidth:70,
                       margin:'20 20 0 10'
           		},{
@@ -379,7 +413,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                       value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
                       fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                       readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-                      width:190,
+                     // width:190,
+                    		  flex: 1,
                       labelWidth:90,
                       margin:'20 20 0 10'
           		}

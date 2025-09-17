@@ -3,12 +3,16 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentDetailPanel' ,{
     alias : 'widget.fiscalDocumentDetailPanel',
     border:false,
     frame:false,
-    width:1700,
+    //width:1700,
+    layout: 'fit',
+    //autoScroll: true,
 	initComponent: function () {
 		 Ext.apply(this, {
  	            items: [{
 	            	xtype: 'fiscalDocumentForm',
-	            	height:515
+	            	//height:515
+	            	autoScroll: true,
+	            	flex: 1
 	            }/*,{
 					xtype : 'displayfield',
 					value : SuppAppMsg.purchaseTitle23,

@@ -17,6 +17,7 @@ Ext.define('SupplierApp.view.main.MainController', {
         Ext.getCmp('tabPaymentsSuppliersPanelId').setTitle( SuppAppMsg.paymentsSuppliers);
         Ext.getCmp('tabTaxVaultPanelId').setTitle( SuppAppMsg.tabtaxVault);
         Ext.getCmp('tabFreightApprovalId').setTitle( SuppAppMsg.tabFreightApproval);
+        Ext.getCmp('tabFiscalDocumentsPanelId').setTitle( SuppAppMsg.tabFiscalDocuments);
         
          /*
         Ext.getCmp('tabnonComplianceSupplierPanelId').setTitle( SuppAppMsg.tabNonComplianceSupplier);
