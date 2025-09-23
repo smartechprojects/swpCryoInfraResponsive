@@ -1,13 +1,12 @@
 Ext.define('SupplierApp.view.purchaseOrder.SelInvGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.selInvGrid',
-    forceFit: true,
     loadMask: true,
     frame:true,
     border:false,
+    scrollable: true,
     title:'Selección de órdenes',
     cls: 'extra-large-cell-grid',  
-    scroll : true,
     viewConfig: {
         stripeRows: true,
         style : { overflow: 'auto', overflowX: 'hidden' }
@@ -27,7 +26,8 @@ Ext.define('SupplierApp.view.purchaseOrder.SelInvGrid' ,{
         this.columns = [{
             xtype: 'checkcolumn',
             text: Ext.String.format('<input type="checkbox" id="{0}" class="select-all-checkbox"/>', Ext.id()),
-            width: 30,
+            //width: 30,
+            flex: 0.2,
             dataIndex: 'selected',
             sortable: false,
             menuDisabled: true,
@@ -48,15 +48,18 @@ Ext.define('SupplierApp.view.purchaseOrder.SelInvGrid' ,{
         },
         {
             text     : SuppAppMsg.acceptTitle1,
-            width: 90,
+            //width: 90,
+            flex: 1,
             dataIndex: 'documentNumber'
         },{
             text     : 'UUID',
-            width: 260,
+            //width: 260,
+            flex: 2,
             dataIndex: 'uuid'
         },{
             text     : SuppAppMsg.purchaseTitle54,
-            width: 90,
+            //width: 90,
+            flex: 1,
             dataIndex: 'folio'
         },{         
             renderer: function(value, meta, record) {

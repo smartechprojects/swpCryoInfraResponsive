@@ -18,7 +18,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.PaymentsSuppliers',
         'SupplierApp.controller.TaxVault',
         'SupplierApp.controller.FreightApproval',
-        'SupplierApp.controller.FiscalDocuments'/*,
+        'SupplierApp.controller.FiscalDocuments',
+        'SupplierApp.controller.PurchaseOrder'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -115,6 +116,13 @@ Ext.define('SupplierApp.view.main.Main', {
 		title : '',
 		id:'tabSuppliersId',
 		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true
+	},{
+		xtype : 'purchaseOrderPanel',
+		iconCls: 'fa-list-alt',
+		itemId: 'purchaseOrderPanelTab',
+		id:'tabPurchaseOrderPanelId',
+		title : '',
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ' || role=='ROLE_SUPPLIER' || role=='ROLE_AUDIT_USR' ?false:true
 	},{
     	xtype : 'fiscalDocumentsPanel',
     	iconCls: 'fa-file-text',

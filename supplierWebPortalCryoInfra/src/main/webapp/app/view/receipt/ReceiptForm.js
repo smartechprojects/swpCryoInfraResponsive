@@ -2,19 +2,23 @@ Ext.define('SupplierApp.view.receipt.ReceiptForm' ,{
 	extend: 'Ext.form.Panel',
 	alias : 'widget.receiptForm',
 	border:true,
+	scrollable : true,
 	  initComponent: function() {		  
 			this.items= [{
 				xtype: 'container',
 				layout: 'hbox',
-				margin: '15 15 0 5',
-        		style:'border-bottom: 1px dotted #fff;padding-bottom:10px',
+				//margin: '15 15 0 5',
+				width: '100%',
+        		//style:'border-bottom: 1px dotted #fff;padding-bottom:10px',
 				defaults: { 
-					labelWidth : 100,
+					//labelWidth : 100,
 					align: 'stretch',
-					fieldStyle: 'padding-bottom:5px;font-size:18px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
+					flex : 1,
+					//fieldStyle: 'padding-bottom:5px;font-size:18px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
 					xtype:'textfield',
 					readOnly:true,
-					width:220
+					//width:220
+					margin: '0 10 0 0'
 				},
 				items       :[{
 					xtype: 'hidden',
@@ -37,14 +41,16 @@ Ext.define('SupplierApp.view.receipt.ReceiptForm' ,{
 					name: 'orderNumber'
 				},{
 					fieldLabel: SuppAppMsg.purchaseTitle5,
-					labelWidth : 90,
+					//labelWidth : 90,
 					name: 'orderType',
-					width:170
+					//width:170
+					flex :1
 				},{
 					fieldLabel: SuppAppMsg.suppliersNumber,
-					labelWidth : 130,
+					//labelWidth : 130,
 					name: 'addressNumber',
-					width:280
+					//width:280
+					flex :1.2
 				},{
 					fieldLabel: SuppAppMsg.purchaseOrderÌmporteTotal,
 					name: 'orderAmount',
@@ -54,7 +60,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptForm' ,{
                     decimalSeparator: '.',
                     thousandSeparator: ',',
                     alwaysDisplayDecimals: true,
-                    width:320
+                    //width:320
+                    flex :1.1
 				},{
 					name: 'supplierCountry',
 					hidden:true

@@ -247,6 +247,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 
 
     showReceipts: function(grid, record){
+    	
     	var me = this;
     	var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);    	
 		Ext.Ajax.request({
@@ -284,18 +285,22 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 								me.receiptWindow = new Ext.Window({
 						    		layout : 'fit',
 						    		title : SuppAppMsg.purchaseReceipt,
-						    		width : 1600,
-						    		height : 500,
+						    		//width : 1600,
+						    		//height : 500,
+						    		width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
+					                maxWidth: 1600,                                // 👈 ancho mínimo
+					                height: Ext.Element.getViewportHeight() * 0.70, // 👈 40% de alto
+					                maxHeight: 500,
 						    		modal : true,
 						    		closeAction : 'destroy',
-						    		resizable : true,
+						    		//resizable : true,
 						    		minimizable : false,
 						    		maximizable : false,
 						    		plain : true,
 						    		items : [ {
 						    			xtype : 'receiptPanel',
 						    			border : true,
-						    			height : 415
+						    			//height : 415
 						    		}  ]
 						    	});
 								var form = me.getReceiptForm().getForm();
@@ -490,7 +495,8 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    	var filePanel = Ext.create(
     			    					'Ext.form.Panel',
     			    					{
-    			    						width : 900,
+    			    						//width : 900,
+    			    						scrollable: true,
     			    						items : [
 	    			    							{
 				    									xtype : 'textfield',
@@ -540,7 +546,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    					                           var file =   Ext.getCmp('file').getEl().down('input[type=file]').dom.files[0]
     			    						                       if (file.size > 10485760) {
     			    					                    	   Ext.getCmp('file').setRawValue("");
-    			    					                    	   Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:   'El archivo supera los 10 MB'});
+    			    					                    	   Ext.MessageBox.alert({ 
+    			    					                    		   //maxWidth: 700, minWidth: 650, 
+    			    					                    		   width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+		    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+		    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+		    							    				            maxHeight: 100,
+    			    					                    		   title: SuppAppMsg.supplierMsgValidationLoad, msg:   'El archivo supera los 10 MB'});
     			    					                    		                    	   
     			    					                       }
     			    					                      
@@ -564,7 +576,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
   			    					                           var file =   Ext.getCmp('fileTwo').getEl().down('input[type=file]').dom.files[0]
   			    						                       if (file.size > 10485760) {
   			    					                    	   Ext.getCmp('fileTwo').setRawValue("");
-  			    					                    	   Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:   'El archivo supera los 10 MB'});
+  			    					                    	   Ext.MessageBox.alert({ 
+  			    					                    		  // maxWidth: 700, minWidth: 650, 
+  			    					                    		    width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+	    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+	    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+	    							    				            maxHeight: 100,
+  			    					                    		   title: SuppAppMsg.supplierMsgValidationLoad, msg:   'El archivo supera los 10 MB'});
   			    					                    		                    	   
   			    					                       }
   			    					                      
@@ -587,7 +605,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    					                           var file =   Ext.getCmp('fileThree').getEl().down('input[type=file]').dom.files[0]
     			    						                       if (file.size > 10485760) {
     			    					                    	   Ext.getCmp('fileThree').setRawValue("");
-    			    					                    	   Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:   'El archivo supera los 10 MB'});
+    			    					                    	   Ext.MessageBox.alert({ 
+    			    					                    		   //maxWidth: 700, minWidth: 650, 
+    			    					                    		   width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+		    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+		    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+		    							    				            maxHeight: 100,
+    			    					                    		   title: SuppAppMsg.supplierMsgValidationLoad, msg:   'El archivo supera los 10 MB'});
     			    					                    		                    	   
     			    					                       }
     			    					                      
@@ -609,7 +633,8 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    					                forceSelection: applyPlant ? true : false,
     			    					                triggerAction: 'all',
     			    					                labelWidth:120,
-    			    					                width : 490,
+    			    					                //width : 490,
+    			    					                anchor : '90%',
     			    									allowBlank : applyPlant ? false : true,
     			    									margin:'20 0 20 0',
     			    									hidden: applyPlant  ? false : true
@@ -620,7 +645,8 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 			    									name : 'docsOtherUUID',
 			    									id :'docsOtherUUID',
 			    									hidden : true,
-			    									value : ''
+			    									value : '',
+			    									scrollable : true
 			    								},
     			    								
     			    								
@@ -638,15 +664,16 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    									height:204,
     			    									id:'fileListOthersHtmlReceipt',
     			    									margin: '0 0 8 15',
-    			    									fieldStyle: 'font-size:11px;color:#blue;padding-bottom:10px;'
-    			    									
+    			    									fieldStyle: 'font-size:11px;color:#blue;padding-bottom:10px;',
+    			    									scrollable : true,
     			    								},
     			    								{
     			    									xtype : 'textfield',
     			    									name : 'attachmentFlag',
     			    									id : 'attachmentFlagReceipt',
     			    									value:'',
-    			    									hidden:true
+    			    									hidden:true,
+    			    									scrollable : true
     			    								},/*,
     			    								{
     													xtype: 'button',
@@ -694,7 +721,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    													if(me.receiptWindow){
     			    														me.receiptWindow.close();
     			    													}
-    			    													Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierLoadDocSucc});
+    			    													Ext.MessageBox.alert({ 
+    			    														//maxWidth: 700, minWidth: 650, 
+    			    														width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+			    							    				            maxHeight: 100,
+    			    														title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierLoadDocSucc});
     			    													
     			    												},       // If you don't pass success:true, it will always go here
     			    										        failure: function(fp, o) {
@@ -705,111 +738,321 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    										        	if(msgResp == "Error_1"){
     			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError1});
     			    										        	}else if(msgResp == "Error_2"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError2});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError2});
     			    										        	}else if(msgResp == "Error_3"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError3});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError3});
     			    										        	}else if(msgResp == "Error_4"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError4});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError4});
     			    										        	}else if(msgResp == "Error_5"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError5});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError5});
     			    										        	}else if(msgResp == "Error_6"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError6});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError6});
     			    										        	}else if(msgResp == "Error_7"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError7});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.fileUploadError7});
     			    										        	}else if(msgResp == "Error_8"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO1});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO1});
     													        	    }else if(msgResp == "Error_9"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO2});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO2});
     			    										        	}else if(msgResp == "Error_10"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO3});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO3});
     			    										        	}else if(msgResp == "Error_11"){
-    													        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.foreignInvoiceError6});
+    													        		Ext.MessageBox.alert({ 
+    													        			//maxWidth: 700, minWidth: 650, 
+    													        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+			    							    				            maxHeight: 100,
+    													        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.foreignInvoiceError6});
     													        	    }else if(msgResp == "Error_12"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO4});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO4});
     			    										        	}else if(msgResp == "Error_13"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO5});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO5});
     			    										        	}else if(msgResp == "Error_14"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO6});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO6});
     			    										        	}else if(msgResp == "Error_15"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO7});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO7});
     			    										        	}else if(msgResp == "Error_16"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO8});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO8});
     													        	    }else if(msgResp == "Error_17"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO9});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorPO9});
     			    										        	}else if(msgResp == "Error_18"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP10});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP10});
     			    										        	}else if(msgResp == "Error_19"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP11});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP11});
     													        	    }else if(msgResp.startsWith("Error_20_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP12 + ' ' + dataResp});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP12 + ' ' + dataResp});
     			    										        	}else if(msgResp.startsWith("Error_21_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP13_a + ' ' + dataResp + ' ' + SuppAppMsg.msgErrorP13_b});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP13_a + ' ' + dataResp + ' ' + SuppAppMsg.msgErrorP13_b});
     			    										        	}else if(msgResp.startsWith("Error_22_", 0)){
     			    										        		var data_resp = msgResp.substring(9,msgResp.length);
     			    										        		var r1 = data_resp.split("_:_");
     			    										        		var invCurrency = r1[0];
     			    										        		var oCurr = r1[1];
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP13_a + ' ' + invCurrency + ' ' + SuppAppMsg.msgErrorP14 + ' ' + oCurr});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP13_a + ' ' + invCurrency + ' ' + SuppAppMsg.msgErrorP14 + ' ' + oCurr});
     			    										        	}else if(msgResp.startsWith("Error_23_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP15 + ' ' + dataResp});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP15 + ' ' + dataResp});
     			    										        	}else if(msgResp.startsWith("Error_24_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP16_a + ' ' + dataResp + SuppAppMsg.msgErrorP16_b});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP16_a + ' ' + dataResp + SuppAppMsg.msgErrorP16_b});
     			    										        	}else if(msgResp.startsWith("Error_25_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP17 + ' ' + dataResp + SuppAppMsg.msgErrorP16_b});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP17 + ' ' + dataResp + SuppAppMsg.msgErrorP16_b});
     			    										        	}else if(msgResp.startsWith("Error_26_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP18 + ' ' + dataResp});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP18 + ' ' + dataResp});
     			    										        	}else if(msgResp.startsWith("Error_27_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP19_a + ' ' + dataResp + ' ' + SuppAppMsg.msgErrorP19_b});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP19_a + ' ' + dataResp + ' ' + SuppAppMsg.msgErrorP19_b});
     			    										        	}else if(msgResp.startsWith("Error_28_", 0)){
     			    										        		var data_resp = msgResp.substring(9,msgResp.length);
     			    										        		var r1 = data_resp.split("_:_");
     			    										        		var receiptTaxCode = r1[0];
     			    										        		var tasasRequeridas = r1[1];
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP20_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP20_b + ' ' + tasasRequeridas});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP20_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP20_b + ' ' + tasasRequeridas});
     			    										        	}else if(msgResp.startsWith("Error_29_", 0)){
     			    										        		var data_resp = msgResp.substring(9,msgResp.length);
     			    										        		var r1 = data_resp.split("_:_");
     			    										        		var receiptTaxCode = r1[0];
     			    										        		var tasasRequeridas = r1[1];
     			    										        		var transTaxValue = r1[2];
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP21_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP21_b + ' ' + tasasRequeridas+ ' ' + SuppAppMsg.msgErrorP21_c + ' ' + transTaxValue});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP21_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP21_b + ' ' + tasasRequeridas+ ' ' + SuppAppMsg.msgErrorP21_c + ' ' + transTaxValue});
     			    										        	}else if(msgResp.startsWith("Error_30_", 0)){
     			    										        		var data_resp = msgResp.substring(9,msgResp.length);
     			    										        		var r1 = data_resp.split("_:_");
     			    										        		var receiptTaxCode = r1[0];
     			    										        		var tasasRequeridas = r1[1];
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP22_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP22_b + ' ' + tasasRequeridas});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP22_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP22_b + ' ' + tasasRequeridas});
     			    										        	}else if(msgResp.startsWith("Error_31_", 0)){
     			    										        		var data_resp = msgResp.substring(9,msgResp.length);
     			    										        		var r1 = data_resp.split("_:_");
     			    										        		var receiptTaxCode = r1[0];
     			    										        		var tasasRequeridas = r1[1];
     			    										        		var transTaxValue = r1[2];
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP23_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP22_b + ' ' + tasasRequeridas+ ' ' + SuppAppMsg.msgErrorP21_c + ' ' + transTaxValue});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP23_a + ' ' + receiptTaxCode + ' ' + SuppAppMsg.msgErrorP22_b + ' ' + tasasRequeridas+ ' ' + SuppAppMsg.msgErrorP21_c + ' ' + transTaxValue});
     			    										        	}else if(msgResp.startsWith("Error_32_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP24 + ' ' + dataResp});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP24 + ' ' + dataResp});
     			    										        	}else if(msgResp.startsWith("Error_33_", 0)){
     			    										        		var dataResp = msgResp.substring(9,msgResp.length);
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP25 + ' ' + dataResp});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP25 + ' ' + dataResp});
     			    										        	}else if(msgResp.startsWith("Error_34_", 0)){
     			    										        		var data_resp = msgResp.substring(9,msgResp.length);
     			    										        		var r1 = data_resp.split("_:_");
     			    										        		var receiptTaxCode = r1[0];
     			    										        		var tasasRequeridasT = r1[1];
     			    										        		var tasasRequeridasR = r1[2];
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP26_a + ' ' + tasasRequeridasT + ' ' + SuppAppMsg.msgErrorP26_b + ' ' + tasasRequeridasR});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP26_a + ' ' + tasasRequeridasT + ' ' + SuppAppMsg.msgErrorP26_b + ' ' + tasasRequeridasR});
     			    										        	}else if(msgResp == "Error_35"){
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP27});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650,
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.msgErrorP27});
     			    										        	}else{
-    			    										        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  msgResp});
+    			    										        		Ext.MessageBox.alert({ 
+    			    										        			//maxWidth: 700, minWidth: 650, 
+    			    										        			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    			    							    				            maxWidth: 500,                                // 👈 ancho mínimo
+    			    							    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    			    							    				            maxHeight: 100,
+    			    										        			title: SuppAppMsg.supplierMsgValidationLoad, msg:  msgResp});
     			    										        	}
     			    										        	
     			    										        	
@@ -824,15 +1067,20 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   			    	me.winLoadInv = new Ext.Window({
     			    		layout : 'fit',
     			    		title : SuppAppMsg.purchaseUploadInvoice,
-    			    		width : 600,
-    			    		height : 500,
+    			    		//width : 600,
+    			    		//height : 500,
+    			    		width: Ext.Element.getViewportWidth() * 0.40,   // 👈 40% de pantalla
+    		                maxWidth: 500,                                // 👈 ancho mínimo
+    		                height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
+    		                maxHeight: 500,
     			    		modal : true,
+    			    		scrollable: true,
     			    		closeAction : 'destroy',
     			    		resizable : false,
     			    		minimizable : false,
     			    		maximizable : false,
     			    		plain : true,
-    			    		items : [ filePanel ],
+    			    		items : [ filePanel ],   			    		
     	   			    	tbar : [{
     	   						iconCls:'icon-document',
     	   						text: SuppAppMsg.fiscalTitleOther,
@@ -852,7 +1100,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   					    		var filePanelOther = Ext.create(
     	   										'Ext.form.Panel',
     	   										{
-    	   											width : 900,
+    	   											//width : 900,
     	   											items : [
     	   													/*{
     	   														xtype : 'textfield',
@@ -983,8 +1231,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   					    		me.winLoadInvFile = new Ext.Window({
     	   									layout : 'fit',
     	   									title : SuppAppMsg.purchaseUploadDocumentsAditional,
-    	   									width : 600,
-    	   									height : 150,
+    	   									//width : 600,
+    	   									//height : 150,
+    	   									width: Ext.Element.getViewportWidth() * 0.45,   // 👈 40% de pantalla
+    	   					                maxWidth: 680,                                // 👈 ancho mínimo
+    	   					                height: Ext.Element.getViewportHeight() * 0.30, // 👈 40% de alto
+    	   					                maxHeight: 150,
     	   									modal : true,
     	   									closeAction : 'destroy',
     	   									resizable : false,
@@ -997,7 +1249,20 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   								me.winLoadInvFile.show();
     	   							//}
     	   						}
-    	   					}]
+    	   					}],
+    	   					/*items : [{
+    			    	        xtype: 'form',
+    			    	        layout: 'anchor',
+    			    	        bodyPadding: 10,
+    			    	        autoScroll: true,
+    			    	        defaults: {
+    			    	            anchor: '100%',   // <-- hace que todos los campos se adapten
+    			    	            labelWidth: 120,
+    			    	            margin: '10 0 10 0'
+    			    	        },
+    			    	        items: filePanel.items, // tus items existentes
+    			    	        buttons: filePanel.buttons
+    			    	    }],*/
     			
     			    	});
     	   			    	
@@ -1005,12 +1270,16 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    	me.winLoadInv.show();
     		
     			    }else if(sup.data.country != "" && sup.data.country != null){
-			    		debugger
+			    		
     			    	me.winLoadInv = new Ext.Window({
 				    		layout : 'fit',
 				    		title : SuppAppMsg.purchaseUploadInvoiceForeing,
-				    		width : 740,
-				    		height : 680,
+				    		//width : 740,
+				    		//height : 680,
+				    		width: Ext.Element.getViewportWidth() * 0.5,   // 👈 40% de pantalla
+			                maxWidth: 740,                                // 👈 ancho mínimo
+			                height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
+			                maxHeight: 680,
 				    		modal : true,
 				    		closeAction : 'destroy',
 				    		resizable : false,
@@ -1045,7 +1314,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 		
 		        		me.winLoadInv.show();
     			    	}else{
-    			    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: 'Error', msg:  SuppAppMsg.purchaseErrorNonSupplier});
+    			    		Ext.MessageBox.alert({ 
+    			    			//maxWidth: 700, minWidth: 650,
+    			    			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+    				            maxWidth: 500,                                // 👈 ancho mínimo
+    				            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+    				            maxHeight: 100,
+    			    			title: 'Error', msg:  SuppAppMsg.purchaseErrorNonSupplier});
     			    	}
     		    },  
 		        failure: function(fp, o) {
@@ -1054,14 +1329,20 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     		});
 
     	}else{
-    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: 'Error', msg: SuppAppMsg.purchaseUploadBillErrorTitle  });
+    		Ext.MessageBox.alert({ 
+    			//maxWidth: 700, minWidth: 650, 
+    			width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+	            maxWidth: 500,                                // 👈 ancho mínimo
+	            height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+	            maxHeight: 100,
+    			title: 'Error', msg: SuppAppMsg.purchaseUploadBillErrorTitle  });
     		return false;
     	}
  	
     },
 
     uploadReceiptCreditNote : function(grid, rowIndex, colIndex, record) {
-    	debugger
+    	
     	var orderForm = this.getCreditNoteForm().getForm();
         var me = this;
     	var values = orderForm.getFieldValues();
@@ -1156,7 +1437,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    												url : 'uploadCreditNoteFromReceipt.action',
     			    												waitMsg : SuppAppMsg.supplierLoadFile,
     			    												success : function(fp, o) {
-    			    													debugger
+    			    													
     			    													var res = Ext.decode(o.response.responseText);
     			    													me.winLoadInv.destroy();
     			    													if(me.receiptWindow){
@@ -1165,7 +1446,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    													Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierLoadDocSucc});
     			    												},       // If you don't pass success:true, it will always go here
     			    										        failure: function(fp, o) {
-    			    										        	debugger
+    			    										        	
     			    										        	var res = o.response.responseText;
     			    										        	var result = Ext.decode(res);
     			    										        	
@@ -1668,6 +1949,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     },
     
     openReceiptForm: function(model, record){
+    	
     	return true;
     	var me = this;
     	me.receiptWindow = new Ext.Window({
@@ -2252,8 +2534,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	if(supNumber != ""){
 
         	new Ext.Window({
-        		  width        : 1115,
-        		  height       : 465,
+        		  //width        : 1115,
+        		  //height       : 465,
+        		width: Ext.Element.getViewportWidth() * 0.7,   // 👈 40% de pantalla
+                maxWidth: 1115,                                // 👈 ancho mínimo
+                height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
+                maxHeight: 465,
+                scrollable: true,
         		  title        : 'Complementos de Pago',
         		  border       : false,
     	      		modal : true,
@@ -2348,8 +2635,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         				        		Ext.getCmp('uploadFiscalDocNoPayment').setVisible(false);
         				        		var win = new Ext.Window({
         				        			  title: 'Mensaje del sistema',
-        				        			  width: 540,
-        				        			  height: 100,
+        				        			  //width: 540,
+        				        			  //height: 100,
+        				        			  width: Ext.Element.getViewportWidth() * 0.45,   // 👈 40% de pantalla
+        				                      minWidth: 540,                                // 👈 ancho mínimo
+        				                      height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+        				                      minHeight: 100,
+        				              		modal : true,
         				        			  modal:true,
         				        			  preventBodyReset: true,
         				        			  html: '<br /><center>La OC existe, pero el proveedor no está registrado en el sistema</center>'
@@ -2367,11 +2659,16 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         	me.orderDetailWindow = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.purchaseOrdersTitle2 ,
-        		width : 1250,
-        		height : 750,
+        		//width : 1250,
+        		//height : 750,
+        		width: Ext.Element.getViewportWidth() * 0.80,   // 👈 40% de pantalla
+                maxWidth: 1150,                                // 👈 ancho mínimo
+                height: Ext.Element.getViewportHeight() * 0.80, // 👈 40% de alto
+                maxHeight: 750,
+        		modal : true,
         		modal : true,
         		closeAction : 'destroy',
-        		resizable : true,
+        		//resizable : true,
         		minimizable : false,
         		maximizable : false,
         		plain : true,
@@ -2480,7 +2777,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 						addressNumber : record.data.addressNumber
 					},
 					success : function(response,opts) {
-						debugger
+						
 						response = Ext.decode(response.responseText);
 						var index = 0;
 						var files = "";
@@ -2570,7 +2867,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         var grid = this.getPurchaseOrderGrid();
     	var store = grid.getStore();
     	var values = orderForm.getFieldValues();
-    	debugger
+    	
     	if(values.supplierCountry == "MX"){
 		    	var filePanel = Ext.create(
 		    					'Ext.form.Panel',
@@ -2821,6 +3118,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     },
     
     uploadAdditional : function(grid, record) {
+    	
         var me = this;
         
         var grid = this.getPurchaseOrderGrid();
@@ -2829,7 +3127,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	var filePanel = Ext.create(
     					'Ext.form.Panel',
     					{
-    						width : 900,
+    						//width : 900,
+    						bodyPadding: 10,
+    				        layout: 'anchor',
+    				        defaults: {
+    				            anchor: '100%',
+    				            margin: '20 0 30 0'
+    				        },
     						items : [
     								{
     									xtype : 'textfield',
@@ -2855,11 +3159,11 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     									xtype : 'filefield',
     									name : 'file',
     									fieldLabel : SuppAppMsg.purchaseFilePDF,
-    									labelWidth : 80,
+    									//labelWidth : 80,
     									msgTarget : 'side',
     									allowBlank : false,
-    									margin:'20 0 30 0',
-    									anchor : '90%',
+    									//margin:'20 0 30 0',
+    									//anchor : '90%',
     									buttonText : SuppAppMsg.suppliersSearch
     								} ],
 
@@ -3002,8 +3306,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	this.winLoadInv = new Ext.Window({
     		layout : 'fit',
     		title : SuppAppMsg.purchaseUploadDocumentsAditional,
-    		width : 600,
-    		height : 150,
+    		//width : 600,
+    		//height : 150,
+    		width: Ext.Element.getViewportWidth() * 0.35,   //  40% de pantalla
+            maxWidth: 520,                                //  ancho mínimo
+            height: Ext.Element.getViewportHeight() * 0.35, //  40% de alto
+            maxHeight: 150,
     		modal : true,
     		closeAction : 'destroy',
     		resizable : false,
@@ -3017,7 +3325,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     },
     
     loadComplFile : function(grid, record) {
-    	debugger
+    	
         var me = this;    	
     	var orderArray = [];
     	var invoiceArray = [];
@@ -3039,7 +3347,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 			var filePanel = Ext.create(
 					'Ext.form.Panel',
 					{
-						width : 900,
+						//width : 900,
 						items : [
 								{
 									xtype : 'textfield',
@@ -3088,14 +3396,26 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 												url : 'uploadComplPago.action',
 												waitMsg : SuppAppMsg.supplierLoadFile,
 												success : function(fp, o) {
-													Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierLoadDocSucc});
+													Ext.MessageBox.alert({ 
+														//maxWidth: 700, minWidth: 650, 
+										        		width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+											            maxWidth: 420,                                // 👈 ancho mínimo
+											            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+											            maxHeight: 150,
+														title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierLoadDocSucc});
 													storeAccept.loadData([],false);
 													storeSelect.load();
 												},       // If you don't pass success:true, it will always go here
 										        failure: function(fp, o) {
 										        	var res = o.response.responseText;
 										        	var result = Ext.decode(res);
-										        	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  result.message});
+										        	Ext.MessageBox.alert({ 
+										        		//maxWidth: 700, minWidth: 650, 
+										        		width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+											            maxWidth: 420,                                // 👈 ancho mínimo
+											            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+											            maxHeight: 150,
+										        		title: SuppAppMsg.supplierMsgValidationLoad, msg:  result.message});
 										        }
 											});
 								}
@@ -3106,8 +3426,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 					this.winLoadInv = new Ext.Window({
 						layout : 'fit',
 						title : SuppAppMsg.purchaseOrdersTitle3,
-						width : 600,
-						height : 200,
+						//width : 600,
+						//height : 200,
+		        		width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+			            maxWidth: 420,                                // 👈 ancho mínimo
+			            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+			            maxHeight: 150,
 						modal : true,
 						closeAction : 'destroy',
 						resizable : false,
@@ -3124,7 +3448,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	
     },
     loadComplFileMassive : function(grid, record) {
-    	debugger
+    	
         var me = this;    	
     	var orderArray = [];
     	var invoiceArray = [];
@@ -3141,12 +3465,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 		       invoiceArray.push(rec.data.uuid);
 			}
 		});
-		debugger;
+		
 		if(orderArray.length > 0){
 			var filePanel = Ext.create(
 					'Ext.form.Panel',
 					{
-						width : 900,
+						//width : 900,
 						items : [
 								{
 									xtype : 'textfield',
@@ -3214,7 +3538,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 												url : 'uploadComplPagoMassive.action',
 												waitMsg : SuppAppMsg.supplierLoadFile,
 												success : function(fp, o) {
-													debugger
+													
 													// Crear una tabla HTML con los datos del arreglo y aplicar estilos de "striped"
 													var tableHtml = '<table style="font-size: small; width: 1000px; border-collapse: collapse; border: 1px solid #ccc;">'; // Aplica el estilo para reducir el tamaño de letra y colapsar bordes
 													tableHtml += '<tr><th style="background-color: #f2f2f2; border: 1px solid #ccc;">Archivo</th><th style="background-color: #f2f2f2; border: 1px solid #ccc;">Mensaje</th></tr>'; // Establece el color de fondo para las cabeceras y añade borde
@@ -3232,10 +3556,14 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 
 													// Mostrar la tabla dentro del mensaje del Ext.MessageBox.alert
 													Ext.MessageBox.alert({
-													    maxWidth: 1150,
-													    minWidth: 1150,
-													    minHeight: 460,
-													    maxHeight: 460,
+													    //maxWidth: 1150,
+													    //minWidth: 1150,
+													    //minHeight: 460,
+													    //maxHeight: 460,
+													    width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+											            maxWidth: 420,                                // 👈 ancho mínimo
+											            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+											            maxHeight: 150,
 													    title: SuppAppMsg.supplierMsgValidationLoad,
 													    msg: 'Archivo procesado:<br><br>' + containerHtml
 													});
@@ -3248,7 +3576,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 										        failure: function(fp, o) {
 										        	var res = o.response.responseText;
 										        	var result = Ext.decode(res);
-										        	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  result.message});
+										        	Ext.MessageBox.alert({ 
+										        		//maxWidth: 700, minWidth: 650,
+										        		width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+											            maxWidth: 420,                                // 👈 ancho mínimo
+											            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+											            maxHeight: 150,
+										        		title: SuppAppMsg.supplierMsgValidationLoad, msg:  result.message});
 										        }
 											});
 								}
@@ -3259,8 +3593,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 					this.winLoadInv = new Ext.Window({
 						layout : 'fit',
 						title : SuppAppMsg.purchaseOrdersTitle3,
-						width : 600,
-						height : 200,
+						//width : 600,
+						//height : 200,
+						width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+			            maxWidth: 420,                                // 👈 ancho mínimo
+			            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+			            maxHeight: 150,
 						modal : true,
 						closeAction : 'destroy',
 						resizable : false,
@@ -3272,7 +3610,13 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 					});
 					this.winLoadInv.show();
 		}else{
-			Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg: SuppAppMsg.purchaseOrdersMsg6 });
+			Ext.MessageBox.alert({ 
+				//maxWidth: 700, minWidth: 650, 
+				width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+	            maxWidth: 420,                                // 👈 ancho mínimo
+	            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+	            maxHeight: 150,
+				title: SuppAppMsg.supplierMsgValidationLoad, msg: SuppAppMsg.purchaseOrdersMsg6 });
 		}
     	
     },
@@ -3620,7 +3964,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 																addressNumber : val.addressNumber
 															},
 															success : function(response,opts) {
-																debugger
+																
 																response = Ext.decode(response.responseText);
 																var index = 0;
 																var files = "";
@@ -3734,7 +4078,8 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 			record.save({
 			    callback: function (records, o, success, msg) { 
 			    	if(success == true){
-			    		var r1 = Ext.decode(o.response.responseText);
+			    		
+			    		var r1 = Ext.decode(o._response.responseText);
 				    	var res = Ext.decode(r1);
 				    	box.hide();
 
@@ -3786,7 +4131,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     },
     
     openForeignDoc : function(button) {
-debugger
+
     	var orderForm = this.getPurchaseOrderForm().getForm();
         var me = this;
         var grid = this.getPurchaseOrderGrid();
@@ -3982,135 +4327,157 @@ debugger
     },
     
     poPaymentCalendar: function(button) {
+        
+        var calendarPanel = Ext.create('Ext.form.Panel', {
+            layout: 'fit',
+            flex: 1,
+            items: [{
+                xtype: 'paymentCalendarGrid'
+            }]
+        });
 
-    	var calendarPanel = Ext.create(
-				'Ext.form.Panel',
-				{
-					width        : 380,
-		    		 height       : 430,
-					items : [
-							{
-								xtype : 'paymentCalendarGrid',
-								height : 420,
-							}]
-				});
-    	
-    	var grid = this.getPaymentCalendarGrid();
-    	var store = grid.getStore();
-    	var view = grid.getView();
-    	
-    	new Ext.Window({
-    		  width        : 385,
-    		  height       : 500,
-    		  title        : SuppAppMsg.purchasePaymentCalendar,
-    		  border       : false,
-  	      modal : true,
-  	      closeAction : 'destroy',
-  	      resizable : false,
-  	      minimizable : false,
-  	      maximizable : false,
-  	      plain : true,
-    		  items : [{
-    	       		xtype:'button',
-    	            text: SuppAppMsg.purchaseLoadCalendar,
-    	            iconCls: 'icon-doSearch',
-    	            margin:'5 5 5 5',
-    	            listeners: {
-    	                click: function() {
-    	                var filePanel = Ext.create(
-								'Ext.form.Panel',
-								{
-									width : 900,
-									items : [
-											{
-												xtype : 'filefield',
-												name : 'file',
-												fieldLabel : SuppAppMsg.purchaseFile + '(.xls, .xlsx)*:',
-												labelWidth : 120,
-												msgTarget : 'side',
-												allowBlank : false,
-												margin:'20 0 20 0',
-												anchor : '90%',
-												multiple: true,
-												buttonText : SuppAppMsg.suppliersSearch
-											}],
-				
-									buttons : [ {
-										text : SuppAppMsg.supplierLoad,
-										margin:'10 0 0 0',
-										handler : function() {
-											var form = this.up('form').getForm();
-											if (form.isValid()) {
-												form.submit({
-															url : 'paymentCalendar/uploadCalendar.action',
-															waitMsg : SuppAppMsg.supplierLoadFile,
-															success : function(fp, o) {
-																var res = Ext.decode(o.response.responseText);
-																
-																Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierLoadDocSucc});
-																store.load();
-															},       // If you don't pass success:true, it will always go here
-													        failure: function(fp, o) {
-													        	var res = o.response.responseText;
-													        	var result = Ext.decode(res);
-													        	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  result.message});
-													        }
-														});
-											}
-										}
-									} ]
-								});
-    	                
-	    	            	var winLoadFileInv = new Ext.Window({
-		    	            		layout : 'fit',
-		    	            		title : SuppAppMsg.purchaseLoadPaymentCalendar ,
-		    	            		width : 600,
-		    	            		height : 160,
-		    	            		modal : true,
-		    	            		closeAction : 'destroy',
-		    	            		resizable : false,
-		    	            		minimizable : false,
-		    	            		maximizable : false,
-		    	            		plain : true,
-		    	            		items : [ filePanel ]
-		
-		    	            	});
-		    	             winLoadFileInv.show();
-    	                }}
-    	          },{
-    	       		xtype:'button',
-    	            text: SuppAppMsg.purchaseDeleteInputs ,
-    	            iconCls: 'icon-delete',
-    	            margin:'5 5 5 25',
-    	            listeners: {
-    	                click: function() {
-    	                	Ext.Msg.prompt(SuppAppMsg.purchaseDataRequest, SuppAppMsg.purchaseSpecifyYear , function(btnText, sInput){
-    	                        if(btnText === 'ok'){
-    	                        	var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
-    	                        	Ext.Ajax.request({
-    	                    			url : 'paymentCalendar/deleteCalendar.action',
-    	                    			method : 'POST',
-    	                    				params : {
-    	                    					year: sInput
-    	                    				},
-    	                    				success : function(response,opts) {
-    	                    					var resp = Ext.decode(response.responseText);
-    	                    					store.currentPage = 1;
-    	                    					store.load();
-    	                    					box.hide();
-    	                    				},
-    	                    				failure : function() {
-    	                    					box.hide();
-    	                    				}
-    	                    			});
-    	                        }
-    	                    }, this);
-    	                }}
-    	          },calendarPanel
-    	    		
-    			  ]
-    		}).show();	
-  	},
+        var grid = this.getPaymentCalendarGrid();
+        var store = grid.getStore();
+        var view = grid.getView();
+
+        new Ext.Window({
+            width: Ext.Element.getViewportWidth() * 0.40,
+            maxWidth: 385,
+            height: Ext.Element.getViewportHeight() * 0.45,
+            maxHeight: 500,
+            title: SuppAppMsg.purchasePaymentCalendar,
+            border: false,
+            modal: true,
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
+            scrollable: false,
+            closeAction: 'destroy',
+            resizable: false,
+            minimizable: false,
+            maximizable: false,
+            plain: true,
+            items: [
+                {
+                    xtype: 'container',
+                    layout: 'hbox',
+                    padding: 5,
+                    items: [
+                        {
+                            xtype:'button',
+                            text: SuppAppMsg.purchaseLoadCalendar,
+                            iconCls: 'icon-doSearch',
+                            margin:'0 10 0 0',
+                            handler: function() {
+                                var filePanel = Ext.create('Ext.form.Panel', {
+                                    bodyPadding: 10,
+                                    layout: 'anchor',
+                                    defaults: {
+                                        anchor: '100%',
+                                        margin: '20 0 20 0'
+                                    },
+                                    items : [{
+                                        xtype : 'filefield',
+                                        name : 'file',
+                                        fieldLabel : SuppAppMsg.purchaseFile + '(.xls, .xlsx)*:',
+                                        msgTarget : 'side',
+                                        allowBlank : false,
+                                        multiple: true,
+                                        buttonText : SuppAppMsg.suppliersSearch
+                                    }],
+                                    buttons : [{
+                                        text : SuppAppMsg.supplierLoad,
+                                        margin:'10 0 0 0',
+                                        handler : function() {
+                                            var form = this.up('form').getForm();
+                                            if (form.isValid()) {
+                                                form.submit({
+                                                    url : 'paymentCalendar/uploadCalendar.action',
+                                                    waitMsg : SuppAppMsg.supplierLoadFile,
+                                                    success : function(fp, o) {
+                                                        Ext.MessageBox.alert({
+                                                            //maxWidth: 700,
+                                                            //minWidth: 650,
+                                                            width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+                                                            maxWidth: 520,                                // 👈 ancho mínimo
+                                                            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+                                                            maxHeight: 100,
+                                                            title: SuppAppMsg.supplierMsgValidationLoad,
+                                                            msg:  SuppAppMsg.supplierLoadDocSucc
+                                                        });
+                                                        store.load();
+                                                    },
+                                                    failure: function(fp, o) {
+                                                        var result = Ext.decode(o.response.responseText);
+                                                        Ext.MessageBox.alert({
+                                                            //maxWidth: 700,
+                                                            //minWidth: 650,
+                                                        	width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
+                                                            maxWidth: 520,                                // 👈 ancho mínimo
+                                                            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
+                                                            maxHeight: 100,
+                                                            title: SuppAppMsg.supplierMsgValidationLoad,
+                                                            msg:  result.message
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    }]
+                                });
+
+                                var winLoadFileInv = new Ext.Window({
+                                    layout : 'fit',
+                                    title : SuppAppMsg.purchaseLoadPaymentCalendar,
+                                    width: Ext.Element.getViewportWidth() * 0.35,
+                                    maxWidth: 500,
+                                    height: Ext.Element.getViewportHeight() * 0.45,
+                                    maxHeight: 160,
+                                    modal : true,
+                                    closeAction : 'destroy',
+                                    resizable : false,
+                                    minimizable : false,
+                                    maximizable : false,
+                                    plain : true,
+                                    items : [ filePanel ]
+                                });
+                                winLoadFileInv.show();
+                            }
+                        },
+                        {
+                            xtype:'button',
+                            text: SuppAppMsg.purchaseDeleteInputs,
+                            iconCls: 'icon-delete',
+                            margin:'0 0 0 10',
+                            handler: function() {
+                                Ext.Msg.prompt(SuppAppMsg.purchaseDataRequest, SuppAppMsg.purchaseSpecifyYear , function(btnText, sInput){
+                                    if(btnText === 'ok'){
+                                        var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
+                                        Ext.Ajax.request({
+                                            url : 'paymentCalendar/deleteCalendar.action',
+                                            method : 'POST',
+                                            params : { year: sInput },
+                                            success : function(response,opts) {
+                                                store.currentPage = 1;
+                                                store.load();
+                                                box.hide();
+                                            },
+                                            failure : function() {
+                                                box.hide();
+                                            }
+                                        });
+                                    }
+                                }, this);
+                            }
+                        }
+                    ]
+                },
+                calendarPanel
+            ]
+        }).show();
+    },
+
   	
   	refreshLog: function(button) {
     	

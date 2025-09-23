@@ -7,7 +7,7 @@ Ext.define('SupplierApp.view.paymentCalendar.PaymentCalendarGrid' ,{
 	store : {
 		type:'paymentcalendar'
 	},
-	forceFit: true,
+	//forceFit: true,
 	dockedItems: [
     	getPagingContent()
     ],
@@ -26,11 +26,13 @@ Ext.define('SupplierApp.view.paymentCalendar.PaymentCalendarGrid' ,{
             hidden:true
         },{
             text     : SuppAppMsg.paymentTitle1,
-            width: 120,
+            //width: 120,
+            flex:1,
             dataIndex: 'company'
         },{
             text     : SuppAppMsg.paymentTitle2,
-            width: 220,
+            //width: 220,
+            flex:1,
             dataIndex: 'paymentDate',
             renderer : Ext.util.Format.dateRenderer("d-m-Y")
         }];

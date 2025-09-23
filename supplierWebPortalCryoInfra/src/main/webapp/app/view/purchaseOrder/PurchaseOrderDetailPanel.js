@@ -3,7 +3,8 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderDetailPanel' ,{
     alias : 'widget.purchaseOrderDetailPanel',
     border:false,
     frame:false,
-    width:1400,
+   // width:1400,
+    scrollable: true,
 	initComponent: function () {
 		 Ext.apply(this, {
 	        	layout: {
@@ -12,17 +13,22 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderDetailPanel' ,{
 	            },   
 	            items: [{
 	            	xtype: 'purchaseOrderForm',
-	            	height:160
-
+	            	//height:160
+	            	flex: 0,
+	            	width: '100%',
+	            	scrollable: true
 	            },{
 	           	 xtype: 'purchaseOrderDetailGrid',
-	           	 height:270,
-	           	 border:true
+	           	 //height:270,
+	           	flex: 0,
+            	width: '100%',
+	           	 border:true,
+	           	 scrollable: true,
 	            }, {
 					xtype : 'panel',
 					html : SuppAppMsg.purchaseTitle23,
 					height:70,
-					autoScroll: true,
+					scrollable: true,
 					border:false,
 					id:'fileListHtml',
 					margin: '2 0 0 15',

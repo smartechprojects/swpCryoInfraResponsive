@@ -4,7 +4,7 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 	border : false,
 	frame : false,
 	style: 'border: solid #ccc 1px',
-	autoScroll : true,
+	scrollable : true,
 	initComponent : function() {
 		
 		
@@ -19,8 +19,10 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 						},{
 					xtype: 'container',
 					layout: 'hbox',
+					width: '100%',
 					defaults : {
-						labelWidth : 120,
+						//labelWidth : 120,
+						flex : 1,
 						xtype : 'textfield',
 						margin: '10 0 0 10',
 						align: 'stretch',
@@ -35,23 +37,29 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 							},{
 							fieldLabel : SuppAppMsg.purchaseOrderNumber,
 							name : 'orderNumber',
-							width : 195,
-							labelWidth : 90,
+							//width : 195,
+							//labelWidth : 90,
+				            flex:1
 							},{
 							fieldLabel : SuppAppMsg.purchaseOrderType,
-							labelWidth : 30,
+							//labelWidth : 30,
 							name : 'orderType',
-							width : 80
+							//width : 80
+							// minWidth: 80,        // no más chico que esto
+				             //maxWidth: 80,
+				             flex:1
 							},{
 							xtype : 'textfield',
-							labelWidth : 70,
-							width:200,
+							//labelWidth : 70,
+							//width:200,
 							fieldLabel : SuppAppMsg.purchaseOrderSupplier,
-							name : 'addressNumber'
+							name : 'addressNumber',
+				             flex:1
 							},{
 							xtype : 'textfield',
 							width:450,
-							id : 'description'
+							id : 'description',
+							hidden : true
 							},{
 							xtype : 'textfield',
 							hidden:true,
@@ -82,26 +90,30 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 					      ]},{
 							xtype: 'container',
 							layout: 'hbox',
+							width: '100%',
 							defaults : {
-								labelWidth : 120,
+								//labelWidth : 120,
 								xtype : 'datefield',
 								align: 'stretch',
 								margin: '10 0 0 10',
 								readOnly:true,
-								width : 280,
+								flex:1,
+								//width : 280,
 								format: 'd-m-Y',
 								fieldStyle: 'padding-bottom:5px;font-size:15px;border:none;background:transparent;color:black;font-weight:bold'
 							},
 					        items:[{
 									fieldLabel : SuppAppMsg.purchaseOrderFechaAprovacion,
-									name : 'promiseDelivery'
+									name : 'promiseDelivery',
+						             flex:1,
 									},{
 									fieldLabel : 'Fecha de la orden',
 									name : 'rateRequested',
 									hidden:true
 									},{
-									labelWidth : 50,
-									width:250,
+									//labelWidth : 50,
+									//width:250,
+						             flex:1,
 									fieldLabel : SuppAppMsg.fiscalTitle16,
 									name : 'orderAmount',
 									xtype: 'numericfield',
@@ -113,7 +125,8 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 								},{
 						        	xtype : 'textfield',
 						        	name : 'currecyCode',
-									width:100
+									//width:100
+						             flex:1
 								},{
 						        	labelWidth : 140,
 						        	fieldLabel : 'Fecha estimada de pago',
@@ -139,18 +152,21 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 							]},{
 								xtype: 'container',
 								layout: 'hbox',
+								width: '100%',
 								defaults : {
-									labelWidth : 70,
+									//labelWidth : 70,
 									xtype : 'textfield',
 									align: 'stretch',
 									margin: '10 0 0 10',
 									readOnly:true,
-									width : 880,
+									//width : 880,
+									 flex:1,
 									fieldStyle: 'padding-bottom:5px;font-size:15px;border:none;background:transparent;color:black;font-weight:bold'
 								},
 						        items:[{
 										fieldLabel : SuppAppMsg.paymentTitle1,
-										name : 'longCompanyName'
+										name : 'longCompanyName',
+								             flex:1
 										},
 										{
 											xtype: 'button',

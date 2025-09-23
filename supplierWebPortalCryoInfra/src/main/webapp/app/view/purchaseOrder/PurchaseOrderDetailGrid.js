@@ -63,8 +63,8 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderDetailGrid' ,{
 	border:false,
 	cls: 'extra-large-cell-grid',  
 	store:store,
-	forceFit: true,
-	scroll : true,
+	//forceFit: true,
+	scrollable: true,
 	viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' }
@@ -74,55 +74,66 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderDetailGrid' ,{
     	var poController = SupplierApp.app.getController("SupplierApp.controller.PurchaseOrder");
     	
         this.columns = [{
-						    width: 100,
+						    //width: 100,
+        					flex :1 ,
 						    dataIndex: 'status',
 						    hidden:true
 						},{
 						    text     : SuppAppMsg.purchaseTitle26,
-						    width: 50,
+						    //width: 50,
+						    flex :1 ,
 						    dataIndex: 'lineNumber'
 						},{
 						    text     : 'Código',
-						    width: 70,
+						    //width: 70,
+						    flex :1 ,
 						    dataIndex: 'itemNumber',
 						    hidden:true
 						},{
 						    text     : SuppAppMsg.paymentTitle1,
-						    width: 70,
+						    //width: 70,
+						    flex :1 ,
 						    dataIndex: 'orderCompany'
 						},{
 						    text     : SuppAppMsg.purchaseTitle27,
-						    width: 140,
+						    //width: 140,
+						    flex :1 ,
 						    dataIndex: 'glOffSet'
 						},{
 						    text     : 'Cantidad',
-						    width: 70,
+						    //width: 70,
+						    flex :1 ,
 						    dataIndex: 'quantity',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    hidden:true
 						},{
 						    text     : 'UOM',
-						    width: 50,
+						    //width: 50,
+						    flex :1 ,
 						    dataIndex: 'uom',
 						    hidden:true
 						},{
 						    text     : SuppAppMsg.purchaseTitle29,
-						    width: 300,
+						    //width: 300,
+						    flex :1 ,
 						    dataIndex: 'itemDescription'
 						},{
 						    text     : 'Código SAT',
-						    width: 80,
+						    //width: 80,
+						    flex :1 ,
 						    dataIndex: 'codigoSat',
 						    hidden:true
 						},{
 						    text     : 'Precio unitario',
-						    width: 100,
+						    //width: 100,
+						    flex :1 ,
 						    dataIndex: 'unitCost',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    hidden:true
 						},{
 						    text     : SuppAppMsg.purchaseOrderÌmporteTotal,
-						    width: 80,
+						    //width: 80,
+						    flex :1 ,
 						    dataIndex: 'amount',
 						   // renderer : Ext.util.Format.numberRenderer('0,0.00')
 							renderer: function(value, metaData, record, row, col, store, gridView){
@@ -134,62 +145,73 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderDetailGrid' ,{
 							}
 						},{
 							text     : 'Recibido',
-						    width: 90,
+						    //width: 90,
+							flex :1 ,
 						    dataIndex: 'received',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    hidden:true
 						},{
 							text     : 'Rechazado',
-						    width: 90,
+						    //width: 90,
+							flex :1 ,
 						    dataIndex: 'rejected',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    hidden:true
 						},{
 						    text     : 'Por recibir',
-						    width: 100,
+						    //width: 100,
+						    flex :1 ,
 						    dataIndex: 'toReceive',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    //hidden:role=='ROLE_SUPPLIER' || role== 'ROLE_SUPPLIER_OPEN'?true:false,
 						    hidden:true
 						},{
 						    text     : 'Por rechazar',
-						    width: 100,
+						    //width: 100,
+						    flex :1 ,
 						    dataIndex: 'toReject',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    //hidden:role=='ROLE_SUPPLIER' || role== 'ROLE_SUPPLIER_OPEN'?true:false,
 							hidden:true
 						},{
 						    text     : 'Pendiente',
-						    width: 80,
+						    //width: 80,
+						    flex :1 ,
 						    hidden:false,
 						    dataIndex: 'pending',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    hidden:true
 						},{
 						    text     : 'Importe recibido',
-						    width: 100,
+						    //width: 100,
+						    flex :1 ,
 						    dataIndex: 'amuntReceived',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    hidden:true
 						},{
 						    text     : 'Importe pendiente',
-						    width: 100,
+						    //width: 100,
+						    flex :1 ,
 						    dataIndex: 'openAmount',
 						    renderer : Ext.util.Format.numberRenderer('0,0.00'),
 						    hidden:true
 						},{
-						    width: 160,
+						    //width: 160,
+							flex :1 ,
 						    text: 'Motivo de rechazo',
 						    dataIndex: 'reason',
 						    hidden:true
 						},{
 						    text     : SuppAppMsg.purchaseTitle30,
-						    width: 180,
+						   // width: 180,
+						    flex :1 ,
 						    dataIndex: 'notes',
 						    hidden:true
 						},{
 						    text     : SuppAppMsg.purchaseTitle30,
-						    width: 550,
+						    //width: 500,
+						    flex :1 ,
+						    //width:100,
 						    dataIndex: 'purchaseOrderNotes',
 						    renderer: renderTip
 						},{

@@ -5,6 +5,7 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
     loadMask: true,
 	frame:false,
 	border:false,
+	scrollable: true,
 	selModel: {
         checkOnly: true,
         mode: 'SIMPLE',
@@ -24,7 +25,7 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
     selType: 'checkboxmodel',
 	cls: 'extra-large-cell-grid', 
 	store : {
-		type:'receiptstore'
+		type:'receipt'
 	},
 	scroll : false,
 	viewConfig: {
@@ -76,19 +77,23 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
             },{
                 text     : 'Sts',
                 dataIndex: 'paymentStatus',
-                width: 80
+                //width: 80
+                flex :1 
             },{
                 text     : 'Sec',
                 dataIndex: 'receiptLine',
-                width: 60
+                //width: 60
+                flex :1 
             },
            {
             text     : SuppAppMsg.receiptTitle1,
             dataIndex: 'documentNumber',
-            width: 90
+            //width: 90
+            flex :1 
         },{
             text     : SuppAppMsg.receiptTitle2,
-            width: 90,
+            //width: 90,
+            flex :1,
             dataIndex: 'receiptDate',
             renderer : Ext.util.Format.dateRenderer("d-m-Y")
         },{
@@ -102,7 +107,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         },{
             text     : SuppAppMsg.purchaseOrderCurrency,
             dataIndex: 'currencyCode',
-            width: 60
+            //width: 60
+            flex :1 
         },{
             text     : SuppAppMsg.purchaseTitle43,
             dataIndex: 'quantityReceived',
@@ -110,19 +116,23 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         },{
             text     : 'UOM',
             dataIndex: 'uom',
-            width: 50
+            //width: 50
+            flex :1 
         },{
             text     : 'Remark',
             dataIndex: 'remark',
-            width: 90
+            //width: 90
+            flex :1 
         },{
             text     : SuppAppMsg.receiptTitle8,
             dataIndex: 'receiptType',
-            width: 40
+           // width: 40
+            flex :1 
         },{
             text     : SuppAppMsg.receiptTitle5,
             dataIndex: 'estPmtDate',
-            width: 110,
+            //width: 110,
+            flex :1,
 			renderer: function(value, metaData, record, row, col, store, gridView){
 				if(value) {
 					return Ext.util.Format.date(new Date(value), 'd-m-Y');
@@ -133,7 +143,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         },{
             text     : SuppAppMsg.receiptTitle10,
             dataIndex: 'uploadDate',
-            width: 150,
+            //width: 150,
+            flex :1 ,
             renderer: function(value, metaData, record, row, col, store, gridView){
 				if(value) {
 					return Ext.util.Format.date(new Date(value), 'd-m-Y H:i:s');
@@ -144,7 +155,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         },{
             text     : SuppAppMsg.receiptTitle11,
             dataIndex: 'paymentTerms',
-            width: 150,
+           // width: 150,
+            flex :1 ,
             renderer: function(value, metaData, record, row, col, store, gridView){
             	value = value.trim();
             	var returnValue = value;
@@ -195,7 +207,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         },{
             text     : SuppAppMsg.receiptTitle9,
             dataIndex: 'paymentDate',
-            width: 80,
+            // width: 80,
+            flex :1 ,
 			renderer: function(value, metaData, record, row, col, store, gridView){
 				if(value) {
 					return Ext.util.Format.date(new Date(value), 'd-m-Y');
@@ -206,7 +219,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         },{
             text     : SuppAppMsg.receiptTitle12,
             dataIndex: 'uploadComplDate',
-            width: 150,
+            //width: 150,
+            flex :1 ,
             renderer: function(value, metaData, record, row, col, store, gridView){
             	debugger
             	var returnValue = '';
@@ -221,7 +235,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         },{
             text     : 'UUID',
             dataIndex: 'uuid',
-            width: 290,
+           // width: 290,
+            flex :2
         }];
       
         this.callParent(arguments);

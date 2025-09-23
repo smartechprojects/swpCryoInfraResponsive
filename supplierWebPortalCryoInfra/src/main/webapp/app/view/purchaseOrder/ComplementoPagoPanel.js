@@ -3,6 +3,7 @@ Ext.define('SupplierApp.view.purchaseOrder.ComplementoPagoPanel' ,{
     alias : 'widget.complementoPagoPanel',
     border:false,
     frame:false,
+    layout: 'fit',
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
@@ -14,12 +15,12 @@ Ext.define('SupplierApp.view.purchaseOrder.ComplementoPagoPanel' ,{
             	items: [
             	    {    
             	    	xtype: 'selInvGrid',
-                      	height:430,
-                      	flex:.50
+                      	//height:430,
+                      	flex:1
                     },{    
             	    	xtype: 'acceptInvGrid',
-                      	height:430,
-                      	flex:.50
+                      	//height:430,
+                      	flex:1
                     }
             	]
              }]

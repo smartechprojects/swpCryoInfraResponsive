@@ -1,10 +1,12 @@
 	Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.purchaseOrderGrid',
-    forceFit: true,
+    //forceFit: true,
     loadMask: true,
 	frame:false,
 	border:false,
+	flex: 1,
+	scrollable: true,
 	selModel: {
         checkOnly: true,
         mode: 'SIMPLE'
@@ -63,12 +65,14 @@
     	    alias: 'widget.poTypeCombo',
     	    queryMode: 'local',
     	    displayField: 'name',
-    	    labelWidth:40,
+    	    //labelWidth:40,
     	    valueField: 'id',
     	    margin:'20 20 0 0',
     	    id:'poTypeCombo',
     	    itemId:'poTypeCombo',
-    	    width:150,labelAlign: 'top'
+    	    //width:150,
+    	    labelAlign: 'top',
+    	    flex:1
     	   /* listeners: {
     	        afterrender: function() {
     	           if(role == 'ROLE_WNS'){
@@ -85,12 +89,13 @@
     	    alias: 'widget.poComboStatus',
     	    queryMode: 'local',
     	    displayField: 'name',
-    	    labelWidth:40,
+    	    //labelWidth:40,
     	    valueField: 'id',
     	    margin:'20 20 0 0',
     	    id:'poComboStatus',
     	    itemId:'poComboStatus',
-    	    width:150,
+    	    //width:150,
+    	    flex:1,
     	    listeners: {
     	        afterrender: function() {
     	           if(role == 'ROLE_WNS'){
@@ -119,15 +124,18 @@
         this.columns = [
            {
         	text     : SuppAppMsg.paymentTitle1,
-			width: 70,
+			//width: 70,
+        	flex : 1,
 			dataIndex: 'orderCompany'
 		},{
             text     : SuppAppMsg.purchaseOrderNumber,
-            width: 80,
+            //width: 80,
+            flex : 1,
             dataIndex: 'orderNumber'
         },{
             text     : SuppAppMsg.purchaseOrderType,
-            width: 40,
+            //width: 40,
+            flex : 1,
             dataIndex: 'orderType',
             hidden:false
         },{
@@ -136,11 +144,13 @@
             dataIndex: 'addressNumber'
         },{
         	text     : SuppAppMsg.suppliersName,
-            width: 280,
+            //width: 280,
+        	flex : 2,
             dataIndex: 'longCompanyName'
         },{
             text     : SuppAppMsg.approvalRequestDate,
-            width: 120,
+            //width: 120,
+            flex : 1,
             dataIndex: 'dateRequested',
             renderer: function(value, metaData, record, row, col, store, gridView){
             	debugger
@@ -154,19 +164,22 @@
             }
         },{
             text     : SuppAppMsg.purchaseOrderFechaAprovacion,
-            width: 120,
+            //width: 120,
+            flex : 1,
             dataIndex: 'promiseDelivery',
             renderer : Ext.util.Format.dateRenderer("d-m-Y"),
             hidden:true
         },{
             text     : 'Fecha estimada de recibo',
-            width: 150,
+            //width: 150,
+            flex : 1,
             dataIndex: 'promiseDelivery',
             renderer : Ext.util.Format.dateRenderer("d-m-Y"),
             hidden:true
         },{
             text     : SuppAppMsg.purchaseOrderÌmporteTotal,
-            width: 110,
+            //width: 110,
+            flex : 1,
             dataIndex: 'orderAmount',
             renderer: function(value, meta, record) {
             	if(record.data.currecyCode == "MXP"){
@@ -177,7 +190,8 @@
             }
         },{
             text     : SuppAppMsg.purchaseOrderCurrency,
-            width: 60,
+            //width: 60,
+            flex : 0.5,
             dataIndex: 'currecyCode'
         },{
             hidden:true,
@@ -196,13 +210,15 @@
             dataIndex: 'invoiceNumber'
         },{
             text     : SuppAppMsg.fiscalTitle22,
-            width: 120,
+            //width: 120,
+            flex : 1,
             dataIndex: 'orderStauts',
             hidden:true
         },{
             align: 'left',
             text     : SuppAppMsg.fiscalTitle22,
-            width: 170,
+            //width: 170,
+            flex : 1.2,
             renderer: function(value, meta, record) {
             	var status = {
             	        STATUS_OC_RECEIVED: 'OC RECIBIDA',
@@ -258,13 +274,15 @@
              }
         },{
             text     : 'Status de Factura',
-            width: 100,
+            //width: 100,
+            flex : 1,
             dataIndex: 'status',
             hidden:true
         },{
             text     : SuppAppMsg.purchaseOrderRecibosFacturas,
             align: 'center',
-            width: 120,
+            //width: 120,
+            flex : 1,
             renderer: function(value, meta, record) {
             	
             	 if (record.data.orderType !== 'OP') {
@@ -291,7 +309,8 @@
         {
             text: SuppAppMsg.purchaseOrderCreditNotes,
             align: 'center',
-            width: 120,
+            //width: 120,
+            flex : 1,
             hidden: false,
             renderer: function(value, meta, record) {
                 // Verifica si orderType es igual a 'OP'
@@ -342,7 +361,8 @@
         
         ,{
             xtype: 'actioncolumn', 
-            width: 50,
+            //width: 50,
+            flex : 0.5,
             header: SuppAppMsg.purchaseTitle30,
             align: 'center',
 			name : 'openPONotes',
@@ -353,8 +373,9 @@
             	icon:'resources/images/notepad.png',
           	     iconCls: 'increaseSize',
             	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
+            		  debugger
               		  if(r.data.notes == null || r.data.notes == '') {
-        	              return "x-hide-display";
+        	              return "x-hidden-display";
         	          }else{
         	        	  return "increaseSize";
         	          }
@@ -364,7 +385,8 @@
              }}]
         },{
             align: 'center',
-            width: 140,
+            //width: 140,
+            flex : 1,
             renderer: function(value, meta, record) {
 	            	var id = Ext.id();
 	            	var status = {
@@ -444,10 +466,19 @@
             this.dockedItems = [
                 {
                     xtype: 'toolbar',
+                    dock: 'top',
                     style: {
                         background: 'white'
                       },
-                    dock: 'top',
+                      layout: {
+                          type: 'hbox',
+                          align: 'middle',
+                          pack: 'start'
+                      },
+                      defaults: {
+                          //margin: '5 10 5 0',
+                          labelAlign: 'top',
+                      },
                     items: [
                     	{
     						xtype: 'textfield',
@@ -455,10 +486,11 @@
     			            id: 'poNumber',
     			            itemId: 'poNumber',
     			            name:'poNumber',
-    			            width:100,
-    			            labelWidth:70,
-    			            margin:'0 20 0 10'
-    			            	,labelAlign: 'top'
+    			            //width:100,
+    			            //labelWidth:70,
+    			            margin:'20 20 0 10',
+    			           // labelAlign: 'top',
+    			            flex:1
     					},
     					{
     						xtype: 'textfield',
@@ -469,52 +501,60 @@
     			            //value: role == 'ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ'?addressNumber:'',
     			            //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
     			            //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-    			            width:100,
-    			            labelWidth:90,
-    			            margin:'20 20 0 10'
-    			            	,labelAlign: 'top'
+    			            //width:100,
+    			            //labelWidth:90,
+    			            margin:'20 20 0 10',
+    			            //labelAlign: 'top'
+    			            flex:1
     					},{
     						 xtype: 'datefield',
  						    fieldLabel: SuppAppMsg.purchaseOrderDesde,
  						    id: 'poFromDate',
  						    itemId: 'poFromDate',
  						    name: 'poFromDate',
- 						    width: 100,
- 						    labelWidth: 35,
+ 						    //width: 100,
+ 						    //labelWidth: 35,
  						    margin: '0 20 0 10',
- 						    labelAlign: 'top' // Set label position to top
+ 						    //labelAlign: 'top', // Set label position to top
+ 						    flex:1
     					},{
     						xtype: 'datefield',
     			            fieldLabel: SuppAppMsg.purchaseOrderHasta,
     			            id: 'poToDate',
     			            itemId: 'poToDate',
     			            name:'poToDate',
-    			            width:100,
-    			            labelWidth:35,
-    			            margin:'0 40 0 10'
-    			            ,labelAlign: 'top'	
+    			            //width:100,
+    			            //labelWidth:35,
+    			            margin:'0 40 0 10',
+    			            //labelAlign: 'top'	
+    			            flex:1
     					},{ 
     						xtype: 'poComboStatus'
     					},{
     						xtype:'poTypeCombo'
-    					},{
+    					}
+                    ]
+                },
+                {
+                	xtype: 'toolbar',
+                    dock: 'top',
+                    layout: {
+                        type: 'hbox',
+                        align: 'middle',
+                        pack: 'start'
+                    },
+                    defaults: {
+                        margin: '2 20 5 10' 
+                    },
+                    items: [
+                    	{
     		           		xtype:'button',
     			            text: SuppAppMsg.suppliersSearch,
     			            iconCls: 'icon-appgo',
     			            action:'poSearch',
     			            cls: 'buttonStyle',
     			            margin:'0 20 0 10'
-    					}
-                    ]
-                },
-                {
-                    xtype: 'toolbar',
-                    dock: 'top',
-                    style: {
-                        background: 'white'
-                      },
-                    items: [
-                    	{
+    					},{
     		           		xtype:'button',
     			            text: 'Aprobar facturas seleccionadas',
     			            iconCls: 'icon-accept',
@@ -522,7 +562,7 @@
     			            cls: 'buttonStyle',
     			            //hidden:role == 'ROLE_SUPPLIER' || role == 'ROLE_WNS'?true:false,
     			            hidden : true,
-    			            margin:'2 20 5 10'
+    			            //margin:'2 20 5 10'
     					},{
     		           		xtype:'button',
     			            text: 'Rechazar facturas seleccionadas',
@@ -531,7 +571,7 @@
     			            //hidden:role == 'ROLE_SUPPLIER'?true:false,
     			            hidden : true,
     			            cls: 'buttonStyle',
-    			            margin:'2 20 5 10'
+    			            //margin:'2 20 5 10'
     					},
     					{
     		           		xtype:'button',
@@ -539,7 +579,7 @@
     			            iconCls: 'icon-accept',
     			            action:'poLoadCompl',
     			            cls: 'buttonStyle',
-    			            margin:'2 20 5 10',
+    			            //margin:'2 20 5 10',
     			            hidden:role=='ROLE_PURCHASE_READ' || role == 'ROLE_WNS'?true:false
     					},
     					{
@@ -550,7 +590,7 @@
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
     			            cls: 'buttonStyle',
-    			            margin:'2 20 5 10'
+    			            //margin:'2 20 5 10'
     					},
     					{
     		           		xtype:'button',
@@ -559,7 +599,7 @@
     			            action:'poPaymentCalendar',
     			            hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
     			            cls: 'buttonStyle',
-    			            margin:'2 20 5 10'
+    			            //margin:'2 20 5 10'
     					},
     					{
     		           		xtype:'button',
@@ -569,7 +609,7 @@
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
     			            cls: 'buttonStyle',
-    			            margin:'2 20 5 10'
+    			            //margin:'2 20 5 10'
     					},'->'
     					,
     					{
@@ -580,11 +620,12 @@
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     			            cls: 'buttonStyle',
-    			            margin:'2 20 5 10'
+    			            //margin:'2 20 5 10'
     					},{
     						xtype: 'displayfield',
     			            value: SuppAppMsg.replicacion,
-    			            width : 100,
+    			            //width : 100,
+    			            flex : 1,
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     		            	},{
@@ -593,27 +634,30 @@
     			            id: 'fromDate',
     			            maxValue: new Date(),
     			            format: 'd/m/Y',
-    			            width:140,
-    			            labelWidth:30,
+    			            //width:140,
+    			            flex : 1,
+    			            //labelWidth:30,
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     					},{
     						xtype: 'datefield',
     			            fieldLabel: SuppAppMsg.purchaseOrderHasta,
-    			            margin:'2 10 5 15',
+    			            //margin:'2 10 5 15',
     			            id: 'toDate',
-    			            width:140,			            
+    			            //width:140,
+    			            flex : 1,
     			            maxValue: new Date(),
-    			            labelWidth:30,
+    			            //labelWidth:30,
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     					},{
     						xtype: 'textfield',
     			            fieldLabel: SuppAppMsg.purchaseOrderSupplier,
     			            id: 'addressNumber',
-    			            width:120,
-    			            labelWidth:50,
-    			            margin:'2 10 5 15',
+    			            //width:120,
+    			            flex : 1,
+    			            //labelWidth:50,
+    			            //margin:'2 10 5 15',
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     					},{
@@ -621,9 +665,10 @@
     			            fieldLabel: 'OC',
     			            id: 'orderNumber',
     			            hideTrigger:'true', 
-    			            width:100,
-    			            labelWidth:20,
-    			            margin:'2 10 5 15',
+    			            //width:100,
+    			            flex : 1,
+    			            //labelWidth:20,
+    			            //margin:'2 10 5 15',
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     					},{
@@ -634,7 +679,7 @@
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     			            cls: 'buttonStyle',
-    			            margin:'2 10 5 10'
+    			            //margin:'2 10 5 10'
     					}
                     ]
                 },
@@ -645,11 +690,17 @@
         
         this.dockedItems = [
             {
-                xtype: 'toolbar',
-                style: {
-                    background: 'white'
-                  },
+            	xtype: 'toolbar',
                 dock: 'top',
+                layout: {
+                    type: 'hbox',
+                    align: 'middle',
+                    pack: 'start'
+                },
+                defaults: {
+                    margin:'0 20 0 10',
+                    labelAlign: 'top'
+                },
                 items: [
                 	{
 						xtype: 'textfield',
@@ -657,10 +708,11 @@
 			            id: 'poNumber',
 			            itemId: 'poNumber',
 			            name:'poNumber',
-			            width:100,
-			            labelWidth:70,
-			            margin:'0 20 0 10'
-			            	,labelAlign: 'top'
+			            //width:100,
+			            flex : 1,
+			            //labelWidth:70,
+			            //margin:'0 20 0 10'
+			            //	,labelAlign: 'top'
 					},
 					{
 						xtype: 'textfield',
@@ -671,52 +723,60 @@
 			            value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
 			            fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
 			            readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-			            width:150,
-			            labelWidth:90,
-			            margin:'20 20 0 10'
-			            	,labelAlign: 'top'
+			            //width:150,
+			            //labelWidth:90,
+			            //margin:'20 20 0 10',
+			           	flex : 1
+			           //labelAlign: 'top'
 					},{
 						 xtype: 'datefield',
 						    fieldLabel: SuppAppMsg.purchaseOrderDesde,
 						    id: 'poFromDate',
 						    itemId: 'poFromDate',
 						    name: 'poFromDate',
-						    width: 100,
-						    labelWidth: 35,
-						    margin: '0 20 0 10',
-						    labelAlign: 'top' // Set label position to top
+						    //width: 100,
+						    flex : 1
+						    //labelWidth: 35,
+						    //margin: '0 20 0 10',
+						    //labelAlign: 'top' // Set label position to top
 					},{
 						xtype: 'datefield',
 			            fieldLabel: SuppAppMsg.purchaseOrderHasta,
 			            id: 'poToDate',
 			            itemId: 'poToDate',
 			            name:'poToDate',
-			            width:100,
-			            labelWidth:35,
-			            margin:'0 40 0 10'
-			            	,labelAlign: 'top'
+			            //width:100,
+			            flex : 1
+			            //labelWidth:35,
+			            //margin:'0 40 0 10',
+			            //labelAlign: 'top'
 					},{ 
 						xtype: 'poComboStatus'
 					},{
 						xtype:'poTypeCombo'
-					},{
+					}
+                ]
+            },
+            {
+            	xtype: 'toolbar',
+                dock: 'top',
+                layout: {
+                    type: 'hbox',
+                    align: 'middle',
+                    pack: 'start'
+                },
+                defaults: {
+                    margin: '2 20 5 10' 
+                },
+                items: [
+                	{
 		           		xtype:'button',
 			            text: SuppAppMsg.suppliersSearch,
 			            iconCls: 'icon-appgo',
 			            action:'poSearch',
 			            cls: 'buttonStyle',
-			            margin:'0 20 0 10'
-					}
-                ]
-            },
-            {
-                xtype: 'toolbar',
-                dock: 'top',
-                style: {
-                    background: 'white'
-                  },
-                items: [
-                	{
+			           // margin:'0 20 0 10'
+					},{
 		           		xtype:'button',
 			            text: 'Aprobar facturas seleccionadas',
 			            iconCls: 'icon-accept',
@@ -724,7 +784,7 @@
 			            cls: 'buttonStyle',
 			            //hidden:role == 'ROLE_SUPPLIER' || role == 'ROLE_WNS'?true:false,
 			            hidden : true,
-			            margin:'2 20 5 10'
+			            //margin:'2 20 5 10'
 					},{
 		           		xtype:'button',
 			            text: 'Rechazar facturas seleccionadas',
@@ -733,7 +793,7 @@
 			            //hidden:role == 'ROLE_SUPPLIER'?true:false,
 			            hidden : true,
 			            cls: 'buttonStyle',
-			            margin:'2 20 5 10'
+			            //margin:'2 20 5 10'
 					},
 					{
 		           		xtype:'button',
@@ -741,7 +801,7 @@
 			            iconCls: 'icon-accept',
 			            action:'poLoadCompl',
 			            cls: 'buttonStyle',
-			            margin:'2 20 5 10',
+			            //margin:'2 20 5 10',
 			            hidden:role=='ROLE_PURCHASE_READ' || role == 'ROLE_WNS'?true:false
 					},
 					{
@@ -752,7 +812,7 @@
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
 			            cls: 'buttonStyle',
-			            margin:'2 20 5 10'
+			            //margin:'2 20 5 10'
 					},
 					{
 		           		xtype:'button',
@@ -761,7 +821,7 @@
 			            action:'poPaymentCalendar',
 			            hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
 			            cls: 'buttonStyle',
-			            margin:'2 20 5 10'
+			            //margin:'2 20 5 10'
 					},
 					{
 		           		xtype:'button',
@@ -771,7 +831,7 @@
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
 			            cls: 'buttonStyle',
-			            margin:'2 20 5 10'
+			            //margin:'2 20 5 10'
 					},'->'
 					,
 					{
@@ -782,11 +842,12 @@
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 			            cls: 'buttonStyle',
-			            margin:'2 20 5 10'
+			            //margin:'2 20 5 10'
 					},{
 						xtype: 'displayfield',
 			            value: SuppAppMsg.replicacion,
-			            width : 100,
+			            //width : 100,
+			            flex:1,
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 		            	},{
@@ -795,38 +856,42 @@
 			            id: 'fromDate',
 			            maxValue: new Date(),
 			            format: 'd/m/Y',
-			            width:140,
-			            labelWidth:30,
+			            //width:140,
+			            //labelWidth:30,
+			            flex:1,
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 					},{
 						xtype: 'datefield',
 			            fieldLabel: SuppAppMsg.purchaseOrderHasta,
-			            margin:'2 10 5 15',
+			            //margin:'2 10 5 15',
 			            id: 'toDate',
-			            width:140,			            
+			            //width:140,			            
 			            maxValue: new Date(),
-			            labelWidth:30,
+			            //labelWidth:30,
 			            hidden:true,
+			            flex:1			            
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 					},{
 						xtype: 'textfield',
 			            fieldLabel: SuppAppMsg.purchaseOrderSupplier,
 			            id: 'addressNumber',
-			            width:120,
-			            labelWidth:50,
-			            margin:'2 10 5 15',
+			            //width:120,
+			            //labelWidth:50,
+			            //margin:'2 10 5 15',
 			            hidden:true,
+			            flex:1
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 					},{
 						xtype: 'numberfield',
 			            fieldLabel: 'OC',
 			            id: 'orderNumber',
 			            hideTrigger:'true', 
-			            width:100,
-			            labelWidth:20,
-			            margin:'2 10 5 15',
+			            //width:100,
+			            //labelWidth:20,
+			            //margin:'2 10 5 15',
 			            hidden:true,
+			            flex:1,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 					},{
 		           		xtype:'button',
@@ -835,8 +900,9 @@
 			            action:'poLoadPurchases',
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
+			            flex:1,
 			            cls: 'buttonStyle',
-			            margin:'2 10 5 10'
+			            //margin:'2 10 5 10'
 					},{
 		           		xtype:'button',
 			            text: 'Facturas SAT',
@@ -844,8 +910,9 @@
 			            action:'uploadSATInvoiceZip',
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
+			            flex:1,
 			            cls: 'buttonStyle',
-			            margin:'2 10 5 10'
+			            //margin:'2 10 5 10'
 					}
                 ]
             },

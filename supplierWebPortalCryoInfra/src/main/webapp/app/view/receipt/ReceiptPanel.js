@@ -3,6 +3,7 @@ Ext.define('SupplierApp.view.receipt.ReceiptPanel' ,{
     alias : 'widget.receiptPanel',
     border:false,
     frame:false,
+    scrollable: true,
 	initComponent: function () {
         Ext.apply(this, {
         	layout: {
@@ -11,11 +12,16 @@ Ext.define('SupplierApp.view.receipt.ReceiptPanel' ,{
             },   
             items: [{
             	xtype: 'receiptForm',
-            	height:80
-
+            	height:80,
+            	flex: 0,
+            	width: '100%',
+            	scrollable: true
             },{
            	 xtype: 'receiptGrid',
-           	 height:380
+           	 //height:380
+           	lex: 0,
+        	width: '100%',
+        	scrollable: true
             }]
         });
         this.callParent(arguments);
