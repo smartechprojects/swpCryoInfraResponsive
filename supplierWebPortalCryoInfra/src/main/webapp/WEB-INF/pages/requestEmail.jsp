@@ -37,7 +37,7 @@
 		</div>
 		<div class="avatar">
 			<img src="resources/images/CryoInfra-logo-gris.png"
-				style="height: 60px; width: 250px;">
+				style="height: auto; max-width: 90%;">
 		</div>
 
 		<div style="text-align: center;">

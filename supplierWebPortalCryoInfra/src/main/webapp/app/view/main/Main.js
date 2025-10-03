@@ -44,7 +44,7 @@ Ext.define('SupplierApp.view.main.Main', {
             align: 'stretchmax'
         },
         title: {
-        	text: '<table style="width:100%;"><tr><td style="width:33%;"><img src="resources/images/hand-click.png" style="width:65%;"></td><td style="width:33%;text-align:center;padding-top:12px;"><img src="resources/images/CryoInfra-logo-gris.png" style="width:20%;"></td><td style="text-align:right;width:33%;padding-right:30px;"><img src="resources/images/profile.png" style="width:45px;padding-right:30px;"></a><img src="resources/images/help-icon.png" style="width:45px;padding-right:30px;"></a><a href="logout" class="page-link"><img src="resources/images/logout-icon.png" style="width:15px;"></a></td></tr></table>',
+        	text: '<table style="width:100%;"><tr><td style="width:33%;"><img src="resources/images/hand-click.png" style="width:65%;"></td><td style="width:33%;text-align:center;padding-top:12px;"><img src="resources/images/CryoInfra-logo-gris.png" style="width:50%;"></td><td style="text-align:right;width:33%;padding-right:30px;"><img src="resources/images/profile.png" style="width:45px;padding-right:30px;"></a><img src="resources/images/help-icon.png" style="width:45px;padding-right:30px;"></a><a href="logout" class="page-link"><img src="resources/images/logout-icon.png" style="width:15px;"></a></td></tr></table>',
             flex: 1,
         }
     },
@@ -110,7 +110,7 @@ Ext.define('SupplierApp.view.main.Main', {
         title: SuppAppMsg.tabInicio,
         iconCls: 'fa-home',
         id:'tabHomeId',
-        html:"<div style='display: flex;justify-content: center;vertical-align: middle;padding-top:100px;'><img src='resources/images/CryoInfra-logo-gris.png'></div>"
+        html:"<div style='display: flex;justify-content: center;vertical-align: middle;padding-top:100px;'><img src='resources/images/CryoInfra-logo-gris.png' style='max-width: 80%; height: auto;' alt='Logo CryoInfra'> </div>"
     },{
     	xtype : 'supplierPanel',
     	iconCls: 'fa-share-alt',
