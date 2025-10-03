@@ -248,7 +248,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessForm',	{
 							},
 					        items:[{
 					        	xtype : 'textfield',
-								fieldLabel : SuppAppMsg.plantAccess11,
+								fieldLabel : SuppAppMsg.plantAccess11+'a',
 								name : 'text_PSUA',
 								id:'text_PSUA',
 								width:600,

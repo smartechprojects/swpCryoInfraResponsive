@@ -38,11 +38,13 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessFileGrid' ,{
     initComponent: function() {
         this.columns = [{
 						    text     :SuppAppMsg.taxvaultDocument,
-						    width: "30%",
+						    //width: "30%",
+						    flex:1,
 						    dataIndex: 'originName'
 						},{
 						    text     : SuppAppMsg.fiscalTitle21,
-						    width: '40%',
+						    //width: '40%',
+						    flex:1,
 						    dataIndex: 'documentType',
 				            renderer: function(value, meta, record) {
 				            	
@@ -105,7 +107,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessFileGrid' ,{
 				             }
 						},{
 				        	xtype: 'actioncolumn', 
-				            width: '10%',
+				            //width: '10%',
+				        	flex:1,
 				            header: SuppAppMsg.plantAccess34,
 				            align: 'center',
 							name : 'openDocumentFile',
@@ -125,7 +128,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessFileGrid' ,{
 				                  }}]
 						},{
 				        	xtype: 'actioncolumn', 
-				            width: 90,
+				            //width: 90,
+				        	flex:1,
 				            header: 'Eliminar documento',
 				            align: 'center',
 							name : 'deleteFilePlantAccess',

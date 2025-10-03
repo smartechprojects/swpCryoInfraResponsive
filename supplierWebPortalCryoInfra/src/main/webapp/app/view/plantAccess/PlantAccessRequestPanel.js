@@ -4,10 +4,15 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
 	border : false,
 	frame : false,
 	style: 'border: solid #fff 1px',
+	layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
 	initComponent: function() {
 		this.items = [{
 			xtype:'container',
-			layout: 'anchor',
+			flex: 1,
+			layout: 'fit',
 			border:false,
 			items: [{
 				xtype: 'tabpanel',
@@ -16,6 +21,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
 				items:[{
 					id: 'paRequestForm',
 					itemId: 'paRequestForm',
+					layout: 'fit',
 					title: 'Datos Solicitante',//------------------ Pestaña Datos Solicitante -----------------------
 					items:[{
 						xtype: 'plantAccessRequestForm'
@@ -23,6 +29,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
 				},{
 					id: 'paRequestDocForm',
 					itemId: 'paRequestDocForm',
+					layout: 'fit',
 					title: 'Documentos Solicitante',//------------------ Pestaña Documentos Solicitante -----------------------
 					items:[{
 						xtype: 'plantAccessRequestDocForm'
@@ -33,7 +40,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
 			id: 'paRequestGrid',
 			itemId: 'paRequestGrid',
 			xtype:'container',
-			layout: 'anchor',
+			flex: 1,
+			layout: 'fit',
 			items: [{
 				xtype:'plantAccessRequestGrid'
 			}]

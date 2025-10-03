@@ -422,6 +422,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailGrid' ,{
         
         /// carga de usuario antes de agregar a la lista (borrado)
         this.tbar = [
+        	'->', 
         	{
 				xtype : 'displayfield',
 				value : SuppAppMsg.plantAccess33+"<br>"
@@ -432,13 +433,12 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailGrid' ,{
 						+SuppAppMsg.plantAccess58+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 						+SuppAppMsg.plantAccess59+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 						+SuppAppMsg.plantAccess52,
-				height:45,
+				height:55,
 				id:'listActivities',
 				hidden:true,
-				//margin: '50 0 0 10',
-				margin:'5 10 0 300',
-				colspan:3,
-				fieldStyle: 'font-weight:bold'
+				//margin:'5 10 0 300',
+				//colspan:3,
+				fieldStyle: 'font-weight:bold;font-size: 11px;'
 				}
 			];
               

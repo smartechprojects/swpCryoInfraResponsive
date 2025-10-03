@@ -5,6 +5,13 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	frame : false,
 	style : 'border: solid #fff 1px',
 	autoScroll : true,
+	layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
+    defaults: {
+        margin: '5 10 5 10'
+    },
 	initComponent : function() {
 		
 		
@@ -25,11 +32,15 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 		this.items = [{
 			xtype: 'container',
             layout: 'anchor',
+            defaults: {
+                labelWidth: 150,
+                margin: '5 10 5 10'
+            },
             items: [{
             	xtype : 'displayfield',
 				value : SuppAppMsg.plantAccess6,
 				height:20,
-				margin:'5 10 0 300',
+				//margin:'5 10 0 300',
 				colspan:3,
 				fieldStyle: 'font-weight:bold'
             },{
@@ -38,17 +49,17 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            name:'rfc',
 	            id: 'paRequestRfc',
 	            itemId: 'paRequestRfc',
-	            width:8,
-	            labelWidth:100,
-	            margin:'5 10 0 10',
+	            //width:8,
+	            //labelWidth:100,
+	            //margin:'5 10 0 10',
 	            hidden:true
             },{
 				xtype: 'textfield',
 	            fieldLabel: 'Razón Social',
 	            name:'razonSocial',
-	            width:8,
-	            labelWidth:100,
-	            margin:'5 10 0 10',
+	            //width:8,
+	            //labelWidth:100,
+	            //margin:'5 10 0 10',
 	            hidden:true
             },{
 				xtype: 'textfield',
@@ -56,9 +67,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            name:'status',
 	            id: 'paRequestStatus',
 	            itemId: 'paRequestStatus',
-	            width:8,
-	            labelWidth:100,
-	            margin:'5 10 0 10',
+	            //width:8,
+	            //labelWidth:100,
+	            //margin:'5 10 0 10',
 	            hidden:true
             },{
 				xtype: 'textfield',
@@ -66,9 +77,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            name:'addressNumberPA',
 	            id: 'paRequestAddressNumber',
 	            itemId: 'paRequestAddressNumber',
-	            width:300,
-	            labelWidth:100,
-	            margin:'5 10 0 10',
+	            //width:300,
+	            //labelWidth:100,
+	            //margin:'5 10 0 10',
 	            hidden:true
             },{
 				xtype: 'textfield',
@@ -76,9 +87,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            id: 'paNameRequest',
 	            itemId: 'paNameRequest',
 	            name:'nameRequest',
-	            width:800,
-	            labelWidth:150,
-	            margin:'5 10 0 150',
+	            //width:800,
+	            //labelWidth:150,
+	            //margin:'5 10 0 150',
 	            allowBlank:false,
 	            maxLength : 100,
 	            enforceMaxLength: true,
@@ -94,7 +105,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             },  {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '5 10 0 150',
+                //margin: '5 10 0 150',
+                margin: '0 5 5 0',
                 items: [
                 	{
 				xtype: 'textfield',
@@ -102,10 +114,11 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            id: 'paContractorCompany',
 	            itemId: 'paContractorCompany',
 	            name:'contractorCompany',	            
-	            width:650,	            
+	            //width:650,	            
 	            labelWidth:150,
-	            margin:'0 0 10 0',
+	            //margin:'0 0 10 0',
 	            //allowBlank:false,
+	            flex: 2,
 	            readOnly:true,
 	            maxLength : 254
                 },
@@ -117,7 +130,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     name: 'subcontractService',
                     inputValue: 'true', // Valor enviado si el checkbox está marcado
                     uncheckedValue: 'false', // Valor enviado si el checkbox no está marcado
-                    margin: '0 0 0 10', // Ajusta el margen para separar del elemento anterior
+                    //margin: '0 0 0 10', // Ajusta el margen para separar del elemento anterior
+                    margin: '5 0 5 10',
+                    flex: 1,
                     	 listeners: {
                     	        change: function(checkbox, newValue, oldValue) {
                     	          
@@ -176,7 +191,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '5 10 0 150',
+                //margin: '5 10 0 150',
+                margin: '0 5 5 0',
                 items: [
                     {
                         xtype: 'textfield',
@@ -184,9 +200,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                         id: 'paSubContractedCompany',
                         itemId: 'paSubContractedCompany',
                         name: 'subContractedCompany',
-                        width: 400,
+                        flex: 1,
+                        //width: 400,
                         labelWidth: 150,
-                        margin: '0 0 10 0',
+                        //margin: '0 0 10 0',
                         allowBlank: true,
                         disabled: true,
                         maxLength: 51,
@@ -226,7 +243,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                         id: 'paSubContractedCompanyRFC',
                         itemId: 'paSubContractedCompanyRFC',
                         name: 'subContractedCompanyRFC',
-                        width: 390,
+                        flex:1,
+                        //width: 390,
                         labelWidth: 170,
                         margin: '0 0 0 10',
                         allowBlank: true,
@@ -266,9 +284,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 id: 'paContractorRepresentative',
                 itemId: 'paContractorRepresentative',
                 name: 'contractorRepresentative',
-                width: 800,
+                //width: 800,
+                width: '100%',
                 labelWidth: 150,
-                margin: '5 10 0 150',
+               // margin: '5 10 0 150',
                 allowBlank: false,
                 maxLength: 100,
                 enforceMaxLength: true,
@@ -285,14 +304,18 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '5 10 0 150',
+               // margin: '5 10 0 150',
+                defaults: {
+                    margin: '0 5 5 0'
+                },
                 items: [{
     				xtype: 'textfield',
     	            fieldLabel: SuppAppMsg.plantAccess74,
     	            id: 'paContacEmergency',
     	            itemId: 'paContacEmergency',
     	            name:'contactEmergency',
-    	            width:400,	            
+    	            //width:400,
+    	            flex: 1,
     	            labelWidth:150,
     	            margin:'0 0 10 0',
     	            allowBlank:false,
@@ -314,7 +337,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     id: 'pafechaFirmaGuia',
                     itemId: 'pafechaFirmaGuia',
                     name: 'fechafirmGui',
-                    width: 350,
+                    //width: 350,
+                    flex: 1,
                     labelWidth: 100,
                     margin: '0 0 0 10',
                     allowBlank: false,
@@ -325,10 +349,13 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '5 10 0 150',
+               // margin: '5 10 0 150',
                 id: 'containerOrden',
 	            itemId: 'containerOrden',
 				name : 'containerOrden',
+				 defaults: {
+		                margin: '5 0 5 0'
+		            },
                 items: [{
                     xtype: 'checkbox',
                     boxLabel: SuppAppMsg.plantAccess76,
@@ -337,7 +364,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     name: 'sinOrden',
                     inputValue: 'true', // Valor enviado si el checkbox está marcado
                     uncheckedValue: 'false', // Valor enviado si el checkbox no está marcado
-                    margin: '5 10 0 0', // Ajusta el margen para separar del elemento anterior
+                   // margin: '5 10 0 0', // Ajusta el margen para separar del elemento anterior
+                    margin: '0 10 0 0',
                     	 listeners: {
                     	        change: function(checkbox, newValue, oldValue) {
                     	            var ordenNumberField = checkbox.up('form').down('textfield[name=paOrdenNumberInput]'); // Obtener el campo de texto
@@ -380,8 +408,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     displayField: 'companyName',
                     valueField: 'company',
                     labelWidth:50,
-                    width : 250,
-                    margin:'5 10 0 10',
+                    //width : 250,
+                    flex: 1,
+                    //margin:'5 10 0 10',
+                    argin: '0 10 0 0',
                     editable: false,
                     hidden:true,
     				listeners: {
@@ -397,9 +427,11 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     id: 'paOrdenNumber',
                     itemId: 'paOrdenNumber',
                     name: 'ordenNumber',
-                    width: 250,
+                    //width: 250,
+                    flex: 1,
                     labelWidth: 100,
-                    margin: '5 10 0 10',
+                    //margin: '5 10 0 10',
+                    margin: '0 10 0 0',
                     allowBlank: false,
                     hidden:true
                 },
@@ -409,9 +441,11 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     id: 'paOrdenNumberInput',
                     itemId: 'paOrdenNumberInput',
                     name: 'paOrdenNumberInput',
-                    width: 250,
+                    //width: 250,
+                    flex: 1,
                     labelWidth: 100,
-                    margin: '5 10 0 10',
+                    //margin: '5 10 0 10',
+                    margin: '0 10 0 0',
                     allowBlank: true,
                     maxLength: 254,
                     triggerCls: 'x-form-search-trigger',
@@ -476,9 +510,11 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     name: 'description',
                     id: 'description',
                     itemId: 'description',
-                    width: 400,
+                    //width: 400,
+                    flex: 2,
                     labelWidth: 80,
-                    margin: '5 10 0 10',
+                    //margin: '5 10 0 10',
+                    margin: '0 10 0 0',
                     maxLength: 254,
                     maxLength: 100,  // Limita a 10 caracteres
                     enforceMaxLength: true,
@@ -497,6 +533,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     name: 'butonAddOrder',
                     id: 'butonAddOrder',
                     itemId: 'butonAddOrder',
+                    width: 40,
+                    margin: '0 0 0 10',
                     handler: function() {
 //                    	var butonadd = Ext.getCmp('butonAddOrder');
 //                    	butonadd.setVisible(false)
@@ -622,7 +660,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 columns: [{
                     header: SuppAppMsg.plantAccess85,
                     dataIndex: 'order',
-                    width: 100,
+                    //width: 100,
+                    flex: 1,
                     editor: {
                         xtype: 'numberfield',
                         allowBlank: false
@@ -637,7 +676,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     }
                 }, {
                     xtype: 'actioncolumn',
-                    width: 50,
+                    //width: 50,
+                    flex: 1,
                     itemId: 'deleteActionColumn',
                     items: [{
                         icon: 'resources/images/delete.png',
@@ -666,13 +706,17 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 }],
                 selType: 'rowmodel',
                 height: 100,
-                width: 800,
-                margin: '5 5 0 150'
+                //width: 800,
+                //margin: '5 5 0 150'
+                flex: 1,
+                margin: '5 10 0 10',
+                minWidth: 800
             },
             {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '5 10 0 0',
+                //margin: '5 10 0 0',
+                margin: '5 10 5 10',
                 items: [
                 	{				
 				xtype: 'combobox',
@@ -692,7 +736,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 labelWidth:100,
                 width : 300,
                 typeAheadDelay: 100,
-                margin:'5 10 0 150',
+               // margin:'5 10 0 150',
                 editable: false,
 				listeners: {
 			    	select: function (comboBox, records, eOpts) {
@@ -708,7 +752,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            name:'employerRegistration',	            
 	            width:390,	            
 	            labelWidth:130,
-	            margin:'5 10 0 100',
+	           // margin:'5 10 0 100',
 	            allowBlank:false,
 //	            readOnly:true,
 	            maxLength : 254,
@@ -730,7 +774,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            name:'aprovUser',
 	            width:400,
 	            labelWidth:150,	            
-	            margin:'5 10 0 150',
+	           // margin:'5 10 0 150',
 	            readOnly:true,
 	            hidden:true
             },{
@@ -744,8 +788,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 icon: 'resources/images/doc.png',
                 action:'updatePlantAccessRequest',
                 id: 'updatePlantAccessRequest',
-                width: 150,                
-                margin: '10 10 10 150',
+               // width: 150,
+                flex: 1, 
+                //margin: '10 10 10 150',
+                margin: '5 10 0 10',
                 handler: function () {
 //                    secondContainer.show();
 //                    firstContainer.hide();

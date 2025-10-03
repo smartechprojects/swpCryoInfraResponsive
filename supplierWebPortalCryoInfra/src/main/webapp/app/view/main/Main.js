@@ -19,7 +19,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.TaxVault',
         'SupplierApp.controller.FreightApproval',
         'SupplierApp.controller.FiscalDocuments',
-        'SupplierApp.controller.PurchaseOrder'/*,
+        'SupplierApp.controller.PurchaseOrder',
+        'SupplierApp.controller.PlantAccess'/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -129,7 +130,7 @@ Ext.define('SupplierApp.view.main.Main', {
     	itemId: 'fiscalDocumentsPanelTab',
 		title : '',
 		id:'tabFiscalDocumentsPanelId',
-		hidden: role=='ROLE_ADMIN' ||  role=='ROLE_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || (role=='ROLE_SUPPLIER' && supplierWithoutOC == 'TRUE') ?false:true
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ'?false:true
 	},{
 		xtype : 'freightApprovalPanel',
 		iconCls: 'fa-truck',
@@ -137,6 +138,13 @@ Ext.define('SupplierApp.view.main.Main', {
 		id:'tabFreightApprovalId',
 		title : '',					
 		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ'|| Flete=='si'?false:true
+	},{
+		xtype : 'plantAccessPanel',
+		itemId: 'plantAccessPanelTab',
+		id:'tabPlantAccessPanelId',
+		title : '',	
+		iconCls: 'fa-industry',		
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_PURCHASE_READ' || role=='ROLE_MANAGER' || role=='ROLE_SUPPLIER'?false:true
 	},
 	{
 		xtype : 'taxVaultPanel',

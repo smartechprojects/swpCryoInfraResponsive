@@ -4,6 +4,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerPanel', {
 	border : false,
 	frame : false,
 	style: 'border: solid #fff 1px',
+	autoScroll : true,
 	initComponent: function() {
 		
 		this.items = [{
@@ -11,6 +12,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerPanel', {
 			itemId: 'paWorkerForm',
 			xtype:'container',
 			layout: 'fit',
+			autoScroll : true,
 			items: [{
 				xtype: 'plantAccessWorkerForm',
 			}]			
@@ -19,6 +21,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerPanel', {
 			itemId: 'paWorkerGrid',
 			xtype:'container',
 			layout: 'fit',
+			autoScroll : true,
 			items: [{
 				xtype: 'plantAccessWorkerGrid',
 			}]

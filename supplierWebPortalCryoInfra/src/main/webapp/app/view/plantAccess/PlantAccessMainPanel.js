@@ -6,26 +6,31 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
 	border : false,
 	frame : false,
 	autoScroll : true,
+	layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
 	initComponent: function() {
 		this.items = [{
         	xtype: 'tabpanel',
 			id: 'plantAccessMainTabPanel',
 			itemId: 'plantAccessMainTabPanel',
         	layout: 'fit',
+        	flex: 1, 
     		plain: true,
     		border:false,
     		cls: 'hide-tabs hide-border',
     		items:[{
     			title: 'Solicitud',//------------------ Pestaña Solicitud -----------------------    			
     			autoScroll : true,
-    			//layout: 'fit',
+    			layout: 'fit',
     			items:[{
     				xtype: 'plantAccessRequestPanel'
     			}]
     		},{
     			title: 'Trabajador',//------------------ Pestaña Trabajador ---------------------
     			autoScroll : true,
-    			//layout: 'fit',
+    			layout: 'fit',
     			items:[{
     				xtype: 'plantAccessWorkerPanel'
     			}]            			

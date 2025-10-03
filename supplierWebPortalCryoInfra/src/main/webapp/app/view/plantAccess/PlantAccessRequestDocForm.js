@@ -5,41 +5,51 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 	frame : false,
 	style : 'border: solid #fff 1px',
 	autoScroll : true,
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
+    defaults: {
+        anchor: '100%'
+    },
 	initComponent : function() {
 		
 		this.items = [{
 			xtype: 'container',
             layout: 'anchor',
+            defaults: {
+                margin: '5 10 5 10'
+            },
             items: [{
 				xtype : 'displayfield',
 				value : SuppAppMsg.supplierForm35,
 				id:'textDocsRequest',
 				height:20,
-				margin:'5 10 0 300',
-				colspan:3,
+				margin:'5 10 10 10',
+			    //flex: 1,
+				//colspan:3,
 				fieldStyle: 'font-weight:bold'
             },{//Oculto
 				xtype: 'container',
 				layout: 'hbox',
 				id:'documentContainerDoc1',
-				colspan:3,
-				width:800,
-				margin:'10 0 10 150',
+				//colspan:3,
+				//width:800,
 				hidden:true,
 				defaults : {
-					labelWidth : 150,
-					xtype : 'textfield',
-					margin: '12 0 0 0'
+					//labelWidth : 150,
+					//xtype : 'textfield',
+					margin: '0 5 0 0'
 				},
 		        items:[{//	FORMATO DE INGRESO DE PROVEEDORES:
 		        	xtype : 'textfield',
 					fieldLabel : SuppAppMsg.plantAccess10,
 					name : 'text_SI',
 					id:'text_SI',
-					width:600,
+					//width:600,
 					labelWidth:300,
 					readOnly:true,
-					margin: '12 10 0 0'
+					flex: 1
 				},{
 					xtype: 'button',
 					width:100,
@@ -52,24 +62,23 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 				xtype: 'container',
 				layout: 'hbox',
 				id:'documentContainerDoc2',
-				colspan:3,
-				width:800,
-				margin:'10 0 10 150',
+				//colspan:3,
+				//width:800,
 				defaults : {
-					labelWidth : 150,
-					xtype : 'textfield',
-					margin: '12 0 0 0'
+					//labelWidth : 150,
+					//xtype : 'textfield',
+					margin: '0 5 0 0'
 				},
 		        items:[{
 		        	xtype : 'textfield',
 		        	fieldLabel : SuppAppMsg.plantAccess11,
 		        	name : 'text_PSUA',
 		        	id:'text_PSUA',
-		        	width:600,
+		        	//width:600,
 		        	labelWidth:300,
 		        	readOnly:true,
 		        	allowBlank:false,
-		        	margin: '12 10 0 0',
+				    flex: 1
 		        },{
 		        	xtype: 'button',
 		        	width:100,
@@ -82,24 +91,27 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 				xtype: 'container',
 				layout: 'hbox',
 				id:'documentContainerDoc3',
-				colspan:3,
-				width:800,
-				margin:'10 0 10 150',
+				//colspan:3,
+				//width:800,
+				//margin:'5 10 5 10',
+			   // flex: 1,
 				defaults : {
-					labelWidth : 150,
-					xtype : 'textfield',
-					margin: '12 0 0 0'
+					//labelWidth : 150,
+					//xtype : 'textfield',
+					//margin: '5 10 5 10'
+					margin: '0 5 0 0'
 				},
 		        items:[{
 		        	xtype : 'textfield',
 					fieldLabel : 'SUA',
 					name : 'text_SUA',
 					id:'text_SUA',
-					width:600,
+					//width:600,
 					labelWidth:300,
 					readOnly:true,
 					allowBlank:false,
-					margin: '12 10 0 0',
+					//margin: '5 10 5 10',
+				    flex: 1,
 				},{
 					xtype: 'button',
 					width:100,
@@ -112,24 +124,27 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 				xtype: 'container',
 				layout: 'hbox',
 				id:'documentContainerDoc4',
-				colspan:3,
-				width:800,
-				margin:'10 0 10 150',
+				//colspan:3,
+				//width:800,
+				//margin:'5 10 5 10',
+			    //flex: 1,
 				defaults : {
-					labelWidth : 150,
-					xtype : 'textfield',
-					margin: '12 0 0 0'
+					//labelWidth : 150,
+					//xtype : 'textfield',
+					//margin: '5 10 5 10'
+					margin: '0 5 0 0'
 				},
 		        items:[{
 		        	xtype : 'textfield',
 		        	fieldLabel : SuppAppMsg.plantAccess12,
 		        	name : 'text_FPCOPAA',
 		        	id:'text_FPCOPAA',
-		        	width:600,
+		        	//width:600,
 		        	labelWidth:300,
 		        	readOnly:true,
 		        	allowBlank:false,
-		        	margin: '12 10 0 0'
+		        	//margin: '5 10 5 10',
+				    flex: 1,
 		        },{
 		        	xtype: 'button',
 		        	width:100,
@@ -145,9 +160,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 	            itemId: 'heavyEquipmentRequestDoc',
 	            name:'heavyEquipmentRequestDoc',
 	            action:'heavyEquipmentRequestDoc',
-	            width:650,
+	            //width:650,
 	            labelWidth:650,
-	            margin:'5 10 0 150',
+	            margin:'5 10 5 10',
+			    flex: 1,
 	            listeners: {
 	                click: {
 	                    element: 'el', //bind to the underlying el property on the panel
@@ -179,24 +195,27 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 				xtype: 'container', 
 				layout: 'hbox',
 				id:'documentContainerDoc10',
-				colspan:3,
-				width:800,
-				margin:'10 0 10 150',
+				//colspan:3,
+				//width:800,
+				//margin:'5 10 5 10',
+			    //flex: 1,
 				hidden:true,
 				defaults : {
-					labelWidth : 150,
-					xtype : 'textfield',
-					margin: '12 0 0 0'
+					//labelWidth : 150,
+					//xtype : 'textfield',
+					//margin: '5 10 5 10'
+					margin: '0 5 0 0'
 				},
 		        items:[{
 		        	xtype : 'textfield',
 		        	fieldLabel : SuppAppMsg.plantAccess19,
 		        	name : 'text_SRC',
 					id:'text_SRC',
-					width:600,
+					//width:600,
 					labelWidth:300,
 					readOnly:true,
-					margin: '12 10 0 0',
+					margin: '5 10 5 10',
+				    flex: 1,
 				},{
 					xtype: 'button',
 					width:100,
@@ -209,24 +228,27 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 				xtype: 'container',
 				layout: 'hbox',
 				id:'documentContainerDoc12',
-				colspan:3,				
-				width:800,
-				margin:'10 0 10 150',
+				//colspan:3,				
+				//width:800,
+				//margin:'5 10 5 10',
+			    //flex: 1,
 				hidden:true,
 				defaults : {
-					labelWidth : 150,
-					xtype : 'textfield',
-					margin: '12 0 0 0'
+					//labelWidth : 150,
+					//xtype : 'textfield',
+					//margin: '5 10 5 10'
+					margin: '0 5 0 0'
 				},
 		        items:[{
 		        	xtype : 'textfield',
 		        	fieldLabel : SuppAppMsg.plantAccess21,
 		        	name : 'text_RM',
 					id:'text_RM',
-					width:600,
+					//width:600,
 					labelWidth:300,
 					readOnly:true,
-					margin: '12 10 0 0',
+					//margin: '5 10 5 10',
+				    flex: 1,
 				},{
 					xtype: 'button',
 					width:100,
@@ -238,17 +260,19 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
             },{
 				xtype: 'container',
 				layout: 'hbox',
-				colspan:3,
-				width:800,
-				margin:'20 10 10 150',
+				//colspan:3,
+				//width:800,
+				margin: '0 5 0 0',
+			    //flex: 1,
 		        items:[{
 	                xtype: 'button',
 	                text: SuppAppMsg.plantAccess88,
 	                icon: 'resources/images/doc.png',	                
 	                action: 'updatePlantAccessRequestDoc',
 	                id: 'updatePlantAccessRequestDoc',
-	                width: 150,
-	                margin: '0 0 0 0'
+	                width: 120,
+	                margin: '0 0 0 0',
+				    //flex: 1,
 	            }]
             }]
 		}]

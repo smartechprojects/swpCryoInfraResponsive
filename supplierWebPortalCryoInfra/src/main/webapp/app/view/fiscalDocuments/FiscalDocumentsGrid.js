@@ -4,7 +4,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
     loadMask: true,
 	frame:false,
 	border:false,
-    forceFit: true,
+    //forceFit: true,
     scrollable: true,
 	store : {
 		type:'fiscaldocuments'

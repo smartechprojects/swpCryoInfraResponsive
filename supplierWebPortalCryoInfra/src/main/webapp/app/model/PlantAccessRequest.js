@@ -1,7 +1,8 @@
 Ext.define('SupplierApp.model.PlantAccessRequest', {
     extend: 'Ext.data.Model',
     fields: [
-				{name:  'id'},
+				//{name:  'id'},
+    			{ name: 'id', type: 'int' },
 				{ name: 'fechaSolicitud', type: 'int' },
 				{ name: 'fechaSolicitudStr', type: 'string' },
 				{name:  'addressNumberPA'},
@@ -45,6 +46,7 @@ Ext.define('SupplierApp.model.PlantAccessRequest', {
             writer: {
             	type: 'json',
                 writeAllFields: true,
+                encode: true,
                 encode: false
             }
         }

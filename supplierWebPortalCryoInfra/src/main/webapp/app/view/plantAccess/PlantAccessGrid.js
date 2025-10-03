@@ -6,14 +6,16 @@
 	frame:false,
 	border:false,
 	cls: 'extra-large-cell-grid',  
-    store:'PlantAccess',
-	scroll : true,
+	//store: Ext.create('SupplierApp.store.PlantAccess'),
+	//scrollable : true,
 	viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' }
 	},
     initComponent: function() {
-    	
+    	 this.store = Ext.create('SupplierApp.store.PlantAccess');
+    	 var plantAccessController = SupplierApp.app.getController("SupplierApp.controller.PlantAccess");
+    	 
     	var docType = null;
     	var invStatus = null;
     	
@@ -41,10 +43,11 @@
     	    allowBlank:false,
     	    editable: false,
     	    displayField: 'name',
-			width:150,
-    	    labelWidth:40,
+			//width:150,
+    	    flex : 1.5,
+    	    //labelWidth:40,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
+    	    //margin:'20 20 0 10',
     	    emptyText:'SELECCIONAR',
     	    id:'combostatus',
     	    listeners: {
@@ -57,47 +60,57 @@
         this.columns = [
 		        	{
 			            text     : 'Id de Solicitud',
-			            width: 100,
+			            //width: 100,
+			            flex: 1,
 			            dataIndex: 'id',
 			            hidden:true
 			        },{
 			            text     : SuppAppMsg.approvalRequestDate,
-			            width: 150,
+			            //width: 150,
+			            flex: 1,
 			            dataIndex: 'fechaSolicitudStr',
 			            //renderer : Ext.util.Format.dateRenderer("d-m-Y"),
 			        },{
 			            text     : 'UUID',
-			            width: 230,
+			            //width: 230,
+			            flex: 1,
 			            dataIndex: 'rfc',
 			            hidden:true
 			        },{
 			            text     : SuppAppMsg.plantAccess51,
-			            width: 230,
+			            //width: 230,
+			            flex: 1,
 			            dataIndex: 'addressNumberPA',
 			        },{
 			            text     : SuppAppMsg.plantAccess64,
-			            width: 230,
+			            //width: 230,
+			            flex: 1,
 			            dataIndex: 'razonSocial', 
 			        },{
 			            text     : SuppAppMsg.plantAccess2,
-			            width: 230,
+			            //width: 230,
+			            flex: 1,
 			            dataIndex: 'nameRequest',
 			        },{
 			            text     : SuppAppMsg.fiscalTitle22,
-			            width: 230,
+			            //width: 230,
+			            flex: 1,
 			            dataIndex: 'status'
 			        },{
 			            text     : 'Vigente',
-			            width: 110,
+			            //width: 110,
+			            flex: 1,
 			            hidden:true,
 			            dataIndex: 'status'
 			        },{
 			            text     : SuppAppMsg.plantAccess3,
-			            width: 110,
+			            //width: 110,
+			            flex: 1,
 			            dataIndex: 'aprovUser'
 			        }, 	{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.taxvaulRequest,
 			            align: 'center',
 						name : 'plantAccessReportBatch',
@@ -109,7 +122,7 @@
 			            		icon:'resources/images/archivo-pdf.png',
 			            		getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			            				if(r.data.status != "APROBADO") {
-				              	              return "x-hide-display";
+				              	              return "x-hidden-display";
 				              	          }
 				              	      },
 			             	      text: SuppAppMsg.freightApprovalReportBatch,
@@ -122,7 +135,8 @@
 			                  }}]
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.approvalApprove,
 			            align: 'center',
 			            hidden: role=='ROLE_PURCHASE_READ' || role == 'ROLE_SUPPLIER'?true:false,
@@ -134,7 +148,7 @@
 			            	icon:'resources/images/accept.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			              	          if(!(r.data.status == "PENDIENTE" && r.data.aprovUser.includes(userName) )) {
-			              	              return "x-hide-display";
+			              	              return "x-hidden-display";
 			              	          }
 			              	      },
 			              	      text: SuppAppMsg.approvalApprove,
@@ -143,7 +157,8 @@
 			                  }}]
 			        },{
 			        	xtype: 'actioncolumn', 
-			            width: 90,
+			            //width: 90,
+			        	flex: 1,
 			            header: SuppAppMsg.approvalReject,
 			            align: 'center',
 						name : 'rejectInvoiceFDA',
@@ -156,7 +171,7 @@
 			            	icon:'resources/images/close.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			              		 if(!(r.data.status == "PENDIENTE" && r.data.aprovUser.includes(userName) )) {
-		              	              return "x-hide-display";
+		              	              return "x-hidden-display";
 		              	          }
 			              	      },
 			              	      text: SuppAppMsg.approvalReject,
@@ -165,8 +180,20 @@
 			                  }}]
 			        }];
         
-        this.tbar = [
-        	{
+        this.dockedItems = [
+        	{   xtype: 'toolbar',
+                dock: 'top',
+                layout: {
+                    type: 'hbox',
+                    align: 'middle',
+                    pack: 'start'
+                },
+                defaults: {
+                    margin:'20 20 0 10',
+                  //  labelAlign: 'top'
+                },
+                items: [
+                	{
     			xtype: 'textfield',
                 fieldLabel: 'Aprobador',
                 id: 'approverPlantAccess',
@@ -176,9 +203,10 @@
                 value: role != 'ROLE_SUPPLIER' ?userName:'',
                 readOnly: true,
                 hidden:true,
-                width:200,
-                labelWidth:50,
-                margin:'20 20 0 10'
+                //width:200,
+                //labelWidth:50,
+                flex :1 ,
+                //margin:'20 20 0 10'
     		},{
     			xtype: 'textfield',
                 fieldLabel: SuppAppMsg.plantAccess51, 
@@ -190,9 +218,10 @@
                 readOnly: role.includes('ROLE_SUPPLIER') ?true:false,
                 hidden: role.includes('ROLE_SUPPLIER') ?true:false,		
                 //hidden: role.includes('ROLE_SUPPLIER')?true:false,
-                width:200,
-                labelWidth:50,
-                margin:'20 20 0 10'
+                //width:200,
+                //labelWidth:50,
+                flex :1 ,
+                //margin:'20 20 0 10'
     		},{
 			xtype: 'textfield',
             fieldLabel: SuppAppMsg.supplierForm5.substring(0,SuppAppMsg.supplierForm5.length - 1), 
@@ -204,18 +233,37 @@
             readOnly: role == 'ROLE_SUPPLIER' ?true:false,
             hidden: role == 'ROLE_SUPPLIER' ?true:false,
             //hidden: role == 'ROLE_SUPPLIER'?true:false,
-            width:200,
-            labelWidth:50,
-            margin:'20 20 0 10'
+            //width:200,
+            flex :1.5 ,		
+            //labelWidth:50,
+            //margin:'20 20 0 10'
 		},{ 
 			xtype: 'combostatus'
-		},{
+		}]
+        	},        
+        	{
+            	xtype: 'toolbar',
+                dock: 'top',
+                layout: {
+                    type: 'hbox',
+                    align: 'middle',
+                    pack: 'start'
+                },
+                defaults: {
+                    margin: '0 20 0 10' 
+                },
+                items: [{
        		xtype:'button',
             text: SuppAppMsg.suppliersSearch,
             iconCls: 'icon-appgo',
             action:'parSearch',
             cls: 'buttonStyle',
-            margin:'0 20 0 10'
+           // margin:'0 20 0 10',
+            listeners: {
+                tap: function (button) {
+                	plantAccessController.parSearch(button);
+                }
+            }
 		},{
 			iconCls : 'icon-add',
 			itemId : 'addPlantAccessRequest',
@@ -224,6 +272,8 @@
 			action : 'addNewPlantAccessRequest',
 //			hidden: role == 'ROLE_SUPPLIER'?false:true,
 		}
+		]
+        	},
 		];
         
 		this.bbar = Ext.create('Ext.PagingToolbar', {

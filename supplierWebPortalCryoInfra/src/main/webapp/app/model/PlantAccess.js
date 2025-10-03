@@ -4,8 +4,7 @@ Ext.define('SupplierApp.model.PlantAccess', {
 				{name:  'id'},
 				{ name: 'fechaSolicitud', type: 'int' },
 		        { name: 'fechaSolicitudStr', type: 'string', convert: function (value, record) {
-		        	
-		            return Ext.util.Format.date(new Date(record.raw.fechaSolicitud), 'd-m-Y H:i:s');
+		            return Ext.util.Format.date(new Date(record.data.fechaSolicitud), 'd-m-Y H:i:s');
 		        }},
 				{name:  'addressNumberPA'},
 				{name:  'razonSocial'},

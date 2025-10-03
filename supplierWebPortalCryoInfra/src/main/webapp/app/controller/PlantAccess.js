@@ -1090,8 +1090,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     		this.winLoadInv = new Ext.Window({
     			layout : 'fit',
     			title : SuppAppMsg.plantAccess93,
-    			width : 600,
-    			height : 160,
+    			//width : 600,
+    			//height : 160,
+    			width: Ext.Element.getViewportWidth() * 0.45,   
+                maxWidth: 450,                               
+                height: Ext.Element.getViewportHeight() * 0.35, 
+                maxHeight: 160,
     			modal : true,
     			closeAction : 'destroy',
     			resizable : false,
@@ -1354,8 +1358,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
-			width : 600,
-			height : 160,
+			//width : 600,
+			//height : 160,
+			width: Ext.Element.getViewportWidth() * 0.45,   
+            maxWidth: 450,                               
+            height: Ext.Element.getViewportHeight() * 0.35, 
+            maxHeight: 160,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : false,
@@ -1502,8 +1510,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
-			width : 600,
-			height : 160,
+			//width : 600,
+			//height : 160,
+			width: Ext.Element.getViewportWidth() * 0.45,   
+            maxWidth: 450,                               
+            height: Ext.Element.getViewportHeight() * 0.35, 
+            maxHeight: 160,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : false,
@@ -1722,8 +1734,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
-			width : 600,
-			height : 160,
+			//width : 600,
+			//height : 160,
+			width: Ext.Element.getViewportWidth() * 0.45,   
+            maxWidth: 450,                               
+            height: Ext.Element.getViewportHeight() * 0.35, 
+            maxHeight: 160,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : false,
@@ -1740,24 +1756,30 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
 	
     showRequestFile: function(button) {
+    	debugger
        	var win = new Ext.Window(
 				{
 					title : SuppAppMsg.taxvaultUploandDocuments,
 					layout : 'fit',
 					autoScroll : true,
-					width : 850,
-					height : 440,
+					//width : 850,
+					//height : 440,
+					width: Ext.Element.getViewportWidth() * 0.65,   // 👈 40% de pantalla
+	                maxWidth: 850,                                // 👈 ancho mínimo
+	                height: Ext.Element.getViewportHeight() * 0.50, // 👈 40% de alto
+	                maxHeight: 440,
 					modal : true,
 					closeAction : 'destroy',
 					resizable : false,
 					minimizable : false,
 					maximizable : false,
+					scrollable: true,
 					plain : true,
 					bodyStyle : "padding:10 10 0 10px;background:#fff;",
 					items : [ {
 	        			xtype : 'plantAccessFileGrid',
 	        			border : true,
-	        			height : 415
+	        			//height : 415
 	        		}  ]
 				});
 
@@ -1774,11 +1796,11 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    	requestId:paRequestId
 	        },
 		    success: function(fp, o) {
-		    	
+		    	debugger
 		    	var res = Ext.decode(fp.responseText);
 				var rec =Ext.create('SupplierApp.model.PlantAccessDetail',res.data);
 				store.removeAll();
-		    	store.add(rec.raw);
+		    	store.add(res.data);
 		    	grid.getView().refresh();
 		    	
 		    },
@@ -1883,8 +1905,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
-			width : 1050,
-			height : 600,
+			//width : 1050,
+			//height : 600,
+			width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
+            maxWidth: 1050,                                // 👈 ancho mínimo
+            height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
+            maxHeight: 600,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : true,
@@ -1906,7 +1932,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	var form = this.getPlantAccessRequestForm().getForm();
 		form.loadRecord(record);
 		
-		 var rawDate = record.raw.fechafirmGui; // Suponiendo que el campo en record.raw se llama 'fechafirmGui'
+		 var rawDate = record.data.fechafirmGui; // Suponiendo que el campo en record.raw se llama 'fechafirmGui'
 		    if (rawDate) {
 		        var dateField = form.findField('fechafirmGui');
 		        var date = new Date(rawDate); // Convertir timestamp a objeto Date
@@ -2241,11 +2267,21 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	var filePanel = Ext.create(
 				'Ext.form.Panel',
 				{
-					width : 900,
+					//width : 900,
+					bodyPadding: 10,
+				    layout: {
+				        type: 'vbox',
+				        align: 'stretch'
+				    },
+				    defaults: {
+				        anchor: '100%',   // ocupa todo el ancho disponible
+				        labelWidth: 120,
+				        margin: '5 10'
+				    },
 					items : [{
 								xtype : 'displayfield',
 								value : SuppAppMsg.approvalNoteAcept,
-								margin:'0 20 0 10',
+								//margin:'0 20 0 10',
 							},{
 					        	//xtype : 'textfield',
 								xtype: 'textareafield',
@@ -2253,17 +2289,20 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 								name : 'noteApprovPA',
 								id:'noteApprovPA',
 								multiline: true,
-								width:400,
+								//width:400,
 								height : 70,
 								maxLength : 250,
 								enforceMaxLength : true,
-								margin:'0 20 0 10',
+								//margin:'0 20 0 10',
 								allowBlank:false
 							},{
 								xtype : 'displayfield',
 								value : SuppAppMsg.plantAccess61,
-								margin:'0 20 0 10',
+								//margin:'0 20 0 10',
 							},{
+						        xtype: 'fieldcontainer',
+						        layout: 'hbox',
+						        items: [{
 								xtype: 'datefield',
 					            fieldLabel: SuppAppMsg.purchaseOrderDesde,
 					            id: 'paFromDate',
@@ -2289,9 +2328,9 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 					            allowBlank:false,
 					            width:160,
 					            labelWidth:35,
-					            margin:'0 40 0 10'
-							}
-							],
+					            margin:'0 0 0 10'
+							}]
+						    }],
 
 					buttons : [ {
 						text : SuppAppMsg.supplierLoad,
@@ -2369,8 +2408,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 					me.winLoadInvFile = new Ext.Window({
 						layout : 'fit',
 						title : SuppAppMsg.approvalAceptSupp,
-						width : 500,
-						height : 235,
+						//width : 500,
+						//height : 235,
+						width: Ext.Element.getViewportWidth() * 0.55,   // 👈 40% de pantalla
+		                maxWidth: 500,                                // 👈 ancho mínimo
+		                height: Ext.Element.getViewportHeight() * 0.85, // 👈 40% de alto
+		                maxHeight: 300,
 						modal : true,
 						closeAction : 'destroy',
 						resizable : false,
@@ -2462,12 +2505,15 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	var dto = Ext.create('SupplierApp.model.PlantAccess',record.data);
     	var status ="RECHAZADO";
     	
+    	var winWidth = Ext.Element.getViewportWidth();
+    	var boxWidth = Math.min(Math.max(winWidth * 0.35, 400), 500); // ancho mínimo 400, máximo 600, 50% pantalla
+    	
     	var dlgRejected = Ext.MessageBox.show({
     		title : SuppAppMsg.rejectDoc,
 			msg : SuppAppMsg.approvalNoteReject,
 			buttons : Ext.MessageBox.YESNO,
 			multiline: true,
-			width:500,
+			//width:500,
 			buttonText : {
 				yes : SuppAppMsg.approvalAcept,
 				no : SuppAppMsg.approvalExit
@@ -2534,6 +2580,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	dlgRejected.textArea.inputEl.set({
 		    maxLength: 255
 		});
+    	dlgRejected.textArea.setWidth(boxWidth - 40);
     },
     
     invLoad : function(grid, rowIndex, colIndex, record) {
@@ -5232,13 +5279,18 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
-			width : 1050,
-			height : 600,
+			//width : 1050,
+			//height : 600,
+			width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
+            maxWidth: 1050,                                // 👈 ancho mínimo
+            height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
+            maxHeight: 600,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : true,
 			minimizable : false,
 			maximizable : false,
+			scrollable : true,
 			plain : true,
 			items : [ {
 				xtype : 'plantAccessMainPanel',
@@ -5576,7 +5628,7 @@ debugger
     	
     	
     	
-    	debugger
+    	
     },
 
     plantAccessFinishWorker: function(button) {
@@ -6002,7 +6054,7 @@ debugger
     
     updatePlantAccessRequest: function() {
     	debugger;
-    	var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
+    	//var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
     	var me = this;
     	var form = this.getPlantAccessRequestForm().getForm();
 		var values = form.getFieldValues();
@@ -6029,13 +6081,24 @@ debugger
 		
 		
 		
+		debugger
 		
-		var updatedRecord = populateObj(record, values);
-		record.set(updatedRecord);
+		 // SOLUCIÓN: Limpiar el ID del record antes de asignar valores
+	    record.set('id', null); // Forzar ID a null para nuevo registro
+	    
+	    // Asignar valores excluyendo el ID si es temporal
+	    if (values.id && typeof values.id === 'string' && values.id.indexOf('SupplierApp.model') !== -1) {
+	        delete values.id;
+	    }
+		
+		//var updatedRecord = populateObj(record, values);
+		 record.set(values); 
+		//record.set(updatedRecord);
 		record.save({
 			callback: function (records, o, success, msg) {
+				debugger
 				if(success == true){
-		    		var r1 = Ext.decode(o.response.responseText);
+		    		var r1 = Ext.decode(o._response.responseText);
 			    	var res = Ext.decode(r1);
 
 			    	if(res.message != ''){
@@ -6046,11 +6109,13 @@ debugger
 	    	        	});
 			    		return false;
 			    	} else {
+			    		debugger
 			    		//Actualiza información del formulario PlantAccessRequestForm
 			    		var recordNew = Ext.create('SupplierApp.model.PlantAccessRequest', res.data);
 			    		form.loadRecord(recordNew);
-			    		 
-			    		var rawDate = res.data.fechafirmGui.time; // Suponiendo que el campo en record.raw se llama 'fechafirmGui'
+			    		 debugger
+			    		//var rawDate = res.data.fechafirmGui.time; // Suponiendo que el campo en record.raw se llama 'fechafirmGui'
+			    		 var rawDate = res.data.fechafirmGui && res.data.fechafirmGui.time;
 			 		    if (rawDate) {
 			 		        var dateField = form.findField('fechafirmGui');
 			 		        var date = new Date(rawDate); // Convertir timestamp a objeto Date
@@ -6069,7 +6134,7 @@ debugger
 				    		Ext.getCmp('plantAccessAddWorker').setVisible(false);
 				    	}
 			    		
-			    		box.hide();
+			    		//box.hide();
 			    		return true;				    		
 			    	}
 				}
@@ -6112,13 +6177,26 @@ debugger
     	var form = this.getPlantAccessWorkerForm().getForm();
 		var values = form.getFieldValues();
 		var record = Ext.create('SupplierApp.model.PlantAccessWorker');		
-		var updatedRecord = populateObj(record, values);
-		record.set(updatedRecord);
+		//var updatedRecord = populateObj(record, values);
+		
+		// SOLUCIÓN: Limpiar el ID del record antes de asignar valores
+	    record.set('id', null); // Forzar ID a null para nuevo registro
+	    
+	    // Asignar valores excluyendo el ID si es temporal
+	    if (values.id && typeof values.id === 'string' && values.id.indexOf('SupplierApp.model') !== -1) {
+	        delete values.id;
+	    }
+		
+		//var updatedRecord = populateObj(record, values);
+		 record.set(values); 
+		//record.set(updatedRecord);
+		
+		//record.set(updatedRecord);
 		record.save({
 			callback: function (records, o, success, msg) {
 				debugger;
 				if(success == true){
-		    		var r1 = Ext.decode(o.response.responseText);
+		    		var r1 = Ext.decode(o._response.responseText);
 			    	var res = Ext.decode(r1);
 
 			    	if(res.message != ''){ 
@@ -6151,6 +6229,7 @@ debugger
 			    		return true;
 			    	}
 				} else {
+					debugger
 		    		var r1 = Ext.decode(o.response.responseText);
 			    	var res = Ext.decode(r1);
 
@@ -6271,12 +6350,22 @@ debugger
             	var form = this.getPlantAccessRequestForm().getForm();
         		var values = form.getFieldValues();
         		var record = Ext.create('SupplierApp.model.PlantAccessRequest');		
-        		var updatedRecord = populateObj(record, values);
-        		record.set(updatedRecord);
+        		//var updatedRecord = populateObj(record, values);
+        		//record.set(updatedRecord);
+        		
+        		 // SOLUCIÓN: Limpiar el ID del record antes de asignar valores
+        	    record.set('id', null); // Forzar ID a null para nuevo registro
+        	    
+        	    // Asignar valores excluyendo el ID si es temporal
+        	    if (values.id && typeof values.id === 'string' && values.id.indexOf('SupplierApp.model') !== -1) {
+        	        delete values.id;
+        	    }
+        		
+        		 record.set(values); 
         		record.save({
         			callback: function (records, o, success, msg) {
         				if(success == true){
-        		    		var r1 = Ext.decode(o.response.responseText);
+        		    		var r1 = Ext.decode(o._response.responseText);
         			    	var res = Ext.decode(r1);
         			    	if(res.message != ''){
         			    		try{
