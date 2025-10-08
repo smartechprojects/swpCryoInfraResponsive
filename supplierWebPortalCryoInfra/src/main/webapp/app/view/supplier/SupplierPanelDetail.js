@@ -4,11 +4,13 @@ Ext.define('SupplierApp.view.supplier.SupplierPanelDetail' ,{
     id:'supplierPanelDetail',
     border:false,
     frame:false,
+ 	scrollable: true,
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
            	 xtype: 'supplierForm',
-           	 height:490
+           	 //height:490,
+          
             }]
         });
         this.callParent(arguments);

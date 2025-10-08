@@ -96,7 +96,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 						   fieldLabel : SuppAppMsg.supplierForm1,
 						   name : 'fechaSolicitud',
 						   id:'fechaSolicitud',
-						   width:250,
+						   //width:250,
+						   flex:1,
 						   xtype:'datefield',
 						   format: 'd-m-Y',
 						   margin:'0 0 20 10',
@@ -120,7 +121,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								id : 'dataUpdateList',
 								//maxLength : 40,
 								margin:'10 0 0 10',
-								width : 500,
+								//width : 500,
+								flex:1,
 								readOnly:true,
 								hidden: true
 								},{//DACG
@@ -129,14 +131,16 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								id : 'updateApprovalFlow',
 								//maxLength : 40,
 								margin:'10 0 0 10',
-								width : 500,
+								//width : 500,
+								flex:1,
 								readOnly:true,
 								hidden: true
 								},{ 
 								xtype : 'displayfield',
 								value : SuppAppMsg.supplierForm75,
 								height:20,
-								width : 1000,
+								//width : 1000,
+								flex:1,
 								id: 'msgUpdSect',
 								margin: '0 0 0 0',
 								colspan:4,
@@ -146,7 +150,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								xtype : 'displayfield',
 								value : false,
 								height:20,
-								width : 1000,
+								//width : 1000,
+								flex:1,
 								id: 'originApproval',
 								name: 'originApproval',
 								margin: '0 0 0 0',
@@ -171,7 +176,9 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									itemId : 'ticketForSearch',
 									labelAlign:'left',
 									margin:'0 5 0 0',
-									width:250,
+									//width:250,
+									width:150,
+									//flex:1,
 									colspan:2,
 									tip: SuppAppMsg.supplierForm3,
 								    listeners: {
@@ -184,7 +191,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								    }
 							  },{
 									xtype: 'button',
-									width:60,
+									//width:60,
+									flex:1,
 									hidden : role == 'ROLE_SUPPLIER'?true:false,
 									text : SuppAppMsg.suppliersSearch,
 									action : 'searchTicket',
@@ -196,6 +204,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'addresNumber',
 								labelAlign:'center',
 								margin:'0 0 20 0',
+								flex:1,
 								colspan:3,
 								readOnly:true,
 								allowBlank:true,
@@ -226,7 +235,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                store : getAutoLoadUDCStore('COUNTRY', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width:400,
+				                //width:400,
+				                flex:1,
 				                readOnly:role =='ROLE_SUPPLIER' ?true:false,
 				                editable: false,
 							    listeners: {
@@ -677,7 +687,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									name : 'checkEditDataSupp',
 									id : 'checkEditDataSupp',
 									margin: '0 0 0 90',
-									width : 20,
+									//width : 20,
+									flex:1,
 									checked: false,
 									//hidden:false,
 									hidden: isMainSupplierUser ? false : true, //Solo el proveedor puede modificar su información
@@ -889,7 +900,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 						   //maskRe: /[A-Za-z &]/, 
 						   //stripCharsRe: /[^A-Za-z &]/,
 						   margin:'10 0 0 10',
-						   width : 500,
+						   //width : 500,
+						   flex:1,
 						   maxLength : 40,
 						   ////enforceMaxLength : true,
 						   maxLengthText : SuppAppMsg.supplierForm68 + '{0}<br>',
@@ -1089,7 +1101,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CONTRIB', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 250,
+				                //width : 250,
+				                flex:1,
 				                editable: false,
 								colspan:3,
 								listeners: {
@@ -1381,7 +1394,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.supplierForm10,
 								name : 'calleNumero',
 								id : 'calleNumero',
-								width:550,
+								//width:550,
+								flex:1,
 								colspan:3,
 								maxLength : 40,
 								////enforceMaxLength : true,
@@ -1397,7 +1411,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									fieldLabel :SuppAppMsg.supplierForm11,
 									name : 'delegacionMnicipio',
 									id:'fldMunicipio',
-									width:300,
+									//width:300,
+									flex:1,
 									maxLength : 40,
 									////enforceMaxLength : true,
 									maxLengthText : SuppAppMsg.supplierForm68 + '{0}<br>',
@@ -1424,7 +1439,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										id : 'codigoPostal',
 										labelAlign:'right',
 										margin:'0 10 0 0',
-										width:200,
+										//width:200,
+										flex:1,
 										colspan:2,
 										allowBlank:false,
 										   listeners:{
@@ -1508,7 +1524,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel :SuppAppMsg.supplierForm16,
 								name : 'coloniaEXT', 
 								id:'coloniaEXT',
-								width:300,
+								//width:300,
+								flex:1,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								maxLength : 40,
 								////enforceMaxLength : true,
@@ -1535,7 +1552,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								id:'fldColonia', 
 								editable: false,
-								width:400,
+								//width:400,
+								flex:1,
 								allowBlank:false,
 								//fieldStyle:role=='ANONYMOUS'?'':'border:2px solid green;'
 							    },{
@@ -1553,7 +1571,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									store : getAutoLoadUDCStore('STATE', '', '', ''),
 					                displayField: 'strValue1',
 					                valueField: 'udcKey',
-					                width : 250,
+					                //width : 250,
+					                flex:1,
 									colspan:3,
 									lastQuery: ''
 							},{
@@ -1561,7 +1580,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'telefonoDF',
 								id:'phoneDF',
 								margin:'10 0 0 10',
-								width:250,
+								//width:250,
+								flex:1,
 								maskRe: /[0-9]/,
 								stripCharsRe: /[^0-9]/,
 								allowBlank:false,
@@ -1576,7 +1596,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'faxDF',
 								id:'faxDF',
 								margin:'10 0 0 10',
-								width:250,
+								//width:250,
+								flex:1,
 								colspan:3,
 								hidden:true,
 								allowBlank:true,
@@ -1590,7 +1611,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
                                 fieldLabel : '',
                                 name : 'auxComp',
                                 id : 'auxComp',
-                                width:450,
+                                //width:450,
+                                flex:1,
                                 colspan:3,
                                 fieldStyle: 'display:none;'
                            }/*,{
@@ -1641,7 +1663,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									name : 'checkEditContact',
 									id : 'checkEditContact',
 									margin: '0 0 0 90',
-									width : 20,
+									//width : 20,
+									flex:1,
 									checked: false,
 									//hidden:false,
 									hidden: isMainSupplierUser ? false : true, //Solo el proveedor puede modificar su información
@@ -1726,7 +1749,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('USERPURCHASE', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'strValue1',
-				                width : 500,
+				                //width : 500,
+				                flex:1,
 				                editable: false,
 								colspan:3,
 								listeners: {
@@ -1780,7 +1804,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.supplierForm20,
 								name : 'emailComprador',
 								id : 'emailComprador',
-								width:550,
+								//width:550,
+								flex:1,
 								colspan:3,
 								readOnly:true,
 								//tip: SuppAppMsg.supplierForm50,
@@ -1805,7 +1830,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								readOnly:true,
 								maskRe: /[0-9]/,
 								stripCharsRe: /[^0-9]/,
-								width:300,
+								//width:300,
+								flex:1,
 								//colspan:1,
 								allowBlank:false,
 								   listeners:{
@@ -1832,7 +1858,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'cargoCxC',
 								id:'cargoCxC',
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								colspan:3,
 								allowBlank:true,
 								   listeners:{
@@ -1853,10 +1880,13 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									fieldLabel : SuppAppMsg.supplierForm7,
 									name : 'emailSupplier',
 									id : 'emailSupplier',
-									width:450,
+									//width:450,
+									flex:1,
+									margin:'10 0 0 10',
 									allowBlank:false,blankText: SuppAppMsg.supplierForm74,
 									blankText: SuppAppMsg.supplierForm74,
 									maxLength : 254,
+									colspan:3,
 									//enforceMaxLength : true,
 									//vtype: 'email',
 									//vtypeText : SuppAppMsg.supplierForm73,
@@ -1875,15 +1905,18 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							xtype : 'displayfield',
 							value : SuppAppMsg.supplierForm25,
 							height:20,
+							//margin: '50 0 0 10',
 							margin: '50 0 0 10',
 							colspan:3,
+							width:'100%',
 							fieldStyle: 'font-weight:bold'
 							},{
 								fieldLabel : SuppAppMsg.supplierForm26 + ' 01*',
 								name : 'nombreCxP01',
 								id:'nombreCxP01',
 								margin:'10 0 0 10',
-								width:400,
+								//width:400,
+								flex:1,
 								allowBlank:false,
 								   listeners:{
 										change: function(field, newValue, oldValue){
@@ -1899,7 +1932,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								vtype: 'email',
 								vtypeText : SuppAppMsg.supplierForm69,
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								allowBlank:false,
 								listeners:{
 					            	render: function(c) {
@@ -1923,7 +1957,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'telefonoCxP01',
 								id:'telefonoCxP01',
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								maskRe: /[0-9]/,
 								stripCharsRe: /[^0-9]/,
 								colspan:2,
@@ -1939,7 +1974,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'nombreCxP02',
 								id:'nombreCxP02',
 								margin:'10 0 0 10',
-								width:400,
+								//width:400,
+								flex:1,
 								allowBlank:false,
 								   listeners:{
 										change: function(field, newValue, oldValue){
@@ -1955,7 +1991,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								//tip: SuppAppMsg.supplierForm50,
 								vtype: 'email',
 								vtypeText : SuppAppMsg.supplierForm69,
-								width:300,
+								//width:300,
+								flex:1,
 								allowBlank:false,
 								listeners:{
 					            	render: function(c) {
@@ -1981,7 +2018,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								maskRe: /[0-9]/,
 								stripCharsRe: /[^0-9]/,
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								colspan:2,
 								allowBlank:false,
 								   listeners:{
@@ -1995,7 +2033,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'nombreCxP03',
 								id:'nombreCxP03',
 								margin:'10 0 0 10',
-								width:400,
+								//width:400,
+								flex:1,
 								allowBlank:true,
 								   listeners:{
 										change: function(field, newValue, oldValue){
@@ -2011,7 +2050,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								vtype: 'email',
 								vtypeText : SuppAppMsg.supplierForm69,
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								allowBlank:true,
 								listeners:{
 					            	render: function(c) {
@@ -2035,7 +2075,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'telefonoCxP03',
 								id:'telefonoCxP03',
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								maskRe: /[0-9]/,
 								stripCharsRe: /[^0-9]/,
 								colspan:2,
@@ -2051,7 +2092,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'nombreCxP04',
 								id:'nombreCxP04',
 								margin:'10 0 0 10',
-								width:400,
+								//width:400,
+								flex:1,
 								allowBlank:true,
 								   listeners:{
 										change: function(field, newValue, oldValue){
@@ -2067,7 +2109,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								//tip: SuppAppMsg.supplierForm50,
 								vtype: 'email',
 								vtypeText : SuppAppMsg.supplierForm69,
-								width:300,
+								//width:300,
+								flex:1,
 								allowBlank:true,
 								listeners:{
 					            	render: function(c) {
@@ -2091,7 +2134,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'telefonoCxP04',
 								id:'telefonoCxP04',
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								colspan:2,
 								maskRe: /[0-9]/,
 								stripCharsRe: /[^0-9]/,
@@ -2110,6 +2154,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								margin: '50 0 0 10',
 								hidden:true,
 								colspan:3,
+								flex:1,
 								fieldStyle: 'font-weight:bold'
 							},{
 								fieldLabel : SuppAppMsg.supplierForm63,
@@ -2128,7 +2173,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                displayField: 'strValue1', 
 				                valueField: 'udcKey',
 				                hidden:true,
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							}/*,{
 								fieldLabel : 'Cat Code 27',
@@ -2164,7 +2210,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CATEGORYCODE01', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : 'Cat Code 20',
@@ -2182,7 +2229,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CATEGORYCODE20', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : 'Cat Code 23',
@@ -2200,7 +2248,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CATEGORYCODE23', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : 'Cat Code 24',
@@ -2218,7 +2267,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CATEGORYCODE24', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : SuppAppMsg.supplierForm28,
@@ -2236,7 +2286,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('INDUSTRYCLASS', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							}/*,{
 								fieldLabel : 'G/L Class',
@@ -2269,7 +2320,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('GLCLASS', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : SuppAppMsg.supplierForm65,
@@ -2287,7 +2339,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('PAYMETH', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : SuppAppMsg.supplierForm66,
@@ -2305,7 +2358,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('REQUISITOSFISCALES', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : SuppAppMsg.supplierForm67,
@@ -2323,7 +2377,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('PMTTRM', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								xtype : 'displayfield',
@@ -2418,13 +2473,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									store : getAutoLoadUDCStore('IDENTIFICATIONTYPE', '', '', ''),
 					                displayField: 'strValue1',
 					                valueField: 'udcKey',
-					                width : 250,
+					                //width : 250,
+					                flex:1,
 									colspan:3
 							},{
 								fieldLabel : SuppAppMsg.supplierForm31,
 								name : 'numeroIdentificacion',
 								id : 'numeroIdentificacion',
-								width:550,
+								//width:550,
+								flex:1,
 								colspan:3,
 								allowBlank:false,
 								   listeners:{
@@ -2438,7 +2495,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'nombreRL',
 								id:'nombreRL',
 								margin:'10 0 0 10',
-								width:400,
+								//width:400,
+								flex:1,
 								allowBlank:false,
 								   listeners:{
 										change: function(field, newValue, oldValue){
@@ -2451,7 +2509,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'apellidoPaternoRL',
 								id:'apellidoPaternoRL',
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								colspan:2,
 								allowBlank:false,
 								   listeners:{
@@ -2465,7 +2524,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'apellidoMaternoRL',
 								id:'apellidoMaternoRL',
 								margin:'10 0 0 10',
-								width:300,
+								//width:300,
+								flex:1,
 								colspan:3,
 								allowBlank:true,
 								   listeners:{
@@ -2500,7 +2560,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									name : 'checkEditDataBank',
 									id : 'checkEditDataBank',
 									margin: '0 0 0 90',
-									width : 20,
+									//width : 20,
+									flex:1,
 									checked: false,
 									//hidden:false,
 									hidden: isMainSupplierUser ? false : true, //Solo el proveedor puede modificar su información
@@ -2583,7 +2644,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CURRENCYVALIDATION', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 350,
+				                //width : 350,
+				                flex:1,
 				                allowBlank:true,
 				                colspan:3,
 								listeners: {
@@ -2660,7 +2722,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CURRENCY', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 450,
+				                //width : 450,
+				                flex:1,
 								colspan:3,
 							    listeners: {
 							    	select: function (comboBox, records, eOpts) {
@@ -2680,7 +2743,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.supplierForm62,
 								name : 'idFiscal', 
 								id : 'idFiscal', 
-								width:450,
+								//width:450,
+								flex:1,
 								maxLength : 20,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								colspan:3,
@@ -2697,7 +2761,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.supplierForm33,
 								name : 'swiftCode', 
 								id : 'swiftCode',  
-								width:450,
+								//width:450,
+								flex:1,
 								maxLength : 15,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								colspan:3,
@@ -2714,7 +2779,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'ibanCode',
 								id:'ibanCode',
 								margin:'10 0 0 10',
-								width:400,
+								//width:400,
+								flex:1,
 								maxLength : 34,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								allowBlank:true,
@@ -2728,7 +2794,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.supplierForm56,
 								name : 'bankTransitNumber',
 								id : 'bankTransitNumber',
-								width:450,
+								//width:450,
+								flex:1,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								colspan:3,
 								maxLength : 18, 
@@ -2743,7 +2810,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							   fieldLabel : SuppAppMsg.supplierForm61,
 								name : 'custBankAcct',
 								id : 'custBankAcct',
-								width:450,
+								//width:450,
+								flex:1,
 								colspan:3,
 								stripCharsRe: /[^0-9]/,
 								maxLength : 18,
@@ -2771,13 +2839,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CONTROLDIGIT', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 450,
+				                //width : 450,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : SuppAppMsg.supplierForm51,
 								name : 'description',
 								id : 'description',
-								width:450,
+								//width:450,
+								flex:1,
 								maskRe: /[A-Za-z &]/,
 								stripCharsRe: /[^A-Za-z &]/,
 								maxLength : 30,
@@ -2813,13 +2883,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								store : getAutoLoadUDCStore('CHECKORSAVEACCOUNT', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width : 400,
+				                //width : 400,
+				                flex:1,
 								colspan:3
 							},{
 								fieldLabel : SuppAppMsg.supplierForm58,
 								name : 'rollNumber',
 								id : 'rollNumber',
-								width:450,
+								//width:450,
+								flex:1,
 								maxLength : 18,
 								colspan:3,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
@@ -2834,7 +2906,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.supplierForm59,
 								name : 'bankAddressNumber',
 								id : 'bankAddressNumber',
-								width:450,
+								//width:450,
+								flex:1,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								colspan:3,
 								maxLength : 8,
@@ -2866,13 +2939,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                store : getAutoLoadUDCStore('COUNTRY', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
-				                width:400,
+				                //width:400,
+				                flex:1,
 				                colspan:3
 							},{
 								xtype : 'checkbox',
 								fieldLabel : SuppAppMsg.outsourcingSupp,
 								name : 'outSourcing',
-								width : 220,
+								//width : 220,
+								flex:1,
 								labelWidth:220,
 								colspan:3,
 								checked: false,
@@ -2902,7 +2977,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'hbox',
 									id:'documentContainerRfc',
 									colspan:3,
-									width:800,
+									//width:800,
+									flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
 										labelWidth : 150,
@@ -2914,7 +2990,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm36,
 										name : 'rfcDocument',
 										id:'rfcDocument',
-										width:400,
+										//width:400,
+										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
@@ -2931,7 +3008,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'hbox',
 									id:'documentContainerDom',
 									colspan:3,
-									width:800,
+									//width:800,
+									flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
 										labelWidth : 150,
@@ -2943,13 +3021,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm37,
 										name : 'domDocument',
 										id : 'domDocument',
-										width:400,
+										//width:400,
+										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
 									    },{
 											xtype: 'button',
-											width:100,
+											//width:100,
+											flex:1,
 											itemId : 'loadDomDoc',
 											id : 'loadDomDoc',
 											text : SuppAppMsg.supplierLoad,
@@ -2960,7 +3040,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'hbox',
 									id:'documentContainerBank',
 									colspan:3,
-									width:800,
+									//width:800,
+									flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
 										labelWidth : 150,
@@ -2972,13 +3053,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm38,
 										name : 'edoDocument',
 										id : 'edoDocument',
-										width:400,
+										//width:400,
+										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
 									    },{
 											xtype: 'button',
-											width:100,
+											//width:100,
+											flex:1,
 											itemId : 'loadEdoDoc',
 											id : 'loadEdoDoc',
 											text : SuppAppMsg.supplierLoad,
@@ -2989,7 +3072,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'hbox',
 									id:'documentContainerIden',
 									colspan:3,
-									width:800,
+									//width:800,
+									flex:1,
 									defaults : {
 										labelWidth : 150,
 										xtype : 'textfield',
@@ -3000,13 +3084,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm39, 
 										name : 'identDocument',
 										id : 'identDocument',
-										width:400,
+										//width:400,
+										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
 									    },{
 											xtype: 'button',
-											width:100,
+											//width:100,
+											flex:1,
 											itemId : 'loadIdentDoc',
 											id : 'loadIdentDoc',
 											text : SuppAppMsg.supplierLoad,
@@ -3017,7 +3103,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'hbox',
 									id:'documentContainerActaConstitutiva',
 									colspan:3,
-									width:800,
+									//width:800,
+									flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
 										labelWidth : 150,
@@ -3029,7 +3116,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm40,
 										name : 'actaConstitutiva',
 										id : 'actaConstitutiva',
-										width:400,
+										//width:400,
+										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
@@ -3047,7 +3135,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									id:'documentContainerRcp',
 									colspan:3,
 									hidden:true,
-									width:800,
+									//width:800,
+									flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
 										labelWidth : 150,
@@ -3059,7 +3148,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm41,
 										name : 'rpcDocument',
 										id : 'rpcDocument',
-										width:400,
+										//width:400,
+										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?true:true
@@ -3077,7 +3167,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									id:'documentContainerLegalExistence',
 									colspan:3,
 									hidden:true,
-									width:800,
+									//width:800,
+									flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
 										labelWidth : 150,
@@ -3089,7 +3180,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm42,
 										name : 'legalExistence',
 										id : 'legalExistence',
-										width:400,
+										//width:400,
+										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										//allowBlank:role=='ANONYMOUS'?false:true
@@ -3120,7 +3212,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm43,
 										name : 'foreingResidence',
 										id : 'foreingResidence',
-										width:400,
+										//width:400,
+										flex:1,
 										allowBlank:true,
 										readOnly:true,
 										margin: '12 10 0 0',
@@ -3140,7 +3233,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'vbox',
 									id:'documentContainerOutSourcing',
 									colspan:3,
-									width:800,
+									//width:800,
+									flex:1,
 									hidden:true,
 							        items:[
 							        	{
@@ -3157,7 +3251,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 													fieldLabel : SuppAppMsg.outsourcingSTPSLabel,
 													name : 'textSTPS',
 													id : 'textSTPS',
-													width:400,
+													//width:400,
+													flex:1,
 													readOnly:true,
 													allowBlank:true
 												    },{
@@ -3185,7 +3280,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 												fieldLabel : SuppAppMsg.outsourcingIMSSLabel,
 												name : 'textIMSS',
 												id : 'textIMSS',
-												width:400,
+												//width:400,
+												flex:1,
 												readOnly:true,
 												allowBlank:true
 											    },{
@@ -3211,7 +3307,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									value : '',
 									id:'hrefFileList',
 									height:20,
-									width:800,
+									//width:800,
+									flex:1,
 									margin: '10 0 20 10',
 									colspan:3
 
@@ -3229,7 +3326,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								id:'internalFileList',
 								hidden:role=='ANONYMOUS'?true:false,
 								height:20,
-								width:800,
+								//width:800,
+								flex:1,
 								margin: '10 0 0 10',
 								colspan:3
 

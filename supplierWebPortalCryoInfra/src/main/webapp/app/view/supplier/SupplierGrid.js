@@ -6,7 +6,7 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
 	frame:false,
 	border:true,
 	cls: 'extra-large-cell-grid', 
-	scroll : false,
+	autoScroll : true,
 	viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' }
@@ -29,15 +29,18 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
         this.columns = [
            {
             text     : SuppAppMsg.suppliersNumber,
-            width: 120,
+            //width: 120,
+            flex: 1,
             dataIndex: 'addresNumber'
         },{
             text     : SuppAppMsg.suppliersNameSupplier,
-            width: 420,
+            //width: 420,
+            flex: 1,
             dataIndex: 'razonSocial'
         },{
         	xtype: 'actioncolumn', 
-            width: 90,
+            //width: 90,
+        	flex: 1,
             header: SuppAppMsg.suppliersDisable,
             align: 'center',
 			name : 'disableSupplier',
@@ -49,7 +52,7 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
             	icon:'resources/images/cancel.jpg',
               	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
               	          if(r.data.observaciones == "INHABILITADO") {
-              	              return "x-hide-display";
+              	              return "x-hidden-display";
               	          }
               	      },
               	      text: 'RECHAZAR',
@@ -81,8 +84,9 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                 value: role.includes('ROLE_SUPPLIER')?addressNumber:'',
                 fieldStyle: role.includes('ROLE_SUPPLIER')?'border:none;background-color: #ddd; background-image: none;':'',
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
-                width:200,
-                labelWidth:90,
+                //width:200,
+                //labelWidth:90,
+                flex: 1,
                 margin:'10 20 0 20'
     		},{
     			xtype: 'textfield',
@@ -93,8 +97,9 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                 value: role.includes('ROLE_SUPPLIER')?addressNumber:'',
                 fieldStyle: role.includes('ROLE_SUPPLIER')?'border:none;background-color: #ddd; background-image: none;':'',
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
-                width:500,
-                labelWidth:70,
+                //width:500,
+                //labelWidth:70,
+                flex: 1,
                 margin:'10 20 0 0'
     		}
               ]},

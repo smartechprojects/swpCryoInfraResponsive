@@ -288,17 +288,23 @@ Ext.define('SupplierApp.controller.Supplier', {
     	var filePanel = Ext.create(
     					'Ext.form.Panel',
     					{
-    						width : 900,
+    						//width : 900,
+    						bodyPadding: 10,
+    				        layout: 'anchor',
+    				        defaults: {
+    				            anchor: '100%',
+    				            margin: '20 0 30 0'
+    				        },
     						items : [
     								{
     									xtype : 'filefield',
     									name : 'file',
     									fieldLabel : SuppAppMsg.supplierFileExcel,
-    									labelWidth : 120,
+    									//labelWidth : 120,
     									msgTarget : 'side',
     									allowBlank : false,
-    									margin:'20 0 70 0',
-    									anchor : '90%',
+    									//margin:'20 0 70 0',
+    									//anchor : '90%',
     									buttonText : SuppAppMsg.suppliersSearch
     								} ],
 
@@ -345,8 +351,12 @@ Ext.define('SupplierApp.controller.Supplier', {
     	this.winLoadSupplier = new Ext.Window({
     		layout : 'fit',
     		title : SuppAppMsg.supplierLoadNewSupplier,
-    		width : 600,
-    		height : 160,
+    		//width : 600,
+    		//height : 160,
+    		width: Ext.Element.getViewportWidth() * 0.35,   //  40% de pantalla
+            maxWidth: 520,                                //  ancho mínimo
+            height: Ext.Element.getViewportHeight() * 0.45, //  40% de alto
+            maxHeight: 150,
     		modal : true,
     		closeAction : 'destroy',
     		resizable : false,
@@ -916,9 +926,14 @@ Ext.define('SupplierApp.controller.Supplier', {
         	this.supDetailWindow = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.supplierDetailsSupplier,
-        		width : 1200,
-        		height : 550,
+        		//width : 1200,
+        		//height : 550,
+        		width: Ext.Element.getViewportWidth() * 0.80,   // 👈 40% de pantalla
+                maxWidth: 1200,                                // 👈 ancho mínimo
+                height: Ext.Element.getViewportHeight() * 0.80, // 👈 40% de alto
+                maxHeight: 550,
         		modal : true,
+        		scrollable  : true,
         		closeAction : 'destroy',
         		resizable : true,
         		minimizable : false,
@@ -1043,8 +1058,8 @@ Ext.define('SupplierApp.controller.Supplier', {
 			        		form.findField('telefonoContactoCxC').setReadOnly(true);
 			        		Ext.getCmp('emailSupplier').setReadOnly(false);
 			        	}
-			        	
-			        	if(tabChgn == 'suppliers'){
+			        	debugger
+			        	if(tabChgn == 'suppliers'){			        		
 			        		Ext.getCmp('ticketForSearch').hide();
 				        	Ext.getCmp('searchTicket').hide();
 				        	Ext.getCmp('searchCP').hide();

@@ -62,6 +62,7 @@ Ext.define('SupplierApp.view.HomeTabs', {
             	tabPanel.getUpdater().refresh();
             }
             */
+        	debugger
         	if(tab.id == 'supplierTab') tabChgn = 'suppliers';
         	if(tab.id == 'usersPanelTab'){//Carga valores de combos
             	var roleCombo = Ext.getCmp('usersRoleCombo');

@@ -3,6 +3,7 @@ Ext.define('SupplierApp.view.supplier.SupplierPanel' ,{
     alias : 'widget.supplierPanel',
     border:false,
     frame:false,
+    autoScroll : true,
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
