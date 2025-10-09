@@ -33,7 +33,8 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.FreightApproval',
         'SupplierApp.controller.FiscalDocuments',
         'SupplierApp.controller.PurchaseOrder',
-        'SupplierApp.controller.PlantAccess'/*,
+        'SupplierApp.controller.PlantAccess',
+         'SupplierApp.controller.Token',/*,
         'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
@@ -125,6 +126,14 @@ Ext.define('SupplierApp.view.main.Main', {
         id:'tabHomeId',
         html:"<div style='display: flex;justify-content: center;vertical-align: middle;padding-top:100px;'><img src='resources/images/CryoInfra-logo-gris.png' style='max-width: 80%; height: auto;' alt='Logo CryoInfra'> </div>"
     },{
+		xtype : 'tokenPanel',
+		title : window.navigator.language.startsWith("es", 0)? 'Nuevos Registros':'New Records',
+		border : true,
+		iconCls: 'fa-user-plus',
+		id:'tabTokenId',
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_PURCHASE'?false:true
+	           
+	},{
     	xtype : 'supplierPanel',
     	iconCls: 'fa-share-alt',
 		title : '',

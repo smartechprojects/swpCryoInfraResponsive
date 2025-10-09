@@ -3,7 +3,7 @@ Ext.define('SupplierApp.view.token.TokenPanel' ,{
     alias : 'widget.tokenPanel',
     border:false,
     frame:false,
-    scroll : false,
+    autoScroll : true,
 	initComponent: function () {
         Ext.apply(this, {
         	/*layout: {
@@ -11,13 +11,14 @@ Ext.define('SupplierApp.view.token.TokenPanel' ,{
             }, */  
             items: [{
             	xtype: 'tokenForm',
-            	height:130
+            	height:150
             	//flex:.4
 
             },{
            	 xtype: 'tokenGrid',
            	 //flex:.6,
-           	height:300
+           	height:300,
+           //	autoScroll : true
             }]
         });
         this.callParent(arguments);
