@@ -29,7 +29,7 @@
 
 <script>
 	var SuppAppMsgLogin = {};
-	
+	var isMainSupplierUser = '<c:out value="${isMainSupplierUser}" default="false"/>'.toLowerCase() === 'true';//Booleano
 	//var langu = window.navigator.language;
 	var lang = "";
 	if(window.navigator.language.startsWith("es", 0)){
