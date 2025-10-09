@@ -6,7 +6,7 @@ Ext.define('Ext.ux.form.MultiSelect', {
     extend: 'Ext.form.FieldContainer',
 
     mixins: {
-        bindable: 'Ext.util.Bindable',
+        bindable: 'Ext.mixin.Bindable',
         field: 'Ext.form.field.Field'
     },
 

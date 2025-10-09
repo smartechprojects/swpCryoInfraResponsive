@@ -45,6 +45,7 @@ Ext.application({
 							        autoWidth: true,
 							        renderTo: 'content',
 							        layout:'fit',
+							        autoScroll : true,
 							        border:false,
 							        frame:false,
 							        items: [{

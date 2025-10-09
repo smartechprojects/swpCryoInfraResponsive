@@ -6,6 +6,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 	frame : false,
 	style: 'border: solid #ccc 1px',
 	autoScroll : true,
+	 scrollable: true, 
     getInvalidFields: function() {
     	debugger
         var invalidFields = [];
@@ -176,9 +177,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									itemId : 'ticketForSearch',
 									labelAlign:'left',
 									margin:'0 5 0 0',
-									//width:250,
-									width:150,
-									//flex:1,
+									maxWidth:250,
+									flex:1,
 									colspan:2,
 									tip: SuppAppMsg.supplierForm3,
 								    listeners: {
@@ -191,7 +191,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								    }
 							  },{
 									xtype: 'button',
-									//width:60,
+									maxWidth:60,
 									flex:1,
 									hidden : role == 'ROLE_SUPPLIER'?true:false,
 									text : SuppAppMsg.suppliersSearch,
@@ -2977,11 +2977,11 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'hbox',
 									id:'documentContainerRfc',
 									colspan:3,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -2990,8 +2990,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm36,
 										name : 'rfcDocument',
 										id:'rfcDocument',
-										//width:400,
-										flex:1,
+										wdth:100,
+										//flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
@@ -3001,18 +3001,19 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											itemId : 'loadRfcDoc',
 											id : 'loadRfcDoc',
 											text : SuppAppMsg.supplierLoad,
-											action : 'loadRfcDoc'
+											action : 'loadRfcDoc',
+											margin: '12 10 0 0',
 										}]
 							    },{
 									xtype: 'container',
 									layout: 'hbox',
 									id:'documentContainerDom',
 									colspan:3,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -3021,30 +3022,31 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										fieldLabel : SuppAppMsg.supplierForm37,
 										name : 'domDocument',
 										id : 'domDocument',
-										//width:400,
-										flex:1,
+										//width:100,
+										//flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
 									    },{
 											xtype: 'button',
-											//width:100,
-											flex:1,
+											width:100,
+											//flex:1,
 											itemId : 'loadDomDoc',
 											id : 'loadDomDoc',
 											text : SuppAppMsg.supplierLoad,
-											action : 'loadDomDoc'
+											action : 'loadDomDoc',
+											margin: '12 10 0 0'
 										}]
 							    },{
 									xtype: 'container',
 									layout: 'hbox',
 									id:'documentContainerBank',
 									colspan:3,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -3054,28 +3056,29 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										name : 'edoDocument',
 										id : 'edoDocument',
 										//width:400,
-										flex:1,
+										//flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
 									    },{
 											xtype: 'button',
-											//width:100,
-											flex:1,
+											width:100,
+											//flex:1,
 											itemId : 'loadEdoDoc',
 											id : 'loadEdoDoc',
 											text : SuppAppMsg.supplierLoad,
-											action : 'loadEdoDoc'
+											action : 'loadEdoDoc',
+											margin: '12 10 0 0'
 										}]
 							    },{
 									xtype: 'container',
 									layout: 'hbox',
 									id:'documentContainerIden',
 									colspan:3,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -3085,29 +3088,29 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										name : 'identDocument',
 										id : 'identDocument',
 										//width:400,
-										flex:1,
+										//flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
 									    },{
 											xtype: 'button',
-											//width:100,
-											flex:1,
+											width:100,
 											itemId : 'loadIdentDoc',
 											id : 'loadIdentDoc',
 											text : SuppAppMsg.supplierLoad,
-											action : 'loadIdentDoc'
+											action : 'loadIdentDoc',
+											margin: '12 10 0 0'
 										}]
 							    },{
 									xtype: 'container',
 									layout: 'hbox',
 									id:'documentContainerActaConstitutiva',
 									colspan:3,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -3117,7 +3120,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										name : 'actaConstitutiva',
 										id : 'actaConstitutiva',
 										//width:400,
-										flex:1,
+										//flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?false:true
@@ -3127,7 +3130,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											itemId : 'loadActaConst',
 											id : 'loadActaConst',
 											text : SuppAppMsg.supplierLoad,
-											action : 'loadActaConst'
+											action : 'loadActaConst',
+											margin: '12 10 0 0'
 										}]
 							    },{
 									xtype: 'container',
@@ -3135,11 +3139,11 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									id:'documentContainerRcp',
 									colspan:3,
 									hidden:true,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -3149,7 +3153,6 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										name : 'rpcDocument',
 										id : 'rpcDocument',
 										//width:400,
-										flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										allowBlank:role=='ANONYMOUS'?true:true
@@ -3159,7 +3162,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											itemId : 'loadRpcDocument',
 											id : 'loadRpcDocument',
 											text : SuppAppMsg.supplierLoad,
-											action : 'loadRpcDocument'
+											action : 'loadRpcDocument',
+											margin: '12 10 0 0'
 										}]
 							    },{
 									xtype: 'container',
@@ -3167,11 +3171,11 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									id:'documentContainerLegalExistence',
 									colspan:3,
 									hidden:true,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -3181,7 +3185,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										name : 'legalExistence',
 										id : 'legalExistence',
 										//width:400,
-										flex:1,
+										//flex:1,
 										readOnly:true,
 										margin: '12 10 0 0',
 										//allowBlank:role=='ANONYMOUS'?false:true
@@ -3191,7 +3195,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											itemId : 'loadlegalExistence',
 											id : 'loadlegalExistence',
 											text : SuppAppMsg.supplierLoad,
-											action : 'loadlegalExistence'
+											action : 'loadlegalExistence',
+											margin: '12 10 0 0'
 										}]
 							    },{
 									xtype: 'container',
@@ -3203,7 +3208,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									hidden:true,
 									//hidden:role=='ANONYMOUS'?false:true,
 									defaults : {
-										labelWidth : 150,
+										labelWidth : 250,
 										xtype : 'textfield',
 										margin: '12 0 0 0'
 									},
@@ -3213,7 +3218,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										name : 'foreingResidence',
 										id : 'foreingResidence',
 										//width:400,
-										flex:1,
+										//flex:1,
 										allowBlank:true,
 										readOnly:true,
 										margin: '12 10 0 0',
@@ -3226,6 +3231,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadForeingResidence',
 											allowBlank:true,
+											margin: '12 10 0 0'
 										}]
 							    },{
 							    	//OUTSOURCING
@@ -3233,15 +3239,15 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									layout: 'vbox',
 									id:'documentContainerOutSourcing',
 									colspan:3,
-									//width:800,
-									flex:1,
+									width:800,
+									//flex:1,
 									hidden:true,
 							        items:[
 							        	{
 							        		xtype:'container',
 							        		layout:'hbox',
 							        		defaults : {
-												labelWidth : 150,
+												labelWidth : 250,
 												xtype : 'textfield',
 												margin: '0 0 0 0'
 											},
@@ -3252,7 +3258,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 													name : 'textSTPS',
 													id : 'textSTPS',
 													//width:400,
-													flex:1,
+													//flex:1,
 													readOnly:true,
 													allowBlank:true
 												    },{
@@ -3270,7 +3276,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 						        		xtype:'container',
 						        		layout:'hbox',
 						        		defaults : {
-											labelWidth : 150,
+											labelWidth : 250,
 											xtype : 'textfield',
 											margin: '15 10 0 0'
 										},
@@ -3281,7 +3287,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 												name : 'textIMSS',
 												id : 'textIMSS',
 												//width:400,
-												flex:1,
+												//flex:1,
 												readOnly:true,
 												allowBlank:true
 											    },{
