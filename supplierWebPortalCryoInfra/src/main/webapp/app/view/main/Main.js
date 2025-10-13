@@ -1,6 +1,29 @@
 Ext.define('SupplierApp.view.main.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'app-main',
+    tabPosition: 'left', // o 'right', según tu diseño
+    tabRotation: 0,
+    tabBar: {
+        layout: {
+            type: 'vbox',
+            align: 'stretch'
+        },
+        listeners: {
+            afterrender: function(tb) {
+                tb.getEl().setStyle({
+                    'overflow-y': 'auto',
+                    'max-height': 'calc(100vh - 120px)' // ajusta según el alto de tu header
+                });
+            }
+        },
+        scrollable: 'y', // 🔹 Activa el scroll vertical en la barra de tabs
+        autoScroll: true
+    },
+
+    defaults: {
+        bodyPadding: 10,
+        scrollable: true
+    },
     listeners: {
         afterrender: function(form) {
             hidePreloader();
@@ -46,35 +69,191 @@ Ext.define('SupplierApp.view.main.Main', {
     ],
     
     ui: 'navigation',
+    scrollable: true, 
     header: {
-        flex:   1,
-        height: 80,
-        style: {
-            backgroundColor: '#FFFFFF',
-            padding: '0px'
+        height: 120,
+        style: { backgroundColor: '#FFFFFF', padding: '0px' },
+        title: '<img src="resources/images/CryoInfra-logo-gris.png" style="width:75%;height:80px;">',
+        layout: { type: 'hbox', align: 'middle', pack: 'space-between' },
+        plugins: 'responsive',
+        responsiveConfig: {
+            wide: { layout: { type: 'hbox', align: 'middle', pack: 'space-between' }, height: 120 },
+            tall: { layout: { type: 'vbox', align: 'stretch', pack: 'start' }, height: 180 }
         },
-        layout: {
-            type:  'hbox',
-            align: 'stretchmax'
-        },
-        title: {
-        	text: '<table style="width:100%;"><tr><td style="width:33%;"><img src="resources/images/hand-click.png" style="width:65%;"></td><td style="width:33%;text-align:center;padding-top:12px;height:auto;"><img src="resources/images/CryoInfra-logo-gris.png" style="width:30%;"></td><td style="text-align:right;width:33%;padding-right:30px;"><img src="resources/images/profile.png" style="width:45px;padding-right:30px;"></a><img src="resources/images/help-icon.png" style="width:45px;padding-right:30px;"></a><a href="logout" class="page-link"><img src="resources/images/logout-icon.png" style="width:15px;"></a></td></tr></table>',
-            flex: 1,
-        }
-    },
+        items: [
+            {
+                xtype: 'container',
+                flex: 1.5,
+                layout: 'vbox',
+                defaults: { xtype: 'label', style: 'color:#666; font-size:15px;' },
+                items: [
+                    { itemId: 'displayNameLabel', html: '', margin: '0 0 5 0' },
+                    { itemId: 'userInfoLabel', html: '', flex: 1 }
+                ]
+            },
+            {
+                xtype: 'component',
+                itemId: 'helpLink', // ⚡ aquí directamente
+                html: '',
+                flex: 1,
+                plugins: 'responsive',
+                responsiveConfig: {
+                    wide: { hidden: false },
+                    tall: { hidden: true } // ahora sí se oculta en pantallas pequeñas
+                }
+            },
+            {
+                xtype: 'image',
+                src: 'resources/images/logout-icon.png',
+                width: 15,
+                height: 15,
+                margin: '0 35 0 0',
+                plugins: 'responsive',
+                responsiveConfig: {
+                    wide: { hidden: false },
+                    tall: { hidden: true }
+                },
+                listeners: {
+                    render: function(img) {
+                        // Cambia el cursor al pasar sobre la imagen
+                        img.getEl().setStyle('cursor', 'pointer');
 
-    tabRotation: 0,
-    tabPosition: 'left',
+                        img.getEl().on('click', function() {
+                            window.location.href = 'j_spring_security_logout';
+                        });
+                    }
+                }
+            }
+
+
+
+        ],
+        listeners: {
+            afterrender: function(header) {
+            	var showItems = false;
+            	var link = "";
+            	var userDesc = "";
+            	/*console.log("nombreUsuario: " + displayName);
+            	console.log("numeroUsuario: " + numeroUsuario);
+            	console.log("correo: " + correo);
+            	console.log("telefono: " + telefono);
+            	
+            	console.log("userName: " + userName);
+            	console.log("userEmail: " + userEmail);*/
+            	
+            	if ("".match(numeroUsuario)){
+            		link = "https://servicios.cryoinfra.com.mx/scip/default.aspx?nombreUsuario="+displayName+"&numeroUsuario="+userName+"&correo="+userEmail+"&telefono="+telefono;
+                	//console.log("link: " + link);
+            	} else {
+                	link = "https://servicios.cryoinfra.com.mx/scip/default.aspx?nombreUsuario="+displayName+"&numeroUsuario="+numeroUsuario+"&correo="+userEmail+"&telefono="+telefono;
+                	//console.log("link: " + link);
+            	}
+
+            	if(role == 'ROLE_SUPPLIER'){
+                	if(isMainSupplierUser){
+                		userDesc = SuppAppMsg.userDescMainSupplierUser;
+                	} else {
+                		userDesc = SuppAppMsg.userDescSubuserSupplierUser;
+                	}
+            	}
+            	
+            	if(multipleRfc != "empty"){
+            		multipleRfc = multipleRfc.replace(/&#034;/g,'"');
+            		var rfcList = Ext.JSON.decode(multipleRfc);
+            		
+            		var msg = 'Nuestro sistema ha identificado que tiene mútiples cuentas asociadas con el mismo RFC. <br /><br /> A continuación se muestra la lista de las cuentas disponibles. <br /><br />Debe seleccionar una de ellas para continuar.<br /><br /><select id="supplierRfcId" style="width:550px;height:20px;">';
+            		for (var i = 0; i < rfcList.length; i++) {
+            			msg = msg + '<option value="' + rfcList[i].addresNumber +'">' + rfcList[i].addresNumber + ' - ' + rfcList[i].rfc + ' - ' + rfcList[i].razonSocial + '</option>';
+            		}
+            		msg = msg + '</select><br />';
+                	
+                	Ext.MessageBox.show({
+                	    title: 'Múltiples cuentas asociadas',
+                	    msg: msg,
+                	    buttons: Ext.MessageBox.OKCANCEL,
+                	    fn: function (btn) {
+                	        if (btn == 'ok') {
+                	            addresNumber = Ext.get('supplierRfcId').getValue();
+                	        	Ext.MessageBox.show({
+                	        	    title: 'Aviso',
+                	        	    msg: 'Su sesión se reiniciará con la cuenta: ' + addresNumber + '.',
+                	        	    buttons: Ext.MessageBox.OKCANCEL,
+                	        	    fn: function (btn) {
+                	        	        if (btn == 'ok') {
+                	        	        	var box = Ext.MessageBox.wait('Redireccionando a la nueva cuenta. Espere unos segundos', 'Redirección de cuentas');
+                	        	            location.href = "homeUnique.action?userName=" + addresNumber;
+                	        	        }else{
+                	        	        	location.href = "j_spring_security_logout";
+                	        	        }
+                	        	    }
+                	        	});
+                	        }else{
+                	        	location.href = "j_spring_security_logout";
+                	        }
+                	    }
+                	});
+                	
+            	}else{
+            		showItems = true;
+            	}
+                                
+                header.down('#displayNameLabel').setHtml(displayName);
+                header.down('#userInfoLabel').setHtml(SuppAppMsg.headerAccount + ': ' + userName + ' <b>' + userDesc + '</b>');
+                /*header.down('#helpLink').setHtml(
+                    "<span style='font-size:14px; color:#000; '>" +
+                    SuppAppMsg.homePortalHelp1 + " <a href='" + link + "' target='_blank'>" + SuppAppMsg.homePortalHelp2 + "</a>" +
+                    "</span>"
+                );*/
+                
+                var helpCmp = header.down('#helpLink');
+
+                function updateHelpHtml(width){
+                    if(width >= 768){ // Pantallas grandes
+                        helpCmp.setHtml(
+                            "<span style='font-size:14px; color:#000; border:2px solid royalblue; border-radius:5px; padding:3px; margin:3px;'>" +
+                            SuppAppMsg.homePortalHelp1 + " <a href='" + link + "' target='_blank'>" + SuppAppMsg.homePortalHelp2 + "</a>" +
+                            "</span>"
+                        );
+                    } else { // Pantallas pequeñas
+                        helpCmp.setHtml(
+                            "<span style='font-size:14px; color:#000;'>" +
+                            SuppAppMsg.homePortalHelp1 + " <a href='" + link + "' target='_blank'>" + SuppAppMsg.homePortalHelp2 + "</a>" +
+                            "</span>"
+                        );
+                    }
+                }
+
+                // Inicial
+                updateHelpHtml(header.getWidth());
+
+                // Escucha cambios de tamaño
+                header.on('resize', function(h, width){
+                    updateHelpHtml(width);
+                });
+            }
+        }
+    }
+
+
+
+
+,
+
+ //   tabRotation: 0,
+  //  tabPosition: 'left',
 
     tabBar: {
     	iconAlign: 'left',
+    	scrollable: 'y',
         layout: {
             align: 'stretch',
-            overflowHandler: 'none'
+           // overflowHandler: 'none'
         },
         style: {
             'background-color': '#3D72A4',
-            'text-align':'left'
+            'text-align':'left',
+            'overflow-y': 'auto',  // ✅ por compatibilidad extra
+            'max-height': '100vh',  // ✅ limita el alto al viewport visible
         }
     },
     
@@ -119,15 +298,67 @@ Ext.define('SupplierApp.view.main.Main', {
             }
         }
     },
+    
 
+ 
     items: [{
-        title: SuppAppMsg.tabInicio,
+    	xtype : 'panel',
+        title: '',
         iconCls: 'fa-home',
         id:'tabHomeId',
-        html:"<div style='display: flex;justify-content: center;vertical-align: middle;padding-top:100px;'><img src='resources/images/CryoInfra-logo-gris.png' style='max-width: 80%; height: auto;' alt='Logo CryoInfra'> </div>"
+        scrollable: true,
+        //html:"<div style='display: flex;justify-content: center;vertical-align: middle;padding-top:100px;'><img src='resources/images/CryoInfra-logo-gris.png' style='max-width: 80%; height: auto;' alt='Logo CryoInfra'> </div>"
+        listeners: {
+            afterrender: function(panel) {
+            
+                 function updateHtml(width){
+                     if(width >= 768){ // Pantallas grandes
+                    	 var homeContent = "<div style='display: grid; place-items: center;'>" +
+                         "<div style='width: 50%; font-size:14px; color: black; border: 2px solid royalblue; border-radius: 10px; padding: 10px; margin: 10px;'>" +
+                         "<div style='display: grid; place-items: center; padding: 10px; margin: 10px;'>" +
+                             "<img src='resources/images/CryoInfra-logo-gris.png' width='40%' height='80%' style='align: center;'>" +
+                         "</div>" +
+                         "<div style='display: grid; place-items: center; padding: 10px; margin: 40px;'>" +
+                             "<span style='text-align: justify; font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height: 1.5;'>" +
+                                 "<p style='padding-left: 10px;'>" + SuppAppMsg.homeHeaderMessage + "</p>" +
+                             "</span>" +
+                         "</div>" +                            
+                         "</div>" +
+                         "</div>";
+                     
+                     panel.update(homeContent);
+                      
+                     } else { // Pantallas pequeñas
+                    	 var homeContent = "<div style='display: grid; place-items: center;'>" +
+                         "<div style='width: 50%; font-size:14px; color: black;padding: 10px; margin: 10px;'>" +
+                         "<div style='display: grid; place-items: center; padding: 10px; margin: 10px;'>" +
+                             "<img src='resources/images/CryoInfra-logo-gris.png' width='40%' height='80%' style='align: center;'>" +
+                         "</div>" +
+                         "<div style='display: grid; place-items: center; padding: 10px; margin: 40px;'>" +
+                             "<span style='text-align: justify; font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height: 1.5;'>" +
+                                 "<p style='padding-left: 10px;'>" + SuppAppMsg.homeHeaderMessage + "</p>" +
+                             "</span>" +
+                         "</div>" +                            
+                         "</div>" +
+                         "</div>";
+                     
+                     panel.update(homeContent);
+                     }
+            	
+                 }
+                 
+              // Inicial
+                 updateHtml(panel.getWidth());
+
+                 // Escucha cambios de tamaño
+                 panel.on('resize', function(h, width){
+                	 updateHtml(width);
+                 });
+            }
+        }
     },{
 		xtype : 'tokenPanel',
-		title : window.navigator.language.startsWith("es", 0)? 'Nuevos Registros':'New Records',
+		title : '',
 		border : true,
 		iconCls: 'fa-user-plus',
 		id:'tabTokenId',
@@ -343,9 +574,5 @@ Ext.define('SupplierApp.view.main.Main', {
             }
         }
     },
-    {
-        title: 'TEST',
-        html: 'HOLA',
-    }
 	]
 });

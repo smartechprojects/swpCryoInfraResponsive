@@ -11,6 +11,7 @@ Ext.define('SupplierApp.view.main.MainController', {
     init: function() {
         var me = this;
         Ext.getCmp('tabHomeId').setTitle(SuppAppMsg.tabInicio);
+        Ext.getCmp('tabTokenId').setTitle( SuppAppMsg.tabToken);
         Ext.getCmp('tabSuppliersId').setTitle( SuppAppMsg.tabProveedores);
         Ext.getCmp('tabApprovalPanelId').setTitle( SuppAppMsg.tabApproval);
         Ext.getCmp('tabApprovalSearchPanelId').setTitle( SuppAppMsg.tabSearchApproval);
