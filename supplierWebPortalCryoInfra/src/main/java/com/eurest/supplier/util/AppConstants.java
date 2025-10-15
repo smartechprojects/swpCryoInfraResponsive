@@ -297,7 +297,7 @@ public final class AppConstants {
     
     public static final String URL_UPDATE_ORDERSTATUS = "http://localhost:8081/supplierWebPortalRestCryoInfra/poUpdateOrderStatus";
     
-    public static final String EMAIL_PORTAL_LINK = "https://3.222.152.41/supplierWebPortalCryoInfra";
+    public static final String EMAIL_PORTAL_LINK = "https://3.222.152.41/supplierWebPortalCryoInfraResponsive";
     
     public static final String EMAIL_NEW_SUPPLIER_SUBJECT = "CryoInfra - Solicitud Alta de Proveedor";
     
@@ -627,7 +627,7 @@ public final class AppConstants {
 	public static final String OUTSOURCING_APPROVAL_SUBJECT = "Portal de Proveedores: Aprobación de documentos de Outsourcing del proveedor _SUPPLIER_";
 	public static final String OUTSOURCING_APPROVAL_MESSAGE = "Estimado Aprobador. <br /><br />El proveedor _SUPPLIER_ categorizado como OUTSOURCING, ha enviado la documentación que se anexa en este correo para su revisión y aprobación. <br /><br />Para APROBAR esta documentación y notificar al proveedor, haga click en el siguiente enlace:<br /><br /> _LINK_ <br /><br /><br />";
 	public static final String OUTSOURCING_APPROVED_MESSAGE = "Estimado Proveedor de OutSourcing. <br /><br />Su documentación ha sido aceptada y a partir de este momento usted podrá utulizar el Portal de Proveedores sin mayor incoveniente. <br /><br />Nota Importante: De conformidad con las disposiciones en materia fiscal, en el momento en que cargue facturas en el Portal de Proveedores y éstas pertenezcan a Servicios de OutSourcing, el sistema le permitirá cargar de forma adicional los comprobantes correspondientes.<br /><br />";
-	public static final String EMAIL_PORTAL_LINK_PUBLIC = "https://3.222.152.41/supplierWebPortalCryoInfra/public";
+	public static final String EMAIL_PORTAL_LINK_PUBLIC = "https://3.222.152.41/supplierWebPortalCryoInfraResponsive/public";
 	
 	public static final String NEWREGISTER_SUBJECT = "Portal de Alta de Proveedores - CryoInfra. Enlace para nuevo registro. No responder.";
 	public static final String NEWREGISTER_RENEW_SUBJECT = "Portal de Alta de Proveedores - CryoInfra. Renovación del enlace para nuevo registro. No responder.";
