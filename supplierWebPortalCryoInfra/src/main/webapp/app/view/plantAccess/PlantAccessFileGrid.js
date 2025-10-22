@@ -142,12 +142,12 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessFileGrid' ,{
 				            	icon:'resources/images/close.png',
 				              	 /* getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 				              		if(r.data.documentStatus != "COMPLETED" ){
-				              			return "x-hide-display";
+				              			return "x-hidden-display";
 				              		}
 				              		   if(
 	              	        		  !(role=='ROLE_BF_ADMIN')) {
 	                      	        	  
-	                      	              return "x-hide-display";
+	                      	              return "x-hidden-display";
 	                      	          }
 				              	      },
 				              	      text: SuppAppMsg.approvalReject,*/

@@ -161,7 +161,7 @@ Ext.define('SupplierApp.view.outSourcing.OutSourcingGrid' ,{
           	     iconCls: 'increaseSize',
             	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
               		  if(r.data.notes == null || r.data.notes == '') {
-        	              return "x-hide-display";
+        	              return "x-hidden-display";
         	          }else{
         	        	  return "increaseSize";
         	          }
@@ -183,7 +183,7 @@ Ext.define('SupplierApp.view.outSourcing.OutSourcingGrid' ,{
             	  icon:'resources/images/close.png',
             	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
               		  if(r.data.docStatus != "PENDIENTE") {
-        	              return "x-hide-display";
+        	              return "x-hidden-display";
         	          }else{
         	        	  return "increaseSize";
         	          }
@@ -205,7 +205,7 @@ Ext.define('SupplierApp.view.outSourcing.OutSourcingGrid' ,{
             		icon:'resources/images/accept.png',
             	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
               		  if(r.data.docStatus != "PENDIENTE") {
-        	              return "x-hide-display";
+        	              return "x-hidden-display";
         	          }else{
         	        	  return "increaseSize";
         	          }
@@ -228,11 +228,11 @@ Ext.define('SupplierApp.view.outSourcing.OutSourcingGrid' ,{
               	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
               		  
               		  if(r.data.documentType == 'REC_NOMINA'){
-              			return "x-hide-display";
+              			return "x-hidden-display";
               		  }
 
               		  if(r.data.docStatus != "RECHAZADO") {
-        	              return "x-hide-display";
+        	              return "x-hidden-display";
         	          }else{
         	        	  return "increaseSize";
         	          }

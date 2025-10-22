@@ -286,7 +286,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 			              			 }
 			              		 /*}else{
 			              	          if(role == 'ROLE_SUPPLIER' || r.data.status != "PENDIENTE" || (r.data.status == "PENDIENTE" && r.data.currentApprover != userName)) {
-			              	              return "x-hide-display";
+			              	              return "x-hidden-display";
 			              	          }
 			              		 }*/
 			              	      },
@@ -323,7 +323,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 				              			 }
 				              		 /*}else{
 			              		if(role == 'ROLE_SUPPLIER' || r.data.status != "PENDIENTE" || (r.data.status == "PENDIENTE" && r.data.currentApprover != userName)) {
-			              	              return "x-hide-display";
+			              	              return "x-hidden-display";
 			              	          }
 				              		 }*/
 			              	      },

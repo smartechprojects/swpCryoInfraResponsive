@@ -163,7 +163,7 @@ Ext.define('SupplierApp.view.customBroker.CustomBrokerGrid' ,{
 			            	icon:'resources/images/accept.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			              	          if(role == 'ROLE_SUPPLIER' || r.data.status != "PENDIENTE" || (r.data.status == "PENDIENTE" && r.data.currentApprover != userName)) {
-			              	              return "x-hide-display";
+			              	              return "x-hidden-display";
 			              	          }
 			              	      },
 			              	      text: SuppAppMsg.approvalApprove,
@@ -184,7 +184,7 @@ Ext.define('SupplierApp.view.customBroker.CustomBrokerGrid' ,{
 			            	icon:'resources/images/close.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			              		if(role == 'ROLE_SUPPLIER' || r.data.status != "PENDIENTE" || (r.data.status == "PENDIENTE" && r.data.currentApprover != userName)) {
-			              	              return "x-hide-display";
+			              	              return "x-hidden-display";
 			              	          }
 			              	      },
 			              	      text: SuppAppMsg.approvalReject,
