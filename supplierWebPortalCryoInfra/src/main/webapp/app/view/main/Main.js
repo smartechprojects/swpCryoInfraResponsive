@@ -285,7 +285,7 @@ Ext.define('SupplierApp.view.main.Main', {
         	style: {
                 'background-color': '#3D72A4',
                 'text-align':'left',
-                'width':'210px'//,
+                'width':'220px'//,
                // 'min-height': '60px'
             },
             listeners: {
@@ -504,7 +504,67 @@ Ext.define('SupplierApp.view.main.Main', {
 		itemId:'companyPanelTab',
 		hidden:true
 		
-	}/*,{
+	},{
+        xtype: 'form',
+        title: SuppAppMsg.tabInfoSupplier,
+        iconCls: 'fa-user',
+        id: 'tabSupplierProfileId',
+        hidden: role == 'ROLE_SUPPLIER' ? false : true,
+        bodyStyle: 'padding:5px 5px 0',
+        scrollable: true,
+        items: [{
+            xtype: 'supplierForm',
+            //height: 490,
+            autoScroll: true,
+            id: 'supplierFormId'
+        }],
+        listeners: {
+            afterrender: function(panel) {
+                // Cargar datos del perfil del proveedor si existe
+                if(supplierProfile != null){
+                    var form = Ext.getCmp('supplierFormId');
+                    form.loadRecord(supplierProfile);
+                    
+                    var fileList = supplierProfile.data.fileList;
+                    var hrefList = "";
+                    var r2 = [];
+                    var href = "";
+                    var fileHref = "";
+
+                    var r1 = fileList.split("_FILE:");
+                    var inx = r1.length;
+                    for (var index = inx - 1; index >= 0; index--) {
+                        r2 = r1[index].split("_:_");
+                        if(r2[0] != ""){
+                            href = "documents/openDocument.action?id=" + r2[0];
+                            
+                            var typeDoc = "";
+                            if(r2[1].includes("*1*")){
+                                r2[1] = r2[1].replace("*1*", '');
+                                typeDoc = SuppAppMsg.supplierForm36;
+                            } else if(r2[1].includes("*2*")){
+                                r2[1] = r2[1].replace("*2*", '');
+                                typeDoc = SuppAppMsg.supplierForm37;
+                            } else if(r2[1].includes("*3*")){
+                                r2[1] = r2[1].replace("*3*", '');
+                                typeDoc = SuppAppMsg.supplierForm38;
+                            } else if(r2[1].includes("*4*")){
+                                r2[1] = r2[1].replace("*4*", '');
+                                typeDoc = SuppAppMsg.supplierForm39;
+                            } else if(r2[1].includes("*5*")){
+                                r2[1] = r2[1].replace("*5*", '');
+                                typeDoc = SuppAppMsg.supplierForm40;
+                            }
+                            
+                            fileHref = typeDoc + "** <a href='" + href + "' target='_blank'>" + r2[1] + "</a> ||" + r2[2];
+                            hrefList = "<p>" + hrefList + fileHref + "</p>";
+                        }
+                    } 
+                    Ext.getCmp('hrefFileList').setValue(hrefList);
+                }
+            }
+        }
+    }/*,{
 		xtype : 'panel',
 		id:'tabNoticePrivacyId',
 		iconCls: 'fa-external-link',
@@ -520,6 +580,8 @@ Ext.define('SupplierApp.view.main.Main', {
     {
         title: 'Configuración',
         html: '',
+        id:'tabConfigId',
+        hidden: role !== 'ROLE_ADMIN',
         tabConfig: {
             iconCls: 'fa-cog',
             listeners: {
@@ -540,6 +602,7 @@ Ext.define('SupplierApp.view.main.Main', {
                             { 
                             	text: SuppAppMsg.tabUsers ,
                             	iconCls: 'x-fa fa-users',
+                            	hidden:role=='ROLE_ADMIN'?false:true,
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(users);
@@ -550,6 +613,7 @@ Ext.define('SupplierApp.view.main.Main', {
                             { 
                             	text: SuppAppMsg.tabUDC,
                             	iconCls: 'x-fa fa-bars',
+                            	hidden:role=='ROLE_ADMIN'?false:true,
                             	style: 'margin-left:40px;background-color: #3D72A4;padding:2px;',
                                 listeners: {
                                     click: function(){
@@ -560,6 +624,7 @@ Ext.define('SupplierApp.view.main.Main', {
                             { 
                             	text: SuppAppMsg.companys,
                             	iconCls: 'x-fa fa-building',
+                            	hidden:role=='ROLE_ADMIN'?false:true,
                             	style: 'margin-left:40px;background-color: #3D72A4;padding:2px;',
                                 listeners: {
                                     click: function(){

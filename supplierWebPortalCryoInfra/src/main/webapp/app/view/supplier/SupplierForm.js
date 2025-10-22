@@ -345,327 +345,344 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							    	afterrender: function(){
 							    		debugger
 							    		  var user = role;
-		                            	  var check = Ext.getCmp('country').getValue();
-		                            	  if (check != null && user=='ROLE_SUPPLIER'){
-		                            		    var currencyCode = Ext.getCmp('currencyCode').getValue();
-									    		
-									    		if(currencyCode == 'MXP' && check =='US'){
-									    			Ext.getCmp('idFiscal').allowBlank=false;
-									    		}else{
-									    			Ext.getCmp('idFiscal').allowBlank=true;
-									    		}
-									    		
-									    		
-		                            		  if(check != 'MX'){
-				                      				Ext.getCmp('supRfc').setReadOnly(true);
-				                      				//Ext.getCmp('documentContainerForeingResidence').show();
-				                      				Ext.getCmp('taxId').allowBlank=false;
-				                      				Ext.getCmp('taxId').show();
-				                      				Ext.getCmp('taxId').setReadOnly(false);
-				                      				Ext.getCmp('supRfc').allowBlank=true;
-				                      				Ext.getCmp('supRfc').hide();
-				                      				//Ext.getCmp('regFiscal').hide();
-				                      				//Ext.getCmp('regFiscal').allowBlank=true;
-				                      				
-				                      				var colonia = Ext.getCmp('fldColonia').getValue(); 
-				                      				Ext.getCmp('coloniaEXT').allowBlank=false;
-				                      				Ext.getCmp('coloniaEXT').show();
-				                      				Ext.getCmp('coloniaEXT').setValue(colonia);
-				                      				
-				                      				Ext.getCmp('fldColonia').hide();
-				                      				Ext.getCmp('fldColonia').allowBlank=true;
-				                      				
-				                      				Ext.getCmp('fldMunicipio').hide();
-				                      				Ext.getCmp('fldMunicipio').allowBlank=true;
-				                      				
-				                      				Ext.getCmp('searchCP').hide();
-				                      				Ext.getCmp('codigoPostal').allowBlank=true;
-				                      				
-				                      				/*Ext.getCmp('contCheckForeingBank').hide();
-				                      				Ext.getCmp('swiftCode').show();
-				                          			Ext.getCmp('ibanCode').show();
-				                          			Ext.getCmp('checkingOrSavingAccount').show();
-				                          			Ext.getCmp('rollNumber').show();
-				                          			Ext.getCmp('bankAddressNumber').show();
-				                          			Ext.getCmp('bankCountryCode').show();
-				                          			Ext.getCmp('bankTransitNumber').allowBlank=true;
-				                          			Ext.getCmp('custBankAcct').allowBlank=true;
-				                          			Ext.getCmp('bankTransitNumber').minLength=0;
-				                          			Ext.getCmp('custBankAcct').minLength=0;
-				                          			Ext.getCmp('bankTransitNumber').maxLength=20;
-										    		Ext.getCmp('custBankAcct').maxLength=20;
-				                          			Ext.getCmp('bankTransitNumber').setFieldLabel("Bank Transit Number");
-				                          			Ext.getCmp('custBankAcct').setFieldLabel("Cust Bank Account Number");
-				                          			
-				                          			Ext.getCmp('documentContainerForeingResidence').show();*/
-				                      				
-				                      				debugger
-				                      				Ext.getCmp('custBankAcct').allowBlank=true;
-				                      				//Ext.getCmp('custBankAcct').minLength=0;
-				                                	//Ext.getCmp('custBankAcct').maxLength=0;
-				                      				
-				                      			//ReadOnly Datos del Proveedor
-				                          		    Ext.getCmp('fisicaMoral').setReadOnly(true);
-				                      				Ext.getCmp('currencyCode').setReadOnly(true);
-				                      				Ext.getCmp('taxId').setReadOnly(true);
-				                      				
-				                      			    //ReadOnly Dirección Fiscal 
-				                      				Ext.getCmp('calleNumero').setReadOnly(true);
-				                      				Ext.getCmp('codigoPostal').setReadOnly(true);
-				                      				Ext.getCmp('coloniaEXT').setReadOnly(true);
-				                      				Ext.getCmp('estado').setReadOnly(true);
-				                      				Ext.getCmp('phoneDF').setReadOnly(true);
-				                      				Ext.getCmp('faxDF').setReadOnly(true);
-				                      				
-				                      			}else{
-				                      				debugger
-				                      				/*Ext.getCmp('fisicaMoral').setReadOnly(true);
-				                      				Ext.getCmp('currencyCode').setReadOnly(true);
-				                      				Ext.getCmp('nombreContactoCxC').setReadOnly(true);
-				                      				Ext.getCmp('payInstCxC').setReadOnly(true);
-				                      				Ext.getCmp('description').setReadOnly(true);
-				                      				Ext.getCmp('controlDigit').setReadOnly(true);
-				                      				Ext.getCmp('bankTransitNumber').setReadOnly(true);
-				                      				Ext.getCmp('custBankAcct').setReadOnly(true);*/
-				                      				Ext.getCmp('currencyCode').setReadOnly(true);
-				                      				Ext.getCmp('supRfc').setReadOnly(true);
-				                      				//Ext.getCmp('documentContainerForeingResidence').hide();
-				                      				Ext.getCmp('supRfc').allowBlank=false;
-				                      				Ext.getCmp('supRfc').show();
-				                      				Ext.getCmp('taxId').allowBlank=true;
-				                      				Ext.getCmp('taxId').hide();
-				                      				//Ext.getCmp('regFiscal').show();
-				                      				//Ext.getCmp('regFiscal').allowBlank=false;
-				                      				
-				                      				Ext.getCmp('fldColonia').show();
-				                      				Ext.getCmp('fldColonia').allowBlank=false;
-				                      				
-				                      				Ext.getCmp('coloniaEXT').hide();
-				                      				Ext.getCmp('coloniaEXT').allowBlank=true;
-				                      				
-				                      				Ext.getCmp('fldMunicipio').show();
-				                      				Ext.getCmp('fldMunicipio').allowBlank=false;
-				                      				
-				                      				//Ext.getCmp('searchCP').hide();
-				                      				Ext.getCmp('codigoPostal').allowBlank=false;
-				                      				
-				                      				//Ext.getCmp('contCheckForeingBank').show();
-				                      				debugger
-				                      				//Ext.getCmp('swiftCode').hide();
-				                          			//Ext.getCmp('ibanCode').hide();
-				                          			//Ext.getCmp('checkingOrSavingAccount').hide();
-				                          			//Ext.getCmp('rollNumber').hide();
-				                          			//Ext.getCmp('bankAddressNumber').hide();
-				                          			//Ext.getCmp('bankCountryCode').hide();
-				                          			//Ext.getCmp('bankTransitNumber').allowBlank=false;
-				                          			Ext.getCmp('custBankAcct').allowBlank=false;
-				                          			//Ext.getCmp('bankTransitNumber').minLength=18;
-				                          			Ext.getCmp('custBankAcct').maxLength=18;
-				                          			Ext.getCmp('bankTransitNumber').maxLength=18;
-										    		Ext.getCmp('custBankAcct').maxLength=18;
-				                          			Ext.getCmp('bankTransitNumber').setFieldLabel(SuppAppMsg.supplierForm52);
-				                          			Ext.getCmp('custBankAcct').setFieldLabel(SuppAppMsg.supplierForm53);
-				                      				
-				                          			Ext.getCmp('documentContainerForeingResidence').hide();
-				                      				
-				                      				/*Ext.getCmp('contCheckForeingBank').show();
-				                      				Ext.getCmp('swiftCode').hide();
-				                          			Ext.getCmp('ibanCode').hide();
-				                          			Ext.getCmp('checkingOrSavingAccount').hide();
-				                          			Ext.getCmp('rollNumber').hide();
-				                          			Ext.getCmp('bankAddressNumber').hide();
-				                          			Ext.getCmp('bankCountryCode').hide();
-				                          			Ext.getCmp('bankTransitNumber').allowBlank=false;
-				                          			Ext.getCmp('custBankAcct').allowBlank=false;
-				                          			Ext.getCmp('bankTransitNumber').minLength=18;
-				                          			Ext.getCmp('custBankAcct').minLength=18;
-				                          			Ext.getCmp('bankTransitNumber').maxLength=18;
-										    		Ext.getCmp('custBankAcct').maxLength=18;
-				                          			Ext.getCmp('bankTransitNumber').setFieldLabel(SuppAppMsg.supplierForm52);
-				                          			Ext.getCmp('custBankAcct').setFieldLabel(SuppAppMsg.supplierForm53);
-				                      				
-				                          			Ext.getCmp('documentContainerForeingResidence').hide();*/
-				                          			
+							    		var countryField = Ext.getCmp('country');
+							    	    
+							    	    if (countryField && countryField.getValue() != null) {
+							    	        var check = countryField.getValue();
+							    	        debugger;
+							    	        
+							    	        if (check != null && user == 'ROLE_SUPPLIER'){
+							    	            // Tu lógica aquí...
+							    	        }
+							    	    } else {
+							    	        // Si no tiene valor, esperar un poco y reintentar
+							    	        setTimeout(function(){
+							    	        	debugger
+							    	            var check = Ext.getCmp('country').getValue();
+							    	            if (check != null && user == 'ROLE_SUPPLIER'){
+							    	            	var currencyCode = Ext.getCmp('currencyCode').getValue();
+										    		
+										    		if(currencyCode == 'MXP' && check =='US'){
+										    			Ext.getCmp('idFiscal').allowBlank=false;
+										    		}else{
+										    			Ext.getCmp('idFiscal').allowBlank=true;
+										    		}
+										    		
+										    		debugger
+			                            		  if(check != 'MX'){
+					                      				Ext.getCmp('supRfc').setReadOnly(true);
+					                      				//Ext.getCmp('documentContainerForeingResidence').show();
+					                      				Ext.getCmp('taxId').allowBlank=false;
+					                      				Ext.getCmp('taxId').show();
+					                      				Ext.getCmp('taxId').setReadOnly(false);
+					                      				Ext.getCmp('supRfc').allowBlank=true;
+					                      				Ext.getCmp('supRfc').hide();
+					                      				//Ext.getCmp('regFiscal').hide();
+					                      				//Ext.getCmp('regFiscal').allowBlank=true;
+					                      				
+					                      				var colonia = Ext.getCmp('fldColonia').getValue(); 
+					                      				Ext.getCmp('coloniaEXT').allowBlank=false;
+					                      				Ext.getCmp('coloniaEXT').show();
+					                      				Ext.getCmp('coloniaEXT').setValue(colonia);
+					                      				
+					                      				Ext.getCmp('fldColonia').hide();
+					                      				Ext.getCmp('fldColonia').allowBlank=true;
+					                      				
+					                      				Ext.getCmp('fldMunicipio').hide();
+					                      				Ext.getCmp('fldMunicipio').allowBlank=true;
+					                      				
+					                      				Ext.getCmp('searchCP').hide();
+					                      				Ext.getCmp('codigoPostal').allowBlank=true;
+					                      				
+					                      				/*Ext.getCmp('contCheckForeingBank').hide();
+					                      				Ext.getCmp('swiftCode').show();
+					                          			Ext.getCmp('ibanCode').show();
+					                          			Ext.getCmp('checkingOrSavingAccount').show();
+					                          			Ext.getCmp('rollNumber').show();
+					                          			Ext.getCmp('bankAddressNumber').show();
+					                          			Ext.getCmp('bankCountryCode').show();
+					                          			Ext.getCmp('bankTransitNumber').allowBlank=true;
+					                          			Ext.getCmp('custBankAcct').allowBlank=true;
+					                          			Ext.getCmp('bankTransitNumber').minLength=0;
+					                          			Ext.getCmp('custBankAcct').minLength=0;
+					                          			Ext.getCmp('bankTransitNumber').maxLength=20;
+											    		Ext.getCmp('custBankAcct').maxLength=20;
+					                          			Ext.getCmp('bankTransitNumber').setFieldLabel("Bank Transit Number");
+					                          			Ext.getCmp('custBankAcct').setFieldLabel("Cust Bank Account Number");
+					                          			
+					                          			Ext.getCmp('documentContainerForeingResidence').show();*/
+					                      				
+					                      				debugger
+					                      				Ext.getCmp('custBankAcct').allowBlank=true;
+					                      				//Ext.getCmp('custBankAcct').minLength=0;
+					                                	//Ext.getCmp('custBankAcct').maxLength=0;
+					                      				
+					                      			//ReadOnly Datos del Proveedor
+					                          		    Ext.getCmp('fisicaMoral').setReadOnly(true);
+					                      				Ext.getCmp('currencyCode').setReadOnly(true);
+					                      				Ext.getCmp('taxId').setReadOnly(true);
+					                      				
+					                      			    //ReadOnly Dirección Fiscal 
+					                      				Ext.getCmp('calleNumero').setReadOnly(true);
+					                      				Ext.getCmp('codigoPostal').setReadOnly(true);
+					                      				Ext.getCmp('coloniaEXT').setReadOnly(true);
+					                      				Ext.getCmp('estado').setReadOnly(true);
+					                      				Ext.getCmp('phoneDF').setReadOnly(true);
+					                      				Ext.getCmp('faxDF').setReadOnly(true);
+					                      				
+					                      			}else{
+					                      				debugger
+					                      				/*Ext.getCmp('fisicaMoral').setReadOnly(true);
+					                      				Ext.getCmp('currencyCode').setReadOnly(true);
+					                      				Ext.getCmp('nombreContactoCxC').setReadOnly(true);
+					                      				Ext.getCmp('payInstCxC').setReadOnly(true);
+					                      				Ext.getCmp('description').setReadOnly(true);
+					                      				Ext.getCmp('controlDigit').setReadOnly(true);
+					                      				Ext.getCmp('bankTransitNumber').setReadOnly(true);
+					                      				Ext.getCmp('custBankAcct').setReadOnly(true);*/
+					                      				Ext.getCmp('currencyCode').setReadOnly(true);
+					                      				Ext.getCmp('supRfc').setReadOnly(true);
+					                      				//Ext.getCmp('documentContainerForeingResidence').hide();
+					                      				Ext.getCmp('supRfc').allowBlank=false;
+					                      				Ext.getCmp('supRfc').show();
+					                      				Ext.getCmp('taxId').allowBlank=true;
+					                      				Ext.getCmp('taxId').hide();
+					                      				//Ext.getCmp('regFiscal').show();
+					                      				//Ext.getCmp('regFiscal').allowBlank=false;
+					                      				
+					                      				Ext.getCmp('fldColonia').show();
+					                      				Ext.getCmp('fldColonia').allowBlank=false;
+					                      				
+					                      				Ext.getCmp('coloniaEXT').hide();
+					                      				Ext.getCmp('coloniaEXT').allowBlank=true;
+					                      				
+					                      				Ext.getCmp('fldMunicipio').show();
+					                      				Ext.getCmp('fldMunicipio').allowBlank=false;
+					                      				
+					                      				//Ext.getCmp('searchCP').hide();
+					                      				Ext.getCmp('codigoPostal').allowBlank=false;
+					                      				
+					                      				//Ext.getCmp('contCheckForeingBank').show();
+					                      				debugger
+					                      				//Ext.getCmp('swiftCode').hide();
+					                          			//Ext.getCmp('ibanCode').hide();
+					                          			//Ext.getCmp('checkingOrSavingAccount').hide();
+					                          			//Ext.getCmp('rollNumber').hide();
+					                          			//Ext.getCmp('bankAddressNumber').hide();
+					                          			//Ext.getCmp('bankCountryCode').hide();
+					                          			//Ext.getCmp('bankTransitNumber').allowBlank=false;
+					                          			Ext.getCmp('custBankAcct').allowBlank=false;
+					                          			//Ext.getCmp('bankTransitNumber').minLength=18;
+					                          			Ext.getCmp('custBankAcct').maxLength=18;
+					                          			Ext.getCmp('bankTransitNumber').maxLength=18;
+											    		Ext.getCmp('custBankAcct').maxLength=18;
+					                          			Ext.getCmp('bankTransitNumber').setFieldLabel(SuppAppMsg.supplierForm52);
+					                          			Ext.getCmp('custBankAcct').setFieldLabel(SuppAppMsg.supplierForm53);
+					                      				
+					                          			Ext.getCmp('documentContainerForeingResidence').hide();
+					                      				
+					                      				/*Ext.getCmp('contCheckForeingBank').show();
+					                      				Ext.getCmp('swiftCode').hide();
+					                          			Ext.getCmp('ibanCode').hide();
+					                          			Ext.getCmp('checkingOrSavingAccount').hide();
+					                          			Ext.getCmp('rollNumber').hide();
+					                          			Ext.getCmp('bankAddressNumber').hide();
+					                          			Ext.getCmp('bankCountryCode').hide();
+					                          			Ext.getCmp('bankTransitNumber').allowBlank=false;
+					                          			Ext.getCmp('custBankAcct').allowBlank=false;
+					                          			Ext.getCmp('bankTransitNumber').minLength=18;
+					                          			Ext.getCmp('custBankAcct').minLength=18;
+					                          			Ext.getCmp('bankTransitNumber').maxLength=18;
+											    		Ext.getCmp('custBankAcct').maxLength=18;
+					                          			Ext.getCmp('bankTransitNumber').setFieldLabel(SuppAppMsg.supplierForm52);
+					                          			Ext.getCmp('custBankAcct').setFieldLabel(SuppAppMsg.supplierForm53);
+					                      				
+					                          			Ext.getCmp('documentContainerForeingResidence').hide();*/
+					                          			
 
-				                          			
-				                          			//ReadOnly
-				                          					                          			
-				                          			//ReadOnly Datos del Proveedor MX
-				                          		    //Ext.getCmp('emailSupplier').setReadOnly(true);
-				                      				Ext.getCmp('fisicaMoral').setReadOnly(true);
-				                      				Ext.getCmp('currencyCode').setReadOnly(true);
-				                      				//Ext.getCmp('regFiscal').setReadOnly(true);
+					                          			
+					                          			//ReadOnly
+					                          					                          			
+					                          			//ReadOnly Datos del Proveedor MX
+					                          		    //Ext.getCmp('emailSupplier').setReadOnly(true);
+					                      				Ext.getCmp('fisicaMoral').setReadOnly(true);
+					                      				Ext.getCmp('currencyCode').setReadOnly(true);
+					                      				//Ext.getCmp('regFiscal').setReadOnly(true);
+					                      				
+					                      				//ReadOnly Dirección Fiscal MX
+					                      				Ext.getCmp('calleNumero').setReadOnly(true);
+					                      				Ext.getCmp('fldMunicipio').setReadOnly(true);
+					                      				Ext.getCmp('codigoPostal').setReadOnly(true);
+					                      				
+					                      				Ext.getCmp('fldColonia').setReadOnly(true);
+					                      				Ext.getCmp('estado').setReadOnly(true);
+					                      				Ext.getCmp('phoneDF').setReadOnly(true);
+					                      				Ext.getCmp('faxDF').setReadOnly(true);
+					                      				Ext.getCmp('searchCP').hide();
+					                      			}  
+			                            		  
+			                            		  //ReadOnly Contactos Proveedor
+			                      					Ext.getCmp('nombreContactoCxC').setReadOnly(true);
+			                      					Ext.getCmp('cargoCxC').setReadOnly(true);
+			                      					Ext.getCmp('emailSupplier').setReadOnly(true);
+			                      					Ext.getCmp('nombreCxP01').setReadOnly(true);
+				                      				Ext.getCmp('emailCxP01').setReadOnly(true);
+				                      				Ext.getCmp('telefonoCxP01').setReadOnly(true);
+				                      				Ext.getCmp('nombreCxP02').setReadOnly(true);
+				                      				Ext.getCmp('emailCxP02').setReadOnly(true);
+				                      				Ext.getCmp('telefonoCxP02').setReadOnly(true);
+				                      				Ext.getCmp('nombreCxP03').setReadOnly(true);
+				                      				Ext.getCmp('emailCxP03').setReadOnly(true);
+				                      				Ext.getCmp('telefonoCxP03').setReadOnly(true);
+				                      				Ext.getCmp('nombreCxP04').setReadOnly(true);
+				                      				Ext.getCmp('emailCxP04').setReadOnly(true);
+				                      				Ext.getCmp('telefonoCxP04').setReadOnly(true);
 				                      				
-				                      				//ReadOnly Dirección Fiscal MX
-				                      				Ext.getCmp('calleNumero').setReadOnly(true);
-				                      				Ext.getCmp('fldMunicipio').setReadOnly(true);
-				                      				Ext.getCmp('codigoPostal').setReadOnly(true);
+				                      	  //ReadOnly Representante Legal
 				                      				
-				                      				Ext.getCmp('fldColonia').setReadOnly(true);
-				                      				Ext.getCmp('estado').setReadOnly(true);
-				                      				Ext.getCmp('phoneDF').setReadOnly(true);
-				                      				Ext.getCmp('faxDF').setReadOnly(true);
-				                      				Ext.getCmp('searchCP').hide();
-				                      			}  
-		                            		  
-		                            		  //ReadOnly Contactos Proveedor
-		                      					Ext.getCmp('nombreContactoCxC').setReadOnly(true);
-		                      					Ext.getCmp('cargoCxC').setReadOnly(true);
-		                      					Ext.getCmp('emailSupplier').setReadOnly(true);
-		                      					Ext.getCmp('nombreCxP01').setReadOnly(true);
-			                      				Ext.getCmp('emailCxP01').setReadOnly(true);
-			                      				Ext.getCmp('telefonoCxP01').setReadOnly(true);
-			                      				Ext.getCmp('nombreCxP02').setReadOnly(true);
-			                      				Ext.getCmp('emailCxP02').setReadOnly(true);
-			                      				Ext.getCmp('telefonoCxP02').setReadOnly(true);
-			                      				Ext.getCmp('nombreCxP03').setReadOnly(true);
-			                      				Ext.getCmp('emailCxP03').setReadOnly(true);
-			                      				Ext.getCmp('telefonoCxP03').setReadOnly(true);
-			                      				Ext.getCmp('nombreCxP04').setReadOnly(true);
-			                      				Ext.getCmp('emailCxP04').setReadOnly(true);
-			                      				Ext.getCmp('telefonoCxP04').setReadOnly(true);
-			                      				
-			                      	  //ReadOnly Representante Legal
-			                      				
-			                      				Ext.getCmp('tipoIdentificacion').setReadOnly(true);
-			                                	Ext.getCmp('numeroIdentificacion').setReadOnly(true);
-			                                	Ext.getCmp('nombreRL').setReadOnly(true);
-			                                	Ext.getCmp('apellidoPaternoRL').setReadOnly(true);
-			                                	Ext.getCmp('apellidoMaternoRL').setReadOnly(true);	
-			                                	
-			                         //ReadOnly Datos Bancarios
-			                                	
-			                                	 Ext.getCmp('bankTransitNumber').setReadOnly(true);
-			                                	 Ext.getCmp('custBankAcct').setReadOnly(true);
-			                                	 Ext.getCmp('controlDigit').setReadOnly(true);
-			                                	 Ext.getCmp('description').setReadOnly(true);
-			                                	 //Ext.getCmp('checkForeingBank').setReadOnly(true);
-			                                	 //Ext.getCmp('outSourcing').setReadOnly(true);
-			                                	 Ext.getCmp('bankCountryCode').setReadOnly(true);
-			                                	 Ext.getCmp('rollNumber').setReadOnly(true);
-			                                	 Ext.getCmp('ibanCode').setReadOnly(true);
-			                                	 Ext.getCmp('idFiscal').setReadOnly(true);
-			                                	 Ext.getCmp('swiftCode').setReadOnly(true);
-			                                	 Ext.getCmp('bankAddressNumber').setReadOnly(true);
-			                      								                      				
-			                        //ReadOnly Datos Bancarios Extranjeros
-			                                	 
-			                                	/* Ext.getCmp('swiftCode').setReadOnly(true);
-			                                	 Ext.getCmp('ibanCode').setReadOnly(true);
-			                                	 Ext.getCmp('checkingOrSavingAccount').setReadOnly(true);
-			                                	 Ext.getCmp('rollNumber').setReadOnly(true);
-			                                	 Ext.getCmp('bankAddressNumber').setReadOnly(true);
-			                                	 Ext.getCmp('bankCountryCode').setReadOnly(true);	*/
-			                        //ReadOnly Documentos
-			                                	 
-			                                	 Ext.getCmp('loadEdoDoc').setDisabled(true);
-			                                	 Ext.getCmp('loadRfcDoc').setDisabled(true);
-			                                	// Ext.getCmp('loadObligacionesFiscales').setDisabled(true);
-			                                	 Ext.getCmp('loadIdentDoc').setDisabled(true);
-			                                	// Ext.getCmp('loadRpcDocument').setDisabled(true);
-			                                	 Ext.getCmp('loadDomDoc').setDisabled(true);	
-			                                	 Ext.getCmp('loadActaConst').setDisabled(true);
-			                                	 
-			                                	// Ext.getCmp('emailSupplierNewSupp').hide();
-												 //Ext.getCmp('emailSupplierNewSupp').allowBlank=true;
-												 
-												//Allow Blank
-												 
-												//MX
-				                      			Ext.getCmp('fisicaMoral').allowBlank=true;
-				                      			Ext.getCmp('currencyCode').allowBlank=true;
-				                      			//Ext.getCmp('regFiscal').allowBlank=true;
-				                      			Ext.getCmp('calleNumero').allowBlank=true;
-				                      			Ext.getCmp('fldMunicipio').allowBlank=true;
-				                      			Ext.getCmp('codigoPostal').allowBlank=true;
-				                       			Ext.getCmp('fldColonia').allowBlank=true;
-				                      			Ext.getCmp('estado').allowBlank=true;
-				                      			Ext.getCmp('phoneDF').allowBlank=true;
-				                      			Ext.getCmp('faxDF').allowBlank=true;
+				                      				Ext.getCmp('tipoIdentificacion').setReadOnly(true);
+				                                	Ext.getCmp('numeroIdentificacion').setReadOnly(true);
+				                                	Ext.getCmp('nombreRL').setReadOnly(true);
+				                                	Ext.getCmp('apellidoPaternoRL').setReadOnly(true);
+				                                	Ext.getCmp('apellidoMaternoRL').setReadOnly(true);	
+				                                	
+				                         //ReadOnly Datos Bancarios
+				                                	
+				                                	 Ext.getCmp('bankTransitNumber').setReadOnly(true);
+				                                	 Ext.getCmp('custBankAcct').setReadOnly(true);
+				                                	 Ext.getCmp('controlDigit').setReadOnly(true);
+				                                	 Ext.getCmp('description').setReadOnly(true);
+				                                	 //Ext.getCmp('checkForeingBank').setReadOnly(true);
+				                                	 //Ext.getCmp('outSourcing').setReadOnly(true);
+				                                	 Ext.getCmp('bankCountryCode').setReadOnly(true);
+				                                	 Ext.getCmp('rollNumber').setReadOnly(true);
+				                                	 Ext.getCmp('ibanCode').setReadOnly(true);
+				                                	 Ext.getCmp('idFiscal').setReadOnly(true);
+				                                	 Ext.getCmp('swiftCode').setReadOnly(true);
+				                                	 Ext.getCmp('bankAddressNumber').setReadOnly(true);
+				                      								                      				
+				                        //ReadOnly Datos Bancarios Extranjeros
+				                                	 
+				                                	/* Ext.getCmp('swiftCode').setReadOnly(true);
+				                                	 Ext.getCmp('ibanCode').setReadOnly(true);
+				                                	 Ext.getCmp('checkingOrSavingAccount').setReadOnly(true);
+				                                	 Ext.getCmp('rollNumber').setReadOnly(true);
+				                                	 Ext.getCmp('bankAddressNumber').setReadOnly(true);
+				                                	 Ext.getCmp('bankCountryCode').setReadOnly(true);	*/
+				                        //ReadOnly Documentos
+				                                	 debugger
+				                                	 Ext.getCmp('loadEdoDoc').setDisabled(true);
+				                                	 Ext.getCmp('loadRfcDoc').setDisabled(true);
+				                                	// Ext.getCmp('loadObligacionesFiscales').setDisabled(true);
+				                                	 Ext.getCmp('loadIdentDoc').setDisabled(true);
+				                                	// Ext.getCmp('loadRpcDocument').setDisabled(true);
+				                                	 Ext.getCmp('loadDomDoc').setDisabled(true);	
+				                                	 Ext.getCmp('loadActaConst').setDisabled(true);
+				                                	 
+				                                	// Ext.getCmp('emailSupplierNewSupp').hide();
+													 //Ext.getCmp('emailSupplierNewSupp').allowBlank=true;
+													 
+													//Allow Blank
+													 
+													//MX
+					                      			Ext.getCmp('fisicaMoral').allowBlank=true;
+					                      			Ext.getCmp('currencyCode').allowBlank=true;
+					                      			//Ext.getCmp('regFiscal').allowBlank=true;
+					                      			Ext.getCmp('calleNumero').allowBlank=true;
+					                      			Ext.getCmp('fldMunicipio').allowBlank=true;
+					                      			Ext.getCmp('codigoPostal').allowBlank=true;
+					                       			Ext.getCmp('fldColonia').allowBlank=true;
+					                      			Ext.getCmp('estado').allowBlank=true;
+					                      			Ext.getCmp('phoneDF').allowBlank=true;
+					                      			Ext.getCmp('faxDF').allowBlank=true;
+					                      				
+					                      		//Ext
 				                      				
-				                      		//Ext
-			                      				
-			                      				Ext.getCmp('fisicaMoral').allowBlank=true;
-				                      			Ext.getCmp('currencyCode').allowBlank=true;
-				                      			Ext.getCmp('taxId').allowBlank=true;
-				                   				Ext.getCmp('calleNumero').allowBlank=true;
-				                   				Ext.getCmp('codigoPostal').allowBlank=true;
-				                   				Ext.getCmp('coloniaEXT').allowBlank=true;
-				                   				Ext.getCmp('estado').allowBlank=true;
-				                   				Ext.getCmp('phoneDF').allowBlank=true;
-				                   				Ext.getCmp('faxDF').allowBlank=true;
-				                   				
-				                   			//ReadOnly Contactos Proveedor
-		                      					Ext.getCmp('nombreContactoCxC').allowBlank=true;
-		                      					Ext.getCmp('emailComprador').allowBlank=true;
-		                      					Ext.getCmp('telefonoCxC').allowBlank=true;
-		                      					Ext.getCmp('emailSupplier').allowBlank=true;
-		                      					
-		                      					
-		                      					
-		                      					Ext.getCmp('cargoCxC').allowBlank=true;
-		                      					Ext.getCmp('emailSupplier').allowBlank=true;
-		                      					Ext.getCmp('nombreCxP01').allowBlank=true;
-			                      				Ext.getCmp('emailCxP01').allowBlank=true;
-			                      				Ext.getCmp('telefonoCxP01').allowBlank=true;
-			                      				Ext.getCmp('nombreCxP02').allowBlank=true;
-			                      				Ext.getCmp('emailCxP02').allowBlank=true;
-			                      				Ext.getCmp('telefonoCxP02').allowBlank=true;
-			                      				Ext.getCmp('nombreCxP03').allowBlank=true;
-			                      				Ext.getCmp('emailCxP03').allowBlank=true;
-			                      				Ext.getCmp('telefonoCxP03').allowBlank=true;
-			                      				Ext.getCmp('nombreCxP04').allowBlank=true;
-			                      				Ext.getCmp('emailCxP04').allowBlank=true;
-			                      				Ext.getCmp('telefonoCxP04').allowBlank=true;
-			                      			
-			                      		//ReadOnly Representante Legal
-			                      				
-			                      				Ext.getCmp('tipoIdentificacion').allowBlank=true;
-			                                	Ext.getCmp('numeroIdentificacion').allowBlank=true;
-			                                	Ext.getCmp('nombreRL').allowBlank=true;
-			                                	Ext.getCmp('apellidoPaternoRL').allowBlank=true;
-			                                	Ext.getCmp('apellidoMaternoRL').allowBlank=true;	
-			                                	
-			                         //Datos Bancarios
-			                                	
-			                                	// Ext.getCmp('bankTransitNumber').allowBlank=true;
-			                                	 Ext.getCmp('custBankAcct').allowBlank=true;
-			                                	 Ext.getCmp('controlDigit').allowBlank=true;
-			                                	 Ext.getCmp('description').allowBlank=true;
-			                                	 
-			                                	  Ext.getCmp('custBankAcct').maxLength=28;
-			                                	 
-			                                	// Ext.getCmp('checkForeingBank').allowBlank=true;
-			                          //Bancarios Extranjeros
-			                                	 
-			                                	 Ext.getCmp('swiftCode').allowBlank=true;
-			                                	 Ext.getCmp('ibanCode').allowBlank=true;
-			                                	// Ext.getCmp('checkingOrSavingAccount').allowBlank=true;
-			                                	 Ext.getCmp('rollNumber').allowBlank=true;
-			                                	 Ext.getCmp('bankAddressNumber').allowBlank=true;
-			                                	 Ext.getCmp('bankCountryCode').allowBlank=true;
-			                                	 //Documentos
-			                                	 
-			                                	 Ext.getCmp('loadEdoDoc').allowBlank=true;
-			                                	 Ext.getCmp('loadRfcDoc').allowBlank=true;
-			                                	// Ext.getCmp('loadObligacionesFiscales').allowBlank=true;
-			                                	 Ext.getCmp('loadIdentDoc').allowBlank=true;
-			                                	 //Ext.getCmp('loadRpcDocument').allowBlank=true;
-			                                	 Ext.getCmp('loadDomDoc').allowBlank=true;	
-												// Ext.getCmp('emailSupplierNewSupp').allowBlank=true;  
-												 Ext.getCmp('actaConstitutiva').allowBlank=true;
-		                            	  }else{
-		                            		  Ext.getCmp('checkEditDataSupp').hide();
-			          				        	Ext.getCmp('lblEditDataSupp').hide();
-			          				        	//Ext.getCmp('checkEditFiscalAddress').hide();
-			          				        	//Ext.getCmp('lblEditFiscalAddress').hide();
-			          				        	Ext.getCmp('checkEditContact').hide();
-			          				        	Ext.getCmp('lblEditContact').hide();
-			          				        	//Ext.getCmp('checkEditLegalRepr').hide();
-			          				        	//Ext.getCmp('lblEditLegalRepr').hide();
-			          				        	Ext.getCmp('checkEditDataBank').hide();
-			          				        	Ext.getCmp('lblEditDataBank').hide();		
-		                            	  }
+				                      				Ext.getCmp('fisicaMoral').allowBlank=true;
+					                      			Ext.getCmp('currencyCode').allowBlank=true;
+					                      			Ext.getCmp('taxId').allowBlank=true;
+					                   				Ext.getCmp('calleNumero').allowBlank=true;
+					                   				Ext.getCmp('codigoPostal').allowBlank=true;
+					                   				Ext.getCmp('coloniaEXT').allowBlank=true;
+					                   				Ext.getCmp('estado').allowBlank=true;
+					                   				Ext.getCmp('phoneDF').allowBlank=true;
+					                   				Ext.getCmp('faxDF').allowBlank=true;
+					                   				
+					                   			//ReadOnly Contactos Proveedor
+			                      					Ext.getCmp('nombreContactoCxC').allowBlank=true;
+			                      					Ext.getCmp('emailComprador').allowBlank=true;
+			                      					Ext.getCmp('telefonoCxC').allowBlank=true;
+			                      					Ext.getCmp('emailSupplier').allowBlank=true;
+			                      					
+			                      					
+			                      					
+			                      					Ext.getCmp('cargoCxC').allowBlank=true;
+			                      					Ext.getCmp('emailSupplier').allowBlank=true;
+			                      					Ext.getCmp('nombreCxP01').allowBlank=true;
+				                      				Ext.getCmp('emailCxP01').allowBlank=true;
+				                      				Ext.getCmp('telefonoCxP01').allowBlank=true;
+				                      				Ext.getCmp('nombreCxP02').allowBlank=true;
+				                      				Ext.getCmp('emailCxP02').allowBlank=true;
+				                      				Ext.getCmp('telefonoCxP02').allowBlank=true;
+				                      				Ext.getCmp('nombreCxP03').allowBlank=true;
+				                      				Ext.getCmp('emailCxP03').allowBlank=true;
+				                      				Ext.getCmp('telefonoCxP03').allowBlank=true;
+				                      				Ext.getCmp('nombreCxP04').allowBlank=true;
+				                      				Ext.getCmp('emailCxP04').allowBlank=true;
+				                      				Ext.getCmp('telefonoCxP04').allowBlank=true;
+				                      			
+				                      		//ReadOnly Representante Legal
+				                      				
+				                      				Ext.getCmp('tipoIdentificacion').allowBlank=true;
+				                                	Ext.getCmp('numeroIdentificacion').allowBlank=true;
+				                                	Ext.getCmp('nombreRL').allowBlank=true;
+				                                	Ext.getCmp('apellidoPaternoRL').allowBlank=true;
+				                                	Ext.getCmp('apellidoMaternoRL').allowBlank=true;	
+				                                	
+				                         //Datos Bancarios
+				                                	
+				                                	// Ext.getCmp('bankTransitNumber').allowBlank=true;
+				                                	 Ext.getCmp('custBankAcct').allowBlank=true;
+				                                	 Ext.getCmp('controlDigit').allowBlank=true;
+				                                	 Ext.getCmp('description').allowBlank=true;
+				                                	 
+				                                	  Ext.getCmp('custBankAcct').maxLength=28;
+				                                	 
+				                                	// Ext.getCmp('checkForeingBank').allowBlank=true;
+				                          //Bancarios Extranjeros
+				                                	 
+				                                	 Ext.getCmp('swiftCode').allowBlank=true;
+				                                	 Ext.getCmp('ibanCode').allowBlank=true;
+				                                	// Ext.getCmp('checkingOrSavingAccount').allowBlank=true;
+				                                	 Ext.getCmp('rollNumber').allowBlank=true;
+				                                	 Ext.getCmp('bankAddressNumber').allowBlank=true;
+				                                	 Ext.getCmp('bankCountryCode').allowBlank=true;
+				                                	 //Documentos
+				                                	 
+				                                	 Ext.getCmp('loadEdoDoc').allowBlank=true;
+				                                	 Ext.getCmp('loadRfcDoc').allowBlank=true;
+				                                	// Ext.getCmp('loadObligacionesFiscales').allowBlank=true;
+				                                	 Ext.getCmp('loadIdentDoc').allowBlank=true;
+				                                	 //Ext.getCmp('loadRpcDocument').allowBlank=true;
+				                                	 Ext.getCmp('loadDomDoc').allowBlank=true;	
+													// Ext.getCmp('emailSupplierNewSupp').allowBlank=true;  
+													 Ext.getCmp('actaConstitutiva').allowBlank=true;
+							    	            }else{
+							    	            	 Ext.getCmp('checkEditDataSupp').hide();
+					          				        	Ext.getCmp('lblEditDataSupp').hide();
+					          				        	//Ext.getCmp('checkEditFiscalAddress').hide();
+					          				        	//Ext.getCmp('lblEditFiscalAddress').hide();
+					          				        	Ext.getCmp('checkEditContact').hide();
+					          				        	Ext.getCmp('lblEditContact').hide();
+					          				        	//Ext.getCmp('checkEditLegalRepr').hide();
+					          				        	//Ext.getCmp('lblEditLegalRepr').hide();
+					          				        	Ext.getCmp('checkEditDataBank').hide();
+					          				        	Ext.getCmp('lblEditDataBank').hide();	
+							    	            }
+							    	        }, 200);
+							    	    }
+							    	
+		                            	 
 		                              }
 							    }
 							},{//Contenedor de Datos Proveedor
@@ -797,7 +814,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 						                       // Ext.getCmp('emailSupplier').allowBlank=true;
 						                        
 			                                	  }*/
-			                                	  
+			                                	  debugger
 			                                	  Ext.getCmp('loadRfcDoc').setDisabled(true);
 					                                Ext.getCmp('rfcDocument').allowBlank=true;
 							                        Ext.getCmp('loadDomDoc').setDisabled(true);	
