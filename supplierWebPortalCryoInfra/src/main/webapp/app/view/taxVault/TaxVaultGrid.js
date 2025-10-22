@@ -115,11 +115,11 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			            		icon:'resources/images/archivo-pdf.png',
 			            		getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			            			if(r.data.documentStatus != "COMPLETED" ){
-				              			return "x-hide-display";
+				              			return "x-hidden-display";
 				              		}
 				              	          if(!(role=='ROLE_ADMIN'||role=='ROLE_TAX'||role=='ROLE_TREASURY'||role=='ROLE_ACCOUNTING'||role=='ROLE_MANAGER'||role=='ROLE_BF_ADMIN'||r.data.usuario==userName)) {
 				              	        	  
-				              	              return "x-hide-display";
+				              	              return "x-hidden-display";
 				              	          }
 				              	      },
 			             	      text: SuppAppMsg.freightApprovalReportBatch,
@@ -144,13 +144,13 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			            	icon:'resources/images/add.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			              		if(r.data.documentStatus != "COMPLETED" ){
-			              			return "x-hide-display";
+			              			return "x-hidden-display";
 			              		}
 			              		  
 			              	          if(
               	        		  !(role=='ROLE_ADMIN'||role=='ROLE_BF_ADMIN'||r.data.usuario==userName)) {
               	        	  
-              	              return "x-hide-display";
+              	              return "x-hidden-display";
               	          }
 			              	      },
 			              	      text: SuppAppMsg.approvalApprove,
@@ -172,12 +172,12 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			            	icon:'resources/images/accept.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			              		if(r.data.documentStatus != "COMPLETED" ){
-			              			return "x-hide-display";
+			              			return "x-hidden-display";
 			              		}
 			              	          if(
               	        		  !(role=='ROLE_ADMIN'||role=='ROLE_TAX'||role=='ROLE_TREASURY'||role=='ROLE_ACCOUNTING'||role=='ROLE_MANAGER'||role=='ROLE_BF_ADMIN')) {
               	        	  
-              	              return "x-hide-display";
+              	              return "x-hidden-display";
               	          }
 			              	      },
 			              	      text: SuppAppMsg.approvalApprove,
@@ -199,12 +199,12 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 			            	icon:'resources/images/close.png',
 			              	  getClass: function(v, metadata, r, rowIndex, colIndex, store) {
 			              		if(r.data.documentStatus != "COMPLETED" ){
-			              			return "x-hide-display";
+			              			return "x-hidden-display";
 			              		}
 			              		   if(
               	        		  !(role=='ROLE_ADMIN'||role=='ROLE_BF_ADMIN')) {
                       	        	  
-                      	              return "x-hide-display";
+                      	              return "x-hidden-display";
                       	          }
 			              	      },
 			              	      text: SuppAppMsg.approvalReject,
