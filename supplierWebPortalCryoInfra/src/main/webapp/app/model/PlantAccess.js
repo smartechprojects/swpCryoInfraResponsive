@@ -2,10 +2,11 @@ Ext.define('SupplierApp.model.PlantAccess', {
     extend: 'Ext.data.Model',
     fields: [
 				{name:  'id'},
-				{ name: 'fechaSolicitud', type: 'int' },
+				/*{ name: 'fechaSolicitud', type: 'int' },
 		        { name: 'fechaSolicitudStr', type: 'string', convert: function (value, record) {
 		            return Ext.util.Format.date(new Date(record.data.fechaSolicitud), 'd-m-Y H:i:s');
-		        }},
+		        }},*/
+		        { name: 'fechaSolicitudStr', type: 'string'},
 				{name:  'addressNumberPA'},
 				{name:  'razonSocial'},
 				{name:  'fechaSolicitud', type: 'date', dateFormat: 'c'},

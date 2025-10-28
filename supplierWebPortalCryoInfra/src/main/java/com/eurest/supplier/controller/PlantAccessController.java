@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -142,9 +143,17 @@ public class PlantAccessController {
 			int total=0;
 			list = plantAccessRequestService.getPlantAccessRequests(rFC, status, approver, addressNumberPA, start, limit);
 			
-//			for(PlantAccessRequest x : list) {
-//					x.setFechaSolicitudStr(sdf.format(x.getFechaSolicitud()));
-//			}
+			/*for (PlantAccessRequest x : list) {
+
+				x.setFechaSolicitudStr(sdf.format(x.getFechaSolicitud()));
+			}*/
+			
+			list = list.parallelStream()
+				    .map(x -> {
+				        x.setFechaSolicitudStr(sdf.format(x.getFechaSolicitud()));
+				        return x;
+				    })
+				    .collect(Collectors.toList());
 			
 			if(list!=null)
 			total = list.size();		

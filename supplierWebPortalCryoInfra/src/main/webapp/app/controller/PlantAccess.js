@@ -1981,7 +1981,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	
     	//Habilita o deshabilita control Enviar Solicitud
     	this.showRequestViewAvailableByStatus();
-    	
+    	debugger
     	//Deshabilita Agregar Trabajador
     	Ext.getCmp('plantAccessAddWorker').setVisible(false);
     	
@@ -1993,9 +1993,10 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    	requestId:paRequestId
 	        },
 		    success: function(fp, o) {
+		    	debugger
 		    	var res = Ext.decode(fp.responseText);
 				var rec =Ext.create('SupplierApp.model.PlantAccessDetail',res.data);
-				var fileArray = rec.raw;
+				var fileArray = res.data;
 		    	
 				//Carga el nombre de los archivos de la solicitud
 				var formDoc = me.getPlantAccessRequestDocForm().getForm();
@@ -2007,7 +2008,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						}
 					});
 				}
-		    	
+		    	debugger
 				//Valida documentos de la solicitud cargados y habilita control Agregar Trabajador
 		    	if (formDoc.isValid()) {
 		    		//Habilita control Agregar Trabajador
@@ -5301,6 +5302,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    }
 		
 		});
+		debugger
 		me.viewAccessPlant.show();		
 		Ext.getCmp('paContractorCompany').setValue(supplierProfile.data.razonSocial);
 		Ext.getCmp('paRequestAddressNumber').setValue(addressNumber);
@@ -5559,7 +5561,7 @@ debugger
     		    	debugger;
     		    	var res = Ext.decode(fp.responseText);
     				var rec =Ext.create('SupplierApp.model.PlantAccessFile',res.data);
-    				var fileArray = rec.raw;
+    				var fileArray = res.data;
     		    	
     				//Carga el nombre de los archivos de la solicitud
     				fileArray.forEach(function(element) {
@@ -5778,7 +5780,7 @@ debugger
 		//Opciones barra de tareas (Arriba)
     	Ext.getCmp('savePlantAccessRequest').show();
     	Ext.getCmp('showPlantAccessRequestFiles').show();
-    	
+    	debugger
     	//Opciones barra de tareas (Abajo)
     	Ext.getCmp('plantAccessAddWorker').show();
     	Ext.getCmp('plantAccessFinishWorker').hide();
@@ -5801,7 +5803,7 @@ debugger
 		//Opciones barra de tareas (Arriba)
     	Ext.getCmp('savePlantAccessRequest').hide();
     	Ext.getCmp('showPlantAccessRequestFiles').hide();
-    	
+    	debugger
     	//Opciones barra de tareas (Abajo)
     	Ext.getCmp('plantAccessAddWorker').hide();
     	Ext.getCmp('plantAccessFinishWorker').show();
@@ -6126,7 +6128,8 @@ debugger
 			    		Ext.getCmp('heavyEquipmentRequestDoc').setValue(recordNew.data.heavyEquipment);
 			    		
 			    		//Valida documentos de la solicitud cargados y habilita control Agregar Trabajador
-			    		var formDoc = me.getPlantAccessRequestDocForm().getForm();			    		
+			    		var formDoc = me.getPlantAccessRequestDocForm().getForm();		
+			    		debugger
 				    	if (formDoc.isValid()) {
 				    		//Habilita control Agregar Trabajador
 				    		me.showAddNewWorkerBtnByStatus();
@@ -6492,6 +6495,7 @@ debugger
     		    	idWorker: paWorkerId
     	        },
     		    success: function(fp, o) {
+    		    	debugger
     		    	var res = Ext.decode(fp.responseText);
     		    	var grid = me.getPlantAccessWorkerGrid();
     		    	grid.store.loadData([], false);
@@ -6584,6 +6588,7 @@ debugger
     
     showAddNewWorkerBtnByStatus: function(){
     	//Definición de controles por estatus
+    	debugger
     	var statusPlantAccess = Ext.getCmp('paRequestStatus').getValue();
     	Ext.getCmp('plantAccessAddWorker').setVisible(true);
     	 if(['RECHAZADO','GUARDADO'].includes(statusPlantAccess) && role == 'ROLE_SUPPLIER'){
