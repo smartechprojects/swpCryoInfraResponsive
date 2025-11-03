@@ -6,7 +6,11 @@
 	frame:false,
 	border:false,
 	flex: 1,
-	scrollable: true,
+	//scrollable: false,
+	 //autoScroll: true,
+	 autoHeight: true,
+	    minHeight: 400, 
+
 	selModel: {
         checkOnly: true,
         mode: 'SIMPLE'
@@ -16,10 +20,44 @@
 	scroll : false,
 	viewConfig: {
 		stripeRows: true,
-		style : { overflow: 'auto', overflowX: 'hidden' }
+		style : { overflow: 'auto', overflowX: 'hidden' },
+		enableTextSelection: true,
+		stripeRows: true,
+	    markDirty: false,
+		 listeners: {
+	            refresh: function(view) {
+	                var grid = view.up('grid');
+	                var store = grid.getStore();
+	                var rowCount = store.getCount();
+	                var viewEl = view.getEl();
+	                                
+	                //AutoSize en columnas
+	                Ext.defer(function() {
+	                    grid.columns.forEach(function(col) {
+	                        if (col.autoSize) col.autoSize();
+	                        else if (col.autoSizeColumn) col.autoSizeColumn();
+	                        
+	                        // Ajustar el header si es necesario
+	                        var headerText = col.text || '';
+	                        var headerEl = col.el;
+	                        if (headerEl && headerText) {
+	                            var textWidth = Ext.util.TextMetrics.measure(headerEl, headerText).width + 20; 
+	                            var currentWidth = col.getWidth();
+	                            
+	                            if (textWidth > currentWidth) {
+	                                col.setWidth(textWidth);
+	                            }
+	                        }
+	                    });
+	                }, 200);
+	                
+	            
+	            }
+		 }
 	},
+
     initComponent: function() {
-    	
+    	 this.emptyText = SuppAppMsg.emptyMsg;
     	var poController = SupplierApp.app.getController("SupplierApp.controller.PurchaseOrder");
 	 
     	var status = null;
@@ -140,7 +178,7 @@
             hidden:false
         },{
             text     : SuppAppMsg.purchaseOrderSupplier,
-            width: 80,
+            flex : 1,
             dataIndex: 'addressNumber'
         },{
         	text     : SuppAppMsg.suppliersName,
@@ -191,7 +229,7 @@
         },{
             text     : SuppAppMsg.purchaseOrderCurrency,
             //width: 60,
-            flex : 0.5,
+            flex : 1,
             dataIndex: 'currecyCode'
         },{
             hidden:true,
@@ -924,5 +962,34 @@
 
       
         this.callParent(arguments);
+        
+        this.getStore().on('load', function(store, records) {
+            this.calculateHeight();
+        }, this);
+        
+        this.on('resize', function() {
+            this.calculateHeight();
+        }, this);
+    },
+    
+    calculateHeight: function() {
+        var me = this;
+        Ext.defer(function() {
+            var rowHeight = 40; // Altura aproximada por fila
+            var headerHeight = 40; // Altura del header
+            var toolbarHeight = me.dockedItems.length > 0 ? me.dockedItems[0].getHeight() : 0;
+            var pagingHeight = 40; // Altura de la barra de paginación
+            
+            var recordCount = me.getStore().getCount();
+            var calculatedHeight = (recordCount * rowHeight) + headerHeight + toolbarHeight + pagingHeight;
+            
+            // Establecer altura mínima y máxima
+            var minHeight = 400;
+            var maxHeight = Ext.getBody().getViewSize().height - 100;
+            
+            var finalHeight = Math.max(minHeight, Math.min(calculatedHeight, maxHeight));
+            
+            me.setHeight(finalHeight);
+        }, 100);
     }
 });
