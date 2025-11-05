@@ -3,6 +3,8 @@ Ext.define('SupplierApp.view.udc.UdcPanel' ,{
     alias : 'widget.udcPanel',
     border:false,
     frame:false,
+    layout: 'fit',
+    autoScroll : false,
 	initComponent: function () {
         Ext.apply(this, {
         	layout: {
@@ -11,12 +13,10 @@ Ext.define('SupplierApp.view.udc.UdcPanel' ,{
             },   
             items: [{
             	xtype: 'udcForm',
-            	flex:.25,
-            	minHeight: 150
+            	flex:.3
             },{
            	 xtype: 'udcGrid',
-           	 flex:.75,
-           	minHeight: 250
+           	 flex:.7
             }]
         });
         this.callParent(arguments);

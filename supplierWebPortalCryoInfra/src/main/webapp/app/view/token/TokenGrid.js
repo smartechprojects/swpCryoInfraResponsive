@@ -3,9 +3,10 @@ Ext.define('SupplierApp.view.token.TokenGrid' ,{
     alias : 'widget.tokenGrid',
     loadMask: true,
 	frame:false,
-	border:true,
-    forceFit: true,
-	cls: 'extra-large-cell-grid', 
+	border:false,
+	forceFit:true,
+	fullscreen: true,
+	cls: 'extra-large-cell-grid',
     store : {
 		type:'accesstokenregister'
 	},
@@ -16,6 +17,7 @@ Ext.define('SupplierApp.view.token.TokenGrid' ,{
 	},
 	
     initComponent: function() {
+    	this.emptyText = SuppAppMsg.emptyMsg;
     	
     	var tokenController = SupplierApp.app.getController("SupplierApp.controller.Token");
  
@@ -75,31 +77,6 @@ Ext.define('SupplierApp.view.token.TokenGrid' ,{
       
         
         this.dockedItems = [
-            {
-              xtype: 'toolbar',
-              dock: 'top',
-              items: [{
-      			name : 'searchAccessToken',
-    			itemId : 'searchAccessToken',
-    			emptyText : SuppAppMsg.suppliersSearch,
-    			xtype : 'trigger',
-    			maxWidth : 400,
-    			flex : 1,
-    			margin: '5 0 10 0',
-    			triggerCls : 'x-form-search-trigger',
-    			onTriggerClick: function() {
-    				tokenController.loadSearchList(this, this.getValue());
-            },
-    			enableKeyEvents : true,
-    			listeners : {
-    				specialkey : function(field, e) {
-    					if (e.ENTER === e.getKey()) {
-    						field.onTriggerClick();
-    					}
-    				}
-    			}
-    		}
-              ]},
 		    getPagingContent()
       ];
 	  

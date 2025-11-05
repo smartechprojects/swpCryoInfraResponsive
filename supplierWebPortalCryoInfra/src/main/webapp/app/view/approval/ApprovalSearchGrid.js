@@ -231,17 +231,16 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
             {
               xtype: 'toolbar',
               dock: 'top',
+              defaults: {
+                  labelAlign: 'top',
+                  flex:.3
+              },
               items: [{
       			xtype: 'textfield',
                 fieldLabel: SuppAppMsg.suppliersName,
                 id: 'supSearchName',
                 itemId: 'supSearchName',
                 name:'supSearchName',
-                //width:200,
-                flex: 1,
-                labelWidth:70,
-                labelAlign:'top',
-                margin:'10 20 10 5',
                 listeners:{
     				change: function(field, newValue, oldValue){
     					field.setValue(newValue.toUpperCase());
@@ -253,11 +252,6 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 id: 'supSearchTicket',
                 itemId: 'supSearchTicket',
                 name:'supSearchTicket',
-                //width:120,
-                flex: 1,
-                labelWidth:70,
-                labelAlign:'top',
-                margin:'0 20 10 10',
                 listeners:{
     				change: function(field, newValue, oldValue){
     					field.setValue(newValue.toUpperCase());
@@ -271,10 +265,7 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 queryMode: 'local',
     			store : ticketSatusStore,
                 displayField: 'description',
-                valueField: 'status',
-                //width : 150,
-                flex: 1,
-                labelAlign:'top'
+                valueField: 'status'
     		},{
     			fieldLabel : SuppAppMsg.approvalLevel,
     			name : 'supSearchApprLevel',
@@ -284,22 +275,17 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
     			store : apprLevelStore,
                 displayField: 'description',
                 valueField: 'status',
-                //width : 150,
-                flex: 1,
-                labelAlign:'top',
-                margin:'0 20 10 20',
     		},{
     			xtype: 'textfield',
                 fieldLabel: SuppAppMsg.approvalCurrentApprover,
                 id: 'supSearchApprover',
                 itemId: 'supSearchApprover',
-                name:'supSearchApprover',
-                //width:120,
-                flex: 1,
-                labelWidth:70,
-                labelAlign:'top',
-                margin:'0 20 10 10'
-    		}
+                name:'supSearchApprover'
+    		},{
+		        xtype: 'displayfield',
+		        value: '',
+		        flex:.4
+		    }
               ]},
              {
                 xtype: 'toolbar',
@@ -314,8 +300,7 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
 	                    tap: function (button) {
 	                    	apController.searchAppSupplier(button);
 	                    }
-	                },
-                    margin:'0 0 10 0'
+	                }
                   }
               ]}
       ];

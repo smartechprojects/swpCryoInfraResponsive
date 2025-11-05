@@ -3,7 +3,7 @@ Ext.define('SupplierApp.store.FiscalDocuments', {
     model: 'SupplierApp.model.FiscalDocuments',
     alias:'store.fiscaldocuments',
     autoLoad: false,
-    pageSize: 10,
+    pageSize: 12,
     proxy: {
         enablePaging: true,
         type: 'ajax',

@@ -269,6 +269,7 @@ Ext.define('SupplierApp.controller.Supplier', {
     supAddNbrSrch: function(button) {
     	var grid = this.getSupplierGrid();
     	var store = grid.getStore();
+    	var name = Ext.getCmp('supAddName');
     	var supAddNbr = Ext.getCmp('supAddNbr').getValue() ==''?'':Ext.getCmp('supAddNbr').getValue();
     	var supAddName = Ext.getCmp('supAddName').getValue() == ''?'':Ext.getCmp('supAddName').getValue();
 

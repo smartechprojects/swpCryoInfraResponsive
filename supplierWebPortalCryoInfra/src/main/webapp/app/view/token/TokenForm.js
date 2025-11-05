@@ -2,14 +2,15 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 	extend: 'Ext.form.Panel',
 	alias : 'widget.tokenForm',
 	border:false,
-	  initComponent: function() {		  
+	  initComponent: function() {		
+		  var tokenController = SupplierApp.app.getController("SupplierApp.controller.Token");
+		  
 			this.items= [{
 				xtype : 'container',
-				layout : 'vbox',
-				style : 'border-bottom: 1px dotted #fff;background-color: #D5D8DC;padding-bottom:10px',
+				layout : 'hbox',
 				defaults : {
-					labelWidth : 150,
-					margin : '5 5 5 5',
+					labelAlign: 'top',
+					margin : '5 5 0 5',
 					xtype : 'textfield',
 					//width:250
 				},
@@ -41,8 +42,7 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 				},{
 					fieldLabel: window.navigator.language.startsWith("es", 0)? 'Nombre del Proveedor':'Name Supplier',
 					name: 'registerName',
-					//maxWidth : 1700,
-					flex : 1,
+					width:350,
 					listeners:{
 						change: function(field, newValue, oldValue){
 							field.setValue(newValue.toUpperCase());
@@ -56,8 +56,7 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 					fieldLabel: window.navigator.language.startsWith("es", 0)? 'Correo electronico':'Email',
 					vtype : 'email',
 					name: 'email',
-					//maxWidth : 500,
-					flex : 1,
+					width:250,
 					allowBlank:false
 				},{
 					xtype : 'checkbox',
@@ -66,55 +65,65 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 					//maxWidth : 300,
 					flex:1,
 					checked: true
-				}, {
-	                xtype: 'toolbar',
-	                border: false,
-	                style: 'background: transparent; margin-top:10px;',
-	                items: [{
-	                    iconCls: 'icon-save',
-	                    id: 'saveTokenRegisterId',
-	                    text: window.navigator.language.startsWith("es", 0) ? 'Enviar registro' : 'Send register',
-	                    action: 'save',
-	                    cls: 'buttonStyle'
-	                }, '-', {
-	                    iconCls: 'icon-accept',
-	                    id: 'updateTokenRegisterId',
-	                    text: window.navigator.language.startsWith("es", 0) ? 'Renovar registro' : 'Renew register',
-	                    action: 'update',
-	                    cls: 'buttonStyle',
-	                    disabled: true
-	                }, '-', {
-	                    iconCls: 'icon-add',
-	                    id: 'newTokenRegisterId',
-	                    text: window.navigator.language.startsWith("es", 0) ? 'Nuevo registro' : 'New register',
-	                    action: 'new',
-	                    cls: 'buttonStyle'
-	                }]
-	            }]
+				}
+				
+				
+				
+				]
 			}];
+
 			
-			/*this.tbar=[      
-				 {
-			    	  iconCls: 'icon-save',
-			    	  id: 'saveTokenRegisterId',
-			    	  text: window.navigator.language.startsWith("es", 0)? 'Enviar registro':'Send register',
-			    	  action: 'save',
-			    	  cls: 'buttonStyle'
-			      }, '-',{
-			    	  iconCls: 'icon-accept',
-			    	  id: 'updateTokenRegisterId',
-			    	  text: window.navigator.language.startsWith("es", 0)? 'Renovar registro':'Renew register',
-			    	  action: 'update',
-			    	  cls: 'buttonStyle',
-			    	  disabled : true
-			      }, '-',{
-			    	  iconCls: 'icon-add',
-			    	  id: 'newTokenRegisterId',
-			    	  text: window.navigator.language.startsWith("es", 0)? 'Nuevo registro':'New register',
-			    	  action: 'new',
-			    	  cls: 'buttonStyle',
-			    	  margin : '5 0 10 0'
-			      }];*/
+			this.dockedItems = [{
+		        xtype: 'toolbar',
+		        dock: 'bottom', // Specify the dock position
+		        defaults: {
+                    margin: '0 20 0 0' 
+                },
+		        items: [
+		        	{
+		                iconCls: 'icon-save',
+		                id: 'saveTokenRegisterId',
+		                text: window.navigator.language.startsWith("es", 0) ? 'Enviar registro' : 'Send register',
+		                action: 'save',
+		                cls: 'buttonStyle'
+		            }, {
+		                iconCls: 'icon-accept',
+		                id: 'updateTokenRegisterId',
+		                text: window.navigator.language.startsWith("es", 0) ? 'Renovar registro' : 'Renew register',
+		                action: 'update',
+		                cls: 'buttonStyle',
+		                disabled: true
+		            }, {
+		                iconCls: 'icon-add',
+		                id: 'newTokenRegisterId',
+		                text: window.navigator.language.startsWith("es", 0) ? 'Nuevo registro' : 'New register',
+		                action: 'new',
+		                cls: 'buttonStyle'
+		            },{
+		      			name : 'searchAccessToken',
+		    			itemId : 'searchAccessToken',
+		    			emptyText : SuppAppMsg.suppliersSearch,
+		    			xtype : 'trigger',
+		    			maxWidth : 300,
+		    			flex : 1,
+		    			margin: '0 0 0 50',
+		    			triggerCls : 'x-form-search-trigger',
+		    			onTriggerClick: function() {
+		    				tokenController.loadSearchList(this, this.getValue());
+		            },
+		    			enableKeyEvents : true,
+		    			listeners : {
+		    				specialkey : function(field, e) {
+		    					if (e.ENTER === e.getKey()) {
+		    						field.onTriggerClick();
+		    					}
+		    				}
+		    			}
+		    		}
+		        ]
+		    }],
+		    
+
 		  this.callParent(arguments);	    
 	  }
 

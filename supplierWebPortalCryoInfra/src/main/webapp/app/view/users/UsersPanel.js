@@ -1,14 +1,10 @@
 Ext.define('SupplierApp.view.users.UsersPanel' ,{
     extend: 'Ext.Panel',
     alias : 'widget.usersPanel',
-    border:true,
+    border:false,
     frame:false,
-    title:'Usuarios',
-    layout: 'fit', 
-    scrollable: {
-        x: true,
-        y: true
-    },
+    layout: 'fit',
+    autoScroll : false,
 	initComponent: function () {
         Ext.apply(this, {
         	layout: {
@@ -17,11 +13,13 @@ Ext.define('SupplierApp.view.users.UsersPanel' ,{
             },   
             items: [{
             	xtype: 'usersForm',
-            	flex:5
+            	flex:.4,
+            	border:true
 
             },{
            	 xtype: 'usersGrid',
-           	flex:5
+           	flex:.6,
+        	border:true
             }]
         });
         this.callParent(arguments);

@@ -44,11 +44,10 @@
     	    editable: false,
     	    displayField: 'name',
 			//width:150,
-    	    flex : 1.5,
+    	    flex : .2,
     	    //labelWidth:40,
     	    valueField: 'id',
     	    //margin:'20 20 0 10',
-    	    emptyText:'SELECCIONAR',
     	    id:'combostatus',
     	    listeners: {
     	        afterrender: function() {
@@ -189,8 +188,7 @@
                     pack: 'start'
                 },
                 defaults: {
-                    margin:'20 20 0 10',
-                  //  labelAlign: 'top'
+                    labelAlign: 'top'
                 },
                 items: [
                 	{
@@ -205,7 +203,7 @@
                 hidden:true,
                 //width:200,
                 //labelWidth:50,
-                flex :1 ,
+                flex :.3 ,
                 //margin:'20 20 0 10'
     		},{
     			xtype: 'textfield',
@@ -220,7 +218,7 @@
                 //hidden: role.includes('ROLE_SUPPLIER')?true:false,
                 //width:200,
                 //labelWidth:50,
-                flex :1 ,
+                flex :.3 ,
                 //margin:'20 20 0 10'
     		},{
 			xtype: 'textfield',
@@ -234,12 +232,16 @@
             hidden: role == 'ROLE_SUPPLIER' ?true:false,
             //hidden: role == 'ROLE_SUPPLIER'?true:false,
             //width:200,
-            flex :1.5 ,		
+            flex :.4		
             //labelWidth:50,
             //margin:'20 20 0 10'
 		},{ 
 			xtype: 'combostatus'
-		}]
+		},{
+	        xtype: 'displayfield',
+	        value: '',
+	        flex:.5
+	    }]
         	},        
         	{
             	xtype: 'toolbar',
@@ -250,7 +252,7 @@
                     pack: 'start'
                 },
                 defaults: {
-                    margin: '0 20 0 10' 
+                    //margin: '0 20 0 10' 
                 },
                 items: [{
        		xtype:'button',
@@ -270,13 +272,15 @@
 			id : 'addPlantAccessRequest',
 			text : SuppAppMsg.plantAccess1,
 			action : 'addNewPlantAccessRequest',
+			 cls: 'buttonStyle'
 //			hidden: role == 'ROLE_SUPPLIER'?false:true,
 		}
 		]
         	},
 		];
         
-		this.bbar = Ext.create('Ext.PagingToolbar', {
+		/*
+        this.bbar = Ext.create('Ext.PagingToolbar', {
 			store: this.store,
 			displayInfo : true,
 			beforePageText : SuppAppMsg.page,
@@ -284,6 +288,7 @@
 			emptyMsg  : SuppAppMsg.emptyMsg ,
 			displayMsg :SuppAppMsg.displayMsg + ' {0} - {1} '+ SuppAppMsg.de +' {2}'
 		});
+		*/
 		
         this.callParent(arguments);
     }

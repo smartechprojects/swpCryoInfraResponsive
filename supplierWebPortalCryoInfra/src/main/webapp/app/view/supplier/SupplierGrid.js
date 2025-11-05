@@ -1,12 +1,13 @@
 Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.supplierGrid',
-    forceFit: true,
     loadMask: true,
 	frame:false,
-	border:true,
-	cls: 'extra-large-cell-grid', 
-	autoScroll : true,
+	border:false,
+	forceFit:true,
+	fullscreen: true,
+	cls: 'extra-large-cell-grid',
+	scroll : false,
 	viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' }
@@ -24,7 +25,7 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
 	    			supAddName :''
                 },
 			    "", 
-			    11);
+			    12);
  
         this.columns = [
            {
@@ -78,18 +79,17 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
               items: [{
       			xtype: 'textfield',
                 fieldLabel: SuppAppMsg.suppliersNumber,
+                labelAlign:'top',
                 id: 'supAddNbr',
                 itemId: 'supAddNbr',
                 name:'supAddNbr',
                 value: role.includes('ROLE_SUPPLIER')?addressNumber:'',
                 fieldStyle: role.includes('ROLE_SUPPLIER')?'border:none;background-color: #ddd; background-image: none;':'',
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
-                //width:200,
-                //labelWidth:90,
-                flex: 1,
-                margin:'10 20 0 20'
+                width:150
     		},{
     			xtype: 'textfield',
+                labelAlign:'top',
                 fieldLabel: SuppAppMsg.suppliersName,
                 id: 'supAddName',
                 itemId: 'supAddName',
@@ -97,10 +97,8 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                 value: role.includes('ROLE_SUPPLIER')?addressNumber:'',
                 fieldStyle: role.includes('ROLE_SUPPLIER')?'border:none;background-color: #ddd; background-image: none;':'',
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
-                //width:500,
-                //labelWidth:70,
-                flex: 1,
-                margin:'10 20 0 0'
+                width:380,
+                labelWidth:70
     		}
               ]},
              {
@@ -112,21 +110,21 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                     text: SuppAppMsg.suppliersSearch,
                     iconCls: 'icon-doSearch',
                     action:'supAddNbrSrch',
-                    margin:'0 20 10 20'
+	                cls: 'buttonStyle'
         		},{
                		xtype:'button',
                     hidden: role.includes('ROLE_ADMIN')?false:true,
                     text: SuppAppMsg.suppliersLoadFile,
                     iconCls: 'icon-excel',
                     action:'uploadSuppliersFile',
-                    margin:'0 20 10 20'
+	                cls: 'buttonStyle'
         		},{
                		xtype:'button',
                     hidden: true,
                     text: 'Replicar proveedores',
                     action:'replicateSupplier',
                     iconCls: 'icon-doSearch',
-                    margin:'0 20 10 20'
+	                cls: 'buttonStyle'
                   }
                 	 
               ]},

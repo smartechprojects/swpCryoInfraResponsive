@@ -1,7 +1,7 @@
 Ext.define('SupplierApp.view.udc.UdcForm' ,{
 	extend: 'Ext.form.Panel',
 	alias : 'widget.udcForm',
-	border:true,
+	border:false,
 	  initComponent: function() {
 		  var me = this; 
 		  var upperCaseUDC = ['APPROVER','TAXUSER','APPROVALFREIGHT','PLANTREQUEST','APPROVERPONP','APPROVERPOSP','APPROVERINV'];
@@ -12,7 +12,7 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 			this.items= [{
 				xtype: 'container',
 				layout: 'hbox',
-				margin: '15 15 0 10',
+				margin: '10 15 0 10',
         		style:'border-bottom: 1px dotted #fff;padding-bottom:10px',
 				defaults: { 
 					labelWidth: 50, 
@@ -221,30 +221,34 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 			    	  id: 'udcSave',
 			    	  itemId: 'save',
 			    	  text: SuppAppMsg.usersSave,
-			    	  action: 'save'
-			      },'-',
+			    	  action: 'save',
+			            cls: 'buttonStyle'
+			      },
 			      {
 			    	  iconCls: 'icon-delete',
 			    	  id: 'udcDelete',
 			    	  itemId: 'delete',
 			    	  text: 'Eliminar',
 			    	  action: 'delete',
-			    	  hidden: true
-			      },'-',
+			    	  hidden: true,
+			            cls: 'buttonStyle'
+			      },
 			      {
 			    	  iconCls: 'icon-accept',
 			    	  id: 'udcUpdate',
 			    	  itemId: 'update',
 			    	  text: SuppAppMsg.usersUpdate,
 			    	  action: 'update',
-			    	  disabled: true
-			      },'-',
+			    	  disabled: true,
+			            cls: 'buttonStyle'
+			      },
 			      {
 			    	  iconCls: 'icon-add',
 			    	  itemId: 'udcNew',
 			    	  text: SuppAppMsg.usersNew,
-			    	  action: 'new'
-			      },'-',
+			    	  action: 'new',
+			            cls: 'buttonStyle'
+			      },
 			      {
                       name: 'searchUdc',
                       itemId: 'searchUdc',

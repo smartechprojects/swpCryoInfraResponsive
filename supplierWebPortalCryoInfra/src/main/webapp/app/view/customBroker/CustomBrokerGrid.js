@@ -50,10 +50,9 @@ Ext.define('SupplierApp.view.customBroker.CustomBrokerGrid' ,{
     	    allowBlank:false,
     	    editable: false,
     	    displayField: 'name',
-			width:230,
+			flex:.2,
     	    labelWidth:90,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
     	    id:'comboDocumentTypeCB'
     	});
     	

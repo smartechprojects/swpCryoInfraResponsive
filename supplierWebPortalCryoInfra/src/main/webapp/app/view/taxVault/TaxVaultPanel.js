@@ -3,8 +3,8 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultPanel' ,{
     alias : 'widget.taxVaultPanel',
     border:false,
     frame:false,
-    layout: 'fit', 
-    scrollable: true,
+    layout: 'fit',
+    autoScroll : false,
     responsiveConfig: {
         'width < 800': {   // pantallas chicas
             layout: 'vbox'
@@ -17,8 +17,6 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultPanel' ,{
         Ext.apply(this, {  
             items: [{
            	 xtype: 'taxVaultGrid',
-           	 //height:430
-           	flex : 1
             }]
         });
         this.callParent(arguments);

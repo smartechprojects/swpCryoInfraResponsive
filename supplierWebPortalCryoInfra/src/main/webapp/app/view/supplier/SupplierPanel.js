@@ -3,13 +3,13 @@ Ext.define('SupplierApp.view.supplier.SupplierPanel' ,{
     alias : 'widget.supplierPanel',
     border:false,
     frame:false,
-    autoScroll : true,
+    layout: 'fit',
+    autoScroll : false,
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
-           	 xtype: 'supplierGrid',
-             layout: 'fit'
-            }]
+           	 xtype: 'supplierGrid'
+           }]
         });
         this.callParent(arguments);
     }

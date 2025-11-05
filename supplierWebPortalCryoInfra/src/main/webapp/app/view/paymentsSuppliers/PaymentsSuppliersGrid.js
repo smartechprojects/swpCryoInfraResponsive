@@ -26,7 +26,6 @@
     	tipoDoc = Ext.create('Ext.data.Store', {
     	    fields: ['id', 'esp','ing'],
     	    data : [    	        
-    	    	{"id":"", "esp":"SELECCIONAR","ing":"SELECT"},
     	    	{"id":"PT", "esp":"PT","ing":"PT"},
     	        {"id":"PK", "esp":"PK","ing":"PK"},
     	        {"id":"PN", "esp":"PN","ing":"PN"}
@@ -35,8 +34,7 @@
     	
     	var currencyCode = null;
     	var dataMoney=[
-    		{"id":"", "esp":"SELECCIONAR","ing":"SELECT"},
-    		{"id":"CAD", "esp":"DOLARES CANADIENSES","ing":"CANADIAN DOLLARS"},
+     		{"id":"CAD", "esp":"DOLARES CANADIENSES","ing":"CANADIAN DOLLARS"},
     		{"id":"CHF", "esp":"FRANCO SUIZO","ing":"SWISS FRANC"},
     		{"id":"EUR", "esp":"EUROS","ing":"EUROS"},
     		{"id":"GBP", "esp":"LIBRA ESTERLINA","ing":"POUND STERLING"},
@@ -89,7 +87,6 @@
 		statusPay = Ext.create('Ext.data.Store', {
     	    fields: ['id', 'esp','ing'],
     	    data : [    	        
-    	    	{"id":"", "esp":"SELECCIONAR",'ing':'SELECT'},
     	    	{"id":"P", "esp":"PAGADO",'ing':'PAY'},
     	    	{"id":"C", "esp":"CANCELADO",'ing':'CANCEL'}
     	    ]
@@ -109,11 +106,7 @@
     	    displayField: (navigator.language && (navigator.language.toLowerCase() === 'es' || navigator.language.toLowerCase().startsWith('es-')))
             ? 'esp'
             : 'ing',
-			width:150,
-    	    labelWidth:120,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
-    	    emptyText:'SELECCIONAR',
     	    listeners: {
     	        afterrender: function() {
     	        	   this.setValue("");    
@@ -132,11 +125,7 @@
     	    displayField: (navigator.language && (navigator.language.toLowerCase() === 'es' || navigator.language.toLowerCase().startsWith('es-')))
             ? 'esp'
             : 'ing',
-			width:150,
-    	    labelWidth:120,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
-    	    emptyText:'SELECCIONAR',
     	    listeners: {
     	        afterrender: function() {
     	        	   this.setValue("");    
@@ -155,11 +144,7 @@
     	    displayField: (navigator.language && (navigator.language.toLowerCase() === 'es' || navigator.language.toLowerCase().startsWith('es-')))
             ? 'esp'
             : 'ing',
-			width:150,
-    	    labelWidth:120,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
-    	    emptyText:'SELECCIONAR',
     	    listeners: {
     	        afterrender: function() {
     	        	   this.setValue("");    
@@ -281,96 +266,67 @@
               xtype: 'toolbar',
               dock: 'top',
               layout: {
-                  type: 'hbox',
-                  align: 'middle'
+                  type: 'hbox'
               },
-              padding: 5, // espacio interno uniforme
               defaults: {
-                  margin: '0 5 0 0', // separación pequeña horizontal
-                  flex: 1,
+                  flex: .3,
                   labelAlign: 'top'
               },
               items: [
             	  {
     		          xtype: 'textfield',
     		          fieldLabel: SuppAppMsg.suppliersNumber,
-    		          //labelAlign: 'top',
     		          id: 'paymentsSuppliersAddressNumberGrid',
     		          itemId: 'paymentsSuppliersAddressNumberGrid',
     		          name: 'paymentsSuppliersAddressNumberGrid',
     		          value: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? addressNumber : '',
     		          fieldStyle: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? 'border:none;background-color: #ddd; background-image: none;' : '',
-    		          readOnly: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? true : false,
-    		         // width: 200,
-    		         // labelWidth: 70,
-    		        //  margin: '20 20 10 10'
+    		          readOnly: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? true : false
     		        },
     		        {
     		          xtype: 'tipoDoc',
     		          id: 'paymentsSupplierstipoDocGrid',
     		          itemId: 'paymentsSupplierstipoDocGrid',
-    		          name: 'paymentsSupplierstipoDocGrid',
-    		          //width: 100,
-    		         // labelAlign: 'top',
-    		          //labelWidth: 70,
-    		         // margin: '20 20 10 10',
-    		        }
-    		    ,
-    		   
-    		        {
+    		          name: 'paymentsSupplierstipoDocGrid'
+    		        },{
     		          xtype: 'currencyCombo',
     		          fieldLabel: SuppAppMsg.paymentsSuppliersCurrencyCode,
     		          id: 'paymentsSuppliersCurrencyCodeGrid',
     		          itemId: 'paymentsSuppliersCurrencyCodeGrid',
-    		          name: 'paymentsSuppliersCurrencyCodeGrid'/*,
-    		          width: 200,
-    		          labelAlign: 'top',
-    		          labelWidth: 70,
-    		          margin: '20 20 10 10'*/
+    		          name: 'paymentsSuppliersCurrencyCodeGrid'
     		        },
     		        {
     		          xtype: 'statusPayCombo',
     		          fieldLabel: 'Estatus',
     		          id: 'paymentsSuppliersStatusPayGrid',
     		          itemId: 'paymentsSuppliersStatusPayGrid',
-    		          name: 'paymentsSuppliersStatusPayGrid'/*,
-    		          width: 100,
-    		          labelAlign: 'top',
-    		          labelWidth: 70,
-    		          margin: '20 20 10 10'*/
+    		          name: 'paymentsSuppliersStatusPayGrid'
     		        },
     		        {
     		          xtype: 'datefield',
     		          fieldLabel: SuppAppMsg.purchaseOrderDesde,
     		          id: 'paymentsSupplierspoFromDate',
     		          itemId: 'paymentsSupplierspoFromDate',
-    		          name: 'paymentsSupplierspoFromDate'/*,
-    		          width: 100,
-    		          labelAlign: 'top',
-    		          labelWidth: 70,
-    		          margin: '20 20 10 10'*/
+    		          name: 'paymentsSupplierspoFromDate'
     		        },
     		        {
     		          xtype: 'datefield',
     		          fieldLabel: SuppAppMsg.purchaseOrderHasta,
     		          id: 'paymentsSupplierspoToDate',
     		          itemId: 'paymentsSupplierspoToDate',
-    		          name: 'paymentsSupplierspoToDate'/*,
-    		          width: 100,
-    		          labelAlign: 'top',
-    		          labelWidth: 70,
-    		          margin: '20 20 10 10',
-    		          flex: 1*/
-    		        }
+    		          name: 'paymentsSupplierspoToDate'
+    		        },{
+				        xtype: 'displayfield',
+				        value: '',
+				        flex:.3
+				    }
               ]},
              {
                 xtype: 'toolbar',
                 dock: 'top',
                 layout: {
-                    type: 'hbox',
-                    align: 'middle'
+                    type: 'hbox'
                 },
-                padding: 5,
                 items: [
                 	{
       		          xtype: 'button',
@@ -379,9 +335,6 @@
       		          labelAlign: 'top',
       		          action: 'paymentsSupplierSearch',
       		          cls: 'buttonStyle',
-      		          //width: 100,
-      		         // margin: '38 20 10 10',
-      		          margin: '0 5 0 0',
       		          listeners: {
 	                    tap: function (button) {
 	                    	apController.paymentsSupplierSearch(button);

@@ -8,9 +8,7 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderPanel' ,{
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
-           	 xtype: 'purchaseOrderGrid',
-           	 //height:430
-           	scrollable: true,
+           	xtype: 'purchaseOrderGrid',
            	flex: 1
             }]
         });

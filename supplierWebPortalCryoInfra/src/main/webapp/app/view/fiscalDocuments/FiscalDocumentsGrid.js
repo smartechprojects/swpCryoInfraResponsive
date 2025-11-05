@@ -53,10 +53,9 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
     	    //allowBlank:false,
     	    //editable: false,
     	    displayField: 'name',
-			width:230,
-    	    labelWidth:90,
+			flex:.8,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
+    	    //margin:'20 20 0 10',
     	    id:'comboDocumentType',    	    
     	   /* listeners: {
     	        afterrender: function() {
@@ -77,10 +76,10 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
     	    //editable: false,
     	    displayField: 'name',
 			//width:150,
-    	    flex: 1,
+    	    flex: .4,
     	    labelWidth:40,
     	    valueField: 'id',
-    	    margin:'20 20 0 10',
+    	    //margin:'20 20 0 10',
     	    id:'comboInvoiceStatus',
     	   /* listeners: {
     	        afterrender: function() {
@@ -346,7 +345,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                   pack: 'start'
               },
               defaults: {
-                  margin: '5 10 5 0' 
+                  //margin: '5 10 5 0'
+            	  labelAlign: 'top'
               },
               items: [
             	  {
@@ -356,7 +356,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
           			text : SuppAppMsg.fiscalTitle18,
           			hidden:true,
           			action : 'uploadNewFiscalDoc'
-          		}, '-', {
+          		}, {
           			name : 'searchFiscalDocuments',
           			itemId : 'searchFiscalDocuments',
           			emptyText : SuppAppMsg.fiscalTitle19,
@@ -390,8 +390,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                       //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
                       //width:300,
                       flex: 1,
-                      labelWidth:30,
-                      margin:'20 20 0 10'
+                      labelWidth:30
           		},{ 
           			xtype: 'combostatus'
           		},{
@@ -401,9 +400,8 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                       itemId: 'poNumberFD',
                       name:'poNumberFD',
                       //width:170,
-                      flex: 1,
-                      labelWidth:70,
-                      margin:'20 20 0 10'
+                      flex: .3,
+                      labelWidth:70
           		},{
           			xtype: 'textfield',
                       fieldLabel: SuppAppMsg.suppliersNumber,
@@ -414,10 +412,14 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                       fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                       readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
                      // width:190,
-                    		  flex: 1,
-                      labelWidth:90,
-                      margin:'20 20 0 10'
-          		}
+                    flex: .4,
+                      labelWidth:90
+          		},{
+					xtype: 'displayfield',
+		            value: '',
+		            flex:.3,
+
+	            	}
               ]},
              {
                 xtype: 'toolbar',
@@ -430,7 +432,6 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                         iconCls: 'icon-appgo',
                         action:'fdSearch',
                         cls: 'buttonStyle',
-                        margin:'0 20 0 10',
                         listeners: {
     	                    tap: function (button) {
     	                    	fdController.fdSearch(button);

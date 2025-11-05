@@ -1,29 +1,47 @@
 Ext.define('SupplierApp.view.main.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'app-main',
-    tabPosition: 'left', // o 'right', según tu diseño
+    bodyPadding: 10,
+    tabPosition: 'left',
     tabRotation: 0,
     tabBar: {
-        layout: {
-            type: 'vbox',
-            align: 'stretch'
+        style: {
+            'background-color': '#00306E'
+           // 'overflow-y': 'auto',  // ✅ por compatibilidad extra
+           // 'max-height': '100vh',  // ✅ limita el alto al viewport visible
         },
-        listeners: {
-            afterrender: function(tb) {
-                tb.getEl().setStyle({
-                    'overflow-y': 'auto',
-                    'max-height': 'calc(100vh - 120px)' // ajusta según el alto de tu header
-                });
+        items: [
+            {
+                xtype: 'button',
+                iconCls: 'fa fa-compress',
+                margin: '28 0 0 23',
+                height:30,
+                iconAlign: 'left',
+                textAlign : 'left',
+                width: 50,
+                style: {
+                    border: 'none',
+                    boxShadow: 'none',
+                    background: '#00306E'
+                },
+                
+	            handler: function() {
+	            	var panel = this.up('tabpanel');
+	                var tWidth = panel.tabBar.getWidth();
+	                if (tWidth >= 100) {
+	                panel.tabBar.width = 46;
+	 	            panel.updateLayout();
+	                } else {
+	                    panel.tabBar.width = 220;
+	                    panel.updateLayout();
+	                }
+	
+	            }
             }
-        },
-        scrollable: 'y', // 🔹 Activa el scroll vertical en la barra de tabs
-        autoScroll: true
+        ]
+        
     },
 
-    defaults: {
-        bodyPadding: 10,
-        scrollable: true
-    },
     listeners: {
         afterrender: function(form) {
             hidePreloader();
@@ -31,6 +49,7 @@ Ext.define('SupplierApp.view.main.Main', {
         tabchange: function (tabPanel, tab) {
         	
         	if(tab.id == 'tabSuppliersId') tabChgn = 'suppliers';
+        	
         	if(tab.id == 'tabUsersId'){//Carga valores de combos
             	var roleCombo = Ext.getCmp('usersRoleCombo');
         		roleCombo.store.load();
@@ -40,6 +59,22 @@ Ext.define('SupplierApp.view.main.Main', {
             	typeCombo.store.load();
             	typeCombo.store.reload();
         	}
+        	
+        	if(tab.id == 'tabHelpId'){
+        		
+        		if ("".match(numeroUsuario)){
+            		link = "https://servicios.cryoinfra.com.mx/scip/default.aspx?nombreUsuario="+displayName+"&numeroUsuario="+userName+"&correo="+userEmail+"&telefono="+telefono;
+                	console.log("link: " + link);
+            	} else {
+                	link = "https://servicios.cryoinfra.com.mx/scip/default.aspx?nombreUsuario="+displayName+"&numeroUsuario="+numeroUsuario+"&correo="+userEmail+"&telefono="+telefono;
+                	console.log("link: " + link);
+            	}
+        		 window.open(link, '_blank');
+        		 tabPanel.setActiveTab(0);
+        	}
+        	
+        	
+        	
         }
     },
     controller: 'main',
@@ -69,54 +104,44 @@ Ext.define('SupplierApp.view.main.Main', {
     ],
     
     ui: 'navigation',
-    scrollable: true, 
+    scrollable: false, 
     header: {
-        height: 120,
+        margin: '0 0 0 0',
+        height:80,
         style: { backgroundColor: '#FFFFFF', padding: '0px' },
-        title: '<img src="resources/images/CryoInfra-logo-gris.png" style="width:75%;height:80px;">',
-        layout: { type: 'hbox', align: 'middle', pack: 'space-between' },
-        plugins: 'responsive',
-        responsiveConfig: {
-            wide: { layout: { type: 'hbox', align: 'middle', pack: 'space-between' }, height: 120 },
-            tall: { layout: { type: 'vbox', align: 'stretch', pack: 'start' }, height: 180 }
-        },
+        title: '<img src="resources/images/CryoInfra-logo-gris.png" style="max-width: 60%; display: block; height: auto;">',
+        layout: { type: 'hbox', align: 'left', pack: 'start' },
         items: [
-            {
+        	 {
+                xtype: 'image',
+                src: 'resources/images/hdr-logo.png',
+                margin: '25 0 0 0',
+                height: 25,
+                width: 230
+            },{
+                xtype: 'tbspacer', 
+                flex: 1
+            },{
                 xtype: 'container',
-                flex: 1.5,
                 layout: 'vbox',
-                defaults: { xtype: 'label', style: 'color:#666; font-size:15px;' },
+                margin: '25 100 10 0',
+                defaults: { xtype: 'label', style: 'color:#3F484D;' },
                 items: [
-                    { itemId: 'displayNameLabel', html: '', margin: '0 0 5 0' },
-                    { itemId: 'userInfoLabel', html: '', flex: 1 }
+                    { itemId: 'displayNameLabel', html: '', margin: '0 0 5 0',style: 'font-weight:bold;font-size:1.1em;' },
+                    { itemId: 'userInfoLabel', html: '', flex: 1 ,style: 'font-weight:bold;font-size:1.1em;'},
+                    { itemId: 'envLabel', html: '', flex: 1 ,style: 'font-size:1em;color:red;'}
                 ]
-            },
-            {
-                xtype: 'component',
-                itemId: 'helpLink', // ⚡ aquí directamente
-                html: '',
-                flex: 1,
-                plugins: 'responsive',
-                responsiveConfig: {
-                    wide: { hidden: false },
-                    tall: { hidden: true } // ahora sí se oculta en pantallas pequeñas
-                }
             },
             {
                 xtype: 'image',
                 src: 'resources/images/logout-icon.png',
-                width: 15,
-                height: 15,
-                margin: '0 35 0 0',
-                plugins: 'responsive',
-                responsiveConfig: {
-                    wide: { hidden: false },
-                    tall: { hidden: true }
-                },
+                style: 'width:25px;height:25px;',
+                margin: '30 55 0 0',
+                cls: 'image-grow',
                 listeners: {
                     render: function(img) {
                         // Cambia el cursor al pasar sobre la imagen
-                        img.getEl().setStyle('cursor', 'pointer');
+                        //img.getEl().setStyle('cursor', 'pointer');
 
                         img.getEl().on('click', function() {
                             window.location.href = 'j_spring_security_logout';
@@ -131,23 +156,7 @@ Ext.define('SupplierApp.view.main.Main', {
         listeners: {
             afterrender: function(header) {
             	var showItems = false;
-            	var link = "";
             	var userDesc = "";
-            	/*console.log("nombreUsuario: " + displayName);
-            	console.log("numeroUsuario: " + numeroUsuario);
-            	console.log("correo: " + correo);
-            	console.log("telefono: " + telefono);
-            	
-            	console.log("userName: " + userName);
-            	console.log("userEmail: " + userEmail);*/
-            	
-            	if ("".match(numeroUsuario)){
-            		link = "https://servicios.cryoinfra.com.mx/scip/default.aspx?nombreUsuario="+displayName+"&numeroUsuario="+userName+"&correo="+userEmail+"&telefono="+telefono;
-                	//console.log("link: " + link);
-            	} else {
-                	link = "https://servicios.cryoinfra.com.mx/scip/default.aspx?nombreUsuario="+displayName+"&numeroUsuario="+numeroUsuario+"&correo="+userEmail+"&telefono="+telefono;
-                	//console.log("link: " + link);
-            	}
 
             	if(role == 'ROLE_SUPPLIER'){
                 	if(isMainSupplierUser){
@@ -199,61 +208,8 @@ Ext.define('SupplierApp.view.main.Main', {
                                 
                 header.down('#displayNameLabel').setHtml(displayName);
                 header.down('#userInfoLabel').setHtml(SuppAppMsg.headerAccount + ': ' + userName + ' <b>' + userDesc + '</b>');
-                /*header.down('#helpLink').setHtml(
-                    "<span style='font-size:14px; color:#000; '>" +
-                    SuppAppMsg.homePortalHelp1 + " <a href='" + link + "' target='_blank'>" + SuppAppMsg.homePortalHelp2 + "</a>" +
-                    "</span>"
-                );*/
-                
-                var helpCmp = header.down('#helpLink');
-
-                function updateHelpHtml(width){
-                    if(width >= 768){ // Pantallas grandes
-                        helpCmp.setHtml(
-                            "<span style='font-size:14px; color:#000; border:2px solid royalblue; border-radius:5px; padding:3px; margin:3px;'>" +
-                            SuppAppMsg.homePortalHelp1 + " <a href='" + link + "' target='_blank'>" + SuppAppMsg.homePortalHelp2 + "</a>" +
-                            "</span>"
-                        );
-                    } else { // Pantallas pequeñas
-                        helpCmp.setHtml(
-                            "<span style='font-size:14px; color:#000;'>" +
-                            SuppAppMsg.homePortalHelp1 + " <a href='" + link + "' target='_blank'>" + SuppAppMsg.homePortalHelp2 + "</a>" +
-                            "</span>"
-                        );
-                    }
-                }
-
-                // Inicial
-                updateHelpHtml(header.getWidth());
-
-                // Escucha cambios de tamaño
-                header.on('resize', function(h, width){
-                    updateHelpHtml(width);
-                });
+                header.down('#envLabel').setHtml('Ambiente TEST');
             }
-        }
-    }
-
-
-
-
-,
-
- //   tabRotation: 0,
-  //  tabPosition: 'left',
-
-    tabBar: {
-    	iconAlign: 'left',
-    	scrollable: 'y',
-        layout: {
-            align: 'stretch',
-           // overflowHandler: 'none'
-        },
-        style: {
-            'background-color': '#3D72A4',
-            'text-align':'left',
-            'overflow-y': 'auto',  // ✅ por compatibilidad extra
-            'max-height': '100vh',  // ✅ limita el alto al viewport visible
         }
     },
     
@@ -283,28 +239,20 @@ Ext.define('SupplierApp.view.main.Main', {
         tabConfig: {
         	iconAlign: 'left',
         	style: {
-                'background-color': '#3D72A4',
+                'background-color': '#00306E',
                 'text-align':'left',
                 'width':'220px'//,
                // 'min-height': '60px'
-            },
-            listeners: {
-                click: function(tab) {
-                	var cls = tab.iconCls;
-                	if(cls === "fa-external-link"){
-                		//window.open('https://www.telvista.com/es/politicas-de-privacidad', '_blank');
-                	}
-                }
             }
         }
     },
     
-
+    
  
     items: [{
     	xtype : 'panel',
         title: '',
-        iconCls: 'fa-home',
+        iconCls: 'fa fa-home',
         id:'tabHomeId',
         scrollable: true,
         //html:"<div style='display: flex;justify-content: center;vertical-align: middle;padding-top:100px;'><img src='resources/images/CryoInfra-logo-gris.png' style='max-width: 80%; height: auto;' alt='Logo CryoInfra'> </div>"
@@ -313,18 +261,14 @@ Ext.define('SupplierApp.view.main.Main', {
             
                  function updateHtml(width){
                      if(width >= 768){ // Pantallas grandes
-                    	 var homeContent = "<div style='display: grid; place-items: center;'>" +
-                         "<div style='width: 50%; font-size:14px; color: black; border: 2px solid royalblue; border-radius: 10px; padding: 10px; margin: 10px;'>" +
-                         "<div style='display: grid; place-items: center; padding: 10px; margin: 10px;'>" +
-                             "<img src='resources/images/CryoInfra-logo-gris.png' width='40%' height='80%' style='align: center;'>" +
-                         "</div>" +
-                         "<div style='display: grid; place-items: center; padding: 10px; margin: 40px;'>" +
-                             "<span style='text-align: justify; font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height: 1.5;'>" +
-                                 "<p style='padding-left: 10px;'>" + SuppAppMsg.homeHeaderMessage + "</p>" +
-                             "</span>" +
-                         "</div>" +                            
-                         "</div>" +
-                         "</div>";
+			           var homeContent = "<table class='center-table'>" +
+			                    	"   <tr style='height:45%;'>" +
+			                    	"        <td style=' vertical-align: bottom;'><img src='resources/images/CryoInfra-logo-gris.png' style='height:35%;width:40%;'/></td>" +
+			                    	"    </tr>" +
+			                    	"   <tr>" +
+			                    	"        <td style='vertical-align: top;padding:30px;line-height: 1.5;font-size:1.2em;'>" + SuppAppMsg.homeHeaderMessage + "</td>" +
+			                    	"    </tr>" +
+			                    	"</table>";
                      
                      panel.update(homeContent);
                       
@@ -357,79 +301,247 @@ Ext.define('SupplierApp.view.main.Main', {
             }
         }
     },{
-		xtype : 'tokenPanel',
-		title : '',
-		border : true,
-		iconCls: 'fa-user-plus',
-		id:'tabTokenId',
-		hidden:role=='ROLE_ADMIN' || role=='ROLE_PURCHASE'?false:true
-	           
-	},{
+        xtype: 'panel',
+   		hidden:true,
+		layout:'fit',
+		itemId:'tabTokenTab',
+		iconCls: 'fa fa-user-plus', 
+        items:[
+        	{
+            	xtype : 'tokenPanel',
+        		id:'tabTokenId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
+        xtype: 'panel',
+		layout:'fit',
+		itemId:'tabSuppliersTab',
+    	iconCls: 'fa fa-share-alt',
+    	hidden:true,
+        items:[
+        	{
+        		xtype : 'supplierPanel',
+        		id:'tabSuppliersId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
     	xtype : 'supplierPanel',
-    	iconCls: 'fa-share-alt',
+    	id:'tabSuppliersMenuId',
 		title : '',
-		id:'tabSuppliersId',
-		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true
+		tabConfig: {
+            tooltip: 'This is the quick hint for Tab 1' // The tooltip
+        },
+		style: 'background-color: #00306E;',
+		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true,
+		tabConfig: {
+            iconCls: 'fa fa-solid fa-bars',
+            listeners: {
+                click: function(tab, e) {
+                    e.stopEvent(); 
+                    var tab = this.up();
+                    var tabs = tab.up();
+                    var token = tabs.child('#tabTokenTab');
+                    var suppliers = tabs.child('#tabSuppliersTab');
+                    var approvals = tabs.child('#approvalPanelTab');
+                    var approvalSearch = tabs.child('#approvalSearchPanelTab');
+                    var supplierPayment = tabs.child('#paymentsSuppliersPanelTab');
+                    
+                    
+                    var xy = this.getXY();
+                    xy[1]=xy[1] + 50;
+                    var menu = Ext.create('Ext.menu.Menu', {
+                    	style: 'width:900px;margin-left:1px;border: none;box-shadow: none;background: none;background-color: #00306E;font-family: Poppins-Regular, sans-serif !important;',
+                    	border: false,
+                    	bodyStyle: 'background-color: transparent;border: none;box-shadow: none;background: none;',
+                        items: [
+                        	{ 
+                            	text: SuppAppMsg.tabProveedores ,
+                            	iconCls: 'x-fa fa-share-alt',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(suppliers);
+                                    }
+                                },
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:182px;',
+                            },
+                        	{ 
+                            	text: SuppAppMsg.tabToken ,
+                            	iconCls: 'x-fa fa-user-plus',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(token);
+                                    }
+                                },
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                            },
+                            { 
+                            	text: SuppAppMsg.tabApproval ,
+                            	iconCls: 'x-fa fa-check-circle',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(approvals);
+                                    }
+                                },
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                            },
+                            { 
+                            	text: SuppAppMsg.tabSearchApproval ,
+                            	iconCls: 'x-fa fa-tasks',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(approvalSearch);
+                                    }
+                                },
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:178px;',
+                            },
+                            { 
+                            	text: SuppAppMsg.paymentsSuppliers ,
+                            	iconCls: 'x-fa fa-money',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(supplierPayment);
+                                    }
+                                },
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                            }
+                        ]
+                    });
+                    menu.showAt(xy); // Show menu at mouse position
+                }
+            }
+		}
 	},{
-		xtype : 'purchaseOrderPanel',
-		iconCls: 'fa-list-alt',
+        xtype: 'panel',
+		layout:'fit',
 		itemId: 'purchaseOrderPanelTab',
-		id:'tabPurchaseOrderPanelId',
-		title : '',
-		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ' || role=='ROLE_SUPPLIER' || role=='ROLE_AUDIT_USR' ?false:true
-	},{
-    	xtype : 'fiscalDocumentsPanel',
-    	iconCls: 'fa-file-text',
-    	itemId: 'fiscalDocumentsPanelTab',
-		title : '',
-		id:'tabFiscalDocumentsPanelId',
-		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ'?false:true
-	},{
-		xtype : 'freightApprovalPanel',
-		iconCls: 'fa-truck',
+		iconCls: 'fa fa-list-alt',
+		id:'tabPurchaseOrderPanelMenu',
+		title:'',
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ' || role=='ROLE_SUPPLIER' || role=='ROLE_AUDIT_USR' ?false:true,
+        items:[
+        	{
+        		xtype : 'purchaseOrderPanel',
+        		id:'tabPurchaseOrderPanelId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
+        xtype: 'panel',
+		layout:'fit',
+		itemId: 'fiscalDocumentsPanelTab',
+		iconCls: 'fa fa-file-text',
+		id:'tabFiscalDocumentsPanelMenu',
+		title:'',
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ'?false:true,
+        items:[
+        	{
+        		xtype : 'fiscalDocumentsPanel',
+        		id:'tabFiscalDocumentsPanelId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
+        xtype: 'panel',
+		layout:'fit',
 		itemId: 'freightApprovalPanel',
-		id:'tabFreightApprovalId',
-		title : '',					
-		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ'|| Flete=='si'?false:true
-	},{
-		xtype : 'plantAccessPanel',
+		id:'tabFreightApprovalPanelMenu',
+		iconCls: 'fa fa-truck',
+		title:'',
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_MANAGER' || role=='ROLE_PURCHASE_READ'|| Flete=='si'?false:true,
+        items:[
+        	{
+        		xtype : 'freightApprovalPanel',
+        		id:'tabFreightApprovalId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
+        xtype: 'panel',
+		layout:'fit',
 		itemId: 'plantAccessPanelTab',
-		id:'tabPlantAccessPanelId',
-		title : '',	
-		iconCls: 'fa-industry',		
-		hidden:role=='ROLE_ADMIN' || role=='ROLE_PURCHASE_READ' || role=='ROLE_MANAGER' || role=='ROLE_SUPPLIER'?false:true
-	},
-	{
-		xtype : 'taxVaultPanel',
-		id:'tabTaxVaultPanelId',
+		id:'plantAccessPanelMenu',
+		iconCls: 'fa fa-industry',	
+		title:'',
+		hidden:role=='ROLE_ADMIN' || role=='ROLE_PURCHASE_READ' || role=='ROLE_MANAGER' || role=='ROLE_SUPPLIER'?false:true,
+        items:[
+        	{
+        		xtype : 'plantAccessPanel',
+        		id:'tabPlantAccessPanelId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
+        xtype: 'panel',
+		layout:'fit',
 		itemId: 'taxVaultPanelTab',
-		iconCls: 'fa-lock',
-		title : '',	
+		id:'taxVaultPanelMenu',
+		iconCls: 'fa fa-lock',	
+		title:'',
 		hidden:role=='ROLE_ADMIN' || role=='ROLE_TAX' || role=='ROLE_TREASURY' || role=='ROLE_ACCOUNTING'
 			|| role=='ROLE_MANAGER' || role=='ROLE_FISCAL_USR' || role=='ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ'
-			|| role=='ROLE_FISCAL_PRD'|| role=='ROLE_BF_ADMIN' || role=='ROLE_AUDIT_USR' ?false:true
-	},
+			|| role=='ROLE_FISCAL_PRD'|| role=='ROLE_BF_ADMIN' || role=='ROLE_AUDIT_USR' ?false:true,
+        items:[
+        	{
+        		xtype : 'taxVaultPanel',
+        		id:'tabTaxVaultPanelId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },
 	{
-    	xtype : 'approvalPanel',
-    	iconCls: 'fa-check-circle',
-		id:'tabApprovalPanelId',
+        xtype: 'panel',
+		layout:'fit',
 		itemId:'approvalPanelTab',
-		title : '',
-		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' ||role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER'?false:true
-	},{
-    	xtype : 'approvalSearchPanel',
-    	iconCls: 'fa-tasks',		
-		id:'tabApprovalSearchPanelId',
+		iconCls: 'fa-check-circle',
+    	hidden:true,
+        items:[
+        	{
+        		xtype : 'approvalPanel',
+        		id:'tabApprovalPanelId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },
+	{
+        xtype: 'panel',
+		layout:'fit',
 		itemId:'approvalSearchPanelTab',
-		title : '',
-		hidden:role=='ROLE_ADMIN' || role=='ROLE_TAX' || role=='ROLE_TREASURY' || role=='ROLE_PURCHASE_READ' || role=='ROLE_ACCOUNTING' || role=='ROLE_MANAGER'?false:true
-	}, {
-		xtype : 'paymentsSuppliersPanel',
-		iconCls: 'fa-money',	
-		id:'tabPaymentsSuppliersPanelId',
+		iconCls: 'fa-tasks',
+    	hidden:true,
+        items:[
+        	{
+        		xtype : 'approvalSearchPanel',
+        		id:'tabApprovalSearchPanelId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },
+    {
+        xtype: 'panel',
+		layout:'fit',
 		itemId: 'paymentsSuppliersPanelTab',
-		title : ''
-	}
+		iconCls: 'fa-money',
+    	hidden:true,
+        items:[
+        	{
+        		xtype : 'paymentsSuppliersPanel',
+        		id:'tabPaymentsSuppliersPanelId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },
 	/*,{
     	xtype : 'outSourcingPanel',
     	iconCls: 'fa-object-group',
@@ -485,26 +597,51 @@ Ext.define('SupplierApp.view.main.Main', {
 		id:'tabLogDataPanelId',
         iconCls: 'fa-file-text',
         hidden:role=='ROLE_ADMIN' || role=='ROLE_IT'?false:true
-    }*/,{
-		xtype : 'udcPanel',
-		id:'tabUdcId',
-        iconCls: 'fa-cog',
+    }*/
+	{
+        xtype: 'panel',
+		layout:'fit',
 		itemId:'udcPanelTab',
-        hidden:true
+		id:'udcPanelMenu',
+		iconCls: 'fa-cog',
+    	hidden:true,
+        items:[
+        	{
+        		xtype : 'udcPanel',
+        		id:'tabUdcId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
     },{
-		xtype : 'usersPanel',
-        iconCls: 'fa-users',
-		id:'tabUsersId',
+        xtype: 'panel',
+		layout:'fit',
 		itemId:'usersPanelTab',
-		hidden:true
-	},{
-		xtype : 'companyPanel',
-		iconCls: 'fa-building',
-		id:'tabCompanyId',
+		iconCls: 'fa-users',
+    	hidden:true,
+        items:[
+        	{
+        		xtype : 'usersPanel',
+        		id:'tabUsersId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
+        xtype: 'panel',
+		layout:'fit',
 		itemId:'companyPanelTab',
-		hidden:true
-		
-	},{
+		iconCls: 'fa-building',
+    	hidden:true,
+        items:[
+        	{
+        		xtype : 'companyPanel',
+        		id:'tabCompanyId',
+                title: '',
+                titleAlign: 'center'
+        	}
+        ]
+    },{
         xtype: 'form',
         title: SuppAppMsg.tabInfoSupplier,
         iconCls: 'fa-user',
@@ -564,26 +701,14 @@ Ext.define('SupplierApp.view.main.Main', {
                 }
             }
         }
-    }/*,{
-		xtype : 'panel',
-		id:'tabNoticePrivacyId',
-		iconCls: 'fa-external-link',
-		title : '',
-		html: '',
-		layout:{
-	        type:'fit',
-	        align:'stretch',
-	        pack:'start'
-        }
-		 
-	}*/,
+    },
     {
         title: 'Configuración',
         html: '',
         id:'tabConfigId',
         hidden: role !== 'ROLE_ADMIN',
         tabConfig: {
-            iconCls: 'fa-cog',
+            iconCls: 'fa  fa-solid fa-bars',
             listeners: {
                 click: function(tab, e) {
                     e.stopEvent(); 
@@ -595,7 +720,7 @@ Ext.define('SupplierApp.view.main.Main', {
                     var xy = this.getXY();
                     xy[1]=xy[1] + 50;
                     var menu = Ext.create('Ext.menu.Menu', {
-                    	style: 'margin-left:1px;border: none;box-shadow: none;background: none;background-color: #3D72A4;font-family: Poppins-Regular, sans-serif !important;',
+                    	style: 'margin-left:1px;border: none;box-shadow: none;background: none;background-color: #00306E;font-family: Poppins-Regular, sans-serif !important;',
                     	border: false,
                     	bodyStyle: 'background-color: transparent;border: none;box-shadow: none;background: none;',
                         items: [
@@ -608,13 +733,13 @@ Ext.define('SupplierApp.view.main.Main', {
                                     	 tabs.setActiveTab(users);
                                     }
                                 },
-                            	style: 'margin-left:40px;background-color: #3D72A4;padding:2px;width:102px;',
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
                             },
                             { 
                             	text: SuppAppMsg.tabUDC,
-                            	iconCls: 'x-fa fa-bars',
+                            	iconCls: 'x-fa fa-cog',
                             	hidden:role=='ROLE_ADMIN'?false:true,
-                            	style: 'margin-left:40px;background-color: #3D72A4;padding:2px;',
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;',
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(udc);
@@ -625,7 +750,7 @@ Ext.define('SupplierApp.view.main.Main', {
                             	text: SuppAppMsg.companys,
                             	iconCls: 'x-fa fa-building',
                             	hidden:role=='ROLE_ADMIN'?false:true,
-                            	style: 'margin-left:40px;background-color: #3D72A4;padding:2px;',
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;',
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(company);
@@ -638,6 +763,11 @@ Ext.define('SupplierApp.view.main.Main', {
                 }
             }
         }
-    },
+    },{
+    title: 'Ayuda',
+	xtype : 'panel',
+	id:'tabHelpId',
+	iconCls: 'fa fa-question',
+    }
 	]
 });

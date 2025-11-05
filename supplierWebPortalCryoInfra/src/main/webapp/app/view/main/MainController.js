@@ -11,17 +11,28 @@ Ext.define('SupplierApp.view.main.MainController', {
     init: function() {
         var me = this;
         Ext.getCmp('tabHomeId').setTitle(SuppAppMsg.tabInicio);
-        Ext.getCmp('tabTokenId').setTitle( SuppAppMsg.tabToken);
-        Ext.getCmp('tabSuppliersId').setTitle( SuppAppMsg.tabProveedores);
-        Ext.getCmp('tabApprovalPanelId').setTitle( SuppAppMsg.tabApproval);
-        Ext.getCmp('tabApprovalSearchPanelId').setTitle( SuppAppMsg.tabSearchApproval);
-        Ext.getCmp('tabPaymentsSuppliersPanelId').setTitle( SuppAppMsg.paymentsSuppliers);
-        Ext.getCmp('tabTaxVaultPanelId').setTitle( SuppAppMsg.tabtaxVault);
-        Ext.getCmp('tabFreightApprovalId').setTitle( SuppAppMsg.tabFreightApproval);
-        Ext.getCmp('tabFiscalDocumentsPanelId').setTitle( SuppAppMsg.tabFiscalDocuments);
-        Ext.getCmp('tabPurchaseOrderPanelId').setTitle( SuppAppMsg.tabPurchaseOrder);
-        Ext.getCmp('tabPlantAccessPanelId').setTitle( SuppAppMsg.tabplantaccess);
+        Ext.getCmp('tabSuppliersMenuId').setTitle( SuppAppMsg.tabProveedoresMenu);
+        Ext.getCmp('taxVaultPanelMenu').setTitle( SuppAppMsg.tabtaxVault);
+        Ext.getCmp('tabFreightApprovalPanelMenu').setTitle( SuppAppMsg.tabFreightApproval);
+        Ext.getCmp('tabFiscalDocumentsPanelMenu').setTitle( SuppAppMsg.tabFiscalDocuments);
+        Ext.getCmp('tabPurchaseOrderPanelMenu').setTitle( SuppAppMsg.tabPurchaseOrder);
+        Ext.getCmp('plantAccessPanelMenu').setTitle( SuppAppMsg.tabplantaccess);
         Ext.getCmp('tabSupplierProfileId').setTitle( SuppAppMsg.tabInfoSupplier);
+        
+        Ext.getCmp('tabTokenId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabToken + '</span>');
+        Ext.getCmp('tabSuppliersId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabProveedores + '</span>');
+        Ext.getCmp('tabApprovalPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabApproval + '</span>');
+        Ext.getCmp('tabApprovalSearchPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabSearchApproval + '</span>');
+        Ext.getCmp('tabPaymentsSuppliersPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.paymentsSuppliers + '</span>');
+        Ext.getCmp('tabPurchaseOrderPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabPurchaseOrder + '</span>');
+        Ext.getCmp('tabFiscalDocumentsPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabFiscalDocuments + '</span>');
+        Ext.getCmp('tabFreightApprovalId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabFreightApproval + '</span>');
+        Ext.getCmp('tabPlantAccessPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabplantaccess + '</span>');
+        Ext.getCmp('tabTaxVaultPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabtaxVault + '</span>');
+        
+        Ext.getCmp('tabUdcId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabUDC + '</span>');
+        Ext.getCmp('tabUsersId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.tabUsers + '</span>');
+        Ext.getCmp('tabCompanyId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;">' + SuppAppMsg.companys + '</span>');
         
         
          /*

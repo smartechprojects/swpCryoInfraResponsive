@@ -57,7 +57,7 @@
 	},
 
     initComponent: function() {
-    	 this.emptyText = SuppAppMsg.emptyMsg;
+    	this.emptyText = SuppAppMsg.emptyMsg;
     	var poController = SupplierApp.app.getController("SupplierApp.controller.PurchaseOrder");
 	 
     	var status = null;
@@ -105,12 +105,12 @@
     	    displayField: 'name',
     	    //labelWidth:40,
     	    valueField: 'id',
-    	    margin:'20 20 0 0',
+    	    //margin:'20 20 0 0',
     	    id:'poTypeCombo',
     	    itemId:'poTypeCombo',
     	    //width:150,
     	    labelAlign: 'top',
-    	    flex:1
+    	    flex:.6
     	   /* listeners: {
     	        afterrender: function() {
     	           if(role == 'ROLE_WNS'){
@@ -129,11 +129,11 @@
     	    displayField: 'name',
     	    //labelWidth:40,
     	    valueField: 'id',
-    	    margin:'20 20 0 0',
+    	   // margin:'20 20 0 0',
     	    id:'poComboStatus',
     	    itemId:'poComboStatus',
     	    //width:150,
-    	    flex:1,
+    	    flex:.8,
     	    listeners: {
     	        afterrender: function() {
     	           if(role == 'ROLE_WNS'){
@@ -524,10 +524,6 @@
     			            id: 'poNumber',
     			            itemId: 'poNumber',
     			            name:'poNumber',
-    			            //width:100,
-    			            //labelWidth:70,
-    			            margin:'20 20 0 10',
-    			           // labelAlign: 'top',
     			            flex:1
     					},
     					{
@@ -536,13 +532,6 @@
     			            id: 'supNumber',
     			            itemId: 'supNumber',
     			            name:'supNumber',
-    			            //value: role == 'ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ'?addressNumber:'',
-    			            //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
-    			            //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_PURCHASE_READ' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-    			            //width:100,
-    			            //labelWidth:90,
-    			            margin:'20 20 0 10',
-    			            //labelAlign: 'top'
     			            flex:1
     					},{
     						 xtype: 'datefield',
@@ -550,10 +539,6 @@
  						    id: 'poFromDate',
  						    itemId: 'poFromDate',
  						    name: 'poFromDate',
- 						    //width: 100,
- 						    //labelWidth: 35,
- 						    margin: '0 20 0 10',
- 						    //labelAlign: 'top', // Set label position to top
  						    flex:1
     					},{
     						xtype: 'datefield',
@@ -561,10 +546,6 @@
     			            id: 'poToDate',
     			            itemId: 'poToDate',
     			            name:'poToDate',
-    			            //width:100,
-    			            //labelWidth:35,
-    			            margin:'0 40 0 10',
-    			            //labelAlign: 'top'	
     			            flex:1
     					},{ 
     						xtype: 'poComboStatus'
@@ -736,7 +717,6 @@
                     pack: 'start'
                 },
                 defaults: {
-                    margin:'0 20 0 10',
                     labelAlign: 'top'
                 },
                 items: [
@@ -746,11 +726,7 @@
 			            id: 'poNumber',
 			            itemId: 'poNumber',
 			            name:'poNumber',
-			            //width:100,
-			            flex : 1,
-			            //labelWidth:70,
-			            //margin:'0 20 0 10'
-			            //	,labelAlign: 'top'
+			            flex : .5,
 					},
 					{
 						xtype: 'textfield',
@@ -764,7 +740,7 @@
 			            //width:150,
 			            //labelWidth:90,
 			            //margin:'20 20 0 10',
-			           	flex : 1
+			           	flex : .5
 			           //labelAlign: 'top'
 					},{
 						 xtype: 'datefield',
@@ -773,7 +749,7 @@
 						    itemId: 'poFromDate',
 						    name: 'poFromDate',
 						    //width: 100,
-						    flex : 1
+						    flex : .5
 						    //labelWidth: 35,
 						    //margin: '0 20 0 10',
 						    //labelAlign: 'top' // Set label position to top
@@ -784,7 +760,7 @@
 			            itemId: 'poToDate',
 			            name:'poToDate',
 			            //width:100,
-			            flex : 1
+			            flex : .5
 			            //labelWidth:35,
 			            //margin:'0 40 0 10',
 			            //labelAlign: 'top'
@@ -792,7 +768,11 @@
 						xtype: 'poComboStatus'
 					},{
 						xtype:'poTypeCombo'
-					}
+					},{
+				        xtype: 'displayfield',
+				        value: '',
+				        flex:.4
+				    }
                 ]
             },
             {
@@ -804,7 +784,7 @@
                     pack: 'start'
                 },
                 defaults: {
-                    margin: '2 20 5 10' 
+                    //margin: '0 20 5 0' 
                 },
                 items: [
                 	{
@@ -870,7 +850,7 @@
 			            //hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
 			            cls: 'buttonStyle',
 			            //margin:'2 20 5 10'
-					},'->'
+					}
 					,
 					{
 		           		xtype:'button',
@@ -975,7 +955,8 @@
     calculateHeight: function() {
         var me = this;
         Ext.defer(function() {
-            var rowHeight = 40; // Altura aproximada por fila
+            /*
+        	var rowHeight = 40; // Altura aproximada por fila
             var headerHeight = 40; // Altura del header
             var toolbarHeight = me.dockedItems.length > 0 ? me.dockedItems[0].getHeight() : 0;
             var pagingHeight = 40; // Altura de la barra de paginación
@@ -990,6 +971,7 @@
             var finalHeight = Math.max(minHeight, Math.min(calculatedHeight, maxHeight));
             
             me.setHeight(finalHeight);
+            */
         }, 100);
     }
 });

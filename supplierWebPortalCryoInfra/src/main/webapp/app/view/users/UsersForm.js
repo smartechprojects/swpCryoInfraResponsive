@@ -1,7 +1,6 @@
 Ext.define('SupplierApp.view.users.UsersForm', {
 	extend : 'Ext.form.Panel',
 	alias : 'widget.usersForm',
-	border : false,
 	frame : false,
 	style: 'border: solid #ccc 1px',
 	autoScroll : true,
@@ -13,11 +12,11 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 		this.items = [ {
 			xtype : 'container',
 			layout : 'vbox',
-			margin : '15 15 0 10',
+			margin : '5 15 0 10',
 			style : 'border-bottom: 1px dotted #fff;padding-bottom:10px',
 			defaults : {
 				labelWidth : 150,
-				margin : '5 15 5 0',
+				margin : '5 15 0 0',
 				xtype : 'textfield',
 				labelAlign: 'left',
 				 anchor: '100%'
@@ -44,7 +43,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersFullName,
 				name : 'name',
 				id : 'usersFormName',
-				//width : 600,
+				width : 400,
 				allowBlank:false,
 				maskRe: /[A-Za-z \d]/,
 				stripCharsRe: /[^A-Za-z \d]/,
@@ -58,7 +57,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				name : 'email',
 				id : 'usersFormEmail',
 				vtype : 'email',
-				//width : 400,
+				width : 400,
 				allowBlank : false,
 	            listeners:{
 					change: function(field, newValue, oldValue){
@@ -259,17 +258,14 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersExepAcces,
 				name : 'exepAccesRule',
 				//width : 400
-			},{
-				xtype: 'textareafield',
-				readOnly:true,
-				fieldStyle: 'border: none; background-image: none;',
-				value : SuppAppMsg.usersSupplierMainUserMessage,
+			},,{
+		        xtype: 'displayfield',
+		        value: '<span style="font-size:.8em;color:red;">' + SuppAppMsg.usersSupplierMainUserMessage + '</span>',
+		        width:430,
+		        hidden : true,
 				id : 'userMainSupplierUserMsg',
-				name : 'mainSupplierUserMsg',
-				//width : 700,
-				maxRows: 5,
-				hidden : true
-			}
+				name : 'mainSupplierUserMsg'
+		    }
 
 			]
 		} ];
@@ -279,7 +275,8 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 			itemId : 'saveUsers',
 			id : 'saveUsers',
 			text : SuppAppMsg.usersSave,
-			action : 'saveUsers'
+			action : 'saveUsers',
+            cls: 'buttonStyle'
 		}, {
 			iconCls : 'icon-delete',
 			itemId : 'deleteUsers',
@@ -287,20 +284,23 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 			text : 'Eliminar',
 			action : 'deleteUsers',
 			disabled : true,
-			hidden:true
+			hidden:true,
+            cls: 'buttonStyle'
 		}, '-', {
 			iconCls : 'icon-accept',
 			itemId : 'updateUsers',
 			id : 'updateUsers',
 			text : SuppAppMsg.usersUpdate,
 			action : 'updateUsers',
-			disabled : true
+			disabled : true,
+            cls: 'buttonStyle'
 		}, '-', {
 			iconCls : 'icon-add',
 			itemId : 'usersNew',
 			text : SuppAppMsg.usersNew,
 			action : 'usersNew',
-			margin : '5 0 10 0'
+			margin : '5 0 0 0',
+            cls: 'buttonStyle'
 		} ];
 		this.callParent(arguments);
 	}

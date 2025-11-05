@@ -110,7 +110,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
     	    //labelWidth:40,
     	    valueField: 'id',
     	    //margin:'20 20 0 10',
-    	    flex:1,
+    	    flex:.3,
     	    id:'comboInvoiceStatusFA',
     	   /* listeners: {
     	        afterrender: function() {
@@ -405,13 +405,12 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
           			text : SuppAppMsg.fiscalTitle18,
           			hidden:true,
           			action : 'uploadNewFiscalDoc'
-          		}, '-', {
+          		},{
           			name : 'searchFiscalDocumentsFA',
           			itemId : 'searchFiscalDocumentsFA',
           			emptyText : SuppAppMsg.fiscalTitle19,
           			xtype : 'trigger',
           			width : 300,
-          			margin: '5 0 10 0',
           			hidden:true,
           			triggerCls : 'x-form-search-trigger',
           			onTriggerClick : function(e) {
@@ -434,10 +433,9 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                     type: 'hbox',
                     align: 'middle'
                 },
-                padding: 5,
+                //padding: 5,
                 defaults: {
-                    margin: '20 20 0 10', // separación pequeña horizontal
-                    flex: 1,
+                    flex: .7,
                     labelAlign: 'top'
                 },
                 items: [
@@ -450,7 +448,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //width:300,
                         //labelWidth:120,
                         //margin:'20 20 0 10'
-                        flex:2,
+                        flex:.3,
             		},{
             			xtype: 'textfield',
                         fieldLabel: SuppAppMsg.freightApprovalBudgetAccount,
@@ -464,7 +462,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //width:300,
                         //labelWidth:120,
                         //margin:'20 20 0 10'
-                        flex:2,
+                        flex:.5,
             		},{
             			xtype: 'textfield',
                         fieldLabel: SuppAppMsg.freightApprovalTitle6,
@@ -478,12 +476,17 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //width:300,
                         //labelWidth:120,
                         //margin:'20 20 0 10'
-                        flex:2,
+                        flex:.3,
             		},{ 
             			xtype: 'combostatus',
             			value: role == 'ROLE_SUPPLIER'?'APROBADO':'',
             			readOnly:  role == 'ROLE_SUPPLIER'		       		
-            		}
+            		},{
+						xtype: 'displayfield',
+			            value: '',
+			            flex:.8
+		            	}
+            		
                 	 
               ]},
               {
@@ -491,9 +494,9 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                   dock: 'top',
                   layout: {
                       type: 'hbox',
-                      align: 'middle'
+                      //align: 'middle'
                   },
-                  padding: 5,
+                  //padding: 5,
                   items: [
                 	  {
                      		xtype:'button',
@@ -501,7 +504,6 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                           iconCls: 'icon-appgo',
                           action:'fdSearch',
                           cls: 'buttonStyle',
-                          margin:'0 20 0 10',
                           listeners: {
       	                    tap: function (button) {
       	                    	apController.fdSearch(button);

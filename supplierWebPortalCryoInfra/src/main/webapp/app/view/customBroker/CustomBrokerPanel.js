@@ -3,11 +3,12 @@ Ext.define('SupplierApp.view.customBroker.CustomBrokerPanel' ,{
     alias : 'widget.customBrokerPanel',
     border:false,
     frame:false,
+    layout: 'fit',
+    autoScroll : false,
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
-           	 xtype: 'customBrokerGrid',
-           	 height:430
+           	 xtype: 'customBrokerGrid'
             }]
         });
         this.callParent(arguments);

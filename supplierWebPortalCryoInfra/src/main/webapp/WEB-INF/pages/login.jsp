@@ -91,11 +91,11 @@ th {
 <div id="loading" style="display:none;"></div>
     
 	<div class="wrap">
-  <div style="margin-top:50px;margin-bottom:50px;text-align:center;">
-   <p> <img src="resources/images/hand-click.png" style="width:300px;"></p>
+  <div style="margin-top:50px;margin-bottom:100px;text-align:center;">
+   <p> <img src="resources/images/hdr-logo.png" style="width:300px;"></p>
 </div>
 		<div class="avatar">
-      <img src="resources/images/CryoInfra-logo-gris.png" style="height:60px;width:250px;">
+      <img src="resources/images/CryoInfra-logo-gris.png" style="height:100%;width:100%;">
 		</div>
 				<c:choose>
 	         <c:when test="${param.error == 'true'}">

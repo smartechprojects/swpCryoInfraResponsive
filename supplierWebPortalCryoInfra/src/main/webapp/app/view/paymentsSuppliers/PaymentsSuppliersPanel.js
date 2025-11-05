@@ -3,14 +3,12 @@ Ext.define('SupplierApp.view.paymentsSuppliers.PaymentsSuppliersPanel' ,{
     alias : 'widget.paymentsSuppliersPanel',
     border:false,
     frame:false,
-    layout: 'fit', 
-    scrollable: true, 
+    layout: 'fit',
+    autoScroll : false,
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
-           	 xtype: 'paymentsSuppliersGrid',
-           	// height:430
-           	 flex : 1
+           	 xtype: 'paymentsSuppliersGrid'
             }]
         });
         this.callParent(arguments);
