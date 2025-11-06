@@ -26,7 +26,7 @@ Ext.define('SupplierApp.model.PlantAccessRequest', {
 				{name:  'sinOrden'},
 				{name:  'contactEmergency'},
 				{name:  'employerRegistration'},
-				{name:  'fechafirmGui', type: 'date', dateFormat: 'c'},
+				{name: 'fechafirmGui', type: 'date', dateFormat: 'time'},
 				{name:  'subcontractService', type:'boolean'},
 				{name:  'subContractedCompany'},
 				{name:  'subContractedCompanyRFC'}

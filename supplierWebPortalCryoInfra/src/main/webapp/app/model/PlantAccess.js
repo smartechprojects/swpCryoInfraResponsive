@@ -30,7 +30,7 @@ Ext.define('SupplierApp.model.PlantAccess', {
 				{name:  'highRiskActivities'},
 				{name:  'contactEmergency'},
 				{name:  'employerRegistration'},
-				{name:  'fechafirmGui', type: 'date', dateFormat: 'c'},
+				{name: 'fechafirmGui', type: 'date', dateFormat: 'time'},
 				{name:	'heavyEquipment', type:'boolean'},
 				{name:  'subcontractService', type:'boolean'},
 				{name:  'subContractedCompany'},

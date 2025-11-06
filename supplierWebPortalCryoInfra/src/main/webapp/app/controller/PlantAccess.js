@@ -1936,6 +1936,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    if (rawDate) {
 		        var dateField = form.findField('fechafirmGui');
 		        var date = new Date(rawDate); // Convertir timestamp a objeto Date
+		        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
 		        dateField.setValue(date); // Establecer el valor en el campo de fecha
 		    }
 		var values = form.getFieldValues();
@@ -6055,7 +6056,6 @@ debugger
     },
     
     updatePlantAccessRequest: function() {
-    	debugger;
     	//var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
     	var me = this;
     	var form = this.getPlantAccessRequestForm().getForm();
@@ -6081,10 +6081,6 @@ debugger
 		    // Agregar la cadena generada a los valores del formulario
 		    values.ordenNumber = concatenatedData;
 		
-		
-		
-		debugger
-		
 		 // SOLUCIÓN: Limpiar el ID del record antes de asignar valores
 	    record.set('id', null); // Forzar ID a null para nuevo registro
 	    
@@ -6098,10 +6094,13 @@ debugger
 		//record.set(updatedRecord);
 		record.save({
 			callback: function (records, o, success, msg) {
-				debugger
 				if(success == true){
 		    		var r1 = Ext.decode(o._response.responseText);
 			    	var res = Ext.decode(r1);
+			    	const r1Obj = JSON.parse(r1);
+
+			    	// Obtener el valor time de fechafirmGui
+			    	const timeValue = r1Obj.data.fechafirmGui.time;
 
 			    	if(res.message != ''){
 			    		box.hide();
@@ -6111,16 +6110,16 @@ debugger
 	    	        	});
 			    		return false;
 			    	} else {
-			    		debugger
 			    		//Actualiza información del formulario PlantAccessRequestForm
 			    		var recordNew = Ext.create('SupplierApp.model.PlantAccessRequest', res.data);
 			    		form.loadRecord(recordNew);
-			    		 debugger
 			    		//var rawDate = res.data.fechafirmGui.time; // Suponiendo que el campo en record.raw se llama 'fechafirmGui'
+					    	res.data.fechafirmGui = r1Obj.data.fechafirmGui;
 			    		 var rawDate = res.data.fechafirmGui && res.data.fechafirmGui.time;
 			 		    if (rawDate) {
 			 		        var dateField = form.findField('fechafirmGui');
 			 		        var date = new Date(rawDate); // Convertir timestamp a objeto Date
+			 		        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
 			 		        dateField.setValue(date); // Establecer el valor en el campo de fecha
 			 		    }
 			    						    		
