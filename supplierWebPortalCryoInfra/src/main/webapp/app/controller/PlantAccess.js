@@ -6536,7 +6536,6 @@ debugger
     },
     
     showRequestViewAvailableByStatus: function(){
-    	debugger
     	//Definición de controles por estatus
     	var statusPlantAccess = Ext.getCmp('paRequestStatus').getValue();    	
     	Ext.getCmp('savePlantAccessRequest').show();
@@ -6550,6 +6549,9 @@ debugger
     	Ext.getCmp('paContacEmergency').setReadOnly(false);
     	Ext.getCmp('pafechaFirmaGuia').setReadOnly(false);
     	Ext.getCmp('paEmployerRegistration').setReadOnly(false);   	
+    	Ext.getCmp('paSubContractedCompany').setReadOnly(false); 
+    	Ext.getCmp('paSubContractedCompanyRFC').setReadOnly(false);     	
+    	Ext.getCmp('paisSubcontractService').setReadOnly(false);
            		        
         if(['RECHAZADO','GUARDADO'].includes(statusPlantAccess) && role == 'ROLE_SUPPLIER'){
         	Ext.getCmp('savePlantAccessRequest').show();
@@ -6563,6 +6565,9 @@ debugger
         	Ext.getCmp('paContacEmergency').setReadOnly(false);
         	Ext.getCmp('pafechaFirmaGuia').setReadOnly(false);
         	Ext.getCmp('paEmployerRegistration').setReadOnly(false);   
+        	Ext.getCmp('paSubContractedCompany').setReadOnly(false); 
+        	Ext.getCmp('paSubContractedCompanyRFC').setReadOnly(false);  
+        	Ext.getCmp('paisSubcontractService').setReadOnly(false);
         }else
         
         if(['PENDIENTE','RECHAZADO','APROBADO','GUARDADO'].includes(statusPlantAccess)){
@@ -6576,6 +6581,10 @@ debugger
         	Ext.getCmp('paContacEmergency').setReadOnly(true);
         	Ext.getCmp('pafechaFirmaGuia').setReadOnly(true);
         	Ext.getCmp('paEmployerRegistration').setReadOnly(true);  
+        	Ext.getCmp('paSubContractedCompany').setReadOnly(true); 
+        	Ext.getCmp('paSubContractedCompanyRFC').setReadOnly(true);
+        	Ext.getCmp('paisSubcontractService').setReadOnly(true);
+        	
 //        	Ext.getCmp('paDescriptionUbication').setReadOnly(true);
         	Ext.getCmp('paPlantRequest').setReadOnly(true);
         	 var grid = Ext.getCmp('ordersPlantaccesGridPanel'); // Obtenemos el grid por su id
