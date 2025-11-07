@@ -6549,8 +6549,7 @@ debugger
     	Ext.getCmp('paPlantRequest').setReadOnly(false);
     	Ext.getCmp('paContacEmergency').setReadOnly(false);
     	Ext.getCmp('pafechaFirmaGuia').setReadOnly(false);
-    	
-    	
+    	Ext.getCmp('paEmployerRegistration').setReadOnly(false);   	
            		        
         if(['RECHAZADO','GUARDADO'].includes(statusPlantAccess) && role == 'ROLE_SUPPLIER'){
         	Ext.getCmp('savePlantAccessRequest').show();
@@ -6563,6 +6562,7 @@ debugger
         	Ext.getCmp('paPlantRequest').setReadOnly(false);
         	Ext.getCmp('paContacEmergency').setReadOnly(false);
         	Ext.getCmp('pafechaFirmaGuia').setReadOnly(false);
+        	Ext.getCmp('paEmployerRegistration').setReadOnly(false);   
         }else
         
         if(['PENDIENTE','RECHAZADO','APROBADO','GUARDADO'].includes(statusPlantAccess)){
@@ -6575,6 +6575,7 @@ debugger
         	Ext.getCmp('paContractorRepresentative').setReadOnly(true);
         	Ext.getCmp('paContacEmergency').setReadOnly(true);
         	Ext.getCmp('pafechaFirmaGuia').setReadOnly(true);
+        	Ext.getCmp('paEmployerRegistration').setReadOnly(true);  
 //        	Ext.getCmp('paDescriptionUbication').setReadOnly(true);
         	Ext.getCmp('paPlantRequest').setReadOnly(true);
         	 var grid = Ext.getCmp('ordersPlantaccesGridPanel'); // Obtenemos el grid por su id

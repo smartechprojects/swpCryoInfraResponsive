@@ -127,8 +127,8 @@ Ext.define('SupplierApp.view.main.Main', {
                 margin: '25 100 10 0',
                 defaults: { xtype: 'label', style: 'color:#3F484D;' },
                 items: [
-                    { itemId: 'displayNameLabel', html: '', margin: '0 0 5 0',style: 'font-weight:bold;font-size:1.1em;' },
-                    { itemId: 'userInfoLabel', html: '', flex: 1 ,style: 'font-weight:bold;font-size:1.1em;'},
+                    { itemId: 'displayNameLabel', html: '', margin: '0 0 5 0',style: 'font-weight:bold;font-size:1.1em;color:#000;' },
+                    { itemId: 'userInfoLabel', html: '', flex: 1 ,style: 'font-weight:bold;font-size:1.1em;color:#000;'},
                     { itemId: 'envLabel', html: '', flex: 1 ,style: 'font-size:1em;color:red;'}
                 ]
             },
