@@ -1,61 +1,77 @@
 	Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.purchaseOrderGrid',
-    //forceFit: true,
     loadMask: true,
 	frame:false,
 	border:false,
 	flex: 1,
-	//scrollable: false,
-	 //autoScroll: true,
-	 autoHeight: true,
-	    minHeight: 400, 
-
 	selModel: {
         checkOnly: true,
         mode: 'SIMPLE'
     },
     selType: 'checkboxmodel',
 	cls: 'extra-large-cell-grid',  
-	scroll : false,
+	scroll :  true,
 	viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' },
 		enableTextSelection: true,
 		stripeRows: true,
 	    markDirty: false,
-		 listeners: {
-	            refresh: function(view) {
-	                var grid = view.up('grid');
-	                var store = grid.getStore();
-	                var rowCount = store.getCount();
-	                var viewEl = view.getEl();
-	                                
-	                //AutoSize en columnas
-	                Ext.defer(function() {
-	                    grid.columns.forEach(function(col) {
-	                        if (col.autoSize) col.autoSize();
-	                        else if (col.autoSizeColumn) col.autoSizeColumn();
-	                        
-	                        // Ajustar el header si es necesario
-	                        var headerText = col.text || '';
-	                        var headerEl = col.el;
-	                        if (headerEl && headerText) {
-	                            var textWidth = Ext.util.TextMetrics.measure(headerEl, headerText).width + 20; 
-	                            var currentWidth = col.getWidth();
-	                            
-	                            if (textWidth > currentWidth) {
+	    listeners: {
+	        refresh: function (view) {
+	            var grid = view.up('grid');
+	            if (!grid) return;
+
+	            Ext.defer(function () {
+	                // Autoajuste de columnas según contenido
+	                Ext.each(grid.columns, function (col) {
+	                    if (col.autoSize) col.autoSize();
+	                    else if (col.autoSizeColumn) col.autoSizeColumn();
+
+	                    // Ajuste adicional según header (por texto largo)
+	                    var headerText = col.text || '';
+	                    if (headerText && col.getEl()) {
+	                        var headerEl = col.getEl().down('.x-column-header-text');
+	                        if (headerEl) {
+	                            var textWidth = Ext.util.TextMetrics.measure(headerEl, headerText).width + 20;
+	                            if (textWidth > col.getWidth()) {
 	                                col.setWidth(textWidth);
 	                            }
 	                        }
-	                    });
-	                }, 200);
-	                
-	            
-	            }
-		 }
-	},
+	                    }
+	                });
 
+	                // Repartir espacio sobrante solo si sobra
+	                Ext.defer(function () {
+	                    var totalWidth = 0;
+	                    var gridWidth = grid.getWidth();
+
+	                    // Calcular ancho total de columnas visibles
+	                    Ext.each(grid.columns, function (col) {
+	                        if (!col.hidden) totalWidth += col.getWidth();
+	                    });
+
+	                    // Si sobra espacio, lo repartimos
+	                    if (totalWidth < gridWidth) {
+	                        var diff = gridWidth - totalWidth - 10; // margen visual
+	                        var visibles = Ext.Array.filter(grid.columns, function (col) {
+	                            return !col.hidden;
+	                        });
+	                        var extra = diff / visibles.length;
+
+	                        Ext.each(visibles, function (col) {
+	                            col.setWidth(col.getWidth() + extra);
+	                        });
+
+	                        grid.updateLayout();
+	                    }
+	                }, 100);
+	            }, 200);
+	        }
+	    }
+
+	},
     initComponent: function() {
     	this.emptyText = SuppAppMsg.emptyMsg;
     	var poController = SupplierApp.app.getController("SupplierApp.controller.PurchaseOrder");

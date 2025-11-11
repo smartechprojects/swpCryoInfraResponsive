@@ -2,7 +2,6 @@ Ext.define('SupplierApp.view.receipt.ReceiptForm' ,{
 	extend: 'Ext.form.Panel',
 	alias : 'widget.receiptForm',
 	border:true,
-	scrollable : true,
 	  initComponent: function() {		  
 			this.items= [{
 				xtype: 'container',

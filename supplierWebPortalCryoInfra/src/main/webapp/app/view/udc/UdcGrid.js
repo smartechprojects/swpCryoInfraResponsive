@@ -9,16 +9,65 @@ Ext.define('SupplierApp.view.udc.UdcGrid' ,{
 	store : {
 		type:'udcstore'
 	},
-	scrollable: true, 
 	dockedItems: [
     	getPagingContent()
     ],
-	viewConfig: {
-		stripeRows: true,
-		style : { overflow: 'auto', overflowX: 'hidden' }
-	},
+    scroll : true,
+    viewConfig: {
+        stripeRows: true,
+        enableTextSelection: true,
+        markDirty: false,
+        listeners: {
+            refresh: function (view) {
+                var grid = view.up('grid');
+                var viewEl = view.getEl();
+                if (!grid || !viewEl) return;
+
+                Ext.defer(function () {
+                    // Ajustar tamaño base de columnas por contenido
+                    grid.columns.forEach(function (col) {
+                        if (col.autoSize) col.autoSize();
+                        else if (col.autoSizeColumn) col.autoSizeColumn();
+
+                        var headerText = col.text || '';
+                        var headerEl = col.el;
+                        if (headerEl && headerText) {
+                            var textWidth = Ext.util.TextMetrics.measure(headerEl, headerText).width + 20;
+                            if (textWidth > col.getWidth()) {
+                                col.setWidth(textWidth);
+                            }
+                        }
+                    });
+
+                    // Calcular espacio disponible visible del grid
+                    var totalColumnWidth = 0;
+                    grid.columns.forEach(function (col) {
+                        if (!col.hidden) totalColumnWidth += col.getWidth();
+                    });
+
+                    // Obtener ancho real del contenedor visible (no del grid)
+                    var gridViewWidth = viewEl.getWidth();
+                    var scrollbarWidth = grid.getVerticalScrollerWidth ? grid.getVerticalScrollerWidth() : 0;
+                    var availableWidth = gridViewWidth - scrollbarWidth;
+
+                    // Si sobra espacio, redistribuir proporcionalmente
+                    if (availableWidth - totalColumnWidth > 20) {
+                        var extraWidth = availableWidth - totalColumnWidth;
+                        var visibleCols = grid.columns.filter(function (c) { return !c.hidden; });
+                        var addPerCol = extraWidth / visibleCols.length;
+
+                        Ext.suspendLayouts();
+                        visibleCols.forEach(function (col) {
+                            col.setWidth(col.getWidth() + addPerCol);
+                        });
+                        Ext.resumeLayouts(true);
+                    }
+                }, 200);
+            }
+        }
+    },
     initComponent: function() {
- 
+    	this.emptyText = SuppAppMsg.emptyMsg;
         this.columns = [
            {
             text     : SuppAppMsg.udcSystem,
@@ -43,12 +92,12 @@ Ext.define('SupplierApp.view.udc.UdcGrid' ,{
         },{
             text     : 'intValue',
             flex: 0.5,
-//            width: 50,
+            maxWidth: 140,
             dataIndex: 'intValue'
         },{
             text     : 'boolValue',
             flex: 0.5,
-//            width: 50,
+            maxWidth: 140,
             dataIndex: 'booleanValue'
         },{
             text     : SuppAppMsg.udcDate,

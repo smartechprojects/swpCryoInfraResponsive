@@ -38,5 +38,26 @@ Ext.define('SupplierApp.view.paymentCalendar.PaymentCalendarGrid' ,{
         }];
       
         this.callParent(arguments);
+        debugger
+        this.on('afterrender', function() {
+            Ext.defer(function() {
+            	debugger
+                console.log('Grid rendered');
+                console.log('Grid width:', this.getWidth());
+                console.log('Grid el:', this.getEl());
+                
+                var pager = this.down('pagingtoolbar');
+                if (pager) {
+                    console.log('Pager found, width:', pager.getWidth());
+                    console.log('Pager el:', pager.getEl());
+                    
+                    // En Ext JS 6.2 usa updateLayout en lugar de doComponentLayout
+                    pager.updateLayout();
+                } else {
+                    console.log('Pager not found');
+                }
+                
+            }, 100, this);
+        }, this);
     }
 });

@@ -4,18 +4,71 @@ Ext.define('SupplierApp.view.token.TokenGrid' ,{
     loadMask: true,
 	frame:false,
 	border:false,
-	forceFit:true,
-	fullscreen: true,
 	cls: 'extra-large-cell-grid',
     store : {
 		type:'accesstokenregister'
 	},
-	scroll : false,
+	scroll :  true,
 	viewConfig: {
 		stripeRows: true,
-		style : { overflow: 'auto', overflowX: 'hidden' }
+		style : { overflow: 'auto', overflowX: 'hidden' },
+		enableTextSelection: true,
+		stripeRows: true,
+	    markDirty: false,
+	    listeners: {
+	        refresh: function (view) {
+	            var grid = view.up('grid');
+	            if (!grid) return;
+
+	            Ext.defer(function () {
+	                // 🔹 Autoajuste de columnas según contenido
+	                Ext.each(grid.columns, function (col) {
+	                    if (col.autoSize) col.autoSize();
+	                    else if (col.autoSizeColumn) col.autoSizeColumn();
+
+	                    // Ajuste adicional según header (por texto largo)
+	                    var headerText = col.text || '';
+	                    if (headerText && col.getEl()) {
+	                        var headerEl = col.getEl().down('.x-column-header-text');
+	                        if (headerEl) {
+	                            var textWidth = Ext.util.TextMetrics.measure(headerEl, headerText).width + 20;
+	                            if (textWidth > col.getWidth()) {
+	                                col.setWidth(textWidth);
+	                            }
+	                        }
+	                    }
+	                });
+
+	                // 🔹 Repartir espacio sobrante solo si sobra
+	                Ext.defer(function () {
+	                    var totalWidth = 0;
+	                    var gridWidth = grid.getWidth();
+
+	                    // Calcular ancho total de columnas visibles
+	                    Ext.each(grid.columns, function (col) {
+	                        if (!col.hidden) totalWidth += col.getWidth();
+	                    });
+
+	                    // Si sobra espacio, lo repartimos
+	                    if (totalWidth < gridWidth) {
+	                        var diff = gridWidth - totalWidth - 10; // margen visual
+	                        var visibles = Ext.Array.filter(grid.columns, function (col) {
+	                            return !col.hidden;
+	                        });
+	                        var extra = diff / visibles.length;
+
+	                        Ext.each(visibles, function (col) {
+	                            col.setWidth(col.getWidth() + extra);
+	                        });
+
+	                        grid.updateLayout();
+	                    }
+	                }, 100);
+	            }, 200);
+	        }
+	    }
+
 	},
-	
     initComponent: function() {
     	this.emptyText = SuppAppMsg.emptyMsg;
     	
@@ -29,22 +82,26 @@ Ext.define('SupplierApp.view.token.TokenGrid' ,{
                 text     : window.navigator.language.startsWith("es", 0)? 'Proveedor':'Supplier',
                 dataIndex: 'registerName',
                 //width: 100
-                flex : 1
+                //flex : 1,
+                minWidth: 150
             },{
                 text     : 'Email',
                 dataIndex: 'email',
                 //width: 85
-                flex : 1
+                flex : 1,
+                minWidth: 150
             },{
                 text     : window.navigator.language.startsWith("es", 0)? 'Creado por':'Created by',
                 dataIndex: 'createdBy',
                 //width: 45
-                flex : 1
+                flex : 1,
+                minWidth: 60
             },{
                 text     : window.navigator.language.startsWith("es", 0)? 'Actualizado por':'Updated by',
                 dataIndex: 'updatedBy',
                 //width: 45
-                flex : 1
+                //flex : 1
+                minWidth: 80
             },{
                 text     : window.navigator.language.startsWith("es", 0)? 'Activo':'Enabled',
                 dataIndex: 'enabled',
