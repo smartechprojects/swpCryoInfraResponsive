@@ -577,6 +577,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_1',
 		    			 action : 'workerDOC_1',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -616,6 +617,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_2',
 		    			 action : 'workerDOC_2',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -656,6 +658,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_6',
 		    			 action : 'workerDOC_6',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -696,6 +699,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_7',
 		    			 action : 'workerDOC_7',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -736,6 +740,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_8',
 		    			 action : 'workerDOC_8',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -776,6 +781,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_9',
 		    			 action : 'workerDOC_9',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -817,6 +823,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 		 id : 'workerDOC_10',
                 		 action : 'workerDOC_10',
                 		 text : SuppAppMsg.supplierLoad,
+                		 cls: 'buttonStyle',
                 	 }]
                  }]
 		     },{
@@ -857,6 +864,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_11',
 		    			 action : 'workerDOC_11',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -897,6 +905,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 id : 'workerDOC_12',
 		    			 action : 'workerDOC_12',
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     },{
@@ -939,6 +948,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 action : 'workerDOC_13',
 		    			 hidden: role == 'ROLE_PURCHASE_READ' ?true:false,
 		    			 text : SuppAppMsg.supplierLoad,
+		    			 cls: 'buttonStyle',
 		    		 }]
 		    	 }]
 		     }],

@@ -79,28 +79,32 @@ Ext.define('SupplierApp.view.receipt.ReceiptForm' ,{
 			    	  itemId: 'uploadReceiptInvoice',
 			    	  text: SuppAppMsg.purchaseTitle36,
 			    	  action: 'uploadReceiptInvoice',
-			    	  hidden:true
+			    	  hidden:true,
+			    	  cls: 'buttonStyle'
 			      },{
 			    	  iconCls: 'icon-save',
 			    	  id: 'showOutSourcingWindow',
 			    	  itemId: 'showOutSourcingWindow',
 			    	  text: SuppAppMsg.outsourcingButton,
 			    	  action: 'showOutSourcingWindow',
-			    	  hidden:true
+			    	  hidden:true,
+			    	  cls: 'buttonStyle'
 			      },{
 			    	  iconCls: 'icon-save',
 			    	  id: 'uploadReceiptCreditNote',
 			    	  itemId: 'uploadReceiptCreditNote',
 			    	  text: SuppAppMsg.purchaseTitle57,
 			    	  action: 'uploadReceiptCreditNote',
-			    	  hidden:true
+			    	  hidden:true,
+			    	  cls: 'buttonStyle'
 			      },{
 			    	  iconCls: 'icon-save',
 			    	  id: 'uploadReceiptInvoiceZip',
 			    	  itemId: 'uploadReceiptInvoiceZip',
 			    	  text: SuppAppMsg.supplierLoad + ' Zip',
 			    	  action: 'uploadReceiptInvoiceZip',
-			    	  hidden: true
+			    	  hidden: true,
+			    	  cls: 'buttonStyle'
 			      }];
 		  this.callParent(arguments);	    
 	  }

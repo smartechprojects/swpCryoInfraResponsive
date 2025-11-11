@@ -917,4 +917,105 @@ table.dashGridTable tfoot td {
 .x-form-text-wrap,
     .x-form-trigger-wrap {
         border-radius: 4px; /* Adjust the value for desired roundness */
-    }
+}
+
+.buttonSecondaryStyle {
+    background: #ffffff !important;
+    border: solid 1px #FF8300 !important;
+    height: 24px !important;
+}
+
+.buttonSecondaryStyle .x-btn-inner {
+    color: #FF8300 !important;
+}
+
+.x-btn-over.buttonSecondaryStyle {
+    border: solid 1px #FF9C33 !important;
+    background-color: #f8f8f8 !important; /* Blanco ligeramente más oscuro al hover */
+    background-image: none;
+}
+
+.x-btn-pressed.buttonSecondaryStyle {
+    background: #FFF5EB !important; /* Fondo muy claro naranja */
+    background-color: #FFF5EB !important;
+    border: solid 1px #FF8300 !important;
+    background-image: none !important;
+}
+
+.x-btn-pressed.buttonSecondaryStyle .x-btn-inner {
+    color: #FF8300 !important; /* Mantiene el naranja al presionar */
+}
+
+.x-btn-focus.buttonSecondaryStyle {
+    background: #FFF5EB !important; /* Mismo que pressed para foco */
+    border: solid 1px #FF8300 !important;
+}
+
+
+
+/*  /*Espacio completo en grids - SOLO EN PANTALLAS GRANDES */ */
+
+/* /* Para pantallas grandes (min-width: 1200px) */ */
+/* @media (min-width: 1200px) { */
+/*     .x-panel .x-grid-body { */
+/*         height: 100% !important; */
+/*         min-height: 400px !important; */
+/*     } */
+
+/*     .x-panel .x-grid-view { */
+/*         height: 100% !important; */
+/*         min-height: 400px !important; */
+/*     } */
+
+/*     CONTENEDOR DE ITEMS - EXPANSIÓN MÁXIMA */
+/*     .x-grid-item-container { */
+/*         height: auto !important; */
+/*         min-height: 350px !important; */
+/*         margin: 0 !important; */
+/*         padding: 0 !important; */
+/*     } */
+
+/*     Asegura altura consistente de filas */
+/*     .x-grid-row { */
+/*         height: 35px !important; */
+/*     } */
+
+/*     .x-grid-cell { */
+/*         height: 35px !important; */
+/*         line-height: 35px !important; */
+/*         vertical-align: middle !important; */
+/*     } */
+
+/*     Elimina padding/margin innecesarios en contenedores de grid */
+/*     .x-panel-body-default { */
+/*         padding: 0 !important; */
+/*         height: 100% !important; */
+/*     } */
+
+/*     ESPECÍFICO PARA GRIDS EN TABS */
+/*     .x-tabpanel-child .x-panel-body-default { */
+/*         height: 100% !important; */
+/*     } */
+/* } */
+
+/* /* Para pantallas medianas (entre 768px y 1199px) - comportamiento normal */ */
+/* @media (max-width: 1199px) { */
+/*     .x-panel .x-grid-body, */
+/*     .x-panel .x-grid-view { */
+/*         NO modificar height - dejar comportamiento por defecto */
+/*         min-height: auto !important; */
+/*     } */
+    
+/*     .x-grid-item-container { */
+/*         min-height: auto !important; */
+/*     } */
+/* } */
+
+/* /* Para pantallas pequeñas (menos de 768px) - scroll normal */ */
+/* @media (max-width: 767px) { */
+/*     .x-panel .x-grid-body, */
+/*     .x-panel .x-grid-view { */
+/*         NO modificar height - dejar comportamiento por defecto */
+/*         min-height: auto !important; */
+/*     } */
+/* } */

@@ -66,6 +66,7 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultFiscalPeriodForm',	{
 									id : 'addeTaxVaultFiscPerBtn',
 									text : SuppAppMsg.taxvaultAddPeriod,
 									action : 'addeTaxVaultFiscPerAct',
+									cls: 'buttonStyle',
 }
 								];
 						this.callParent(arguments);

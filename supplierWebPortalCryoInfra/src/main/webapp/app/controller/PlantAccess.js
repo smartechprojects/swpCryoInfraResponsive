@@ -1447,6 +1447,9 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						allowBlank : false,
 						width:300,
 						buttonText : SuppAppMsg.suppliersSearch,
+						buttonConfig: {
+							cls: 'buttonStyle'
+					    },
 						margin:'10 0 10 10',
 				        fileType: ['pdf'], // Filtrar por extensión PDF
 				        listeners: {
@@ -1471,6 +1474,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    		}],
 					buttons : [ {
 						text : SuppAppMsg.supplierLoad,
+						cls: 'buttonStyle',
 						margin:'10 0 0 0',
 						handler : function() {
 							var form = this.up('form').getForm();
@@ -1627,7 +1631,10 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						allowBlank : false,
 						width:300,
 						buttonText : SuppAppMsg.suppliersSearch,
-						margin:'10 0 10 10'
+						margin:'10 0 10 10',
+						buttonConfig: {
+							cls: 'buttonStyle'
+					    }
 				//		listeners: {
 				//            'change': function(f, value){
 				//                  alert(f.size); // not filesize
@@ -1678,6 +1685,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						buttons : [ {
 							text : SuppAppMsg.supplierLoad,
 							margin:'10 0 0 0',
+							cls: 'buttonStyle',
 							handler : function() {
 								var form = this.up('form').getForm();
 								if (form.isValid()) {
@@ -2336,6 +2344,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 
 					buttons : [ {
 						text : SuppAppMsg.supplierLoad,
+						cls: 'buttonStyle',
 						margin:'10 0 0 0',
 						handler : function() {
 							var form = this.up('form').getForm();
@@ -2578,6 +2587,18 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 				}
 			}
 		});
+    	
+    	dlgRejected.on('afterlayout', function() {
+    	    var buttons = dlgRejected.query('button');
+    	    
+    	    buttons.forEach(function(btn) {
+    	        if (btn.text === SuppAppMsg.approvalAcept || btn.text === 'OK') {
+    	            btn.addCls('buttonStyle');
+    	        } else if (btn.text === SuppAppMsg.approvalExit || btn.text === 'Cancel') {
+    	            btn.addCls('buttonStyle');
+    	        }
+    	    });
+    	});
     	
     	dlgRejected.textArea.inputEl.set({
 		    maxLength: 255

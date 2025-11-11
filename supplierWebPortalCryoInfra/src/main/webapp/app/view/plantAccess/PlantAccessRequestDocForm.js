@@ -86,6 +86,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	id : 'requestDOC_2',
 		        	action : 'requestDOC_2',
 		        	text : SuppAppMsg.supplierLoad,
+		        	cls: 'buttonStyle',
 		        }]
             },{
 				xtype: 'container',
@@ -119,6 +120,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					id : 'requestDOC_3',
 					action : 'requestDOC_3',
 					text : SuppAppMsg.supplierLoad,
+					cls: 'buttonStyle',
 				}]
             },{
 				xtype: 'container',
@@ -152,6 +154,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	id : 'requestDOC_4',
 		        	action : 'requestDOC_4',
 		        	text : SuppAppMsg.supplierLoad,
+		        	cls: 'buttonStyle',
 		        }]
             },{
 				xtype: 'checkboxfield',
@@ -223,6 +226,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					id : 'requestDOC_10',
 					action : 'requestDOC_10',
 					text : SuppAppMsg.supplierLoad,
+					cls: 'buttonStyle',
 				}]
             },{
 				xtype: 'container',
@@ -256,6 +260,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					id : 'requestDOC_12',
 					action : 'requestDOC_12',
 					text : SuppAppMsg.supplierLoad,
+					cls: 'buttonStyle',
 				}]
             },{
 				xtype: 'container',
@@ -272,6 +277,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 	                id: 'updatePlantAccessRequestDoc',
 	                width: 120,
 	                margin: '0 0 0 0',
+	                cls: 'buttonStyle',
 				    //flex: 1,
 	            }]
             }]

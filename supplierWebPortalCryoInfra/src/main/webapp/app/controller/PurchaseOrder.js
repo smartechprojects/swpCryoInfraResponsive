@@ -540,6 +540,9 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    									anchor : '90%',
     			    									multiple: true,
     			    									buttonText : SuppAppMsg.suppliersSearch,
+    			    									buttonConfig: {
+    			    										cls: 'buttonStyle'
+    			    								    },
     			    									listeners: {  
     			    					                      change: function (value) {  
     			    					                    	  
@@ -570,6 +573,9 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    									allowBlank : false,
     			    									anchor : '90%',
     			    									buttonText : SuppAppMsg.suppliersSearch,
+    			    									buttonConfig: {
+    			    										cls: 'buttonStyle'
+    			    								    },
     			    									margin:'10 0 0 0',
     			    									listeners: {  
   			    					                      change: function (value) {  
@@ -599,6 +605,9 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    									allowBlank : false,
     			    									anchor : '90%',
     			    									buttonText : SuppAppMsg.suppliersSearch,
+    			    									buttonConfig: {
+    			    										cls: 'buttonStyle'
+    			    								    },
     			    									margin:'20 0 20 0',
     			    									listeners: {  
     			    					                      change: function (value) {  
@@ -701,6 +710,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    						buttons : [ {
     			    							text : SuppAppMsg.supplierLoad,
     			    							margin:'10 0 0 0',
+    			    							cls: 'buttonStyle',
     			    							handler : function() {
     			    								
     			    								/*var plantCode = Ext.getCmp('plantCodeComboPO').getValue();
@@ -1087,6 +1097,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   						//action : 'testDACG',
     	   						itemId: 'uploadOthersDocsPO',
     	   						id: 'uploadOthersDocsPO',
+    	   						cls: 'buttonStyle',
     	   						handler : function() {
     	   							
     	   						
@@ -1148,6 +1159,9 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   														margin:'20 0 30 0',
     	   														anchor : '90%',
     	   														buttonText : SuppAppMsg.suppliersSearch,
+    	   														buttonConfig: {
+    	   				    										cls: 'buttonStyle'
+    	   				    								    },
     	   														listeners: {  
     	   									                      change: function (value) {  
     	   									                           var file =   Ext.getCmp('fileOther').getEl().down('input[type=file]').dom.files[0]
@@ -1164,6 +1178,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   											buttons : [ {
     	   												text : SuppAppMsg.supplierLoad,
     	   												margin:'10 0 0 0',
+    	   												cls: 'buttonStyle',
     	   												handler : function() {
     	   													
     	   													var form = this.up('form').getForm();
@@ -3164,12 +3179,16 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     									allowBlank : false,
     									//margin:'20 0 30 0',
     									//anchor : '90%',
-    									buttonText : SuppAppMsg.suppliersSearch
+    									buttonText : SuppAppMsg.suppliersSearch,
+    									buttonConfig: {
+    										cls: 'buttonStyle'
+    								    }
     								} ],
 
     						buttons : [ {
     							text : SuppAppMsg.supplierLoad,
     							margin:'10 0 0 0',
+    							cls: 'buttonStyle',
     							handler : function() {
     								var form = this.up('form').getForm();
     								if (form.isValid()) {
@@ -4331,6 +4350,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         var calendarPanel = Ext.create('Ext.form.Panel', {
             layout: 'fit',
             flex: 1,
+            width: '100%',
             items: [{
                 xtype: 'paymentCalendarGrid'
             }]
@@ -4369,6 +4389,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
                             text: SuppAppMsg.purchaseLoadCalendar,
                             iconCls: 'icon-doSearch',
                             margin:'0 10 0 0',
+                            cls: 'buttonStyle',
                             handler: function() {
                                 var filePanel = Ext.create('Ext.form.Panel', {
                                     bodyPadding: 10,
@@ -4384,11 +4405,15 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
                                         msgTarget : 'side',
                                         allowBlank : false,
                                         multiple: true,
-                                        buttonText : SuppAppMsg.suppliersSearch
+                                        buttonText : SuppAppMsg.suppliersSearch,
+                                        buttonConfig: {
+    										cls: 'buttonStyle'
+    								    }
                                     }],
                                     buttons : [{
                                         text : SuppAppMsg.supplierLoad,
                                         margin:'10 0 0 0',
+                                        cls: 'buttonStyle',
                                         handler : function() {
                                             var form = this.up('form').getForm();
                                             if (form.isValid()) {
@@ -4450,6 +4475,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
                             text: SuppAppMsg.purchaseDeleteInputs,
                             iconCls: 'icon-delete',
                             margin:'0 0 0 10',
+                            cls: 'buttonStyle',
                             handler: function() {
                                 Ext.Msg.prompt(SuppAppMsg.purchaseDataRequest, SuppAppMsg.purchaseSpecifyYear , function(btnText, sInput){
                                     if(btnText === 'ok'){
@@ -4622,7 +4648,10 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     								margin:'10 0 0 10',
     								anchor : '85%',
     								multiple: true,
-    								buttonText : SuppAppMsg.suppliersSearch
+    								buttonText : SuppAppMsg.suppliersSearch,
+    								buttonConfig: {
+										cls: 'buttonStyle'
+								    }
     									
     							},{
     								xtype : 'filefield',
@@ -4633,7 +4662,10 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     								allowBlank : false,
     								anchor : '85%',
     								buttonText : SuppAppMsg.suppliersSearch,
-    								margin:'10 0 0 10'
+    								margin:'10 0 0 10',
+    								buttonConfig: {
+										cls: 'buttonStyle'
+								    }
     							},{
     								xtype : 'filefield',
     								name : 'uploadedFiles[2]',
@@ -4643,11 +4675,15 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     								allowBlank : false,
     								anchor : '85%',
     								buttonText : SuppAppMsg.suppliersSearch,
-    								margin:'10 0 0 10'
+    								margin:'10 0 0 10',
+    								buttonConfig: {
+										cls: 'buttonStyle'
+								    }
     							}],
 
     					buttons : [ {
     						text : SuppAppMsg.supplierLoad,
+    						cls: 'buttonStyle',
     						margin:'10 0 0 0',
     						handler : function() {
     							var form = this.up('form').getForm();

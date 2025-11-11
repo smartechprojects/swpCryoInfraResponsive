@@ -94,7 +94,6 @@ Ext.define('SupplierApp.controller.Supplier', {
     loadInfoSupplier:function(){
     },
     getInvalidFields: function() {
-    	debugger
         var invalidFields = [];
         Ext.suspendLayouts();
         this.getSupplierForm().getForm().getFields().filterBy(function(field) {
@@ -268,18 +267,21 @@ Ext.define('SupplierApp.controller.Supplier', {
     
     supAddNbrSrch: function(button) {
     	var grid = this.getSupplierGrid();
-    	var store = grid.getStore();
-    	var name = Ext.getCmp('supAddName');
-    	var supAddNbr = Ext.getCmp('supAddNbr').getValue() ==''?'':Ext.getCmp('supAddNbr').getValue();
-    	var supAddName = Ext.getCmp('supAddName').getValue() == ''?'':Ext.getCmp('supAddName').getValue();
+        var store = grid.getStore();
+        
+        var nbrField = grid.down('#supAddNbr');
+        var nameField = grid.down('#supAddName');
+        
+        var supAddNbr = nbrField.getValue() ==''?'':nbrField.getValue();
+    	var supAddName = nameField.getValue() == ''?'':nameField.getValue();
 
-    	store.proxy.extraParams = { 
-    			supAddNbr : supAddNbr?supAddNbr:'',
-    			supAddName : supAddName?supAddName:''
-    	    	}
+        store.proxy.extraParams = { 
+            supAddNbr : supAddNbr?supAddNbr:'',
+        	supAddName : supAddName?supAddName:''
+        };
+        
+        store.load();
     	
-    	store.load();
-  
     },
     
     uploadSuppliersFile: function(button) {
@@ -306,11 +308,15 @@ Ext.define('SupplierApp.controller.Supplier', {
     									allowBlank : false,
     									//margin:'20 0 70 0',
     									//anchor : '90%',
-    									buttonText : SuppAppMsg.suppliersSearch
+    									buttonText : SuppAppMsg.suppliersSearch,
+    									buttonConfig: {
+    										cls: 'buttonStyle'
+    								    }
     								} ],
 
     						buttons : [ {
     							text : SuppAppMsg.supplierLoad,
+    							cls: 'buttonStyle',
     							margin:'10 0 0 0',
     							handler : function() {
     								var form = this.up('form').getForm();
@@ -1059,7 +1065,7 @@ Ext.define('SupplierApp.controller.Supplier', {
 			        		form.findField('telefonoContactoCxC').setReadOnly(true);
 			        		Ext.getCmp('emailSupplier').setReadOnly(false);
 			        	}
-			        	debugger
+			        	
 			        	if(tabChgn == 'suppliers'){			        		
 			        		Ext.getCmp('ticketForSearch').hide();
 				        	Ext.getCmp('searchTicket').hide();

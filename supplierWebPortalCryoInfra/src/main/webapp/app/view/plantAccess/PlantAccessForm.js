@@ -466,6 +466,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessForm',	{
 						id : 'uploadPlantAccessRequestBtn',
 						text : SuppAppMsg.plantAccess4,
 						action : 'uploadPlantAccessRequestAct',
+						cls: 'buttonStyle',
 					},{
 						xtype: 'button',
 						width:200,
@@ -474,7 +475,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessForm',	{
 						text : SuppAppMsg.plantAccess5,
 						action : 'uploadFileRequest',
 						id : 'uploadFileRequest',
-						maring:'0 0 0 0'
+						maring:'0 0 0 0',
+						cls: 'buttonStyle',
 					}
 					];
 			this.callParent(arguments);

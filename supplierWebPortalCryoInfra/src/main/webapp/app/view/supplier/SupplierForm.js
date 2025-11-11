@@ -7,8 +7,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 	style: 'border: solid #ccc 1px',
 	autoScroll : true,
 	 scrollable: true, 
-    getInvalidFields: function() {
-    	debugger
+    getInvalidFields: function() {   	
         var invalidFields = [];
         Ext.suspendLayouts();
         this.form.getFields().filterBy(function(field) {
@@ -197,7 +196,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									text : SuppAppMsg.suppliersSearch,
 									action : 'searchTicket',
 									id : 'searchTicket',
-									maring:'0 0 0 0'
+									maring:'0 0 0 0',
+									cls: 'buttonStyle'
 								}]
 							},{
 								fieldLabel : SuppAppMsg.suppliersNumber,
@@ -342,14 +342,12 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							            	});
 							    		}
 							    	},
-							    	afterrender: function(){
-							    		debugger
-							    		  var user = role;
+							    	afterrender: function(){						    		
+							    	    var user = role;
 							    		var countryField = Ext.getCmp('country');
 							    	    
 							    	    if (countryField && countryField.getValue() != null) {
 							    	        var check = countryField.getValue();
-							    	        debugger;
 							    	        
 							    	        if (check != null && user == 'ROLE_SUPPLIER'){
 							    	            // Tu lógica aquí...
@@ -357,7 +355,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							    	    } else {
 							    	        // Si no tiene valor, esperar un poco y reintentar
 							    	        setTimeout(function(){
-							    	        	debugger
+
 							    	            var check = Ext.getCmp('country').getValue();
 							    	            if (check != null && user == 'ROLE_SUPPLIER'){
 							    	            	var currencyCode = Ext.getCmp('currencyCode').getValue();
@@ -367,8 +365,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										    		}else{
 										    			Ext.getCmp('idFiscal').allowBlank=true;
 										    		}
-										    		
-										    		debugger
+										    												    		
 			                            		  if(check != 'MX'){
 					                      				Ext.getCmp('supRfc').setReadOnly(true);
 					                      				//Ext.getCmp('documentContainerForeingResidence').show();
@@ -412,7 +409,6 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 					                          			
 					                          			Ext.getCmp('documentContainerForeingResidence').show();*/
 					                      				
-					                      				debugger
 					                      				Ext.getCmp('custBankAcct').allowBlank=true;
 					                      				//Ext.getCmp('custBankAcct').minLength=0;
 					                                	//Ext.getCmp('custBankAcct').maxLength=0;
@@ -431,7 +427,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 					                      				Ext.getCmp('faxDF').setReadOnly(true);
 					                      				
 					                      			}else{
-					                      				debugger
+
 					                      				/*Ext.getCmp('fisicaMoral').setReadOnly(true);
 					                      				Ext.getCmp('currencyCode').setReadOnly(true);
 					                      				Ext.getCmp('nombreContactoCxC').setReadOnly(true);
@@ -463,7 +459,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 					                      				Ext.getCmp('codigoPostal').allowBlank=false;
 					                      				
 					                      				//Ext.getCmp('contCheckForeingBank').show();
-					                      				debugger
+					                      				
 					                      				//Ext.getCmp('swiftCode').hide();
 					                          			//Ext.getCmp('ibanCode').hide();
 					                          			//Ext.getCmp('checkingOrSavingAccount').hide();
@@ -570,7 +566,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                                	 Ext.getCmp('bankAddressNumber').setReadOnly(true);
 				                                	 Ext.getCmp('bankCountryCode').setReadOnly(true);	*/
 				                        //ReadOnly Documentos
-				                                	 debugger
+				                                	 
 				                                	 Ext.getCmp('loadEdoDoc').setDisabled(true);
 				                                	 Ext.getCmp('loadRfcDoc').setDisabled(true);
 				                                	// Ext.getCmp('loadObligacionesFiscales').setDisabled(true);
@@ -814,8 +810,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 						                       // Ext.getCmp('emailSupplier').allowBlank=true;
 						                        
 			                                	  }*/
-			                                	  debugger
-			                                	  Ext.getCmp('loadRfcDoc').setDisabled(true);
+			                                	  
+			                                	    Ext.getCmp('loadRfcDoc').setDisabled(true);
 					                                Ext.getCmp('rfcDocument').allowBlank=true;
 							                        Ext.getCmp('loadDomDoc').setDisabled(true);	
 							                        Ext.getCmp('domDocument').allowBlank=true;
@@ -1125,7 +1121,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								listeners: {
 									afterrender: function(){
 										var check = Ext.getCmp('fisicaMoral').getValue();
-										debugger
+										
 										if(check == '1'){
 											Ext.getCmp('REPRESENTE_LEGAL').hide();
 											Ext.getCmp('tipoIdentificacion').allowBlank=true;
@@ -1204,7 +1200,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										}*/
 								    },
 							    	select: function (comboBox, records, eOpts) {
-							    		debugger
+							    		
 							    		var contrib = records[0].data.udcKey;
 							    		/*if(contrib != '1'){
 							    			Ext.getCmp('REPRESENTE_LEGAL').show();
@@ -1471,6 +1467,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 			            				  xtype: 'button',	
 			            				  id : 'searchCP',
 			            				  text: SuppAppMsg.supplierForm13,	
+			            				  cls: 'buttonStyle',
 			            				  listeners: {		
 			            				      click: function() {
 			            				    	  var box = Ext.MessageBox.wait( SuppAppMsg.supplierProcessRequest , SuppAppMsg.approvalExecution);
@@ -3020,6 +3017,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadRfcDoc',
 											margin: '12 10 0 0',
+											cls: 'buttonStyle',
 										}]
 							    },{
 									xtype: 'container',
@@ -3052,7 +3050,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											id : 'loadDomDoc',
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadDomDoc',
-											margin: '12 10 0 0'
+											margin: '12 10 0 0',
+											cls: 'buttonStyle'
 										}]
 							    },{
 									xtype: 'container',
@@ -3085,7 +3084,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											id : 'loadEdoDoc',
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadEdoDoc',
-											margin: '12 10 0 0'
+											margin: '12 10 0 0',
+											cls: 'buttonStyle'
 										}]
 							    },{
 									xtype: 'container',
@@ -3116,7 +3116,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											id : 'loadIdentDoc',
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadIdentDoc',
-											margin: '12 10 0 0'
+											margin: '12 10 0 0',
+											cls: 'buttonStyle'
 										}]
 							    },{
 									xtype: 'container',
@@ -3148,7 +3149,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											id : 'loadActaConst',
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadActaConst',
-											margin: '12 10 0 0'
+											margin: '12 10 0 0',
+											cls: 'buttonStyle'
 										}]
 							    },{
 									xtype: 'container',
@@ -3180,7 +3182,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											id : 'loadRpcDocument',
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadRpcDocument',
-											margin: '12 10 0 0'
+											margin: '12 10 0 0',
+											cls: 'buttonStyle'
 										}]
 							    },{
 									xtype: 'container',
@@ -3213,7 +3216,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											id : 'loadlegalExistence',
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadlegalExistence',
-											margin: '12 10 0 0'
+											margin: '12 10 0 0',
+											cls: 'buttonStyle'
 										}]
 							    },{
 									xtype: 'container',
@@ -3248,7 +3252,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											text : SuppAppMsg.supplierLoad,
 											action : 'loadForeingResidence',
 											allowBlank:true,
-											margin: '12 10 0 0'
+											margin: '12 10 0 0',
+											cls: 'buttonStyle'
 										}]
 							    },{
 							    	//OUTSOURCING
@@ -3285,7 +3290,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 														margin:'0 0 0 12',
 														id : 'loadSTPS',
 														text : SuppAppMsg.supplierLoad,
-														action : 'loadSTPS'
+														action : 'loadSTPS',
+														cls: 'buttonStyle'
 													}
 							        		]
 							        	
@@ -3313,7 +3319,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 													itemId : 'loadIMSS',
 													id : 'loadIMSS',
 													text : SuppAppMsg.supplierLoad,
-													action : 'loadIMSS'
+													action : 'loadIMSS',
+													cls: 'buttonStyle'
 											}
 						        			]
 							        }]
@@ -3364,7 +3371,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									action : 'sendSupplierForm',
 									colspan:3,
 									fieldStyle: 'padding-left:350px;',
-									hidden:role=='ANONYMOUS'?false:true
+									hidden:role=='ANONYMOUS'?false:true,
+									cls: 'buttonStyle'
 								},{
 									xtype: 'button',
 									iconCls : 'icon-save',
@@ -3374,6 +3382,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									text : SuppAppMsg.supplierForm46,
 									action : 'updateSupplierForm',
 									colspan:3,
+									cls: 'buttonStyle',
 									//hidden:role=='ANONYMOUS'
 									//	||role == 'ROLE_SUPPLIER'?true:false,
 									//hidden:true,
@@ -3399,7 +3408,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									colspan:3,
 									hidden:	true,
 									//hidden : role == 'ROLE_ADMIN'?false:true,
-									fieldStyle: 'padding-left:350px;'
+									fieldStyle: 'padding-left:350px;',
+									cls: 'buttonStyle'
 								},{
 									xtype: 'button',
 									iconCls : 'icon-save',
@@ -3414,7 +3424,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											||role == 'ROLE_SUPPLIER'
 											||role == 'ROLE_PURCHASE'?false:true,*/
 									hidden : role=='ROLE_ADMIN'?true:true,
-									fieldStyle: 'padding-left:350px;'
+									fieldStyle: 'padding-left:350px;',
+									cls: 'buttonStyle'
 								},{
 									xtype: 'button',
 									iconCls : 'icon-save',
@@ -3425,7 +3436,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									action : 'updateSupplierFormDraft',
 									colspan:3,
 									hidden:role=='ANONYMOUS'?false:true,
-									fieldStyle: 'padding-left:350px;'
+									fieldStyle: 'padding-left:350px;',
+									cls: 'buttonStyle'
 								}
 								,{
 									xtype : 'displayfield',

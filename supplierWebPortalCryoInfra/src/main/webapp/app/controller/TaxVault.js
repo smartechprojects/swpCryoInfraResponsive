@@ -304,8 +304,7 @@ Ext.define('SupplierApp.controller.TaxVault', {
     	
     },
     
-    eliminarTaxVaultDocument : function(grid, rowIndex, colIndex, record) {
-    	
+    eliminarTaxVaultDocument : function(grid, rowIndex, colIndex, record) { 	
     	var me = this;
     	var record = grid.store.getAt(rowIndex);
     	var dto = Ext.create('SupplierApp.model.TaxVault',record.data);
@@ -356,6 +355,16 @@ Ext.define('SupplierApp.controller.TaxVault', {
 			                        buttons: Ext.Msg.OK,
 			                        width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
 			                    });
+						    	
+						    	Ext.defer(function() {
+						    	    var activeMsg = Ext.WindowManager.getActive();
+						    	    if (activeMsg) {
+						    	        var buttons = activeMsg.query('toolbar button');
+						    	        if (buttons.length > 0) {
+						    	            buttons[0].addCls('buttonStyle');
+						    	        }
+						    	    }
+						    	}, 100);
 						    }
 						}); 
 						
@@ -368,11 +377,35 @@ Ext.define('SupplierApp.controller.TaxVault', {
 	                        buttons: Ext.Msg.OK,
 	                        width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
 	                    });
+						
+						Ext.defer(function() {
+						    var activeMsg = Ext.WindowManager.getActive();
+						    if (activeMsg) {
+						        var buttons = activeMsg.query('toolbar button');
+						        if (buttons.length > 0) {
+						            buttons[0].addCls('buttonStyle');
+						        }
+						    }
+						}, 100);
             		}
 
 				}
 			}
 		});
+    	
+    	  // Aplicar el estilo a los botones YES y NO después de que se renderice el diálogo
+        Ext.defer(function() {
+            var activeMsg = Ext.WindowManager.getActive();
+            if (activeMsg) {
+                var buttons = activeMsg.query('toolbar button');
+                if (buttons.length > 0) {
+                    // Aplicar la clase a todos los botones (YES y NO)
+                    buttons.forEach(function(button) {
+                        button.addCls('buttonStyle');
+                    });
+                }
+            }
+        }, 10);
     },
     reenvioMailTaxDocument : function(grid, rowIndex, colIndex, record) {
     	var me = this;
@@ -393,6 +426,16 @@ Ext.define('SupplierApp.controller.TaxVault', {
 	                width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
 	            });
 		    	
+		    	Ext.defer(function() {
+		    	    var activeMsg = Ext.WindowManager.getActive();
+		    	    if (activeMsg) {
+		    	        var buttons = activeMsg.query('toolbar button');
+		    	        if (buttons.length > 0) {
+		    	            buttons[0].addCls('buttonStyle');
+		    	        }
+		    	    }
+		    	}, 100);
+		    	
 		    },
 		    failure: function() {
 		    	box.hide();
@@ -402,6 +445,16 @@ Ext.define('SupplierApp.controller.TaxVault', {
 	                buttons: Ext.Msg.OK,
 	                width: Math.min(Ext.Element.getViewportWidth() * 0.3, 350)
 	            });
+		    	
+		    	Ext.defer(function() {
+		    	    var activeMsg = Ext.WindowManager.getActive();
+		    	    if (activeMsg) {
+		    	        var buttons = activeMsg.query('toolbar button');
+		    	        if (buttons.length > 0) {
+		    	            buttons[0].addCls('buttonStyle');
+		    	        }
+		    	    }
+		    	}, 100);
 		    }
 		}); 
     },
@@ -435,12 +488,16 @@ Ext.define('SupplierApp.controller.TaxVault', {
     									allowBlank : false,
     									//margin:'15 0 70 0',
     									//anchor : '90%',
-    									buttonText : SuppAppMsg.suppliersSearch
+    									buttonText : SuppAppMsg.suppliersSearch,
+    									buttonConfig: {
+    										cls: 'buttonStyle'
+    								    }
     								} ],
 
     						buttons : [ {
     							text : SuppAppMsg.supplierLoad,
     							margin:'10 0 0 0',
+    							cls: 'buttonStyle',
     							handler : function() {
     								var form = this.up('form').getForm();
     								if (form.isValid()) {
@@ -3137,6 +3194,9 @@ Ext.define('SupplierApp.controller.TaxVault', {
     							allowBlank : false,
     							//width:300,
     							buttonText : SuppAppMsg.taxvaultFile,
+    							buttonConfig: {
+									cls: 'buttonStyle'
+							    },
     							//margin:'10 0 10 10',
     							listeners:{
     						        afterrender:function(cmp){
@@ -3154,6 +3214,7 @@ Ext.define('SupplierApp.controller.TaxVault', {
 
     							buttons : [ {
     								text : SuppAppMsg.supplierLoad,
+    								cls: 'buttonStyle',
     								margin:'10 0 0 0',
     								handler : function() {
     									var form = this.up('form').getForm();

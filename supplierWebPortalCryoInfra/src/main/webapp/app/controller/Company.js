@@ -120,12 +120,16 @@ Ext.define('SupplierApp.controller.Company', {
     									allowBlank : false,
     									margin:'20 0 70 0',
     									//anchor : '90%',
-    									buttonText : SuppAppMsg.suppliersSearch
+    									buttonText : SuppAppMsg.suppliersSearch,
+    									buttonConfig: {
+    										cls: 'buttonStyle'
+    								    }
     								} ],
 
     						buttons : [ {
     							text : SuppAppMsg.supplierLoad,
     							margin:'10 0 0 0',
+    							cls: 'buttonStyle',
     							handler : function() {
     								var form = this.up('form').getForm();
     								if (form.isValid()) {

@@ -42,6 +42,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
 			action : 'plantAccessAddWorker',				
 			itemId : 'plantAccessAddWorker',
 			id : 'plantAccessAddWorker',
+			cls: 'buttonStyle',
 	        margin: '0 5 5 0'
 		},{
 	        text: 'Finalizar Trabajador',
@@ -49,6 +50,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
 			itemId : 'plantAccessFinishWorker',
 			id : 'plantAccessFinishWorker',
 	        margin: '0 5 5 0',
+	        cls: 'buttonStyle',
 	        hidden: true
 		},{
 	        text: 'Ver Solicitud',
@@ -56,6 +58,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
 			itemId : 'plantAccessShowRequest',
 			id : 'plantAccessShowRequest',
 	        margin: '0 5 5 0',
+	        cls: 'buttonStyle',
 	        hidden: true
 		}];
 		
@@ -65,13 +68,15 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
 				text : SuppAppMsg.plantAccess4,
 				action : 'savePlantAccessRequest',				
 				itemId : 'savePlantAccessRequest',
-				id : 'savePlantAccessRequest'
+				id : 'savePlantAccessRequest',
+				cls: 'buttonStyle'
 			},{
 				iconCls:'icon-document',
 				text: SuppAppMsg.plantAccess5,
 				action : 'showPlantAccessRequestFiles',
 				itemId: 'showPlantAccessRequestFiles',
-				id: 'showPlantAccessRequestFiles'
+				id: 'showPlantAccessRequestFiles',
+			    cls: 'buttonStyle'
 			}
 		];
 		

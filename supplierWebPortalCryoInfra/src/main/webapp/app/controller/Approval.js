@@ -180,6 +180,18 @@ Ext.define('SupplierApp.controller.Approval', {
 						}
 					});
 			    	
+			    	dlgAccept.on('afterlayout', function() {
+			    	    var buttons = dlgAccept.query('button');
+			    	    
+			    	    buttons.forEach(function(btn) {
+			    	        if (btn.text === SuppAppMsg.approvalAcept || btn.text === 'OK') {
+			    	            btn.addCls('buttonStyle');
+			    	        } else if (btn.text === SuppAppMsg.approvalExit || btn.text === 'Cancel') {
+			    	            btn.addCls('buttonStyle');
+			    	        }
+			    	    });
+			    	});
+			    	
 			    	dlgAccept.textArea.inputEl.set({
 					    maxLength: 255
 					});
@@ -188,80 +200,7 @@ Ext.define('SupplierApp.controller.Approval', {
 				failure : function() {
 					 box.hide();
 				}
-			});
-    	
-    	/*
-    	var dto = Ext.create('SupplierApp.model.SupplierDTO',record.data);
-    	var currentApprover = addressNumber;
-    	var status ="APROBADO";
-    	var step = record.data.approvalStep;
-    	
-    	var dlgAccept = Ext.MessageBox.show({
-			title : SuppAppMsg.approvalAceptSupp,
-			msg : SuppAppMsg.approvalNoteAcept,
-			buttons : Ext.MessageBox.YESNO,
-			multiline: true,
-			width:500,
-			buttonText : {
-				yes : SuppAppMsg.approvalAcept,
-				no : SuppAppMsg.approvalExit
-			},
-			fn : function(btn, text) {
-				if (btn === 'yes') {
-					if(text != ""){
-						var box = Ext.MessageBox.wait(
-								SuppAppMsg.approvalUpdateData,
-								SuppAppMsg.approvalExecution);
-						var notes = text;
-						Ext.Ajax.request({
-						    url: 'approval/update.action',
-						    method: 'POST',
-						    params: {
-					        	currentApprover:currentApprover,
-					            status:status,
-					            step:step,
-					            notes:notes
-					        },
-						    jsonData: dto.data,
-						    success: function(fp, o) {
-						    	var res = Ext.decode(fp.responseText);
-						    	grid.store.load();
-						    	box.hide();
-						    	if(res.message == "Success"){
-						    		Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalRespAprobadoSucc);
-						    	}else if(res.message == "Error JDE"){
-						    		Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalRespErrorJDE);
-						    	}else if(res.message == "Succ Update"){
-						    		Ext.Msg.alert(SuppAppMsg.approvalResponse, 
-						    				SuppAppMsg.approvalRespUpdateSupp + " " + o.jsonData.addresNumber);
-						    	}else if(res.message == "Rejected"){
-						    		Ext.Msg.alert(SuppAppMsg.approvalResponse, 
-						    				SuppAppMsg.approvalRespRejected + " " + o.jsonData.ticketId);
-						    	}
-					        	//Ext.Msg.alert('Respuesta', res.message);
-						    },
-						    failure: function() {
-						    	box.hide();
-						    	Ext.MessageBox.show({
-					                title: 'Error',
-					                msg: SuppAppMsg.approvalUpdateError,
-					                buttons: Ext.Msg.OK
-					            });
-						    }
-						}); 
-						
-						
-					}else{
-            			Ext.Msg.alert(SuppAppMsg.approvalAlert, SuppAppMsg.approvalMessages);
-            		}
-
-				}
-			}
-		});
-    	
-    	dlgAccept.textArea.inputEl.set({
-		    maxLength: 255
-		});*/
+			});    	
     	
     },
     
@@ -339,6 +278,18 @@ Ext.define('SupplierApp.controller.Approval', {
 				}
 			}
 		});
+    	
+    	dlgRejected.on('afterlayout', function() {
+    	    var buttons = dlgRejected.query('button');
+    	    
+    	    buttons.forEach(function(btn) {
+    	        if (btn.text === SuppAppMsg.approvalAcept || btn.text === 'OK') {
+    	            btn.addCls('buttonStyle');
+    	        } else if (btn.text === SuppAppMsg.approvalExit || btn.text === 'Cancel') {
+    	            btn.addCls('buttonStyle');
+    	        }
+    	    });
+    	});
     	
     	dlgRejected.textArea.inputEl.set({
 		    maxLength: 255

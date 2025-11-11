@@ -252,6 +252,7 @@ Ext.define('SupplierApp.controller.FreightApproval', {
 
 					buttons : [{
 						text : SuppAppMsg.approvalApprove,
+						cls: 'buttonStyle',
 						//margin:'0 5 0 0',
 						handler : function() {
 							var form = this.up('form').getForm();

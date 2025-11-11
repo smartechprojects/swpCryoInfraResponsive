@@ -535,6 +535,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     itemId: 'butonAddOrder',
                     width: 40,
                     margin: '0 0 0 10',
+                    cls: 'buttonStyle',
                     handler: function() {
 //                    	var butonadd = Ext.getCmp('butonAddOrder');
 //                    	butonadd.setVisible(false)
@@ -788,6 +789,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 icon: 'resources/images/doc.png',
                 action:'updatePlantAccessRequest',
                 id: 'updatePlantAccessRequest',
+                cls: 'buttonStyle',
                // width: 150,
                 flex: 1, 
                 //margin: '10 10 10 150',

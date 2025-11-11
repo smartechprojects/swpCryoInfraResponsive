@@ -583,7 +583,7 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 
 					buttons : [{
 						text : SuppAppMsg.approvalApprove,
-						//margin:'0 5 0 0',
+						cls: 'buttonStyle',
 						handler : function() {
 							var form = this.up('form').getForm();
 							if (form.isValid()) {
@@ -788,6 +788,18 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 				}
 			}
 		});
+    	
+    	dlgRejected.on('afterlayout', function() {
+    	    var buttons = dlgRejected.query('button');
+    	    
+    	    buttons.forEach(function(btn) {
+    	        if (btn.text === SuppAppMsg.approvalAcept || btn.text === 'OK') {
+    	            btn.addCls('buttonStyle');
+    	        } else if (btn.text === SuppAppMsg.approvalExit || btn.text === 'Cancel') {
+    	            btn.addCls('buttonStyle');
+    	        }
+    	    });
+    	});
     	
     	dlgRejected.textArea.inputEl.set({
 		    maxLength: 255

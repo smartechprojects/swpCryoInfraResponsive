@@ -331,6 +331,7 @@
             			 itemId : 'showReceipts',
             			 iconCls:'icon-document',
                          text: SuppAppMsg.purchaseOpen,
+                         cls: 'buttonStyle',
                          handler: function(grid, rowIndex, colIndex) {
                          	this.fireEvent('buttonclick', grid, record);
                          }
@@ -360,6 +361,7 @@
                             itemId: 'showCreditNotes',
                             iconCls: 'icon-cancel',
                             text: SuppAppMsg.purchaseOpen,
+                            cls: 'buttonStyle',
                             handler: function(grid, rowIndex, colIndex) {
                                 this.fireEvent('buttonclick', grid, record);
                             }
@@ -486,6 +488,7 @@
 			             			 name : 'uploadPayment',
 			            			 itemId : 'uploadPayment',
 			            			 iconCls:'icon-add',
+			            			 cls: 'buttonStyle',
 			                         text: SuppAppMsg.suppliersLoadFile,
 			                         handler: function(grid, rowIndex, colIndex) {
 			                         	this.fireEvent('buttonclick', grid, record);
