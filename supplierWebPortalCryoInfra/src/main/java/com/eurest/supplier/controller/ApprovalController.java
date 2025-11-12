@@ -40,7 +40,7 @@ public class ApprovalController {
 		int total=0;
 		try{
 				list = approvalService.getPendingApproval(currentApprover, start, limit);
-				total = list.size();
+				total = approvalService.getPendingApprovalTotal(currentApprover);
 
 		    return mapOK(list, total);
 		} catch (Exception e) {
@@ -57,7 +57,9 @@ public class ApprovalController {
 													@RequestParam String approvalStatus,
 													@RequestParam String fechaAprobacion,
 													@RequestParam String currentApprover,
-													@RequestParam String name){	
+													@RequestParam String name,
+													@RequestParam int start,
+													@RequestParam int limit){	
 		List<SupplierDTO> list=null;
 		int total=0;
 		try{
@@ -66,8 +68,8 @@ public class ApprovalController {
 			    if(!"".equals(fechaAprobacion)) {
 			    	requestDate = new SimpleDateFormat("dd/MM/yyyy").parse(fechaAprobacion);  
 			    }
-				list = approvalService.searchApproval(ticketId, approvalStep, approvalStatus, requestDate, currentApprover, name, 0, 100);
-				total = list.size();
+				list = approvalService.searchApproval(ticketId, approvalStep, approvalStatus, requestDate, currentApprover, name, start, limit);
+				total = approvalService.searchApprovalTotal(ticketId, approvalStep, approvalStatus, requestDate, currentApprover, name);
 
 		    return mapOK(list, total);
 		} catch (Exception e) {

@@ -143,6 +143,10 @@ public class PlantAccessRequestService {
 		return plantAccessRequestDao.getPlantAccessRequest(rfc, status, approver, addressNumberPA, start, limit);		
 	}
 	
+	public int getPlantAccessRequestsTotal(String rfc, String status,String approver,String addressNumberPA) {
+		return plantAccessRequestDao.getPlantAccessRequestTotal(rfc, status, approver, addressNumberPA);		
+	}
+	
 	public String getAddNewActivity(boolean isAddActivity, String targetString, String currentString) {
 		if(isAddActivity) {
 			if(!targetString.contains(currentString)) {
@@ -289,8 +293,8 @@ public class PlantAccessRequestService {
 	        
 	        request.setNombreAutorizador(nombreAprobador);
 	        
-	        request.setRazonSocialSubcontratada(paRequest.getSubContractedCompany());
-	        request.setRFCSubcontratada(paRequest.getSubContractedCompanyRFC());
+	        request.setRazonSocialSubcontratada(paRequest.getSubContractedCompany() == null ? "" : paRequest.getSubContractedCompany() );
+	        request.setRFCSubcontratada(paRequest.getSubContractedCompanyRFC() == null ? "" : paRequest.getSubContractedCompanyRFC());
 
 	        // Manejo de órdenes
 	        String[] ordenes = paRequest.getOrdenNumber().split("\\|");

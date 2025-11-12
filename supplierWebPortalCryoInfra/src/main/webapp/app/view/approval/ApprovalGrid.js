@@ -72,7 +72,7 @@ Ext.define('SupplierApp.view.approval.ApprovalGrid' ,{
 
 	},
     initComponent: function() {
-    	
+    	this.emptyText = SuppAppMsg.emptyMsg;
     	var approvalController = SupplierApp.app.getController("SupplierApp.controller.Approval");
     	
 		this.store =  storeAndModelFactory('SupplierApp.model.SupplierDTO',
@@ -86,7 +86,9 @@ Ext.define('SupplierApp.view.approval.ApprovalGrid' ,{
                     notes:''
                 },
 			    "", 
-			    100);
+			    12);
+		
+		this.store.getProxy().actionMethods = { read: 'POST' };
  
         this.columns = [
            {

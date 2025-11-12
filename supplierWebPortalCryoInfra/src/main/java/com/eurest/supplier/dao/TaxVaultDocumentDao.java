@@ -9,6 +9,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -86,6 +87,39 @@ public class TaxVaultDocumentDao {
 		else criteria.add(Restrictions.ne("type", "ANEXO"));
 
 		return criteria.list();
+	}
+	
+	public int getInvoicesTotal(String rfcReceptor, String rfcEmisor, String uuid, java.util.Date tvFromDate, java.util.Date tvToDate, String type, Users user) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(TaxVaultDocument.class);
+				
+		if(!rfcReceptor.equals(""))
+			criteria.add(Restrictions.like("rfcReceptor", "%" + rfcReceptor + "%"));
+		
+		if(!rfcEmisor.equals(""))
+			criteria.add(Restrictions.like("rfcEmisor", "%" + rfcEmisor + "%"));
+		
+		if(!uuid.equals(""))
+			criteria.add(Restrictions.like("uuid", "%" + uuid + "%"));
+		
+		if(tvFromDate != null)
+			criteria.add(Restrictions.ge("uploadDate", tvFromDate));
+		
+		if(tvToDate != null)
+			criteria.add(Restrictions.le("uploadDate", tvToDate));
+				
+		//Multiusuario
+		if(user.getRole().equals("ROLE_SUPPLIER"))
+			criteria.add(Restrictions.like("addressNumber", "%" + user.getAddressNumber() + "%")); 
+		
+		//criteria.add(Restrictions.like("type", "%FACTURA%"));
+		if(!type.equals(""))
+			criteria.add(Restrictions.like("type", "%" + type + "%"));
+		else criteria.add(Restrictions.ne("type", "ANEXO"));
+
+        criteria.setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        return count != null ? count.intValue() : 0;
 	}
 	
 	public TaxVaultDocument getInvoiceByuuid(String uuid) {

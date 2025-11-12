@@ -8,9 +8,9 @@ Ext.define('SupplierApp.view.paymentCalendar.PaymentCalendarGrid' ,{
 		type:'paymentcalendar'
 	},
 	//forceFit: true,
-	dockedItems: [
+	/*dockedItems: [
     	getPagingContent()
-    ],
+    ],*/
 	cls: 'extra-large-cell-grid', 
 	scroll : true,
 	viewConfig: {

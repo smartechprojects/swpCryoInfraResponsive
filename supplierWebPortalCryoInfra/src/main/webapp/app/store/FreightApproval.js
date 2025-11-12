@@ -3,7 +3,7 @@ Ext.define('SupplierApp.store.FreightApproval', {
     model: 'SupplierApp.model.FreightApproval',
     alias:'store.freightapproval',
     autoLoad: false,
-    pageSize: 10000,
+    pageSize: 12,
     proxy: {
         enablePaging: true,
         type: 'ajax',
@@ -19,6 +19,7 @@ Ext.define('SupplierApp.store.FreightApproval', {
         reader: {
             type: 'json',
             rootProperty: 'data',
+            totalProperty: 'total', 
             successProperty: 'success'
         },
         writer: {

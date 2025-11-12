@@ -65,6 +65,9 @@ public class ApprovalService {
     return this.approvalDao.getPendingApproval(currentApprover, start, limit);
   }
   
+  public int getPendingApprovalTotal(String currentApprover) {
+	    return this.approvalDao.getPendingApprovalTotal(currentApprover);
+  }
   
   public String updateSupplier(int id, String status, String step, String notes) {
 	    Supplier s = this.approvalDao.getSupplierById(id);
@@ -1107,6 +1110,15 @@ public class ApprovalService {
             int start,
             int limit) {
 		return approvalDao.searchApproval(ticketId, approvalStep, approvalStatus, fechaAprobacion, currentApprover, name, start, limit);
+	}
+	
+	public int searchApprovalTotal(String ticketId,
+			String approvalStep,
+			String approvalStatus,
+			Date fechaAprobacion,
+			String currentApprover,
+			String name) {
+		return approvalDao.searchApprovalTotal(ticketId, approvalStep, approvalStatus, fechaAprobacion, currentApprover, name);
 	}
 	
 	  public void updateSupplier(Supplier supplier) {

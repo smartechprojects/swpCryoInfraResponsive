@@ -3,7 +3,7 @@ Ext.define('SupplierApp.store.PlantAccess', {
     model: 'SupplierApp.model.PlantAccess',
     alias:'store.plantaccess',
     autoLoad: false,
-    pageSize: 10000,
+    pageSize: 12,
     proxy: {
         enablePaging: true,
         type: 'ajax',
@@ -18,6 +18,7 @@ Ext.define('SupplierApp.store.PlantAccess', {
         reader: {
             type: 'json',
             rootProperty: 'data',
+            totalProperty: 'total',
             successProperty: 'success'
         },
         writer: {

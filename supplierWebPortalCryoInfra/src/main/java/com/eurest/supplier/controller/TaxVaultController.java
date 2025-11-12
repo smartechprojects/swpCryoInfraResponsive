@@ -193,8 +193,7 @@ public class TaxVaultController {
 			}
 			
 			list = taxVaultDocumentService.getTaxVaultDocuments(rfcReceptor,rfcEmisor,tvUUID,tvFromDate,tvToDate,comboType, user,start, limit);
-			if(list!=null)
-			total = list.size();	
+			total = taxVaultDocumentService.getTaxVaultDocumentsTotal(rfcReceptor,rfcEmisor,tvUUID,tvFromDate,tvToDate,comboType, user);
 			
 			for(TaxVaultDocument x : list) {
 				x.setOrigen(sdf.format(x.getUploadDate()));

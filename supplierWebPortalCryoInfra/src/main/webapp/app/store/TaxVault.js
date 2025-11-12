@@ -3,7 +3,7 @@ Ext.define('SupplierApp.store.TaxVault', {
     model: 'SupplierApp.model.TaxVault',
     alias:'store.taxvault',
     autoLoad: false,
-    pageSize: 10000,
+    pageSize: 12,
     proxy: {
         enablePaging: true,
         type: 'ajax',
@@ -22,6 +22,7 @@ Ext.define('SupplierApp.store.TaxVault', {
         reader: {
             type: 'json',
             rootProperty: 'data',
+            totalProperty: 'total',
             successProperty: 'success'
         },
         writer: {

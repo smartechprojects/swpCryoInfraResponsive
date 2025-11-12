@@ -4,7 +4,7 @@ Ext.define('SupplierApp.store.PaymentsSuppliers', {
     alias:'store.paymentssuppliers',
     autoLoad: false,
     remoteSort:true,
-    pageSize: 10,
+    pageSize: 12,
     proxy: {
         type: 'ajax',
         api: {

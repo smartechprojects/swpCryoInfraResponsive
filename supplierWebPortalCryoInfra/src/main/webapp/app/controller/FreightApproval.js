@@ -3157,7 +3157,6 @@ Ext.define('SupplierApp.controller.FreightApproval', {
     },
     
     fdSearch: function(button) {
-    	
     	var grid = this.getFreightApprovalGrid();
     	var store = grid.getStore();
     	

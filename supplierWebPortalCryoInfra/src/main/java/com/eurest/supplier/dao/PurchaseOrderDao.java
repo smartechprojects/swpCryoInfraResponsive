@@ -272,7 +272,7 @@ public class PurchaseOrderDao {
 										            String foreign){
 		try {
 		Session session = this.sessionFactory.getCurrentSession();
-		String sql = "select distinct o from PurchaseOrder o, Supplier s " +
+		String sql = "select distinct o from PurchaseOrder o " +
 			         " where 1=1 ";
 		
 		if(orderNumber > 0) {

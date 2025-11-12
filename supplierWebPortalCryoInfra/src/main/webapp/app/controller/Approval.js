@@ -693,40 +693,34 @@ Ext.define('SupplierApp.controller.Approval', {
     	var approvalStep = Ext.getCmp('supSearchApprLevel').getValue();
     	var approvalStatus = Ext.getCmp('supSearchTicketSts').getValue();
     	var currentApprover = Ext.getCmp('supSearchApprover').getValue();
-    	/*
-    	var fechaAprobacion = Ext.getCmp('fechaAprobacion').getValue();
-    	
-    	*/
     	var name = Ext.getCmp('supSearchName').getValue();
     	store.loadData([], false);
     	grid.getView().refresh();
-    	
-    	Ext.Ajax.request({
-			url : 'approval/search.action',
-			method : 'POST',
-				params : {
-					ticketId:ticketId,
-					approvalStep:approvalStep,
-					approvalStatus:approvalStatus,
-					fechaAprobacion:'',
-					currentApprover:currentApprover,
-					name:name
-				},
-				success : function(response,opts) {
-					response = Ext.decode(response.responseText);
-					if(response.data != null){
-						for(var i = 0; i < response.data.length; i++){
-				    		var r = Ext.create('SupplierApp.model.SupplierDTO',response.data[i]);
-				    		store.insert(i, r);
-						}
-					}
-						
-					box.hide();
-					},
-					failure : function() {
-						 box.hide();
-					}
-				});
+    	    	
+    	 store.removeAll();
+    	    
+    	    // Configurar los parámetros en el proxy del store
+    	    store.getProxy().extraParams = {
+    	        ticketId: ticketId,
+    	        approvalStep: approvalStep,
+    	        approvalStatus: approvalStatus,
+    	        fechaAprobacion: '',
+    	        currentApprover: currentApprover,
+    	        name: name
+    	    };
+
+    	    // Cargar la primera página
+    	    store.loadPage(1, {
+    	        callback: function(records, operation, success) {
+    	            box.hide();
+    	            if (!success) {
+    	                Ext.Msg.alert('Error', 'Error al cargar los datos');
+    	            }
+    	        }
+    	    });
+    	    
+    	    // Refrescar la vista
+    	    grid.getView().refresh();
  
     }
 });

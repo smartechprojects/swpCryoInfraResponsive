@@ -129,6 +129,10 @@ public class TaxVaultDocumentService {
 		return taxVaultDocumentDao.getInvoices(rfcReceptor, rfcEmisor,uuid,tvFromDate,tvToDate,type,user, start, limit);		
 	}
 	
+	public int getTaxVaultDocumentsTotal(String rfcReceptor, String rfcEmisor, String uuid, Date tvFromDate, Date tvToDate, String type, Users user) {
+		return taxVaultDocumentDao.getInvoicesTotal(rfcReceptor, rfcEmisor,uuid,tvFromDate,tvToDate,type,user);		
+	}
+	
 	public List<TaxVaultDocument> getTaxVaultDocumentsByIdFact(String idFact, int start, int limit) {
 		return taxVaultDocumentDao.getTaxVaultDocumentsByIdFact(idFact, start, limit);		
 	}

@@ -173,7 +173,7 @@
 					userName:userName
                 },
 			    "", 
-			    10);
+			    12);
  
         this.columns = [
            {

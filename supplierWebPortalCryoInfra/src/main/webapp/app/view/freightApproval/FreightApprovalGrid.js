@@ -10,11 +10,6 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 	store : {
 		type:'freightapproval'
 	},
-	//forceFit: true,
-    dockedItems: [
-    	getPagingContent()
-    ],
-    //scrollable : true,
     scroll : true,
     viewConfig: {
         stripeRows: true,
@@ -562,6 +557,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
       	                },
               		}     	 
                 ]},
+                getPagingContent()
       ];
 
  

@@ -49,8 +49,8 @@ public class PlantAccessRequestDao {
 			                                      int limit) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(PlantAccessRequest.class);
-//		criteria.setFirstResult(start);
-//		criteria.setMaxResults(limit);
+		criteria.setFirstResult(start);
+		criteria.setMaxResults(limit);
 		
 		if(!rfc.equals(""))
 		criteria.add(Restrictions.like("nameRequest", "%" + rfc + "%"));
@@ -66,6 +66,31 @@ public class PlantAccessRequestDao {
 		
 		criteria.addOrder(Order.desc("id"));
 		return criteria.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public  int getPlantAccessRequestTotal(String rfc,
+			                                      String status,
+			                                      String approver,
+			                                      String addressNumberPA) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(PlantAccessRequest.class);
+		
+		if(!rfc.equals(""))
+		criteria.add(Restrictions.like("nameRequest", "%" + rfc + "%"));
+		
+		if(!status.equals(""))
+		criteria.add(Restrictions.like("status", "%"+status+"%"));
+		
+		if(!approver.equals(""))
+			criteria.add(Restrictions.like("aprovUserDef", "%"+approver+"%"));
+		
+		if(!addressNumberPA.equals(""))
+			criteria.add(Restrictions.like("addressNumberPA", "%"+addressNumberPA+"%"));
+		
+        criteria.setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        return count != null ? count.intValue() : 0;
 	}
 	
 	

@@ -142,7 +142,7 @@ public class PlantAccessController {
 			List<PlantAccessRequest> list=null;
 			int total=0;
 			list = plantAccessRequestService.getPlantAccessRequests(rFC, status, approver, addressNumberPA, start, limit);
-			
+			total = plantAccessRequestService.getPlantAccessRequestsTotal(rFC, status, approver, addressNumberPA);
 			/*for (PlantAccessRequest x : list) {
 
 				x.setFechaSolicitudStr(sdf.format(x.getFechaSolicitud()));
@@ -154,9 +154,7 @@ public class PlantAccessController {
 				        return x;
 				    })
 				    .collect(Collectors.toList());
-			
-			if(list!=null)
-			total = list.size();		
+
 		    return mapOK(list, total);
 		} catch (Exception e) {
 			log4j.error("Exception" , e);

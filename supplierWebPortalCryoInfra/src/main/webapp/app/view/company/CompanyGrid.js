@@ -9,9 +9,6 @@ Ext.define('SupplierApp.view.company.CompanyGrid', {
 	store : {
 		type:'company'
 	},
-    dockedItems: [
-    	getPagingContent()
-    ],
     scroll : true,
     viewConfig: {
         stripeRows: true,
@@ -120,7 +117,8 @@ Ext.define('SupplierApp.view.company.CompanyGrid', {
           			}
           		}
 
-              ]}
+              ]},
+              getPagingContent()
       ];
 		
 

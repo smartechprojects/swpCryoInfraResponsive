@@ -136,7 +136,7 @@ public class FreightInvoiceController {
 				
 				}
 			}*/
-		  return mapOK(list, list.size());
+		  return mapOK(list, total.intValue());
 		    }
 			   
 			   return mapOK(new ArrayList<>(), 0);

@@ -6,9 +6,6 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
 	border:false,
 	cls: 'extra-large-cell-grid', 
 	scroll :  true,
-    dockedItems: [
-    	getPagingContent()
-    ],
     viewConfig: {
 		stripeRows: true,
 		style : { overflow: 'auto', overflowX: 'hidden' },
@@ -131,7 +128,9 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
 					  name:''
                 },
 			    "", 
-			    100);
+			    12);
+		
+		this.store.getProxy().actionMethods = { read: 'POST' };
 
 		var gridStore = this.store;
 		
@@ -357,7 +356,9 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
 	                    }
 	                }
                   }
-              ]}
+              ]},
+              
+              getPagingContent()
       ];
 
       

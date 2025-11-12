@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,6 +44,8 @@ public class ApprovalDao {
 				);
 	    
 		List<SupplierDTO> supDTOList = new ArrayList<SupplierDTO>();
+		criteria.setFirstResult(start);
+		criteria.setMaxResults(limit);
 		List<Supplier> list = criteria.list();
 	    if(list != null){
 	    	for(Supplier sup : list){
@@ -63,6 +66,21 @@ public class ApprovalDao {
 	    	}
 	    }
 	    return supDTOList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public int getPendingApprovalTotal(String currentApprover) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Supplier.class);
+		criteria.add(Restrictions.eq("approvalStatus", AppConstants.STATUS_INPROCESS));
+		criteria.add(
+				Restrictions.conjunction()
+				.add(Restrictions.eq("currentApprover", currentApprover ))
+				);
+	    
+		criteria.setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        return count != null ? count.intValue() : 0;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -121,6 +139,8 @@ public class ApprovalDao {
     
 		List<SupplierDTO> supDTOList = new ArrayList<SupplierDTO>();
 		if(fields) {
+			criteria.setFirstResult(start);
+			criteria.setMaxResults(limit);
 			List<Supplier> list = criteria.list();
 		    if(list != null){
 		    	for(Supplier sup : list){
@@ -146,6 +166,66 @@ public class ApprovalDao {
 		    }
 		}
 	    return supDTOList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public int searchApprovalTotal(String ticketId,
+											String approvalStep,
+											String approvalStatus,
+											Date fechaAprobacion,
+											String currentApprover,
+											String name) {
+		
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Supplier.class);
+		boolean fields = false;
+		
+		if(!"".equals(ticketId)) {
+			Long val = Long.valueOf(ticketId);
+			criteria.add((Criterion)Restrictions.eq("ticketId",val.longValue()));
+			fields = true;
+		}
+
+		if(!"".equals(approvalStep)) {
+			criteria.add((Criterion)Restrictions.like("approvalStep", "%" + approvalStep + "%"));
+			fields = true;
+		}
+		
+		if(!"".equals(approvalStatus)) {
+			criteria.add((Criterion)Restrictions.like("approvalStatus", "%" + approvalStatus + "%"));
+			fields = true;
+		}else {
+			criteria.add(Restrictions.ne("approvalStatus", AppConstants.STATUS_ACCEPT));
+			fields = true;
+		}
+		
+		if(!"".equals(currentApprover)) {
+			criteria.add((Criterion)Restrictions.like("currentApprover", "%" + currentApprover + "%"));
+			fields = true;
+		}
+		
+		if(!"".equals(name)) {
+			criteria.add((Criterion)Restrictions.like("razonSocial", "%" + name + "%"));
+			fields = true;
+		}
+		
+		if(fechaAprobacion != null) {
+			criteria.add(Restrictions.ge("fechaSolicitud", fechaAprobacion));
+			fields = true;
+		}
+		
+		if(fechaAprobacion != null) {
+			criteria.add(Restrictions.le("fechaSolicitud", fechaAprobacion));
+			fields = true;
+		}
+    
+		if(fields) {
+			criteria.setProjection(Projections.rowCount());
+	        Long count = (Long) criteria.uniqueResult();
+	        return count != null ? count.intValue() : 0;
+		}
+	    return 0;
 	}
 	
 	public void updateSupplier(Supplier o) {
