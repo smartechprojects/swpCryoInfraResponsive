@@ -10,10 +10,9 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 	},
 	scroll :  true,
 	viewConfig: {
-		stripeRows: true,
-		style : { overflow: 'auto', overflowX: 'hidden' },
-		enableTextSelection: true,
-		stripeRows: true,
+	    stripeRows: true,
+	    style : { overflow: 'auto', overflowX: 'hidden' },
+	    enableTextSelection: true,
 	    markDirty: false,
 	    listeners: {
 	        refresh: function (view) {
@@ -64,10 +63,86 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 	                        grid.updateLayout();
 	                    }
 	                }, 100);
+	                
+	                // VALIDACIONES PARA APLICAR AJUSTE DE ALTURA:
+	                // 1. Pantalla grande
+	                var screenWidth = Ext.Element.getViewportWidth();
+	                var screenHeight = Ext.Element.getViewportHeight();
+	                var isLargeScreen = screenWidth >= 1000;
+	                
+	                // 2. Verificar si los registros de la página son iguales al pageSize
+	                var store = grid.getStore();
+	                var currentRecords = store.getCount();
+	               // var pageSize = store.pageSize || 2; // Usar 2 como default si no existe
+	                var pageSize = 2;
+	                //var isFullPage = currentRecords === pageSize;
+	                var isFullPage = currentRecords >= pageSize;
+	                
+	                // Aplicar ajuste de altura solo si ambas condiciones se cumplen
+	                if (isLargeScreen && isFullPage) {
+	                    // Ajuste de altura de filas
+	                    var containerHeight = grid.getHeight();
+	                    
+	                    // Calcular altura de los headers
+	                    var headerHeight = 0;
+	                    var headerContainer = grid.headerCt;
+	                    if (headerContainer && headerContainer.getHeight()) {
+	                        headerHeight = headerContainer.getHeight();
+	                    }
+	                    
+	                    // Calcular altura de los docked items (toolbars)
+	                    var dockedHeight = 0;
+	                    if (grid.dockedItems) {
+	                        grid.dockedItems.each(function(item) {
+	                            if (item.isVisible() && item.getHeight) {
+	                                dockedHeight += item.getHeight();
+	                            }
+	                        });
+	                    }
+	                    
+	                    var availableHeight = containerHeight - headerHeight - dockedHeight - 10; // margen
+	                    
+	                    var rows = view.getNodes();
+	                    var totalContentHeight = 0;
+	                    var rowHeights = [];
+	                    
+	                    // Calcular altura necesaria para cada fila
+	                    Ext.each(rows, function(row, index) {
+	                        var rowHeight = 25; // mínima
+	                        var cells = Ext.get(row).query('.x-grid-cell');
+	                        
+	                        Ext.each(cells, function(cell) {
+	                            var cellEl = Ext.get(cell);
+	                            cellEl.setStyle('height', 'auto');
+	                            var contentHeight = cellEl.dom.scrollHeight;
+	                            if (contentHeight > rowHeight) {
+	                                rowHeight = contentHeight + 8; // padding
+	                            }
+	                        });
+	                        
+	                        rowHeights[index] = rowHeight;
+	                        totalContentHeight += rowHeight;
+	                    });
+	                    
+	                    // Distribuir espacio sobrante si hay
+	                    if (totalContentHeight < availableHeight && rows.length > 0) {
+	                        var extraHeight = (availableHeight - totalContentHeight) / rows.length;
+	                        
+	                        Ext.each(rows, function(row, index) {
+	                            Ext.get(row).setHeight(rowHeights[index] + extraHeight);
+	                        });
+	                    } else {
+	                        // Usar alturas calculadas por contenido
+	                        Ext.each(rows, function(row, index) {
+	                            Ext.get(row).setHeight(rowHeights[index]);
+	                        });
+	                    }
+	                    
+	                    grid.updateLayout();
+	                }	                
 	            }, 200);
 	        }
 	    }
-
 	},
     initComponent: function() {
     	this.emptyText = SuppAppMsg.emptyMsg;
@@ -110,28 +185,28 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
 					},
 					{
 			            text     : 'UUID',
-			           // width: 250,
+			            maxWidth: 280,
 			            flex: 2,
 			            dataIndex: 'uuid'
 			        },
 		        	{
 			            text     : SuppAppMsg.taxvaultIssuerRFC,
-			            //width: 150,
+			            maxWidth: 150,
 			            flex: 1,
 			            dataIndex: 'rfcEmisor'
 			        },{
 			            text     : SuppAppMsg.taxvaultreceiverRFC,
-			           // width: 150,
+			            maxWidth: 150,
 			            flex: 1,
 			            dataIndex: 'rfcReceptor'
 			        },{
 			            text     : SuppAppMsg.fiscalTitle21,
-			            //width: 200,
+			            maxWidth: 150,
 			            flex: 1.5,
 			            dataIndex: 'type'
 			        },{
 			            text     : window.navigator.language.startsWith("es", 0)? 'Fecha de Carga':'Upload date',
-			           // width: 200,
+			            maxWidth: 150,
 			            flex: 1.5,
 			            dataIndex: 'origen'
 			        },{
