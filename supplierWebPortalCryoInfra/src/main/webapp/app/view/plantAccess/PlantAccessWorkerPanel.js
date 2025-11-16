@@ -5,6 +5,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerPanel', {
 	frame : false,
 	style: 'border: solid #fff 1px',
 	autoScroll : true,
+	layout: {
+        type: 'vbox', // Layout vertical
+        align: 'stretch' // Que los items ocupen todo el ancho
+    },
 	initComponent: function() {
 		
 		this.items = [{

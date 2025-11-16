@@ -67,7 +67,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 itemId: 'pawEmployeeId',
                 name:'pawEmployeeId',
                 hidden:true,
-                //width:300,
+                maxWidth:300,
+                labelAlign: 'top',
                 flex : 1,
                 labelWidth:130,
                 margin:'5 10 0 10'
@@ -78,7 +79,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 itemId: 'pawEmployeeName',
                 name:'employeeName',
                 allowBlank:false,
-                //width:300,
+                labelAlign: 'top',
+                maxWidth:300,
                 flex : 1,
                 labelWidth:130,
                 margin:'5 10 0 10',
@@ -98,7 +100,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 itemId: 'pawEmployeeLastName',
                 name:'employeeLastName',
                 allowBlank:false,
-                //width:300,
+                labelAlign: 'top',
+                maxWidth:300,
                 flex : 1,
                 labelWidth:130,
                 margin:'5 10 0 10',
@@ -118,8 +121,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 itemId: 'pawEmployeeSecondLastName',
                 name:'employeeSecondLastName',
                 allowBlank:false,
-                //width:300,
+                maxWidth:300,
                 flex : 1,
+                labelAlign: 'top',
                 labelWidth:130,
                 margin:'5 10 0 10',
                 autoComplete: 'off',
@@ -146,7 +150,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	itemId: 'pawMembershipIMSS',
             	name: 'membershipIMSS',
             	allowBlank: false,
-            	//width: 300,
+            	labelAlign: 'top',
+            	maxWidth: 300,
             	flex : 1,
             	labelWidth: 130,
             	margin: '5 10 0 10',
@@ -169,7 +174,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	itemId: 'pawDateInduction',
             	name: 'dateInduction',
             	allowBlank: false,
-            	//width: 300,
+            	labelAlign: 'top',
+            	maxWidth: 300,
             	flex : 1,
             	labelWidth: 130,
             	margin: '5 10 0 10',
@@ -189,8 +195,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	id: 'pawDatefolioIDcard',
             	itemId: 'pawDatefolioIDcard',
             	name: 'datefolioIDcard',
+            	labelAlign: 'top',
             	//allowBlank: false,
-            	//width: 300,
+            	maxWidth: 300,
             	flex : 1,
             	labelWidth: 130,
             	margin: '5 10 0 10',
@@ -219,7 +226,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 name:'cardNumber',
                 allowBlank:false,
                 maxLength: 50,
-                //width:300,
+                labelAlign: 'top',
+                maxWidth:300,
                 flex : 1,
                 labelWidth:130,
                 margin:'5 10 0 10',
@@ -248,7 +256,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 itemId: 'pawEmployeeCurp',
                 name: 'employeeCurp',
                 allowBlank: false,
-                //width: 300,
+                labelAlign: 'top',
+                maxWidth: 300,
                 flex : 1,
                 labelWidth: 130,
                 margin: '5 10 0 10',
@@ -276,7 +285,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 itemId: 'pawEmployeeRfc',
                 name: 'employeeRfc',
                 allowBlank: false,
-                //width: 300,
+                labelAlign: 'top',
+                maxWidth: 300,
                 flex : 1,
                 labelWidth: 130,
                 margin: '5 10 0 10',
@@ -301,7 +311,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 itemId: 'pawEmployeePuesto',
                 name:'employeePuesto',
                 allowBlank:false,
-                //width:300,
+                maxWidth:300,
+                labelAlign: 'top',
                 flex : 1,
                 labelWidth:130,
                 margin:'5 10 0 10',
@@ -369,8 +380,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 dataIndex: 'description',
                 flex: 2
             }],
-            height: 100,
-            //width: 500,
+            autoHeight: true,
+            autoWidth: true,
+            maxWidth: 900,
             flex : 1,
             margin: '5 10 0 10'
         }
@@ -406,7 +418,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	//width:400,
             	flex : 1,
             	labelWidth:400,
-            	margin:'5 10 0 10'
+            	margin: '0 5 0 10'
             },{
             	xtype: 'checkboxfield',
             	fieldLabel: '2.-' + SuppAppMsg.plantAccess18,
@@ -416,8 +428,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	name:'docsActivity2',
             	//width:500,
             	flex : 1,
-            	labelWidth:500,
-            	margin:'5 10 0 75'
+            	labelWidth:400,
+            	margin: '0 10 0 0'
             }]
 		},{
 			xtype: 'toolbar',
@@ -436,7 +448,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 				//width:400,
 				flex : 1,
 				labelWidth:400,
-				margin:'5 10 0 10'
+				margin: '0 5 0 10'
 			},{
 				xtype: 'checkboxfield',
 				fieldLabel: SuppAppMsg.plantAccess30,
@@ -446,8 +458,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 				name:'docsActivity4',
 				//width:500,
 				flex : 1,
-				labelWidth:500,
-				margin:'5 10 0 75'
+				labelWidth:400,
+				margin: '0 10 0 0'
 			}]			
 		},{
             xtype: 'toolbar',
@@ -466,7 +478,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	//width:400,
             	flex : 1,
             	labelWidth:400,
-            	margin:'5 10 0 10'
+            	margin: '0 5 0 10'
             },{
             	xtype: 'checkboxfield',
             	fieldLabel: SuppAppMsg.plantAccess32,
@@ -476,8 +488,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	name:'docsActivity6',
             	//width:500,
             	flex : 1,
-            	labelWidth:500,
-            	margin:'5 10 0 75'
+            	labelWidth:400,
+            	margin: '0 10 0 0'
             }]
 		},{
 			xtype: 'toolbar',
@@ -496,7 +508,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	//width:400,
             	flex : 1,
             	labelWidth:400,
-            	margin:'5 10 0 10'
+            	margin: '0 5 0 10'
             },{
             	iconCls : 'icon-add',
             	itemId : 'updatePlantAccessWorkerAct',
@@ -506,7 +518,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
             	//width:520,
             	flex : 1,
             	labelWidth:400,
-            	margin:'5 10 0 75',
+            	margin: '0 10 0 0',
             	hidden: true
             }]
 		},{
@@ -571,8 +583,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 margin: '0 0 0 0',
 		    		 },{
 		    			 xtype: 'button',
-		    			 //width:100,
-		    			 flex : 1,
+		    			 width:100,
 		    			 itemId : 'workerDOC_1',
 		    			 id : 'workerDOC_1',
 		    			 action : 'workerDOC_1',
@@ -646,14 +657,14 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 		    			 fieldLabel : SuppAppMsg.plantAccess40,
 		    			 name : 'text_CM1',
 		    			 id:'text_CM1',
-		    			 width:600,
+		    			 //width:600,
+		    			 flex:1,
 		    			 labelWidth:300,
 		    			 readOnly:true,
 		    			 margin: '0 0 0 0',
 		    		 },{
 		    			 xtype: 'button',
-		    			 //width:100,
-		    			 flex : 1,
+		    			 width:100,
 		    			 itemId : 'workerDOC_6',
 		    			 id : 'workerDOC_6',
 		    			 action : 'workerDOC_6',
@@ -817,8 +828,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 		 margin: '0 0 0 0',
                 	 },{
                 		 xtype: 'button',
-                		 //width:100,
-                		 flex : 1,
+                		 width:100,
                 		 itemId : 'workerDOC_10',
                 		 id : 'workerDOC_10',
                 		 action : 'workerDOC_10',

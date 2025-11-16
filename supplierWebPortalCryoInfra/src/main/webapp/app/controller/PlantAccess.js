@@ -911,6 +911,15 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	debugger;
     	var me = this;
     	var pawForm = this.getPlantAccessWorkerForm().getForm();
+        
+    	 // Destruir completamente la ventana anterior
+        if (this.winLoadInv) {
+            if (!this.winLoadInv.isDestroyed) {
+                this.winLoadInv.destroy();
+            }
+            this.winLoadInv = null;
+        }    	
+    	
     	var values = pawForm.getFieldValues();
     	var requestRfc = Ext.getCmp('paRequestRfc').getValue();
     	var workerId = Ext.getCmp('pawTempId').getValue();
@@ -1003,7 +1012,10 @@ Ext.define('SupplierApp.controller.PlantAccess', {
         	var filePanel = Ext.create(
     				'Ext.form.Panel',
     				{
-    					width : 900,	
+    					bodyPadding: 15,
+    		            defaults: {
+    		                margin: '8 0 8 0'
+    		            },
     					items : [
     						{
     						xtype : 'textfield',
@@ -1019,17 +1031,67 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     						allowBlank : false,
     						width:300,
     						buttonText : SuppAppMsg.suppliersSearch,
+    						buttonConfig: {
+									cls: 'buttonStyle'
+							    },
     						margin:'10 0 10 10',
     				        fileType: ['pdf'], // Filtrar por extensión PDF
     				        listeners: {
-    				            change: function (field, value) {
-    				                var ext = value.split('.').pop().toLowerCase();
-    				                if (ext !== 'pdf') {
-    				                    Ext.Msg.alert(SuppAppMsg.plantAccess89, SuppAppMsg.plantAccess92);
-    				                    field.reset();
-    				                }
-    				            }
-    				        }
+    	                        afterrender: function(field) {
+    	                            // Limpiar completamente el filefield al renderizar
+    	                            field.reset();
+    	                            if (field.fileInputEl) {
+    	                                field.fileInputEl.dom.value = '';
+    	                            }
+    	                        },
+    	                        change: function (field, value) {
+    	                            debugger;
+    	                            var ext = value ? value.split('.').pop().toLowerCase() : '';
+    	                            if (ext !== 'pdf') {
+    	                                Ext.Msg.show({
+    	                                    title: SuppAppMsg.plantAccess89,
+    	                                    msg: SuppAppMsg.plantAccess92,
+    	                                    buttons: Ext.Msg.OK,
+    	                                    fn: function() {
+    	                                        // Limpiar el filefield después del mensaje
+    	                                        field.reset();
+    	                                        if (field.fileInputEl) {
+    	                                            field.fileInputEl.dom.value = '';
+    	                                        }
+    	                                    }
+    	                                });
+    	                                
+    	                                // Aplicar estilo al botón OK del mensaje
+    	                                function applyButtonStyle(attempts) {
+    	                                    attempts = attempts || 0;
+    	                                    if (attempts > 10) return; // Timeout después de 10 intentos
+    	                                    
+    	                                    var dialog = msg.dialog || msg;
+    	                                    var footer = dialog.down('toolbar[dock="bottom"]');
+    	                                    
+    	                                    if (footer && footer.items && footer.items.length > 0) {
+    	                                        var okButton = footer.items.getAt(0);
+    	                                        if (okButton && okButton.el) {
+    	                                            okButton.addCls('buttonStyle');
+    	                                            console.log('Estilo aplicado al botón OK');
+    	                                        } else {
+    	                                            Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+    	                                        }
+    	                                    } else {
+    	                                        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+    	                                    }
+    	                                }
+    	                                Ext.defer(applyButtonStyle, 10);
+    	                            }
+    	                        },
+    	                        afterrender: function(field) {
+    	                            // Limpiar cualquier estado residual al renderizar
+    	                            field.reset();
+    	                            if (field.fileInputEl) {
+    	                                field.fileInputEl.dom.value = '';
+    	                            }
+    	                        }
+    	                    }
     					},{
     		    			xtype : 'textfield',
     		    			name : 'idRequest',
@@ -1054,6 +1116,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     					buttons : [ {
     						text : SuppAppMsg.supplierLoad,
     						margin:'10 0 0 0',
+    						cls: 'buttonStyle',
     						handler : function() {
     							var form = this.up('form').getForm();
     							if (form.isValid()) {
@@ -1090,28 +1153,59 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     		this.winLoadInv = new Ext.Window({
     			layout : 'fit',
     			title : SuppAppMsg.plantAccess93,
-    			//width : 600,
-    			//height : 160,
-    			width: Ext.Element.getViewportWidth() * 0.45,   
-                maxWidth: 450,                               
-                height: Ext.Element.getViewportHeight() * 0.35, 
-                maxHeight: 160,
+    			width : 450,
+    			height : 160,
+    			//width: Ext.Element.getViewportWidth() * 0.45,   
+                //maxWidth: 450,                               
+                //height: Ext.Element.getViewportHeight() * 0.35, 
+                //maxHeight: 160,
     			modal : true,
     			closeAction : 'destroy',
+    			closable: true,
     			resizable : false,
     			minimizable : false,
     			maximizable : false,
     			plain : true,
-    			items : [ filePanel ]
-    		
+    			constrain: true,
+    	        constrainHeader: true,
+    			items : [ filePanel ],
+    			 listeners: {
+    		            show: function() {
+    		                this.center();
+    		                // Forzar un refresh del layout
+    		                this.updateLayout();
+    		            },
+    		            destroy: function() {
+    		                me.winLoadInv = null;
+    		            }
+    		        }
     		});
     		this.winLoadInv.show(); 
+    		
+    		// Centrado adicional después de renderizar
+    	    Ext.defer(function() {
+    	        if (me.winLoadInv && !me.winLoadInv.isDestroyed) {
+    	            me.winLoadInv.center();
+    	        }
+    	    }, 100);
     	}
     },
     
     loadFileWorker:function(button){
+    	debugger
     	var me = this; 
     	var grid = this.getPlantAccessWorkerFileGrid();
+    	
+    	var paForm = this.getPlantAccessWorkerForm().getForm();
+        
+        // Destruir completamente la ventana anterior
+        if (this.winLoadInv) {
+            if (!this.winLoadInv.isDestroyed) {
+                this.winLoadInv.destroy();
+            }
+            this.winLoadInv = null;
+        }
+    	
     	var store = grid.getStore();
     	debugger
     	Ext.getCmp('uploadFileRequest').show();
@@ -1163,7 +1257,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	var filePanel = Ext.create(
 				'Ext.form.Panel',
 				{
-					width : 900,	
+					//width : 900,	
 					items : [/*{
 						xtype : 'combo',
 						fieldLabel : 'Tipo Documento',
@@ -1251,6 +1345,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						buttons : [ {
 							text : SuppAppMsg.supplierLoad,
 							margin:'10 0 0 0',
+							cls: 'buttonStyle',
 							handler : function() {
 								var form = this.up('form').getForm();
 								if (form.isValid()) {
@@ -1358,31 +1453,58 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
-			//width : 600,
-			//height : 160,
-			width: Ext.Element.getViewportWidth() * 0.45,   
-            maxWidth: 450,                               
-            height: Ext.Element.getViewportHeight() * 0.35, 
-            maxHeight: 160,
+			width : 450,
+			height : 160,
+			//width: Ext.Element.getViewportWidth() * 0.45,   
+            //maxWidth: 450,                               
+            //height: Ext.Element.getViewportHeight() * 0.35, 
+            //maxHeight: 160,
 			modal : true,
 			closeAction : 'destroy',
+		    closable: true,
 			resizable : false,
 			minimizable : false,
 			maximizable : false,
+			constrain: true,
+	        constrainHeader: true,
 			plain : true,
-			items : [ filePanel ]
+			items : [ filePanel ],
+			listeners: {
+	            show: function() {
+	                this.center();
+	                // Forzar un refresh del layout
+	                this.updateLayout();
+	            },
+	            destroy: function() {
+	                me.winLoadInv = null;
+	            }
+	        }
 		
 		});
 		this.winLoadInv.show();
+		
+		// Centrado adicional después de renderizar
+	    Ext.defer(function() {
+	        if (me.winLoadInv && !me.winLoadInv.isDestroyed) {
+	            me.winLoadInv.center();
+	        }
+	    }, 100);
 		
 		var uuid = uuidPlantAccessWorker + '_' + uuidPlantAccess;
     	Ext.getCmp('uuidRequestWorker').setValue(uuid);
     },
     
     loadFileNew:function(button){
-    	debugger;
     	var me = this;
     	var paForm = this.getPlantAccessRequestDocForm().getForm();
+    	
+    	// Destruir completamente la ventana anterior
+        if (this.winLoadInv) {
+            if (!this.winLoadInv.isDestroyed) {
+                this.winLoadInv.destroy();
+            }
+            this.winLoadInv = null;
+        }
     	var values = paForm.getFieldValues();
     	var requestRfc = Ext.getCmp('paRequestRfc').getValue();
 
@@ -1431,7 +1553,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	var filePanel = Ext.create(
 				'Ext.form.Panel',
 				{
-					width : 900,	
+					//width : 900,	
 					items : [
 						{
 						xtype : 'textfield',
@@ -1455,11 +1577,47 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 				        listeners: {
 				            change: function (field, value) {
 				                var ext = value.split('.').pop().toLowerCase();
-				                if (ext !== 'pdf') {
-				                    Ext.Msg.alert(SuppAppMsg.plantAccess89, SuppAppMsg.plantAccess92);
-				                    field.reset();
+				                if (ext !== 'pdf') {				                    
+				                    var msg = Ext.Msg.show({
+		                                  title: SuppAppMsg.plantAccess89,
+		                                  msg: SuppAppMsg.plantAccess92,
+		                                  buttons: Ext.Msg.OK,
+		                                  fn: function() {
+		                                      // Callback cuando se cierra el mensaje
+		                                	  field.reset();
+		                                  }
+		                              });
+		                              
+		                        	 // Función recursiva para aplicar el estilo
+		                            function applyButtonStyle(attempts) {
+		                                attempts = attempts || 0;
+		                                if (attempts > 10) return; // Timeout después de 10 intentos
+		                                
+		                                var dialog = msg.dialog || msg;
+		                                var footer = dialog.down('toolbar[dock="bottom"]');
+		                                
+		                                if (footer && footer.items && footer.items.length > 0) {
+		                                    var okButton = footer.items.getAt(0);
+		                                    if (okButton && okButton.el) {
+		                                        okButton.addCls('buttonStyle');
+		                                        console.log('Estilo aplicado al botón OK');
+		                                    } else {
+		                                        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+		                                    }
+		                                } else {
+		                                    Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+		                                }
+		                            }
+		                            
+		                           Ext.defer(applyButtonStyle, 10);
+				                    
+				                  //  field.reset();
 				                }
-				            }
+				            },				            
+		                    afterrender: function(field) {
+		                        // Limpiar cualquier estado residual al renderizar
+		                        field.reset();
+		                    }
 				        }
 					},{
 		    			xtype : 'textfield',
@@ -1514,22 +1672,43 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
-			//width : 600,
-			//height : 160,
-			width: Ext.Element.getViewportWidth() * 0.45,   
-            maxWidth: 450,                               
-            height: Ext.Element.getViewportHeight() * 0.35, 
-            maxHeight: 160,
+			width : 450,
+			height : 160,
+			//width: Ext.Element.getViewportWidth() * 0.45,   
+            //maxWidth: 450,                               
+            //height: Ext.Element.getViewportHeight() * 0.35, 
+            //maxHeight: 160,
 			modal : true,
 			closeAction : 'destroy',
+			closable: true,
 			resizable : false,
 			minimizable : false,
 			maximizable : false,
 			plain : true,
-			items : [ filePanel ]
+			constrain: true,
+			constrainHeader: true,
+			items : [ filePanel ],
+			listeners: {
+	            show: function() {
+	                this.center();
+	                // Forzar un refresh del layout
+	                this.updateLayout();
+	            },
+	            destroy: function() {
+	                me.winLoadInv = null;
+	            }
+	        }
+	    });
 		
-		});
-		this.winLoadInv.show();
+
+		  this.winLoadInv.show();
+		    
+		  // Centrado adicional después de renderizar
+		    Ext.defer(function() {
+		        if (me.winLoadInv && !me.winLoadInv.isDestroyed) {
+		            me.winLoadInv.center();
+		        }
+		    }, 100);
     },
     
     loadFile:function(button){ 
@@ -6077,6 +6256,7 @@ debugger
     },
     
     updatePlantAccessRequest: function() {
+    	debugger
     	//var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
     	var me = this;
     	var form = this.getPlantAccessRequestForm().getForm();

@@ -18,14 +18,14 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 			xtype: 'container',
             layout: 'anchor',
             defaults: {
-                margin: '5 10 5 10'
+                margin: '2 10 5 10'
             },
             items: [{
 				xtype : 'displayfield',
 				value : SuppAppMsg.supplierForm35,
 				id:'textDocsRequest',
 				height:20,
-				margin:'5 10 10 10',
+				margin:'5 10 0 10',
 			    //flex: 1,
 				//colspan:3,
 				fieldStyle: 'font-weight:bold'
@@ -39,7 +39,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 				defaults : {
 					//labelWidth : 150,
 					//xtype : 'textfield',
-					margin: '0 5 0 0'
+					margin: '10 5 0 0'
 				},
 		        items:[{//	FORMATO DE INGRESO DE PROVEEDORES:
 		        	xtype : 'textfield',
@@ -67,6 +67,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 				defaults : {
 					//labelWidth : 150,
 					//xtype : 'textfield',
+					labelAlign: 'top',
 					margin: '0 5 0 0'
 				},
 		        items:[{
@@ -74,7 +75,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	fieldLabel : SuppAppMsg.plantAccess11,
 		        	name : 'text_PSUA',
 		        	id:'text_PSUA',
-		        	//width:600,
+		        	maxWidth:600,
 		        	labelWidth:300,
 		        	readOnly:true,
 		        	allowBlank:false,
@@ -87,6 +88,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	action : 'requestDOC_2',
 		        	text : SuppAppMsg.supplierLoad,
 		        	cls: 'buttonStyle',
+		        	margin: '25 0 0 15'
 		        }]
             },{
 				xtype: 'container',
@@ -100,6 +102,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					//labelWidth : 150,
 					//xtype : 'textfield',
 					//margin: '5 10 5 10'
+					labelAlign: 'top',
 					margin: '0 5 0 0'
 				},
 		        items:[{
@@ -107,7 +110,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					fieldLabel : 'SUA',
 					name : 'text_SUA',
 					id:'text_SUA',
-					//width:600,
+					maxWidth: 600,
 					labelWidth:300,
 					readOnly:true,
 					allowBlank:false,
@@ -121,6 +124,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					action : 'requestDOC_3',
 					text : SuppAppMsg.supplierLoad,
 					cls: 'buttonStyle',
+					margin: '25 0 0 15'
 				}]
             },{
 				xtype: 'container',
@@ -134,6 +138,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					//labelWidth : 150,
 					//xtype : 'textfield',
 					//margin: '5 10 5 10'
+					labelAlign: 'top',
 					margin: '0 5 0 0'
 				},
 		        items:[{
@@ -141,7 +146,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	fieldLabel : SuppAppMsg.plantAccess12,
 		        	name : 'text_FPCOPAA',
 		        	id:'text_FPCOPAA',
-		        	//width:600,
+		        	maxWidth:600,
 		        	labelWidth:300,
 		        	readOnly:true,
 		        	allowBlank:false,
@@ -155,45 +160,33 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	action : 'requestDOC_4',
 		        	text : SuppAppMsg.supplierLoad,
 		        	cls: 'buttonStyle',
+		        	margin: '25 0 0 15'
 		        }]
             },{
+                // Contenedor para checkbox y botón en la misma línea
+                xtype: 'container',
+                layout: 'hbox',
+                margin: '5 10 5 10',
+                items: [{
 				xtype: 'checkboxfield',
 	            fieldLabel: SuppAppMsg.plantAccess18,
 	            id: 'heavyEquipmentRequestDoc',
 	            itemId: 'heavyEquipmentRequestDoc',
 	            name:'heavyEquipmentRequestDoc',
 	            action:'heavyEquipmentRequestDoc',
-	            //width:650,
-	            labelWidth:650,
-	            margin:'5 10 5 10',
+	            //maxWidth:150,
+	            labelWidth:680,
+	           // margin:'5 10 5 10',
 			    flex: 1,
+			    margin: '0 5 0 0',
 	            listeners: {
 	                click: {
 	                    element: 'el', //bind to the underlying el property on the panel
 	                    fn: function(){
-//	                    	var radio = Ext.getCmp('heavyEquipmentRequestDoc').checked;	                    	
-//	                    	if(radio){
-//	                    		Ext.getCmp('text_SRC').allowBlank=false;
-//	                    		Ext.getCmp('text_RM').allowBlank=false;
-//	                    		Ext.getCmp('documentContainerDoc10').show();
-//	                    		Ext.getCmp('documentContainerDoc12').show();
-//	                    	} else {
-//	                    		Ext.getCmp('text_SRC').allowBlank=true;
-//	                    		Ext.getCmp('text_RM').allowBlank=true;
-//	                    		Ext.getCmp('documentContainerDoc10').hide();
-//	                    		Ext.getCmp('documentContainerDoc12').hide();
-//	                    	}
-//	                    	
-//	                    	//Setea el valor en el formulario de PlantAccessRequestForm
-//	                    	//para que tome el valor desde ese formulario.
-//	                    	Ext.getCmp('heavyEquipmentRequest').setValue(radio);
-//	                    	
-//	                    	//Ejecuta actualización de la solicitud (Botón en PlantAccessRequestForm)
-//	                		var btnUpdate = Ext.getCmp('updatePlantAccessRequest');
-//	                		btnUpdate.fireEvent('click', btnUpdate);
 	                    }
 	                },
 	            }
+            }]
             },{
 				xtype: 'container', 
 				layout: 'hbox',
@@ -207,6 +200,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					//labelWidth : 150,
 					//xtype : 'textfield',
 					//margin: '5 10 5 10'
+					labelAlign: 'top',
 					margin: '0 5 0 0'
 				},
 		        items:[{
@@ -214,10 +208,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	fieldLabel : SuppAppMsg.plantAccess19,
 		        	name : 'text_SRC',
 					id:'text_SRC',
-					//width:600,
-					labelWidth:300,
+					maxWidth:600,
+		        	labelWidth:300,
 					readOnly:true,
-					margin: '5 10 5 10',
 				    flex: 1,
 				},{
 					xtype: 'button',
@@ -227,6 +220,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					action : 'requestDOC_10',
 					text : SuppAppMsg.supplierLoad,
 					cls: 'buttonStyle',
+					margin: '25 0 0 15'
 				}]
             },{
 				xtype: 'container',
@@ -241,6 +235,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					//labelWidth : 150,
 					//xtype : 'textfield',
 					//margin: '5 10 5 10'
+					labelAlign: 'top',
 					margin: '0 5 0 0'
 				},
 		        items:[{
@@ -248,8 +243,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 		        	fieldLabel : SuppAppMsg.plantAccess21,
 		        	name : 'text_RM',
 					id:'text_RM',
-					//width:600,
-					labelWidth:300,
+					maxWidth:600,
+		        	labelWidth:300,
 					readOnly:true,
 					//margin: '5 10 5 10',
 				    flex: 1,
@@ -261,8 +256,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 					action : 'requestDOC_12',
 					text : SuppAppMsg.supplierLoad,
 					cls: 'buttonStyle',
+					margin: '25 0 0 15'
 				}]
-            },{
+            },/*{
 				xtype: 'container',
 				layout: 'hbox',
 				//colspan:3,
@@ -280,8 +276,27 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 	                cls: 'buttonStyle',
 				    //flex: 1,
 	            }]
+            }*/]
+		},
+		{
+            // Contenedor para el botón alineado a la derecha
+            xtype: 'container',
+            layout: {
+                type: 'hbox',
+                pack: 'end'  // Alinea el contenido a la derecha
+            },
+            margin: '0 140 0 10',
+            items: [{
+                xtype: 'button',
+                text: SuppAppMsg.plantAccess88,
+                icon: 'resources/images/doc.png',
+                action: 'updatePlantAccessRequestDoc',
+                id: 'updatePlantAccessRequestDoc',
+                width: 120,
+                margin: '0',  // Sin márgenes extra
+                cls: 'buttonStyle'
             }]
-		}]
+        }];
 		
 		this.callParent(arguments);
 	}

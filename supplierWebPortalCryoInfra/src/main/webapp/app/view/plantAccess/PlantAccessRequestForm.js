@@ -34,13 +34,15 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             layout: 'anchor',
             defaults: {
                 labelWidth: 150,
-                margin: '5 10 5 10'
+                margin: '5 10 5 10',
+                labelAlign: 'top'
             },
             items: [{
             	xtype : 'displayfield',
 				value : SuppAppMsg.plantAccess6,
 				height:20,
 				//margin:'5 10 0 300',
+				margin: '5 10 5 0',
 				colspan:3,
 				fieldStyle: 'font-weight:bold'
             },{
@@ -81,17 +83,18 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            //labelWidth:100,
 	            //margin:'5 10 0 10',
 	            hidden:true
-            },{
+            },/*{
 				xtype: 'textfield',
 	            fieldLabel: SuppAppMsg.plantAccess2,
 	            id: 'paNameRequest',
 	            itemId: 'paNameRequest',
 	            name:'nameRequest',
-	            //width:800,
+	            width:360,
 	            //labelWidth:150,
 	            //margin:'5 10 0 150',
 	            allowBlank:false,
 	            maxLength : 100,
+	            labelAlign: 'top',
 	            enforceMaxLength: true,
                 validator: function(value) {
                     if (value.length < 1) {
@@ -102,20 +105,46 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     }
                     return true;
                 }
-            },  {
+            }, */ {
                 xtype: 'container',
                 layout: 'hbox',
                 //margin: '5 10 0 150',
                 margin: '0 5 5 0',
+                defaults: {
+                    labelAlign: 'top',
+                    margin: '0 15 0 0' 
+                },
                 items: [
                 	{
+        				xtype: 'textfield',
+        	            fieldLabel: SuppAppMsg.plantAccess2,
+        	            id: 'paNameRequest',
+        	            itemId: 'paNameRequest',
+        	            name:'nameRequest',
+        	            width:360,
+        	            //labelWidth:150,
+        	            //margin:'5 10 0 150',
+        	            allowBlank:false,
+        	            maxLength : 100,
+        	            labelAlign: 'top',
+        	            enforceMaxLength: true,
+                        validator: function(value) {
+                            if (value.length < 1) {
+                                return 'Debe tener al menos 1 carácter';
+                            }
+                            if (value.length > 100) {
+                                return 'Solo se permiten hasta 100 caracteres';
+                            }
+                            return true;
+                        }
+                    },{
 				xtype: 'textfield',
 	            fieldLabel: SuppAppMsg.plantAccess7,
 	            id: 'paContractorCompany',
 	            itemId: 'paContractorCompany',
 	            name:'contractorCompany',	            
-	            //width:650,	            
-	            labelWidth:150,
+	            width:250,	            
+	            //labelWidth:150,
 	            //margin:'0 0 10 0',
 	            //allowBlank:false,
 	            flex: 2,
@@ -131,7 +160,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     inputValue: 'true', // Valor enviado si el checkbox está marcado
                     uncheckedValue: 'false', // Valor enviado si el checkbox no está marcado
                     //margin: '0 0 0 10', // Ajusta el margen para separar del elemento anterior
-                    margin: '5 0 5 10',
+                    margin: '28 0 0 0',
                     flex: 1,
                     	 listeners: {
                     	        change: function(checkbox, newValue, oldValue) {
@@ -193,6 +222,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 layout: 'hbox',
                 //margin: '5 10 0 150',
                 margin: '0 5 5 0',
+                defaults: {
+                    labelAlign: 'top',
+                    margin: '0 15 0 0' 
+                },
                 items: [
                     {
                         xtype: 'textfield',
@@ -201,7 +234,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                         itemId: 'paSubContractedCompany',
                         name: 'subContractedCompany',
                         flex: 1,
-                        //width: 400,
+                        maxWidth: 360,
                         labelWidth: 150,
                         //margin: '0 0 10 0',
                         allowBlank: true,
@@ -244,7 +277,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                         itemId: 'paSubContractedCompanyRFC',
                         name: 'subContractedCompanyRFC',
                         flex:1,
-                        //width: 390,
+                        maxWidth: 250,
                         labelWidth: 170,
                         margin: '0 0 0 10',
                         allowBlank: true,
@@ -278,43 +311,44 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     }
                 ]
             }
-            ,{
-                xtype: 'textfield',
-                fieldLabel: SuppAppMsg.plantAccess8,
-                id: 'paContractorRepresentative',
-                itemId: 'paContractorRepresentative',
-                name: 'contractorRepresentative',
-                //width: 800,
-                width: '100%',
-                labelWidth: 150,
-               // margin: '5 10 0 150',
-                allowBlank: false,
-                maxLength: 100,
-                enforceMaxLength: true,
-                validator: function(value) {
-                    if (value.length < 1) {
-                        return 'Debe tener al menos 1 carácter';
-                    }
-                    if (value.length > 100) {
-                        return 'Solo se permiten hasta 100 caracteres';
-                    }
-                    return true;
-                }
-            },
+            ,
             {
                 xtype: 'container',
                 layout: 'hbox',
-               // margin: '5 10 0 150',
+                margin: '0 5 5 0',
                 defaults: {
-                    margin: '0 5 5 0'
+                	labelAlign: 'top',
+                    margin: '0 15 0 0'
                 },
                 items: [{
+                    xtype: 'textfield',
+                    fieldLabel: SuppAppMsg.plantAccess8,
+                    id: 'paContractorRepresentative',
+                    itemId: 'paContractorRepresentative',
+                    name: 'contractorRepresentative',
+                    maxWidth: 360,
+                    width: '100%',
+                    labelWidth: 150,
+                   // margin: '5 10 0 150',
+                    allowBlank: false,
+                    maxLength: 100,
+                    enforceMaxLength: true,
+                    validator: function(value) {
+                        if (value.length < 1) {
+                            return 'Debe tener al menos 1 carácter';
+                        }
+                        if (value.length > 100) {
+                            return 'Solo se permiten hasta 100 caracteres';
+                        }
+                        return true;
+                    }
+                },{
     				xtype: 'textfield',
     	            fieldLabel: SuppAppMsg.plantAccess74,
     	            id: 'paContacEmergency',
     	            itemId: 'paContacEmergency',
     	            name:'contactEmergency',
-    	            //width:400,
+    	            maxWidth:200,
     	            flex: 1,
     	            labelWidth:150,
     	            margin:'0 0 10 0',
@@ -337,7 +371,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     id: 'pafechaFirmaGuia',
                     itemId: 'pafechaFirmaGuia',
                     name: 'fechafirmGui',
-                    //width: 350,
+                    maxWidth: 250,
                     flex: 1,
                     labelWidth: 100,
                     margin: '0 0 0 10',
@@ -353,8 +387,10 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 id: 'containerOrden',
 	            itemId: 'containerOrden',
 				name : 'containerOrden',
+				 margin: '5 0 5 0',
 				 defaults: {
-		                margin: '5 0 5 0'
+					 labelAlign: 'top',
+		             margin: '0 15 0 0'
 		            },
                 items: [{
                     xtype: 'checkbox',
@@ -365,7 +401,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     inputValue: 'true', // Valor enviado si el checkbox está marcado
                     uncheckedValue: 'false', // Valor enviado si el checkbox no está marcado
                    // margin: '5 10 0 0', // Ajusta el margen para separar del elemento anterior
-                    margin: '0 10 0 0',
+                    margin: '25 10 10 0',
                     	 listeners: {
                     	        change: function(checkbox, newValue, oldValue) {
                     	            var ordenNumberField = checkbox.up('form').down('textfield[name=paOrdenNumberInput]'); // Obtener el campo de texto
@@ -408,10 +444,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     displayField: 'companyName',
                     valueField: 'company',
                     labelWidth:50,
-                    //width : 250,
+                    maxWidth : 300,
                     flex: 1,
-                    //margin:'5 10 0 10',
-                    argin: '0 10 0 0',
                     editable: false,
                     hidden:true,
     				listeners: {
@@ -427,11 +461,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     id: 'paOrdenNumber',
                     itemId: 'paOrdenNumber',
                     name: 'ordenNumber',
-                    //width: 250,
+                    maxWidth: 150,
                     flex: 1,
                     labelWidth: 100,
-                    //margin: '5 10 0 10',
-                    margin: '0 10 0 0',
                     allowBlank: false,
                     hidden:true
                 },
@@ -441,11 +473,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     id: 'paOrdenNumberInput',
                     itemId: 'paOrdenNumberInput',
                     name: 'paOrdenNumberInput',
-                    //width: 250,
+                    maxWidth: 250,
                     flex: 1,
                     labelWidth: 100,
-                    //margin: '5 10 0 10',
-                    margin: '0 10 0 0',
                     allowBlank: true,
                     maxLength: 254,
                     triggerCls: 'x-form-search-trigger',
@@ -486,15 +516,105 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                                         descriptionfield.setValue("");
 //                                        ordenNumberField.setReadOnly(false);
 //                                        butonadd.setVisible(false);
-                                        Ext.Msg.alert('Error', SuppAppMsg.plantAccess79);
+                                        
+                                        var msg = Ext.Msg.show({
+                                            title: 'Error',
+                                            msg: SuppAppMsg.plantAccess79,
+                                            buttons: Ext.Msg.OK,
+                                            fn: function() {
+                                                // Callback cuando se cierra el mensaje
+                                            }
+                                        });
+                                        
+                                        function applyButtonStyle(attempts) {
+                                            attempts = attempts || 0;
+                                            if (attempts > 10) return; // Timeout después de 10 intentos
+                                            
+                                            var dialog = msg.dialog || msg;
+                                            var footer = dialog.down('toolbar[dock="bottom"]');
+                                            
+                                            if (footer && footer.items && footer.items.length > 0) {
+                                                var okButton = footer.items.getAt(0);
+                                                if (okButton && okButton.el) {
+                                                    okButton.addCls('buttonStyle');
+                                                    console.log('Estilo aplicado al botón OK');
+                                                } else {
+                                                    Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                                                }
+                                            } else {
+                                                Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                                            }
+                                        }
+                                        
+                                        Ext.defer(applyButtonStyle, 10);
                                     }
                                 },
                                 failure: function(response) {
-                                    Ext.Msg.alert('Error', SuppAppMsg.plantAccess80);
+                                    var msg = Ext.Msg.show({
+                                        title: 'Error',
+                                        msg: SuppAppMsg.plantAccess80,
+                                        buttons: Ext.Msg.OK,
+                                        fn: function() {
+                                            // Callback cuando se cierra el mensaje
+                                        }
+                                    });
+                                    
+                                    function applyButtonStyle(attempts) {
+                                        attempts = attempts || 0;
+                                        if (attempts > 10) return; // Timeout después de 10 intentos
+                                        
+                                        var dialog = msg.dialog || msg;
+                                        var footer = dialog.down('toolbar[dock="bottom"]');
+                                        
+                                        if (footer && footer.items && footer.items.length > 0) {
+                                            var okButton = footer.items.getAt(0);
+                                            if (okButton && okButton.el) {
+                                                okButton.addCls('buttonStyle');
+                                                console.log('Estilo aplicado al botón OK');
+                                            } else {
+                                                Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                                            }
+                                        } else {
+                                            Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                                        }
+                                    }
+                                    
+                                    Ext.defer(applyButtonStyle, 10);
                                 }
                             });
                         } else {
-                            Ext.Msg.alert('Error', SuppAppMsg.plantAccess81);
+                        	
+                        	  var msg = Ext.Msg.show({
+                                  title: 'Error',
+                                  msg: SuppAppMsg.plantAccess81,
+                                  buttons: Ext.Msg.OK,
+                                  fn: function() {
+                                      // Callback cuando se cierra el mensaje
+                                  }
+                              });
+                              
+                        	 // Función recursiva para aplicar el estilo
+                            function applyButtonStyle(attempts) {
+                                attempts = attempts || 0;
+                                if (attempts > 10) return; // Timeout después de 10 intentos
+                                
+                                var dialog = msg.dialog || msg;
+                                var footer = dialog.down('toolbar[dock="bottom"]');
+                                
+                                if (footer && footer.items && footer.items.length > 0) {
+                                    var okButton = footer.items.getAt(0);
+                                    if (okButton && okButton.el) {
+                                        okButton.addCls('buttonStyle');
+                                        console.log('Estilo aplicado al botón OK');
+                                    } else {
+                                        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                                    }
+                                } else {
+                                    Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                                }
+                            }
+                            
+                            Ext.defer(applyButtonStyle, 10);
                         }
                     },
                  // Evento cuando pierde el foco
@@ -510,11 +630,9 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     name: 'description',
                     id: 'description',
                     itemId: 'description',
-                    //width: 400,
-                    flex: 2,
+                    maxWidth: 450,
+                    flex: 1,
                     labelWidth: 80,
-                    //margin: '5 10 0 10',
-                    margin: '0 10 0 0',
                     maxLength: 254,
                     maxLength: 100,  // Limita a 10 caracteres
                     enforceMaxLength: true,
@@ -529,12 +647,11 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 }, {
                     xtype: 'button',
                     iconCls : 'icon-add',
-                    margin: '5 10 0 10',
+                    margin: '25 10 10 0',
                     name: 'butonAddOrder',
                     id: 'butonAddOrder',
                     itemId: 'butonAddOrder',
                     width: 40,
-                    margin: '0 0 0 10',
                     cls: 'buttonStyle',
                     handler: function() {
 //                    	var butonadd = Ext.getCmp('butonAddOrder');
@@ -654,6 +771,14 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     }
                 }]
             },{
+                xtype: 'container',
+                layout: 'hbox',
+                margin: '0 5 5 0',
+                defaults: {
+                    labelAlign: 'top',
+                    margin: '0 15 0 0'
+                },
+                items: [{
                 xtype: 'gridpanel',
                 id: 'ordersPlantaccesGridPanel',
                 title: SuppAppMsg.plantAccess9,
@@ -661,7 +786,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 columns: [{
                     header: SuppAppMsg.plantAccess85,
                     dataIndex: 'order',
-                    //width: 100,
+                    maxWidth: 200,
                     flex: 1,
                     editor: {
                         xtype: 'numberfield',
@@ -671,6 +796,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     header: SuppAppMsg.plantAccess77,
                     dataIndex: 'description',
                     flex: 1,
+                    maxWidth:600,
                     editor: {
                         xtype: 'textfield',
                         allowBlank: false
@@ -706,18 +832,25 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     }]
                 }],
                 selType: 'rowmodel',
-                height: 100,
+                //height: 1000,
+                autoHeight: true,
                 //width: 800,
                 //margin: '5 5 0 150'
                 flex: 1,
-                margin: '5 10 0 10',
-                minWidth: 800
+                //margin: '5 10 0 10',
+                //minWidth: 800
+                autoWidth: true
+                }]
             },
             {
                 xtype: 'container',
                 layout: 'hbox',
-                //margin: '5 10 0 0',
-                margin: '5 10 5 10',
+                margin: '0 5 5 0',
+                //margin: '5 10 5 10',
+                defaults:{
+                	labelAlign: 'top',
+                	margin: '0 15 0 0'
+                },
                 items: [
                 	{				
 				xtype: 'combobox',
@@ -735,7 +868,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 displayField: 'strValue1',
                 valueField: 'udcKey',
                 labelWidth:100,
-                width : 300,
+                maxWidth : 450,
                 typeAheadDelay: 100,
                // margin:'5 10 0 150',
                 editable: false,
@@ -751,7 +884,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            id: 'paEmployerRegistration',
 	            itemId: 'paEmployerRegistration',
 	            name:'employerRegistration',	            
-	            width:390,	            
+	            maxWidth:200,	            
 	            labelWidth:130,
 	           // margin:'5 10 0 100',
 	            allowBlank:false,
@@ -768,6 +901,22 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            },
             	enforceMaxLength: true,
             	maxLength: 11,
+            },
+            {
+                xtype: 'button',
+                text: SuppAppMsg.plantAccess87,
+                icon: 'resources/images/doc.png',
+                action:'updatePlantAccessRequest',
+                id: 'updatePlantAccessRequest',
+                cls: 'buttonStyle',
+                maxWidth: 180,
+                flex: 1, 
+                //margin: '10 10 10 150',
+                margin: '25 10 0 10',
+                handler: function () {
+//                    secondContainer.show();
+//                    firstContainer.hide();
+                }
             }]
             },{
 				xtype: 'textfield',
@@ -783,21 +932,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	            id: 'heavyEquipmentRequest',
 	            itemId: 'heavyEquipmentRequest',
 	            name:'heavyEquipment',
-            },{
-                xtype: 'button',
-                text: SuppAppMsg.plantAccess87,
-                icon: 'resources/images/doc.png',
-                action:'updatePlantAccessRequest',
-                id: 'updatePlantAccessRequest',
-                cls: 'buttonStyle',
-               // width: 150,
-                flex: 1, 
-                //margin: '10 10 10 150',
-                margin: '5 10 0 10',
-                handler: function () {
-//                    secondContainer.show();
-//                    firstContainer.hide();
-                }
             }]
 		}]
 		
