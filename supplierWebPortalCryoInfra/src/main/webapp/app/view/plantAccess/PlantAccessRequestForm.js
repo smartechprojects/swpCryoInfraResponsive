@@ -371,7 +371,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     id: 'pafechaFirmaGuia',
                     itemId: 'pafechaFirmaGuia',
                     name: 'fechafirmGui',
-                    maxWidth: 250,
+                    maxWidth: 200,
                     flex: 1,
                     labelWidth: 100,
                     margin: '0 0 0 10',
@@ -660,9 +660,38 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     	 var form = this.up('form');
                          var grid = form.down('gridpanel'); // Obtener la referencia al grid
                          var store = grid.getStore(); // Obtener el store del grid
-                         
+                         debugger
                          if (store.getCount() >= 4) {
-                             Ext.Msg.alert('Error', 'llego al maximo de ordenes');
+                             //Ext.Msg.alert('Error', 'Llegó al máximo de ordenes');
+                             //return;
+                        	 var msg = Ext.Msg.show({
+                        		    title: 'Error',
+                        		    msg: 'Llegó al máximo de órdenes',
+                        		    buttons: Ext.Msg.OK,
+                        		    fn: function() {
+
+                        		    }
+                        		});
+
+                        		// Aplicar estilo usando la referencia directa
+                        		function applyButtonStyle(attempts) {
+                        		    attempts = attempts || 0;
+                        		    if (attempts > 10) return;
+                        		    
+                        		    var footer = msg.down('toolbar[dock="bottom"]');
+                        		    
+                        		    if (footer && footer.items && footer.items.length > 0) {
+                        		        var okButton = footer.items.getAt(0);
+                        		        if (okButton && okButton.el) {
+                        		            okButton.addCls('buttonStyle');
+                        		        } else {
+                        		            Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                        		        }
+                        		    } else {
+                        		        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+                        		    }
+                        		}
+                        		Ext.defer(applyButtonStyle, 10);
                              return;
                          }
 
