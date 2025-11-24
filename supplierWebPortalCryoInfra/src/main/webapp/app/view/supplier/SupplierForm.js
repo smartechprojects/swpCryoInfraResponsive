@@ -203,7 +203,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.suppliersNumber,
 								name : 'addresNumber',
 								labelAlign:'center',
-								margin:'0 0 20 0',
+								margin:'10 0 0 10',
 								flex:1,
 								colspan:3,
 								readOnly:true,
@@ -694,7 +694,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									height:20,
 									//margin: '50 0 0 10',
 									colspan:3,
-									fieldStyle: 'font-weight:bold'
+									fieldStyle: 'font-weight:bold',
+								    fieldCls: 'no-border-displayfield'
 									},{
 									xtype : 'checkbox',
 									name : 'checkEditDataSupp',
@@ -1280,7 +1281,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								height:20,
 								margin: '50 0 0 10',
 								colspan:3,
-								fieldStyle: 'font-weight:bold'
+								fieldStyle: 'font-weight:bold',
+								fieldCls: 'no-border-displayfield'
 						   },/*{//Contenedor de Dirección Fiscal
 								xtype:'container',
 								id:'contCheckEditFiscalAddress',
@@ -1671,7 +1673,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									height:20,
 									//margin: '50 0 0 10',
 									colspan:3,
-									fieldStyle: 'font-weight:bold'
+									fieldStyle: 'font-weight:bold',
+									fieldCls: 'no-border-displayfield'
 									},{
 									xtype : 'checkbox',
 									name : 'checkEditContact',
@@ -1889,7 +1892,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								margin: '50 0 0 10',
 								colspan:3,
 								width:'100%',
-								fieldStyle: 'font-weight:bold'
+								fieldStyle: 'font-weight:bold',
+								fieldCls: 'no-border-displayfield'
 								},{
 									fieldLabel : SuppAppMsg.supplierForm7,
 									name : 'emailSupplier',
@@ -1923,7 +1927,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							margin: '50 0 0 10',
 							colspan:3,
 							width:'100%',
-							fieldStyle: 'font-weight:bold'
+							fieldStyle: 'font-weight:bold',
+							fieldCls: 'no-border-displayfield'
 							},{
 								fieldLabel : SuppAppMsg.supplierForm26 + ' 01*',
 								name : 'nombreCxP01',
@@ -2401,7 +2406,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								margin: '50 0 0 10',
 								id: 'REPRESENTE_LEGAL',
 								colspan:3,
-								fieldStyle: 'font-weight:bold'
+								fieldStyle: 'font-weight:bold',
+								fieldCls: 'no-border-displayfield'
 								},/*{//Contenedor de Representante Legal
 									xtype:'container',
 									id:'contCheckEditLegalRepr',
@@ -2568,7 +2574,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									height:20,
 									//margin: '50 0 0 10',
 									colspan:3,
-									fieldStyle: 'font-weight:bold'
+									fieldStyle: 'font-weight:bold',
+									fieldCls: 'no-border-displayfield'
 									},{
 									xtype : 'checkbox',
 									name : 'checkEditDataBank',
@@ -2985,7 +2992,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										margin: '30 0 0 0',
 										colspan:3,
 										id: 'documents',
-										fieldStyle: 'font-weight:bold'
+										fieldStyle: 'font-weight:bold',
+										fieldCls: 'no-border-displayfield'
 										},{
 									xtype: 'container',
 									layout: 'hbox',
@@ -3331,11 +3339,13 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									margin: '30 0 0 0',
 									colspan:3,
 									id : 'camposobligatorios',
-									fieldStyle: 'font-weight:bold'
+									fieldStyle: 'font-weight:bold',
+									fieldCls: 'no-border-displayfield'
 									},{
 									xtype : 'displayfield',
 									value : '',
 									id:'hrefFileList',
+									fieldCls: 'no-border-displayfield',
 									height:20,
 									//width:800,
 									flex:1,
@@ -3349,11 +3359,13 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								margin: '50 20 0 10',
 								hidden:true,
 								colspan:3,
-								fieldStyle: 'font-weight:bold'
+								fieldStyle: 'font-weight:bold',
+								fieldCls: 'no-border-displayfield'
 							},{
 								xtype : 'displayfield',
 								value : '',
 								id:'internalFileList',
+								fieldCls: 'no-border-displayfield',
 								hidden:role=='ANONYMOUS'?true:false,
 								height:20,
 								//width:800,
@@ -3444,6 +3456,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									value : '',
 									height:20,
 									margin: '20 0 0 10',
+                                    fieldCls: 'no-border-displayfield',
 									colspan:3
 
 								},{

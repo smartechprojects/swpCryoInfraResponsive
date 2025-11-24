@@ -13,10 +13,10 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 				xtype: 'container',
 				layout: 'hbox',
 				margin: '10 15 0 10',
-        		style:'border-bottom: 1px dotted #fff;padding-bottom:10px',
 				defaults: { 
 					labelWidth: 50, 
-					align: 'stretch'
+					align: 'stretch',
+					labelAlign: 'top'
 				},
 				items       :[{
 					xtype: 'hidden',
@@ -36,8 +36,9 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					fieldLabel: 'System',
 					name: 'udcSystem',
 					id: 'udcSystem',
-					//width:300,
+					maxWidth:300,
 					flex: 1,
+					margin: '0 10 0 0',
 					disabled:false,
 					allowBlank:false,
 					fieldCls: 'outlineField',
@@ -49,37 +50,56 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 				},
 				{
 					xtype:'textfield',
-					labelWidth: 40,
 					fieldLabel: SuppAppMsg.udcKey,
 					name: 'udcKey',
 					id: 'udcKey',
-					//width:200,
+					maxWidth:300,
 					flex: 1,
-					padding:'0 0 0 35',
 					disabled:false,
 					allowBlank:false,
+					margin: '0 10 0 0',
 					fieldCls: 'outlineField',
 					listeners:{
 						change: function(field, newValue, oldValue){
 							//field.setValue(newValue.toUpperCase());
 						}
 					}
-				}]
+				},{
+			    	   xtype:'textfield',
+			    	   fieldLabel: 'KeyRef',
+			    	   name: 'keyRef',
+			    	   maxWidth:250,
+			    	   flex: 1,
+			    	   margin: '0 10 0 0',
+			           listeners:{
+							change: function(field, newValue, oldValue){
+								field.setValue(newValue.toLowerCase());
+							}
+						}
+			       },{
+			    	   xtype:'textfield',
+			    	   fieldLabel: 'SysRef',
+			    	   name: 'systemRef',
+			    	   maxWidth:250,
+			    	   flex: 1
+			       }]
 			},
 			{
 				xtype: 'container',
 				layout: 'hbox',
-				margin: '0 15 0 10',
+				margin: '10 15 0 10',
 				width:'100%',
 				defaults: { 
-					labelWidth: 60, 
-					align: 'stretch'
+					labelWidth: 50, 
+					align: 'stretch',
+					labelAlign: 'top'
 				},
 				items :[{
 					xtype:'textfield',
 					fieldLabel: 'strValue1',
 					name: 'strValue1',
-					//width:550,
+					maxWidth:300,
+					margin: '0 10 0 0',
 					flex: 1,
 					/*listeners:{
 							change: function(field, newValue, oldValue){
@@ -126,9 +146,9 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					xtype:'textfield',
 					fieldLabel: 'strValue2',
 					name: 'strValue2',
-					//width:250,
+					margin: '0 10 0 0',
+					maxWidth:300,
 					flex: 1,
-					padding:'0 0 0 15',
 					listeners:{
 				        change: function(field, newValue, oldValue){
 				            var formPanel = field.up('form');       // subir al panel form
@@ -157,24 +177,14 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 				            }
 				        }
 				    }
-				}
-				]
-			},
-			{
-				xtype: 'container',
-				layout: 'hbox',
-				margin: '10 15 0 0',
-				defaults: { 
-					labelWidth: 75, 
-					align: 'stretch'
 				},
-				items:[,{
+				{
 					xtype: 'numberfield',
 					fieldLabel: 'intValue',
 					name: 'intValue',
-					//width:150,
+					maxWidth:150,
 					flex: 1,
-					padding:'0 0 0 10',
+					margin: '0 10 0 0',
 					hideTrigger : true
 				},
 				{
@@ -182,37 +192,18 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					fieldLabel: 'dateValue',
 					name: 'dateValue',
 					id: 'dateValue',
-					//width: 200,
+					maxWidth: 150,
 					flex: 1,
 					dateFormat: 'd-m-Y',
+					margin: '0 15 0 0',
 					//dateFormat: 'Y-M-d',
-					
-					padding:'0 0 0 25'
-				},{
-			    	   xtype: 'checkbox',
-			    	   boxLabel:'boolValue',
-			    	   name: 'booleanValue',
-			    	   padding:'0 0 0 45'
-			       },{
-				    	   xtype:'textfield',
-				    	   fieldLabel: 'KeyRef',
-				    	   name: 'keyRef',
-				    	   //width:250,
-				    	   flex: 1,
-				    	   padding:'0 0 0 25',
-				            listeners:{
-								change: function(field, newValue, oldValue){
-									field.setValue(newValue.toLowerCase());
-								}
-							}
-				       },{
-				    	   xtype:'textfield',
-				    	   fieldLabel: 'SysRef',
-				    	   name: 'systemRef',
-				    	   //width:250,
-				    	   flex: 1,
-				    	   padding:'0 0 0 30'
-				       }]
+				},
+				{
+					fieldLabel: 'boolValue',
+			    	xtype: 'checkbox',
+			    	name: 'booleanValue'			    	
+			       }
+				]
 			}];
 			
 			this.tbar=[      

@@ -213,22 +213,22 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
         this.columns = [
         	{   
         	   text: SuppAppMsg.approvalTicket,
-               maxWidth: 120,
+        	   minWidth: 120,
         	   flex: 1,
                dataIndex: 'ticketId'
            },{   
         	   text: SuppAppMsg.suppliersNumber ,
-        	   maxWidth: 120,
+        	   minWidth: 120,
                flex: 1,
                dataIndex: 'addresNumber'
            },{
         	   text     : SuppAppMsg.suppliersNameSupplier,
-        	   //width: 300,
+        	   minWidth: 300,
         	   flex: 2,
         	   dataIndex: 'razonSocial'
 	       },{
 	            text     : SuppAppMsg.approvalLevel,
-	            maxWidth: 120,
+	            //maxWidth: 120,
 	            flex: 1,
 	            dataIndex: 'approvalStep'
 	       },{
@@ -254,7 +254,7 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
 	            renderer : Ext.util.Format.dateRenderer("d-m-Y")
 	       },{
 	            text     : SuppAppMsg.purchaseTitle30,
-	            //width: 300,
+	            //maxWidth: 300,
 	            flex: 2,
 	            dataIndex: 'approvalNotes'
 	       },{

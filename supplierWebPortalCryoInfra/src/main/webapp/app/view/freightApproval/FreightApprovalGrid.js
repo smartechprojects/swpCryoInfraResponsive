@@ -522,7 +522,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
         
         
         this.dockedItems = [
-            {
+            /*{
               xtype: 'toolbar',
               dock: 'top',
               items: [
@@ -553,23 +553,23 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
           				}
           			}
           		}
-              ]},
+              ]},*/
              {
                 xtype: 'toolbar',
                 dock: 'top',
                 layout: {
                     type: 'hbox',
-                    align: 'middle'
+                    align: 'middle',
+                    pack: 'start'
                 },
                 //padding: 5,
                 defaults: {
-                    flex: .7,
                     labelAlign: 'top'
                 },
                 items: [
                 	{
             			xtype: 'textfield',
-                        fieldLabel: SuppAppMsg.freightApprovalTitle10,
+                        fieldLabel: SuppAppMsg.freightApprovalTitle10+'fdg',
                         id: 'semanaPagoFA',
                         itemId: 'semanaPagoFA',
                         name:'semanaPagoFA',

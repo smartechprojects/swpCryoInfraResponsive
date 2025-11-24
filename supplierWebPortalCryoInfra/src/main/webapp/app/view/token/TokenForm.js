@@ -106,7 +106,6 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 		    			xtype : 'trigger',
 		    			maxWidth : 300,
 		    			flex : 1,
-		    			margin: '0 0 0 50',
 		    			triggerCls : 'x-form-search-trigger',
 		    			onTriggerClick: function() {
 		    				tokenController.loadSearchList(this, this.getValue());

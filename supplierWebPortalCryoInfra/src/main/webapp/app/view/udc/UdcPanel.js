@@ -13,10 +13,10 @@ Ext.define('SupplierApp.view.udc.UdcPanel' ,{
             },   
             items: [{
             	xtype: 'udcForm',
-            	flex:.3
+            	flex:.25
             },{
            	 xtype: 'udcGrid',
-           	 flex:.7
+           	 flex:.75
             }]
         });
         this.callParent(arguments);

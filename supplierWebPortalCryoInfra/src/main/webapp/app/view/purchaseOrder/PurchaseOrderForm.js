@@ -26,7 +26,8 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 						xtype : 'textfield',
 						margin: '10 0 0 10',
 						align: 'stretch',
-						fieldStyle: 'padding-bottom:5px;font-size:18px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
+						labelAlign: 'top',
+						fieldStyle: 'padding-bottom:5px;font-size:13px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
 						readOnly:true
 					},
 			        items:[{
@@ -37,24 +38,36 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 							},{
 							fieldLabel : SuppAppMsg.purchaseOrderNumber,
 							name : 'orderNumber',
-							//width : 195,
+							maxWidth : 100,
 							//labelWidth : 90,
 				            flex:1
 							},{
 							fieldLabel : SuppAppMsg.purchaseOrderType,
 							//labelWidth : 30,
 							name : 'orderType',
-							//width : 80
+							maxWidth : 100,
 							// minWidth: 80,        // no más chico que esto
 				             //maxWidth: 80,
 				             flex:1
 							},{
 							xtype : 'textfield',
 							//labelWidth : 70,
-							//width:200,
+							maxWidth : 150,
 							fieldLabel : SuppAppMsg.purchaseOrderSupplier,
 							name : 'addressNumber',
 				             flex:1
+							},{
+							fieldLabel : SuppAppMsg.paymentTitle1,
+							name : 'longCompanyName',
+					        flex:1,
+					        maxWidth : 400,
+							},{
+							xtype : 'datefield',
+							fieldLabel : SuppAppMsg.purchaseOrderFechaAprovacion,
+							name : 'promiseDelivery',
+				            flex:1,
+				            format: 'd-m-Y',
+				            maxWidth : 150,
 							},{
 							xtype : 'textfield',
 							width:450,
@@ -95,25 +108,27 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 								//labelWidth : 120,
 								xtype : 'datefield',
 								align: 'stretch',
-								margin: '10 0 0 10',
+								margin: '10 0 10 10',
 								readOnly:true,
 								flex:1,
+								border: false, 
 								//width : 280,
+								labelAlign: 'top',
 								format: 'd-m-Y',
-								fieldStyle: 'padding-bottom:5px;font-size:15px;border:none;background:transparent;color:black;font-weight:bold'
+								fieldStyle: 'padding-bottom:5px;font-size:13px;border:none;background:transparent;color:black;font-weight:bold'
 							},
-					        items:[{
+					        items:[/*{
 									fieldLabel : SuppAppMsg.purchaseOrderFechaAprovacion,
 									name : 'promiseDelivery',
 						             flex:1,
-									},{
+									}*/,{
 									fieldLabel : 'Fecha de la orden',
 									name : 'rateRequested',
 									hidden:true
 									},{
 									//labelWidth : 50,
-									//width:250,
-						             flex:1,
+								    maxWidth:150,
+						            flex:1,
 									fieldLabel : SuppAppMsg.fiscalTitle16,
 									name : 'orderAmount',
 									xtype: 'numericfield',
@@ -124,9 +139,13 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 				                    alwaysDisplayDecimals: true
 								},{
 						        	xtype : 'textfield',
+						        	fieldLabel : SuppAppMsg.purchaseOrderCurrency,
 						        	name : 'currecyCode',
-									//width:100
-						             flex:1
+									maxWidth:100,
+						            flex:1,
+						            margin: '10 0 10 10',
+						            fieldStyle: 'padding-bottom:5px;font-size:13px;border:none;background:transparent;color:black;font-weight:bold',
+					                labelAlign: 'top'
 								},{
 						        	labelWidth : 140,
 						        	fieldLabel : 'Fecha estimada de pago',
@@ -157,17 +176,19 @@ Ext.define('SupplierApp.view.purchaseOrder.PurchaseOrderForm', {
 									//labelWidth : 70,
 									xtype : 'textfield',
 									align: 'stretch',
-									margin: '10 0 0 10',
+									margin: '10 0 10 10',
 									readOnly:true,
-									//width : 880,
-									 flex:1,
-									fieldStyle: 'padding-bottom:5px;font-size:15px;border:none;background:transparent;color:black;font-weight:bold'
+									maxWidth : 400,
+									border: false, 
+									flex:1,
+                                    labelAlign: 'top',
+									fieldStyle: 'padding-bottom:5px;font-size:13px;border:none;background:transparent;color:black;font-weight:bold'
 								},
-						        items:[{
+						        items:[/*{
 										fieldLabel : SuppAppMsg.paymentTitle1,
 										name : 'longCompanyName',
 								             flex:1
-										},
+										}*/,
 										{
 											xtype: 'button',
 											iconCls : 'icon-document',

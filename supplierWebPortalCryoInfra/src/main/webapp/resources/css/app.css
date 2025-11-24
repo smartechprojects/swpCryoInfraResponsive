@@ -950,3 +950,50 @@ table.dashGridTable tfoot td {
     background: #FFF5EB !important; /* Mismo que pressed para foco */
     border: solid 1px #FF8300 !important;
 }
+
+/* FONDO GRIS PARA CAMPOS READONLY */
+
+/* FONDO GRIS PARA CAMPOS READONLY - VERSIÓN ROBUSTA */
+.x-form-item-readonly .x-form-text,
+.x-form-item-readonly .x-form-text-field,
+.x-form-item-readonly .x-form-trigger-wrap .x-form-text,
+.x-form-text-readonly,
+.x-form-datefield-readonly .x-form-text-field,
+.x-form-numericfield-readonly .x-form-text-field,
+.x-form-display-field.x-form-readonly {
+    background-color: #f5f5f5 !important;
+    color: #666 !important;
+}
+
+/* Sobrescribir cualquier estilo inline que ponga background transparent */
+.x-form-text[style*="background:transparent"],
+.x-form-text[style*="background: transparent"] {
+    background-color: #f5f5f5 !important;
+}
+
+/* Para asegurar que los campos con border none también tengan fondo */
+.x-form-text[style*="border:none"],
+.x-form-text[style*="border: none"] {
+    background-color: #f5f5f5 !important;
+}
+
+/* PARA CAMPOS QUE SE VUELVEN READONLY DINÁMICAMENTE */
+.x-form-text[readonly],
+.x-form-text-field[readonly],
+input[readonly].x-form-text {
+    background-color: #f5f5f5 !important;
+    color: #666 !important;
+}
+
+/*QUITAR BORDE DISPLAYFIELD */
+.no-border-displayfield {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.no-border-displayfield .x-form-display-field {
+    border: none !important;
+    background: transparent !important;
+}
+

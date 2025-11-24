@@ -3,7 +3,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 	alias : 'widget.usersForm',
 	frame : false,
 	style: 'border: solid #ccc 1px',
-	autoScroll : true,
+	scrollable : true,
 	layout: {
         type: 'vbox',
         align: 'stretch'
@@ -14,12 +14,14 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 			layout : 'vbox',
 			margin : '5 15 0 10',
 			style : 'border-bottom: 1px dotted #fff;padding-bottom:10px',
+			flex:1,
+			width: '100%',
 			defaults : {
 				labelWidth : 150,
 				margin : '5 15 0 0',
 				xtype : 'textfield',
 				labelAlign: 'left',
-				 anchor: '100%'
+			//	width: '80%',
 			},
 			items : [ {
 				xtype : 'hidden',
@@ -28,7 +30,6 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersUserId,
 				name : 'userName',
 				id : 'usersFormUserName',
-				//width : 300,
 				allowBlank:false,
 				maskRe: /[A-Za-z\d-]/,
 				stripCharsRe: /[^A-Za-z\d-]/,
@@ -43,7 +44,6 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersFullName,
 				name : 'name',
 				id : 'usersFormName',
-				width : 400,
 				allowBlank:false,
 				maskRe: /[A-Za-z \d]/,
 				stripCharsRe: /[^A-Za-z \d]/,
@@ -57,7 +57,6 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				name : 'email',
 				id : 'usersFormEmail',
 				vtype : 'email',
-				width : 400,
 				allowBlank : false,
 	            listeners:{
 					change: function(field, newValue, oldValue){
@@ -67,7 +66,6 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 			}, {
 				fieldLabel : SuppAppMsg.usersPass,
 				name : 'password',
-				//width : 300,
 				enforceMaxLength :8,
 				maxLength : 8,
 				vtype:'secPass', 
@@ -143,7 +141,6 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				valueField : 'id',
 				displayField : 'strValue1',
 				emptyText : 'Selecciona...',
-				//width : 350,
 				allowBlank : false,
 			    listeners: {
 			    	select: function (comboBox, records, eOpts) {
@@ -187,7 +184,6 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				valueField : 'id',
 				displayField : 'strValue1',
 				emptyText : 'Selecciona...',
-				//width : 399,
 				allowBlank : false
 			}, {
 				xtype: 'numberfield',
@@ -258,10 +254,10 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				fieldLabel : SuppAppMsg.usersExepAcces,
 				name : 'exepAccesRule',
 				//width : 400
-			},,{
+			},{
 		        xtype: 'displayfield',
 		        value: '<span style="font-size:.8em;color:red;">' + SuppAppMsg.usersSupplierMainUserMessage + '</span>',
-		        width:430,
+				//flex:1,
 		        hidden : true,
 				id : 'userMainSupplierUserMsg',
 				name : 'mainSupplierUserMsg'
@@ -303,6 +299,22 @@ Ext.define('SupplierApp.view.users.UsersForm', {
             cls: 'buttonStyle'
 		} ];
 		this.callParent(arguments);
-	}
-
+		
+		this.on('afterrender', function() {
+		    var me = this;
+		    var updateScrollBehavior = function() {
+		        var viewportHeight = Ext.Element.getViewportHeight();
+		        
+		        // Activar scroll siempre en pantallas pequeñas
+		        if (viewportHeight < 700) {
+		            me.setScrollable(true);
+		        } else {
+		            me.setScrollable(false);
+		        }
+		    };
+		    
+		    updateScrollBehavior();
+		    Ext.on('resize', updateScrollBehavior, this);
+		});
+    }
 });

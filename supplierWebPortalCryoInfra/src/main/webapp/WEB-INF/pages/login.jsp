@@ -42,9 +42,31 @@
 	    }
 	}); 
 	
+	function setupPasswordToggle() {
+	    var togglePassword = document.getElementById('togglePassword');
+	    var passwordField = document.getElementById('passwordField');
+	    
+	    if (togglePassword && passwordField) {
+	        togglePassword.addEventListener('click', function() {
+	            if (passwordField.type === 'password') {
+	                passwordField.type = 'text';
+	                this.src = '${url}/resources/images/eye-closed.png';
+	                this.alt = 'Ocultar contraseña';
+	            } else {
+	                passwordField.type = 'password';
+	                this.src = '${url}/resources/images/eye-open.png';
+	                this.alt = 'Mostrar contraseña';
+	            }
+	        });
+	    }
+	}
+	
 	//var x = document.getElementsByClassName("newSupplierButton");
 	
-	
+	Ext.onReady(function() {
+    setupPasswordToggle();
+});
+
 	</script>
 	
 
@@ -102,14 +124,24 @@ th {
 				<div class="error"><span style="color:red;font-weight:bold;">ERROR: </span>${fn:replace(SPRING_SECURITY_LAST_EXCEPTION.message, 'Credenciales incorrectas', 'Username/Password are incorrect')}</div>
 		    </c:when>    
 		</c:choose>
-		<form action="${pageContext.request.contextPath}/login" method="POST">
-		<input type="text" placeholder="usuario" name="username" autofocus required>
+		<form action="${pageContext.request.contextPath}/login" method="POST">           
+           <input type="text" placeholder="usuario" name="username" id="usernameField" 
+           style="width: 350px; padding: 6px 12px; height: 40px; box-sizing: border-box; margin-bottom: 10px; 
+           border: 1.11111px solid rgb(204, 204, 204); border-radius: 7px 7px 0px 0px; font-weight: 700; font-size: 13.3333px; 
+           font-family: Arial, Helvetica, sans-serif;" autofocus required>
 		
 		<div class="bar">
 			<i></i>
 		</div>
 		
-		<input type="password" maxlength="12" placeholder="contraseña" name="password" required>
+		<div class="password-container" style="position: relative; width: 350px; margin-bottom: 10px;">
+    <input type="password" maxlength="12" placeholder="contraseña" name="password" id="passwordField" 
+           style="width: 100%; padding: 6px 35px 6px 12px; height: 40px; box-sizing: border-box; border: 1.11111px solid rgb(204, 204, 204); 
+           border-radius: 0px 0px 7px 7px; font-weight: 700; font-size: 13.3333px; font-family: Arial, Helvetica, sans-serif;" required>
+    <img id="togglePassword" src="${url}/resources/images/eye-open.png" alt="Mostrar contraseña"
+         style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); 
+                cursor: pointer; width: 20px; height: 20px; z-index: 2; background: white; padding: 2px;">
+		</div>
 		<br /><br />
 		<button name="buttonLogin" type="submit" onClick="login(this.form)">Login</button>
 		
