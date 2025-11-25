@@ -11,7 +11,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
 	initComponent: function() {
 		this.items = [{
 			xtype:'container',
-			flex: 1,
+			flex: 2.2,
 			layout: 'fit',
 			border:false,
 			items: [{

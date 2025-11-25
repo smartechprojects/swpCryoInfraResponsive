@@ -13,12 +13,12 @@ Ext.define('SupplierApp.view.users.UsersPanel' ,{
             },   
             items: [{
             	xtype: 'usersForm',
-            	flex:.25,
+            	flex:1,
             	border:true,
             	itemId: 'usersForm' 
             },{
            	 xtype: 'usersGrid',
-           	flex:.75,
+           	flex:2,
         	border:true,
         	itemId: 'usersGrid' 
             }]
@@ -34,20 +34,20 @@ Ext.define('SupplierApp.view.users.UsersPanel' ,{
                 var grid = me.down('#usersGrid');
                 
                 if (form && grid) {
-                	
-                    if (viewportWidth < 1200) {
-                    	form.setFlex(0.5);
-                        grid.setFlex(0.5);
-                    } else if (viewportWidth < 1600) {
-                        form.setFlex(0.25);
-                        grid.setFlex(0.75);
-                    } else if (viewportWidth < 700) {
-                        form.setFlex(0.5);
-                        grid.setFlex(0.5);
-                    }else{
-                    	form.setFlex(0.25);
-                        grid.setFlex(0.75);
-                    }
+                	debugger
+                	if (viewportWidth < 800) {
+                	    form.setFlex(2.5);
+                	    grid.setFlex(1);
+                	} else if (viewportWidth < 1200) {
+                	    form.setFlex(1.8);
+                	    grid.setFlex(2);
+                	} else if (viewportWidth >= 1200 && viewportWidth <= 1500) {
+                	    form.setFlex(1.8);
+                	    grid.setFlex(2);
+                	} else { // viewportWidth > 1500
+                	    form.setFlex(1);
+                	    grid.setFlex(2);
+                	}
                     // CORRECCIÓN: Usar updateLayout() en lugar de doLayout()
                     me.updateLayout();
                 }

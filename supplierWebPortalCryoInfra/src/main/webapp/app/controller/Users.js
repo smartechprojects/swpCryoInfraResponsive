@@ -202,6 +202,8 @@ Ext.define('SupplierApp.controller.Users', {
     		this.enableSubUserSupplierUser();
     		
         	var record = form.getRecord();
+        	var selectedUserName = record ? record.get('userName') : null; // Guardar el userName en lugar del ID
+        	
         	values = form.getFieldValues();
         	updatedRecord = populateObj(record, values);
         	
@@ -217,12 +219,54 @@ Ext.define('SupplierApp.controller.Users', {
         			    	if(msgResp == ''){
         			    		var grid = me.getUsersGrid();
         			        	var store = grid.getStore();
-        			        	store.reload();
+        			        	/*store.reload();
         			    		grid.getView().refresh();
         			    		form.reset();
         			    		me.enableSave();
         			    		box.hide();
-        			    		Ext.toggle.msg('Resultado', 'Su operación ha sido completada.');
+        			    		Ext.toggle.msg('Resultado', 'Su operación ha sido completada.');*/
+        			        	
+        			        	 // Recargar el store
+                                store.reload({
+                                    callback: function() {
+                                        if (selectedUserName) {
+                                            // Buscar por userName en lugar de ID
+                                            var updatedRecord = store.findRecord('userName', selectedUserName, 0, false, true, true);
+                                            if (updatedRecord) {
+                                                // IMPORTANTE: Primero seleccionar en el grid
+                                                grid.getSelectionModel().select(updatedRecord);
+                                                // Luego cargar en el formulario
+                                                form.loadRecord(updatedRecord);
+                                                
+                                                // Recargar los combos con los nuevos valores
+                                                var roleCombo = form.findField('userRole.id');
+                                                if (roleCombo && updatedRecord.data.userRole) {
+                                                    roleCombo.store.load({
+                                                        callback: function() {
+                                                            roleCombo.setValue(updatedRecord.data.userRole.id);
+                                                        }
+                                                    });
+                                                }
+                                                
+                                                var typeCombo = form.findField('userType.id');
+                                                if (typeCombo && updatedRecord.data.userType) {
+                                                    typeCombo.store.load({
+                                                        callback: function() {
+                                                            typeCombo.setValue(updatedRecord.data.userType.id);
+                                                            // Configurar visibilidad después de cargar combos
+                                                            me.configurarVisibilidadDespuesUpdate(updatedRecord);
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }
+                                        grid.getView().refresh();
+                                        me.enableUpdate();
+                                        box.hide();
+                                        Ext.toggle.msg('Resultado', 'Su operación ha sido completada.');
+                                    }
+                                });
+                                
         			    		return true;
         			    	} else {
         			    		box.hide();
@@ -268,6 +312,41 @@ Ext.define('SupplierApp.controller.Users', {
     			Ext.Msg.alert(SuppAppMsg.supplierUpdateFail, "Error");
     		}
     	}
+    },
+    
+ // Función auxiliar para configurar visibilidad después del update
+    configurarVisibilidadDespuesUpdate: function(record) {
+        var uRole = record.get('userRole.strValue1') || record.data.role;
+        var uIsSupplier = record.get('supplier');
+        var uIsSubUser = record.get('subUser');
+        var uIsMainSupplierUser = record.get('mainSupplierUser');
+        
+        if(uRole == 'ROLE_SUPPLIER'){
+            Ext.getCmp('usersAddressNumber').show();
+            if(uIsSupplier == true){
+                Ext.getCmp('usersAddressNumber').setReadOnly(true);
+            } else {
+                Ext.getCmp('usersAddressNumber').setReadOnly(false);
+            }
+
+            Ext.getCmp('userMainSupplierUser').show();        		
+            if(uIsMainSupplierUser == true){
+                this.enableSubUserSupplierUser();
+                this.disableMainSupplierUser();
+            } else {
+                this.enableMainSupplierUser();
+                this.disableSubUserSupplierUser();
+            }
+            
+            Ext.getCmp('userTypeCombo').setDisabled(true);
+        } else {
+            this.enableSubUserSupplierUser();
+            this.enableMainSupplierUser();
+            Ext.getCmp('usersAddressNumber').hide();
+            Ext.getCmp('userMainSupplierUser').hide();
+            Ext.getCmp('userMainSupplierUserMsg').hide();
+            Ext.getCmp('userTypeCombo').setDisabled(false);
+        }
     },
     
     deleteUsers: function (button) {

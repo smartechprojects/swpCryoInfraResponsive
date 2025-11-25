@@ -21,7 +21,8 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				margin : '5 15 0 0',
 				xtype : 'textfield',
 				labelAlign: 'left',
-			//	width: '80%',
+				width: '95%',
+				minWidth: 280,
 			},
 			items : [ {
 				xtype : 'hidden',
@@ -35,6 +36,7 @@ Ext.define('SupplierApp.view.users.UsersForm', {
 				stripCharsRe: /[^A-Za-z\d-]/,
 //			    maxLength : 12,
 //				maxLengthText : SuppAppMsg.supplierForm68 + '{0}<br>',
+				minWidth: 280,
 				listeners:{
 					change: function(field, newValue, oldValue){
 						field.setValue(newValue.toUpperCase());

@@ -47,6 +47,46 @@ Ext.define('SupplierApp.Application', {
 		
     },
     init: function() {
+    	
+    	// Aplicar override para campos de formulario
+    	Ext.override(Ext.form.field.Text, {
+            blankText: 'Este campo es requerido',
+            requiredMessage: 'Este campo es requerido'
+        });
+    	
+    	 Ext.override(Ext.form.field.Number, {
+	        blankText: 'Este campo numérico es requerido',
+	        requiredMessage: 'Este campo numérico es requerido',
+	        nanMessage: 'Por favor ingrese un número válido'
+	    });
+	    
+	    Ext.override(Ext.form.field.Date, {
+	        blankText: 'La fecha es requerida',
+	        requiredMessage: 'La fecha es requerida',
+	        disabledDaysText: 'Día no disponible',
+	        disabledDatesText: 'Fecha no disponible'
+	    });
+	    
+	    Ext.override(Ext.form.field.ComboBox, {
+	        blankText: 'Esta selección es requerida',
+	        requiredMessage: 'Esta selección es requerida'
+	    });
+	    
+	    Ext.override(Ext.form.field.TextArea, {
+	        blankText: 'Este campo de texto es requerido',
+	        requiredMessage: 'Este campo de texto es requerido'
+	    });
+	    
+	    Ext.override(Ext.form.field.Checkbox, {
+	        blankText: 'Esta opción es requerida',
+	        requiredMessage: 'Esta opción es requerida'
+	    });
+	    
+	    Ext.override(Ext.form.RadioGroup, {
+	        blankText: 'Debe seleccionar una opción',
+	        requiredMessage: 'Debe seleccionar una opción'
+	    });
+    	
     	Ext.apply(Ext.form.field.VTypes,
 				{
 					secPass : function ValidaRfc(rfcStr) {

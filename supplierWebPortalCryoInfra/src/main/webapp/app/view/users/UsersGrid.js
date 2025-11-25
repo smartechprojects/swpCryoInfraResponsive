@@ -235,7 +235,8 @@ Ext.define('SupplierApp.view.users.UsersGrid', {
 			itemId : 'searchUsers',
 			emptyText : SuppAppMsg.suppliersSearch,
 			xtype : 'trigger',
-			width:300,
+			maxWidth:300,
+			flex:1,
 			triggerCls : 'x-form-search-trigger',
 			onTriggerClick : function() {
 			    userController.loadSearchList(this, this.getValue());
