@@ -985,6 +985,23 @@ input[readonly].x-form-text {
     color: #666 !important;
 }
 
+/* Combobox con editable:false pero activos (no deshabilitados) */
+
+/* Combobox normal (editable:false) */
+/*.x-form-field-container .x-form-trigger-wrap .x-form-text[readonly],
+.x-form-panel .x-form-trigger-wrap .x-form-text[readonly] {
+    background-color: white !important;
+    color: #000 !important;
+}*/
+
+/* Combobox que está dentro de un form readonly */
+/*.x-form-readonly .x-form-trigger-wrap .x-form-text[readonly],
+.x-item-disabled .x-form-trigger-wrap .x-form-text[readonly] {
+    background-color: #f5f5f5 !important;
+    color: #666 !important;
+}*/
+
+
 /*QUITAR BORDE DISPLAYFIELD */
 .no-border-displayfield {
     border: none !important;

@@ -406,21 +406,50 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     	        change: function(checkbox, newValue, oldValue) {
                     	            var ordenNumberField = checkbox.up('form').down('textfield[name=paOrdenNumberInput]'); // Obtener el campo de texto
                     	            var empresaPlantField = checkbox.up('form').down('textfield[name=empresaPlantRequest]'); // Obtener el campo de texto
+                    	            var descriptionField = checkbox.up('form').down('textfield[name=description]');
+                    	            var butonadd = Ext.getCmp('butonAddOrder');
                     	            // Desactivar el campo de texto si el checkbox se marca
                     	            
                     	            
 //                    	            var ordenNumberField = Ext.getCmp('ordenNumberFieldId');
 //                                    var empresaPlantField = Ext.getCmp('empresaPlantFieldId');
-                    	            var butonadd = Ext.getCmp('butonAddOrder');
+                    	            
+                    	            // Función para manejar campos requeridos
+                    	            function setRequired(field, isRequired) {
+                    	                if (!field) return;
+
+                    	                if (isRequired) {
+                    	                    field.allowBlank = false;
+                    	                    field.addCls('x-form-required-field');
+                    	                } else {
+                    	                    field.allowBlank = true;
+                    	                    field.removeCls('x-form-required-field');
+                    	                }
+                    	                field.validate(); // fuerza revalidación visual
+                    	            }
+                    	            
+                    	            
+                    	            
+                    	            
                                     if (newValue) {
                                         ordenNumberField.setVisible(false); // Ocultar el campo
                                         empresaPlantField.setVisible(true); // Mostrar el campo
 //                                        butonadd.setVisible(true);
+                                        
+                                        // Establecer campos requeridos
+                                        setRequired(empresaPlantField, true);
+                                        setRequired(descriptionField, true);
+                                        setRequired(ordenNumberField, false);
+                                        
                                     } else {
                                         ordenNumberField.setVisible(true); // Mostrar el campo
                                         empresaPlantField.setVisible(false); // Ocultar el campo
 //                                        butonadd.setVisible(false);
-
+                                     
+                                        // Establecer campos requeridos
+                                        setRequired(ordenNumberField, true);
+                                        setRequired(descriptionField, true);
+                                        setRequired(empresaPlantField, false);
                                     }
 
                     	            // Limpiar la tabla siempre que cambie el estado del checkbox
@@ -446,7 +475,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     labelWidth:50,
                     maxWidth : 300,
                     flex: 1,
-                    editable: false,
+                    //editable: false,
                     hidden:true,
     				listeners: {
     			    	select: function (comboBox, records, eOpts) {
@@ -654,9 +683,23 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     width: 40,
                     cls: 'buttonStyle',
                     handler: function() {
+                    	
+                    	function setRequired(field, isRequired) {
+                    	    if (!field) return;
+
+                    	    if (isRequired) {
+                    	        field.allowBlank = false;
+                    	        field.addCls('x-form-required-field');
+                    	    } else {
+                    	        field.allowBlank = true;
+                    	        field.removeCls('x-form-required-field');
+                    	    }
+
+                    	    field.validate(); // forza revalidación visual
+                    	}
+
 //                    	var butonadd = Ext.getCmp('butonAddOrder');
 //                    	butonadd.setVisible(false)
-                    	debugger
                     	 var form = this.up('form');
                          var grid = form.down('gridpanel'); // Obtener la referencia al grid
                          var store = grid.getStore(); // Obtener el store del grid
@@ -703,17 +746,100 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                          // Obtener el valor del campo de entrada "Descripción"
                          var description = form.down('textfield[name=description]').getValue();
                          debugger
+                        
+                         var empresaField = form.down('textfield[name=empresaPlantRequest]');
+                         var descriptionField = form.down('textfield[name=description]');
+                         var orderField = form.down('textfield[name=paOrdenNumberInput]');
+                         
+                        //Limpia el required antes de asignar el correcto
+                         setRequired(empresaField, false);
+                         setRequired(descriptionField, false);
+                         setRequired(orderField, false);
+
+                         
                          if(esSinOrden){
+                        	 setRequired(empresaField, true);
+                        	 setRequired(descriptionField, true);
+
                         	 if(parempresaPlantRequest==null||parempresaPlantRequest==''||description==null||description.trim()==''){
-                        		  Ext.Msg.alert('Error', SuppAppMsg.plantAccess82);
+                        		  //Ext.Msg.alert('Error', SuppAppMsg.plantAccess82);
+                        		 var msg = Ext.Msg.show({
+	                                  title: 'Error',
+	                                  msg: SuppAppMsg.plantAccess82,
+	                                  buttons: Ext.Msg.OK,
+	                                  fn: function() {
+	                                      // Callback cuando se cierra el mensaje
+	                                	//  field.reset();
+	                                  }
+	                              });
+	                              
+	                        	 // Función recursiva para aplicar el estilo
+	                            function applyButtonStyle(attempts) {
+	                                attempts = attempts || 0;
+	                                if (attempts > 10) return; // Timeout después de 10 intentos
+	                                
+	                                var dialog = msg.dialog || msg;
+	                                var footer = dialog.down('toolbar[dock="bottom"]');
+	                                
+	                                if (footer && footer.items && footer.items.length > 0) {
+	                                    var okButton = footer.items.getAt(0);
+	                                    if (okButton && okButton.el) {
+	                                        okButton.addCls('buttonStyle');
+	                                        console.log('Estilo aplicado al botón OK');
+	                                    } else {
+	                                        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+	                                    }
+	                                } else {
+	                                    Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+	                                }
+	                            }
+	                            
+	                           Ext.defer(applyButtonStyle, 10);
+			                    
 //                        		  butonadd.setVisible(true)
                         		 return;
                         	 }
                         	 
                         	 
                          }else{
+                        	 
+                        	 setRequired(orderField, true);
+                        	 setRequired(descriptionField, true);
+                        	    
                         	 if(paOrdenNumberInput==null||paOrdenNumberInput==''||description==null||description.trim()==''){
-                       		  Ext.Msg.alert('Error', SuppAppMsg.plantAccess82);
+                       		  //Ext.Msg.alert('Error', SuppAppMsg.plantAccess82);
+                        		 var msg = Ext.Msg.show({
+	                                  title: 'Error',
+	                                  msg: SuppAppMsg.plantAccess82,
+	                                  buttons: Ext.Msg.OK,
+	                                  fn: function() {
+	                                      // Callback cuando se cierra el mensaje
+	                                	  //field.reset();
+	                                  }
+	                              });
+	                              
+	                        	 // Función recursiva para aplicar el estilo
+	                            function applyButtonStyle(attempts) {
+	                                attempts = attempts || 0;
+	                                if (attempts > 10) return; // Timeout después de 10 intentos
+	                                
+	                                var dialog = msg.dialog || msg;
+	                                var footer = dialog.down('toolbar[dock="bottom"]');
+	                                
+	                                if (footer && footer.items && footer.items.length > 0) {
+	                                    var okButton = footer.items.getAt(0);
+	                                    if (okButton && okButton.el) {
+	                                        okButton.addCls('buttonStyle');
+	                                        console.log('Estilo aplicado al botón OK');
+	                                    } else {
+	                                        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+	                                    }
+	                                } else {
+	                                    Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+	                                }
+	                            }
+	                            
+	                           Ext.defer(applyButtonStyle, 10);
                        		 return;
                        	 }
                         	 
@@ -768,6 +894,11 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                                 	     sinOrdenCheckbox.setValue(false); 
                                 	     sinOrdenCheckbox.fireEvent('change', sinOrdenCheckbox, false, true); 
                                 	 }
+                                	 
+                                	   setRequired(empresaField, false);
+                                       setRequired(descriptionField, false);
+                                       setRequired(orderField, false);
+                                       
                                      // Agregar los datos al store
                                      store.add({
                                          order: order, // Asegúrate de asignar al campo correcto del store
@@ -900,7 +1031,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 maxWidth : 450,
                 typeAheadDelay: 100,
                // margin:'5 10 0 150',
-                editable: false,
+               // editable: false,
+                
 				listeners: {
 			    	select: function (comboBox, records, eOpts) {
 			    		//var contrib = records[0].data.udcKey;

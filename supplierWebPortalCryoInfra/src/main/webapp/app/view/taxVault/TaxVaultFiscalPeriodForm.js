@@ -21,7 +21,7 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultFiscalPeriodForm',	{
     	    alias: 'widget.yearCombo',
     	    queryMode: 'local',
     	    allowBlank:false,
-    	    editable: false,
+    	    //editable: false,
     	    displayField: 'optionName',
 			//width:180,
     	    //labelWidth:100,

@@ -75,7 +75,7 @@
 	                var store = grid.getStore();
 	                var currentRecords = store.getCount();
 	               // var pageSize = store.pageSize || 2; // Usar 2 como default si no existe
-	                var pageSize = 2;
+	                var pageSize = 1;
 	                //var isFullPage = currentRecords === pageSize;
 	                var isFullPage = currentRecords >= pageSize;
 	                
@@ -104,42 +104,78 @@
 	                    var availableHeight = containerHeight - headerHeight - dockedHeight - 10; // margen
 	                    
 	                    var rows = view.getNodes();
-	                    var totalContentHeight = 0;
-	                    var rowHeights = [];
-	                    
-	                    // Calcular altura necesaria para cada fila
-	                    Ext.each(rows, function(row, index) {
-	                        var rowHeight = 25; // mínima
-	                        var cells = Ext.get(row).query('.x-grid-cell');
-	                        
-	                        Ext.each(cells, function(cell) {
-	                            var cellEl = Ext.get(cell);
-	                            cellEl.setStyle('height', 'auto');
-	                            var contentHeight = cellEl.dom.scrollHeight;
-	                            if (contentHeight > rowHeight) {
-	                                rowHeight = contentHeight + 8; // padding
-	                            }
-	                        });
-	                        
-	                        rowHeights[index] = rowHeight;
-	                        totalContentHeight += rowHeight;
-	                    });
-	                    
-	                    // Distribuir espacio sobrante si hay
-	                    if (totalContentHeight < availableHeight && rows.length > 0) {
-	                        var extraHeight = (availableHeight - totalContentHeight) / rows.length;
-	                        
-	                        Ext.each(rows, function(row, index) {
-	                            Ext.get(row).setHeight(rowHeights[index] + extraHeight);
-	                        });
-	                    } else {
-	                        // Usar alturas calculadas por contenido
-	                        Ext.each(rows, function(row, index) {
-	                            Ext.get(row).setHeight(rowHeights[index]);
-	                        });
-	                    }
-	                    
-	                    grid.updateLayout();
+
+		                 // Número real de filas visibles
+		                 var realRowCount = rows.length;
+
+		                 // Número deseado (12 máximo)
+		                 var targetRowCount = 12;
+
+		                 // Calcular altura disponible total
+		                 var rowContainerHeight = availableHeight;
+		                 
+		                 //Cuando el registro es una fila 
+		                 if (realRowCount === 1) {
+
+		                     var uniformHeight = rowContainerHeight / targetRowCount;
+
+		                     Ext.get(rows[0]).setHeight(uniformHeight);
+
+		                     Ext.defer(function () {
+		                         Ext.get(rows[0]).setHeight(uniformHeight);
+		                         grid.updateLayout();
+		                     }, 50);
+
+		                     return;
+		                 }
+
+		                 // Para 2..11 filas
+		                 if (realRowCount > 1 && realRowCount < targetRowCount) {
+
+		                     var uniformHeight = rowContainerHeight / targetRowCount;
+
+		                     Ext.each(rows, function(row) {
+		                         Ext.get(row).setHeight(uniformHeight);
+		                     });
+
+		                     grid.updateLayout();
+		                     return;
+		                 }
+
+		                 // Lógica normal para 12 o más filas
+		                 var totalContentHeight = 0;
+		                 var rowHeights = [];
+
+		                 Ext.each(rows, function(row, index) {
+		                     var rowHeight = 25; 
+		                     var cells = Ext.get(row).query('.x-grid-cell');
+		                     
+		                     Ext.each(cells, function(cell) {
+		                         var cellEl = Ext.get(cell);
+		                         cellEl.setStyle('height', 'auto');
+		                         var contentHeight = cellEl.dom.scrollHeight;
+		                         if (contentHeight > rowHeight) {
+		                             rowHeight = contentHeight + 8; 
+		                         }
+		                     });
+
+		                     rowHeights[index] = rowHeight;
+		                     totalContentHeight += rowHeight;
+		                 });
+
+		                 if (totalContentHeight < availableHeight && rows.length > 0) {
+		                     var extraHeight = (availableHeight - totalContentHeight) / rows.length;
+		                     
+		                     Ext.each(rows, function(row, index) {
+		                         Ext.get(row).setHeight(rowHeights[index] + extraHeight);
+		                     });
+		                 } else {
+		                     Ext.each(rows, function(row, index) {
+		                         Ext.get(row).setHeight(rowHeights[index]);
+		                     });
+		                 }
+
+		                 grid.updateLayout();
 	                }	                
 	            }, 200);
 	        }
@@ -231,7 +267,7 @@
     	    queryMode: 'local',
     	    allowBlank:false,
     	    hidden:role!='ROLE_ADMIN',
-    	    editable: false,
+    	    //editable: false,
     	    displayField: (navigator.language && (navigator.language.toLowerCase() === 'es' || navigator.language.toLowerCase().startsWith('es-')))
             ? 'esp'
             : 'ing',
@@ -250,7 +286,7 @@
     	    alias: 'widget.currencyCombo',
     	    queryMode: 'local',
     	    allowBlank:false,
-    	    editable: false,
+    	    //editable: false,
     	    displayField: (navigator.language && (navigator.language.toLowerCase() === 'es' || navigator.language.toLowerCase().startsWith('es-')))
             ? 'esp'
             : 'ing',
@@ -269,7 +305,7 @@
     	    alias: 'widget.statusPayCombo',
     	    queryMode: 'local',
     	    allowBlank:false,
-    	    editable: false,
+    	    //editable: false,
     	    displayField: (navigator.language && (navigator.language.toLowerCase() === 'es' || navigator.language.toLowerCase().startsWith('es-')))
             ? 'esp'
             : 'ing',

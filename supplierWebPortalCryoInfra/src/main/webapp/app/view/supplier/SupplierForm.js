@@ -238,7 +238,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                //width:400,
 				                flex:1,
 				                readOnly:role =='ROLE_SUPPLIER' ?true:false,
-				                editable: false,
+				                //editable: false,
 							    listeners: {
 							    	select: function (comboBox, records, eOpts) { 
 							    		var webSite = Ext.getCmp('webSite').getValue();
@@ -250,9 +250,9 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							    			Ext.getCmp('identDocument').allowBlank = false;
 							    			Ext.getCmp('actaConstitutiva').allowBlank = false;
 						        		}
-							    		
+							    		debugger
 							    		var currencyCode = Ext.getCmp('currencyCode').getValue();
-							    		var countryCode = records[0].data.udcKey;
+							    		var countryCode = records.data.udcKey;
 							    		
 							    		if(currencyCode == 'MXP' && countryCode =='US'){
 							    			Ext.getCmp('idFiscal').allowBlank=false;
@@ -1117,7 +1117,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                valueField: 'udcKey',
 				                //width : 250,
 				                flex:1,
-				                editable: false,
+				                //editable: false,
 								colspan:3,
 								listeners: {
 									afterrender: function(){
@@ -1202,7 +1202,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								    },
 							    	select: function (comboBox, records, eOpts) {
 							    		
-							    		var contrib = records[0].data.udcKey;
+							    		var contrib = records.data.udcKey;
 							    		/*if(contrib != '1'){
 							    			Ext.getCmp('REPRESENTE_LEGAL').show();
 							    			Ext.getCmp('tipoIdentificacion').show();
@@ -1567,7 +1567,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								name : 'colonia',
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								id:'fldColonia', 
-								editable: false,
+								//editable: false,
 								//width:400,
 								flex:1,
 								allowBlank:false,
@@ -1578,7 +1578,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									id : 'estado',
 									xtype: 'combobox',
 									typeAhead: true,
-									editable: false,
+									//editable: false,
 					                typeAheadDelay: 100,
 					                allowBlank:false,
 					                minChars: 1,
@@ -1768,11 +1768,11 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                valueField: 'strValue1',
 				                //width : 500,
 				                flex:1,
-				                editable: false,
+				                //editable: false,
 								colspan:3,
 								listeners: {
 							    	select: function (comboBox, records, eOpts) {
-							    		var userPurchase = records[0].data;
+							    		var userPurchase = records.data;
 							    		Ext.getCmp('emailComprador').setValue(userPurchase.strValue2);
 							    		Ext.getCmp('telefonoCxC').setValue(userPurchase.keyRef);
 							    	}
@@ -2485,7 +2485,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									xtype: 'combobox',
 									typeAhead: true,
 					                typeAheadDelay: 100,
-					                editable: false,
+					                //editable: false,
 					                allowBlank:false,
 					                minChars: 1,
 					                queryMode: 'local',
@@ -2736,7 +2736,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								typeAhead: true,
 				                typeAheadDelay: 100,
 				                allowBlank:false,
-				                editable: false,
+				                //editable: false,
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
@@ -2853,7 +2853,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								typeAhead: true,
 				                typeAheadDelay: 100,
 				                allowBlank:true,
-				                editable: false,
+				                //editable: false,
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
@@ -2952,7 +2952,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                typeAheadDelay: 100,
 				                readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 				                allowBlank:true,
-				                editable: false,
+				                //editable: false,
 				                margin:'10 0 0 10',
 				                minChars: 1,
 				                queryMode: 'local',

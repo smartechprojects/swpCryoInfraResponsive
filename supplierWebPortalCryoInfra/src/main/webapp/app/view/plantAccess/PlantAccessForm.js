@@ -137,7 +137,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessForm',	{
 	    	                width : 400,
 	    	                typeAheadDelay: 100,
 	    	                margin:'5 10 0 150',
-	    	                editable: false,
+	    	                //editable: false,
 	    					//colspan:3,
 	    					listeners: {
 	    				    	select: function (comboBox, records, eOpts) {

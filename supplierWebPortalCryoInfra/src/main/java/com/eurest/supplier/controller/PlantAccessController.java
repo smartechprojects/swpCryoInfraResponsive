@@ -861,7 +861,7 @@ public class PlantAccessController {
 			fileToSave.setDateUpload(new Date());
 			fileToSave.setContent(file.getFile().getBytes());
 			fileToSave.setFileType(file.getFile().getContentType());
-			fileToSave.setOriginName(file.getFile().getOriginalFilename());
+			fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
 			fileToSave.setDocumentType("REQUEST_"+documentType);
 			fileToSave.setStatus("PENDING");
 			fileToSave.setNumRefer(Integer.valueOf(idRequest).intValue());
@@ -895,7 +895,7 @@ public class PlantAccessController {
 			fileToSave.setDateUpload(new Date());
 			fileToSave.setContent(file.getFile().getBytes());
 			fileToSave.setFileType(file.getFile().getContentType());
-			fileToSave.setOriginName(file.getFile().getOriginalFilename());
+			fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
 			fileToSave.setDocumentType("WORKER_"+documentType);
 			fileToSave.setStatus("PENDING");
 			fileToSave.setNumRefer(Integer.valueOf(idworker).intValue());
@@ -945,7 +945,7 @@ public class PlantAccessController {
 			fileToSave.setDateUpload(new Date());
 			fileToSave.setContent(file.getFile().getBytes());
 			fileToSave.setFileType(file.getFile().getContentType());
-			fileToSave.setOriginName(file.getFile().getOriginalFilename());
+			fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
 			fileToSave.setDocumentType("REQUEST_"+addRequestDocumentType);
 			fileToSave.setStatus("PENDING");
 			fileToSave.setNumRefer(uuid);
@@ -1000,7 +1000,7 @@ public class PlantAccessController {
 			fileToSave.setDateUpload(new Date());
 			fileToSave.setContent(file.getFile().getBytes());
 			fileToSave.setFileType(file.getFile().getContentType());
-			fileToSave.setOriginName(file.getFile().getOriginalFilename());
+			fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
 			fileToSave.setDocumentType("WORKER_"+addRequestDocumentType);
 			fileToSave.setStatus("PENDING");
 			fileToSave.setNamefile("");

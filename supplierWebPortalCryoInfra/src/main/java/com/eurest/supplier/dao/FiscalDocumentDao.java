@@ -212,16 +212,16 @@ public class FiscalDocumentDao {
 						" uuidNotaCredito, " +
 						" uuidPago, " +
 						" case when currentApprover like '%" + userName + "%' then 1 else 0 end as approverOrder, " + //Campo para ordenar
-						" case when status = 'PENDIENTE'	then 6 " +
-						" when status = 'APROBADO'		then 5 " +
-						" when status = 'RECHAZADO'		then 4 " +
+						" case when status = 'PENDIENTE' then 1 " +
+						" when status = 'APROBADO'		then 2 " +
 						" when status = 'PAGADO'		then 3 " +
-						" when status = 'COMPLEMENTO'	then 2 " +
-						" when status = 'CANCELADO'		then 1 else 0 end as statusOrder " + //Campo para ordenar
+						" when status = 'COMPLEMENTO'		then 4 " +
+						" when status = 'RECHAZADO'	then 5 " +
+						" when status = 'CANCELADO'		then 6 else 7 end as statusOrder " + //Campo para ordenar
 						" from fiscaldocuments " +
 						" where orderType <> 'FLETE' " +
 						  sqlFilter +
-						" order by approverOrder desc, statusOrder desc, id desc  ";
+						" order by  statusOrder asc, invoiceUploadDate desc, id desc  ";
 				
 				query = session.createSQLQuery(sql);
 				
