@@ -1088,6 +1088,18 @@ Ext.define('SupplierApp.controller.Supplier', {
 				        	form.findField('emailComprador').setReadOnly(true);
 				        	form.findField('nombreContactoCxC').setReadOnly(true);
 				        	form.findField('telefonoContactoCxC').setReadOnly(true);
+			        	}else{
+			        		Ext.getCmp('fechaSolicitud').hide();
+				        	Ext.getCmp('formatoSolicitud').hide();
+			        		Ext.getCmp('ticketForSearch').hide();
+				        	Ext.getCmp('searchTicket').hide();
+				        	Ext.getCmp('searchCP').hide();
+				        	Ext.getCmp('loadIdentDoc').hide();
+				        	Ext.getCmp('loadActaConst').hide();
+				        	Ext.getCmp('updateSupplierForm').hide();
+				        	Ext.getCmp('actaConstitutiva').hide();
+				        	Ext.getCmp('documents').hide();
+				        	Ext.getCmp('camposobligatorios').hide();
 			        	}
 			        	/*
 			        	Ext.Ajax.request({

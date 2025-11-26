@@ -266,26 +266,28 @@ Ext.define('SupplierApp.view.users.UsersGrid', {
 		}  ];
 
 
-		this.tbar = [ {
-			name : 'searchUsers',
-			itemId : 'searchUsers',
-			emptyText : SuppAppMsg.suppliersSearch,
-			xtype : 'trigger',
-			maxWidth:300,
-			flex:1,
-			triggerCls : 'x-form-search-trigger',
-			onTriggerClick : function() {
-			    userController.loadSearchList(this, this.getValue());
-			},
-			enableKeyEvents : true,
-			listeners : {
-				specialkey : function(field, e) {
-					if (e.ENTER === e.getKey()) {
-						field.onTriggerClick();
-					}
-				}
-			}
-		} ];
+		this.tbar = {
+			    padding: 0,
+			    margin: '0 0 5 0',
+			    items: [{
+			        name : 'searchUsers',
+			        itemId : 'searchUsers',
+			        emptyText : SuppAppMsg.suppliersSearch,
+			        xtype : 'trigger',
+			        width: 300,
+			        triggerCls : 'x-form-search-trigger',
+			        onTriggerClick: function() {
+			            userController.loadSearchList(this, this.getValue());
+			        },
+			        enableKeyEvents : true,
+			        listeners : {
+			            specialkey : function(field, e) {
+			                if (e.ENTER === e.getKey()) field.onTriggerClick();
+			            }
+			        }
+			    }]
+			};
+
 		this.callParent(arguments);
 	}
 });

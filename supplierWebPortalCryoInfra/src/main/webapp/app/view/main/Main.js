@@ -110,7 +110,7 @@ Ext.define('SupplierApp.view.main.Main', {
         height:80,
         style: { backgroundColor: '#FFFFFF', padding: '0px' },
         //title: '<img src="resources/images/CryoInfra-logo-gris.png" style="max-width: 60%; display: block; height: auto;">',
-        title: '<img src="resources/images/CryoInfra-logo-gris.png" style="height:60px; width:auto; object-fit:contain; display:block;">',
+        title: '<img src="resources/images/CryoInfra-logo.png" style="height:60px; width:auto; object-fit:contain; display:block;">',
 
 
         layout: { type: 'hbox', align: 'left', pack: 'start' },

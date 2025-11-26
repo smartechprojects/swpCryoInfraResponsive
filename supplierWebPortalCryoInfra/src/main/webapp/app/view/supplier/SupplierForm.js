@@ -250,7 +250,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							    			Ext.getCmp('identDocument').allowBlank = false;
 							    			Ext.getCmp('actaConstitutiva').allowBlank = false;
 						        		}
-							    		debugger
+							    		
 							    		var currencyCode = Ext.getCmp('currencyCode').getValue();
 							    		var countryCode = records.data.udcKey;
 							    		
@@ -726,8 +726,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 						                        
 						                        var fisicaMoral = Ext.getCmp('fisicaMoral').getValue();	
 						                        if(fisicaMoral == '1'){
-						                        	
-						                        
+						                        						                        
 			                                	  Ext.getCmp('tipoIdentificacion').setReadOnly(true);
 			                                	  Ext.getCmp('numeroIdentificacion').setReadOnly(true);
 			                                	  Ext.getCmp('nombreRL').setReadOnly(true);
@@ -822,7 +821,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							                        //Ext.getCmp('loadIdentDoc').setDisabled(false);
 				                                	 // Ext.getCmp('identDocument').allowBlank=false;
 					                                 // Ext.getCmp('loadRpcDocument').setDisabled(false);
-					                                //  Ext.getCmp('rpcDocument').allowBlank=false;					                                  
+					                                //  Ext.getCmp('rpcDocument').allowBlank=false;		
+							                        
 				                                	  Ext.getCmp('tipoIdentificacion').setReadOnly(true);
 				                                	  Ext.getCmp('numeroIdentificacion').setReadOnly(true);
 				                                	  Ext.getCmp('nombreRL').setReadOnly(true);
@@ -1143,6 +1143,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 		                                	//  Ext.getCmp('identDocument').allowBlank=true;
 			                                  //Ext.getCmp('loadRpcDocument').setDisabled(true);
 			                                 // Ext.getCmp('rpcDocument').allowBlank=true;
+							    			
 		                                	  Ext.getCmp('tipoIdentificacion').setReadOnly(true);
 		                                	  Ext.getCmp('numeroIdentificacion').setReadOnly(true);
 		                                	  Ext.getCmp('nombreRL').setReadOnly(true);
@@ -1170,8 +1171,19 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							    			 //Ext.getCmp('loadIdentDoc').setDisabled(true);
 		                                	 // Ext.getCmp('identDocument').allowBlank=true;
 			                                 // Ext.getCmp('loadRpcDocument').setDisabled(false);
-			                                  //Ext.getCmp('rpcDocument').allowBlank=false;					                                  
-		                                	  Ext.getCmp('tipoIdentificacion').setReadOnly(false);
+			                                  //Ext.getCmp('rpcDocument').allowBlank=false;					
+							    			var comboTipoIdentificacion = Ext.getCmp('tipoIdentificacion');
+
+							    			// Ocultar la flechita del combobox
+							    			comboTipoIdentificacion.setReadOnly(true);
+
+							    			comboTipoIdentificacion.on('afterrender', function(c) {
+							    			    var trigger = c.el.down('.x-form-trigger');
+
+							    			    if (trigger) {
+							    			        trigger.setStyle('display', 'none');
+							    			    }
+							    			});
 		                                	  Ext.getCmp('numeroIdentificacion').setReadOnly(false);
 		                                	  Ext.getCmp('nombreRL').setReadOnly(false);
 		                                	  Ext.getCmp('apellidoPaternoRL').setReadOnly(false);
@@ -1264,6 +1276,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 											Ext.getCmp('apellidoPaternoRL').allowBlank=false;
 											Ext.getCmp('apellidoPaternoRL').show();
 							    			Ext.getCmp('apellidoMaternoRL').show();
+							 
 							    			Ext.getCmp('tipoIdentificacion').setReadOnly(false);
 							    			Ext.getCmp('numeroIdentificacion').setReadOnly(false);
 							    			Ext.getCmp('nombreRL').setReadOnly(false);

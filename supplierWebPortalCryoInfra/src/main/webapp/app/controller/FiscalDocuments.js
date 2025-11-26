@@ -229,9 +229,9 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
         		title : SuppAppMsg.fiscalTitle1,
         		//width : 550,
         		//height : 550,
-        		maxWidth: 550,
+        		maxWidth: 500,
         	    maxHeight: 750,
-        	    width: Ext.Element.getViewportWidth() * 0.25,  // 80% del ancho
+        	    width: Ext.Element.getViewportWidth() * 0.35,  // 80% del ancho
         	    height: Ext.Element.getViewportHeight() * 0.6,
         		modal : true,
         		closeAction : 'destroy',

@@ -752,23 +752,35 @@ table.dashGridTable tfoot td {
 }
 
 .newSupplierButton {
-	background-color: #333;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	border: 1px solid #fff;
-	display: inline-block;
-	cursor: pointer;
-	color: #ffffff;
-	font-family: Poppins-Regular, sans-serif;
-	font-size: 13px;
-	padding: 2px 17px;
-	text-decoration: none;
-	text-shadow: 0px -1px 0px #333;
+	background-color: #FF8300 !important;
+    border: 1px solid #FF8300 !important;
+    border-radius: 5px;
+    color: #ffffff !important;
+    font-family: Poppins-Regular, sans-serif;
+    font-size: 13px;
+    padding: 4px 17px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .newSupplierButton:hover {
-	background-color: #666;
+	background-color: #FF9C33 !important;
+    border-color: #FF9C33 !important;
+    color: #ffffff !important;
+}
+
+/* Active */
+.newSupplierButton:active {
+    background-color: #FF9C33 !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* Focus */
+.newSupplierButton:focus {
+    outline: none;
+    background-color: #FF9C33 !important;
 }
 
 .x-tab-bar .x-tab-bar-body .x-box-inner .x-tab {
@@ -1013,4 +1025,3 @@ input[readonly].x-form-text {
     border: none !important;
     background: transparent !important;
 }
-

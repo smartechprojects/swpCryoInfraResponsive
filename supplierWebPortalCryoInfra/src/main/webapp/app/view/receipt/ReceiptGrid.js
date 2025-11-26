@@ -7,23 +7,12 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
 	border:false,
 	//scrollable: true,
 	selModel: {
+        type: 'checkboxmodel',
         checkOnly: true,
         mode: 'SIMPLE',
         showHeaderCheckbox: false,
-        injectCheckbox:'first',
-        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-	            metaData.tdCls = Ext.baseCSSPrefix + 'grid-cell-special';
-	            var html = '';
-	            if ((record.data.uuid != null && record.data.uuid != '') || role=='ROLE_PURCHASE_READ' || role=='ROLE_AUDIT_USR' || record.data.status == 'OC CANCELADA') {
-	                html = '';
-	            } else {
-	            	html = '<div class="' + Ext.baseCSSPrefix + 'grid-row-checker"> </div>';
-	            }
-	            return html;
-        }
+        injectCheckbox: 0
     },
-    selType: 'checkboxmodel',
-	cls: 'extra-large-cell-grid', 
 	store : {
 		type:'receipt'
 	},
@@ -38,6 +27,41 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
 	        refresh: function (view) {
 	            var grid = view.up('grid');
 	            if (!grid) return;
+	            
+	            setTimeout(function() {
+	                var records = view.getStore().getRange();
+	                for (var i = 0; i < records.length; i++) {
+	                    var record = records[i];
+	                    var row = view.getNode(i);
+	                    
+	                    if (row) {
+	                        var shouldHide = ((record.data.uuid != null && record.data.uuid != '') || 
+	                                         window.role == 'ROLE_PURCHASE_READ' || 
+	                                         window.role == 'ROLE_AUDIT_USR' || 
+	                                         record.data.status == 'OC CANCELADA');
+	                        
+	                        // Buscar el elemento del checkbox dentro de la primera celda
+	                        var firstCell = row.querySelector('.x-grid-cell-first');
+	                        if (firstCell) {
+	                            var checkboxElement = firstCell.querySelector('.x-grid-checkcolumn');
+	                            
+	                            if (checkboxElement) {
+	                                if (shouldHide) {
+	                                    // Ocultar solo el checkbox, no toda la celda
+	                                    checkboxElement.style.cssText = 'display: none !important; visibility: hidden !important;';
+	                                    // Mantener la celda visible pero sin contenido de checkbox
+	                                    firstCell.style.cssText = 'display: table-cell !important; visibility: visible !important; width: 24px !important; min-width: 24px !important;';
+	                                } else {
+	                                    // Mostrar el checkbox
+	                                    checkboxElement.style.cssText = 'display: inline !important; visibility: visible !important;';
+	                                    firstCell.style.cssText = 'display: table-cell !important; visibility: visible !important; width: 24px !important; min-width: 24px !important;';
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }, 10);
+	            
 
 	            Ext.defer(function () {
 	                // Autoajuste de columnas según contenido
@@ -107,8 +131,6 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
                 limit: 0
             },
             success: function (response) {
-				
-				debugger;
                 catalogData = Ext.decode(response.responseText).data;
 				var catalogObject = {};
 
@@ -277,7 +299,6 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
             //width: 150,
             flex :1 ,
             renderer: function(value, metaData, record, row, col, store, gridView){
-            	debugger
             	var returnValue = '';
             	if(value != null && value != '' && value!= undefined){
 					    		

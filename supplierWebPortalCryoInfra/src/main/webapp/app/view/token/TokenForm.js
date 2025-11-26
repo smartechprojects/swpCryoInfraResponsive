@@ -10,7 +10,7 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 				layout : 'hbox',
 				defaults : {
 					labelAlign: 'top',
-					margin : '5 5 0 5',
+					margin : '5 5 0 0',
 					xtype : 'textfield',
 					//width:250
 				},
@@ -63,12 +63,32 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 					fieldLabel : window.navigator.language.startsWith("es", 0)? 'Registro activo?':'Active register?',
 					name : 'enabled',
 					//maxWidth : 300,
-					flex:1,
+					width: 90,
 					checked: true
+				},
+				{
+	      			name : 'searchAccessToken',
+	    			itemId : 'searchAccessToken',
+	    			emptyText : SuppAppMsg.suppliersSearch,
+	    			xtype : 'trigger',
+	    			maxWidth : 300,
+	    			  fieldLabel: '&nbsp;',      // ✔ crea espacio de label arriba
+	    			    labelSeparator: '',        // ✔ elimina los dos puntos
+	    			    labelPad: 0, 
+	    			width : 250,
+	    			triggerCls : 'x-form-search-trigger',
+	    			onTriggerClick: function() {
+	    				tokenController.loadSearchList(this, this.getValue());
+	            },
+	    			enableKeyEvents : true,
+	    			listeners : {
+	    				specialkey : function(field, e) {
+	    					if (e.ENTER === e.getKey()) {
+	    						field.onTriggerClick();
+	    					}
+	    				}
+	    			}
 				}
-				
-				
-				
 				]
 			}];
 
@@ -76,8 +96,9 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 			this.dockedItems = [{
 		        xtype: 'toolbar',
 		        dock: 'bottom', // Specify the dock position
+		        padding: '0',
 		        defaults: {
-                    margin: '0 20 0 0' 
+                    margin: '0 20 15 0' 
                 },
 		        items: [
 		        	{
@@ -99,26 +120,7 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 		                text: window.navigator.language.startsWith("es", 0) ? 'Nuevo registro' : 'New register',
 		                action: 'new',
 		                cls: 'buttonStyle'
-		            },{
-		      			name : 'searchAccessToken',
-		    			itemId : 'searchAccessToken',
-		    			emptyText : SuppAppMsg.suppliersSearch,
-		    			xtype : 'trigger',
-		    			maxWidth : 300,
-		    			flex : 1,
-		    			triggerCls : 'x-form-search-trigger',
-		    			onTriggerClick: function() {
-		    				tokenController.loadSearchList(this, this.getValue());
-		            },
-		    			enableKeyEvents : true,
-		    			listeners : {
-		    				specialkey : function(field, e) {
-		    					if (e.ENTER === e.getKey()) {
-		    						field.onTriggerClick();
-		    					}
-		    				}
-		    			}
-		    		}
+		            }
 		        ]
 		    }],
 		    

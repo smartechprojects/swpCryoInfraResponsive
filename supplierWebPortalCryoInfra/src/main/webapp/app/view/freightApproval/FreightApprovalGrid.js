@@ -593,6 +593,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
              {
                 xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
+                //style: 'padding-left: 0px !important; margin-left: 0px !important;',
                 layout: {
                     type: 'hbox',
                     align: 'middle',
@@ -600,7 +602,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                 },
                 //padding: 5,
                 defaults: {
-                    labelAlign: 'top'
+                    labelAlign: 'top',
+                    margin: '0 20 0 0' 
                 },
                 items: [
                 	{
@@ -612,6 +615,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //width:300,
                         //labelWidth:120,
                         //margin:'20 20 0 10'
+                        maxWidth:220,
                         flex:.3,
             		},{
             			xtype: 'textfield',
@@ -626,7 +630,8 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //width:300,
                         //labelWidth:120,
                         //margin:'20 20 0 10'
-                        flex:.5,
+                        maxWidth:220,
+                        flex:.3,
             		},{
             			xtype: 'textfield',
                         fieldLabel: SuppAppMsg.freightApprovalTitle6,
@@ -640,11 +645,14 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //width:300,
                         //labelWidth:120,
                         //margin:'20 20 0 10'
+                        maxWidth:220,
                         flex:.3,
             		},{ 
             			xtype: 'combostatus',
             			value: role == 'ROLE_SUPPLIER'?'APROBADO':'',
-            			readOnly:  role == 'ROLE_SUPPLIER'		       		
+            			readOnly:  role == 'ROLE_SUPPLIER',		
+            			maxWidth:220,
+                        flex:.3,
             		},{
 						xtype: 'displayfield',
 			            value: '',
@@ -656,9 +664,13 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
               {
                   xtype: 'toolbar',
                   dock: 'top',
+                  padding: '0',
+                 // style: 'padding-left: 0px !important; margin-left: 0px !important;',
                   layout: {
                       type: 'hbox',
                       //align: 'middle'
+                  }, defaults: {
+                      margin: '0 20 15 0' 
                   },
                   //padding: 5,
                   items: [

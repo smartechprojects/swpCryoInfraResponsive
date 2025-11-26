@@ -17,7 +17,7 @@ Ext.define('SupplierApp.view.receipt.ReceiptForm' ,{
 					xtype:'textfield',
 					readOnly:true,
 					//width:220
-					margin: '0 10 0 0'
+					margin: '5 10 0 0'
 				},
 				items       :[{
 					xtype: 'hidden',
