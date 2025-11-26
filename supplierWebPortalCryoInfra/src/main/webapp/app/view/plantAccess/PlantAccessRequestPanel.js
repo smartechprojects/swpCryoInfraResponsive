@@ -11,7 +11,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
 	initComponent: function() {
 		this.items = [{
 			xtype:'container',
-			flex: 2.2,
+			flex: 2.5,
 			layout: 'fit',
 			border:false,
 			items: [{
@@ -40,7 +40,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
 			id: 'paRequestGrid',
 			itemId: 'paRequestGrid',
 			xtype:'container',
-			flex: 1,
+			flex: 0.72,
 			layout: 'fit',
 			items: [{
 				xtype:'plantAccessRequestGrid'

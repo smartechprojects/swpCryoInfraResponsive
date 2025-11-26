@@ -10,7 +10,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
         align: 'stretch'
     },
     defaults: {
-        margin: '5 10 5 10'
+        margin: '2 10 0 10'
     },
 	initComponent : function() {
 		
@@ -34,7 +34,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             layout: 'anchor',
             defaults: {
                 labelWidth: 150,
-                margin: '5 10 5 10',
+                margin: '2 10 0 10',
                 labelAlign: 'top'
             },
             items: [{
@@ -42,7 +42,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 				value : SuppAppMsg.plantAccess6,
 				height:20,
 				//margin:'5 10 0 300',
-				margin: '5 10 5 0',
+				margin: '5 10 0 0',
 				colspan:3,
 				fieldStyle: 'font-weight:bold'
             },{
@@ -109,7 +109,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 xtype: 'container',
                 layout: 'hbox',
                 //margin: '5 10 0 150',
-                margin: '0 5 5 0',
+                margin: '0 5 0 0',
                 defaults: {
                     labelAlign: 'top',
                     margin: '0 15 0 0' 
@@ -160,7 +160,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     inputValue: 'true', // Valor enviado si el checkbox está marcado
                     uncheckedValue: 'false', // Valor enviado si el checkbox no está marcado
                     //margin: '0 0 0 10', // Ajusta el margen para separar del elemento anterior
-                    margin: '28 0 0 0',
+                    margin: '22 0 0 0',
                     flex: 1,
                     	 listeners: {
                     	        change: function(checkbox, newValue, oldValue) {
@@ -221,7 +221,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 xtype: 'container',
                 layout: 'hbox',
                 //margin: '5 10 0 150',
-                margin: '0 5 5 0',
+                margin: '0 5 0 0',
                 defaults: {
                     labelAlign: 'top',
                     margin: '0 15 0 0' 
@@ -315,7 +315,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '0 5 5 0',
+                margin: '0 5 0 0',
                 defaults: {
                 	labelAlign: 'top',
                     margin: '0 15 0 0'
@@ -387,7 +387,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 id: 'containerOrden',
 	            itemId: 'containerOrden',
 				name : 'containerOrden',
-				 margin: '5 0 5 0',
+				 margin: '0 0 0 0',
 				 defaults: {
 					 labelAlign: 'top',
 		             margin: '0 15 0 0'
@@ -933,7 +933,12 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             },{
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '0 5 5 0',
+                margin: '0 5 0 0',
+                padding: 0,
+                style: { 
+                	'margin-top': '0px !important', 
+                	'padding-top': '0px !important' 
+                },
                 defaults: {
                     labelAlign: 'top',
                     margin: '0 15 0 0'
@@ -993,7 +998,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                 }],
                 selType: 'rowmodel',
                 //height: 1000,
-                autoHeight: true,
+               // autoHeight: true,
+                height: 120,
                 //width: 800,
                 //margin: '5 5 0 150'
                 flex: 1,
@@ -1005,7 +1011,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
             {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '0 5 5 0',
+                margin: '0 5 0 0',
                 //margin: '5 10 5 10',
                 defaults:{
                 	labelAlign: 'top',

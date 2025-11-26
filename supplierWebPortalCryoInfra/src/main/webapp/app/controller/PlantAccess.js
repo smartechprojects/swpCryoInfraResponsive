@@ -2097,7 +2097,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 			width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
             maxWidth: 1050,                                // 👈 ancho mínimo
             height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
-            maxHeight: 600,
+            maxHeight: 700,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : true,
@@ -2114,6 +2114,25 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		
 		});
 		me.viewAccessPlant.show();
+		
+		
+		 // Obtener referencia al panel principal y ajustar el flex del grid
+	    var mainPanel = me.viewAccessPlant.down('plantAccessMainPanel');
+	    var requestPanel = mainPanel.down('plantAccessRequestPanel');
+	    
+	    if (requestPanel) {
+	        var gridContainer = requestPanel.down('#paRequestGrid');
+	        var formContainer = requestPanel.down('container[flex]'); // El contenedor del formulario
+	        
+	        if (gridContainer && formContainer) {
+	            // Ajustar los flex dinámicamente
+	            formContainer.flex = 2.5;  // Formulario ocupa 1 parte
+	            gridContainer.flex = 1.2;  // Grid ocupa 1 parte (igual que el formulario)
+	            
+	            // Forzar actualización del layout
+	            requestPanel.updateLayout();
+	        }
+	    }
 		
 		//Carga información en el formulario PlantAccessRequestForm
     	var form = this.getPlantAccessRequestForm().getForm();
@@ -5486,7 +5505,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 			width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
             maxWidth: 1050,                                // 👈 ancho mínimo
             height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
-            maxHeight: 600,
+            maxHeight: 700,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : true,
