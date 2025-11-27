@@ -110,8 +110,11 @@ Ext.define('SupplierApp.view.main.Main', {
         height:80,
         style: { backgroundColor: '#FFFFFF', padding: '0px' },
         //title: '<img src="resources/images/CryoInfra-logo-gris.png" style="max-width: 60%; display: block; height: auto;">',
-        title: '<img src="resources/images/CryoInfra-logo.png" style="height:60px; width:auto; object-fit:contain; display:block;">',
-
+        title: '<img src="resources/images/CryoInfra-logo.png" style="height:70px; width:auto; object-fit:contain; display:block;">',
+        tabConfig: {
+            width: 220,
+            textAlign: 'left'   // ayuda pero no es suficiente sin el CSS
+        },
 
         layout: { type: 'hbox', align: 'left', pack: 'start' },
         items: [
@@ -120,10 +123,13 @@ Ext.define('SupplierApp.view.main.Main', {
                 src: 'resources/images/hdr-logo.png',
                 margin: '25 0 0 0',
                 height: 25,
-                width: 230
+                width: 230,
+                cls: 'header-user-info-container',
+                columnWidth: 1
             },{
                 xtype: 'tbspacer', 
-                flex: 1
+                flex: 1,
+                columnWidth: 1
             },{
                 xtype: 'container',
                 layout: 'vbox',
@@ -133,7 +139,8 @@ Ext.define('SupplierApp.view.main.Main', {
                     { itemId: 'displayNameLabel', html: '', margin: '0 0 5 0',style: 'font-weight:bold;font-size:1.1em;color:#000;' },
                     { itemId: 'userInfoLabel', html: '', flex: 1 ,style: 'font-weight:bold;font-size:1.1em;color:#000;'},
                     { itemId: 'envLabel', html: '', flex: 1 ,style: 'font-size:1em;color:red;'}
-                ]
+                ],
+                columnWidth: 1
             },
             {
                 xtype: 'image',
@@ -141,6 +148,7 @@ Ext.define('SupplierApp.view.main.Main', {
                 style: 'width:25px;height:25px;',
                 margin: '30 55 0 0',
                 cls: 'image-grow',
+                columnWidth: 1,
                 listeners: {
                     render: function(img) {
                         // Cambia el cursor al pasar sobre la imagen

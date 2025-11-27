@@ -1025,3 +1025,62 @@ input[readonly].x-form-text {
     border: none !important;
     background: transparent !important;
 }
+
+
+
+/*ESTILO PARA LOGO EN CABECERO */
+
+/* Hace que el área del título NO se reduzca al hacer zoom */
+.x-panel-header .x-title {
+    min-width: 260px;   /* ajusta según tamaño de tu logo */
+}
+
+/* Previene que el texto/html del title se colapse */
+.x-panel-header .x-title-text {
+    display: inline-block !important;
+    min-width: 250px; /* un poco menos que el title */
+    white-space: nowrap;
+}
+
+/* También proteger el contenedor del title */
+.x-panel-header-text-container {
+    min-width: 250px;
+}
+
+
+/* Mover la imagen del title hacia la izquierda en tabs verticales */
+.x-tab-left .x-title-text {
+    text-align: left !important;
+    padding-left: 0 !important;
+}
+
+/* Evitar que ExtJS la centre automáticamente */
+.x-tab-left .x-title {
+    align-items: flex-start !important;
+}
+
+/* Forzar contenedor interno a alineación izquierda */
+.x-tab-left .x-tab-inner {
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+}
+
+
+
+.header-user-info-container {
+    flex-shrink: 0 !important;
+}
+
+/* Mantiene el logo del title totalmente a la izquierda */
+.x-panel-header .x-title {
+    column-width: 250px !important;  /* ajusta si es necesario */
+    padding-left: 0 !important;
+}
+
+/* Evita que ExtJS lo centre */
+.x-panel-header .x-title-text {
+    text-align: left !important;
+    padding-left: 0 !important;
+    display: block !important;
+}
+
