@@ -429,6 +429,7 @@
             {
               xtype: 'toolbar',
               dock: 'top',
+              padding: '0',
               layout: {
                   type: 'hbox'
               },
@@ -488,6 +489,10 @@
              {
                 xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
+                defaults: {
+                    margin: '5 5 10 0' 
+                },
                 layout: {
                     type: 'hbox'
                 },

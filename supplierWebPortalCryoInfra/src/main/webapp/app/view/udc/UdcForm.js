@@ -10,13 +10,72 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 
 		  
 			this.items= [{
+				xtype: 'toolbar',
+	            padding: '0',
+				defaults: { 
+					//margin: '0 10 0 0',
+				},
+				items :[{
+			    	  iconCls: 'icon-save',
+			    	  id: 'udcSave',
+			    	  itemId: 'save',
+			    	  text: SuppAppMsg.usersSave,
+			    	  action: 'save',
+			           cls: 'buttonStyle'
+			      },
+			      {
+			    	  iconCls: 'icon-delete',
+			    	  id: 'udcDelete',
+			    	  itemId: 'delete',
+			    	  text: 'Eliminar',
+			    	  action: 'delete',
+			    	  hidden: true,
+			            cls: 'buttonStyle'
+			      },
+			      {
+			    	  iconCls: 'icon-accept',
+			    	  id: 'udcUpdate',
+			    	  itemId: 'update',
+			    	  text: SuppAppMsg.usersUpdate,
+			    	  action: 'update',
+			    	  disabled: true,
+			            cls: 'buttonStyle'
+			      },
+			      {
+			    	  iconCls: 'icon-add',
+			    	  itemId: 'udcNew',
+			    	  text: SuppAppMsg.usersNew,
+			    	  action: 'new',
+			            cls: 'buttonStyle'
+			      },
+			      {
+                      name: 'searchUdc',
+                      itemId: 'searchUdc',
+                      emptyText: SuppAppMsg.suppliersSearch,
+                      xtype: 'trigger',
+                      triggerCls: 'x-form-search-trigger',
+                      onTriggerClick: function() {
+                    	    udcController.loadSearchList(this, this.getValue());
+                    },
+                      enableKeyEvents: true,
+                      listeners: {
+                    	  specialkey: function (field, e) {
+                    		  if (e.ENTER === e.getKey()) {
+                    			  field.onTriggerClick();
+                    		  }
+                    	  }
+                      }    
+                    
+              }]
+			},{
 				xtype: 'container',
 				layout: 'hbox',
-				margin: '10 15 0 10',
+				padding: '0',			
 				defaults: { 
 					labelWidth: 50, 
 					align: 'stretch',
-					labelAlign: 'top'
+					labelAlign: 'top',
+					margin: '0 10 0 0',
 				},
 				items       :[{
 					xtype: 'hidden',
@@ -87,12 +146,12 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 			{
 				xtype: 'container',
 				layout: 'hbox',
-				margin: '10 15 0 10',
-				width:'100%',
+				padding: '0',
 				defaults: { 
 					labelWidth: 50, 
 					align: 'stretch',
-					labelAlign: 'top'
+					labelAlign: 'top',
+					margin: '0 10 0 0',
 				},
 				items :[{
 					xtype:'textfield',
@@ -206,58 +265,6 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 				]
 			}];
 			
-			this.tbar=[      
-			      {
-			    	  iconCls: 'icon-save',
-			    	  id: 'udcSave',
-			    	  itemId: 'save',
-			    	  text: SuppAppMsg.usersSave,
-			    	  action: 'save',
-			            cls: 'buttonStyle'
-			      },
-			      {
-			    	  iconCls: 'icon-delete',
-			    	  id: 'udcDelete',
-			    	  itemId: 'delete',
-			    	  text: 'Eliminar',
-			    	  action: 'delete',
-			    	  hidden: true,
-			            cls: 'buttonStyle'
-			      },
-			      {
-			    	  iconCls: 'icon-accept',
-			    	  id: 'udcUpdate',
-			    	  itemId: 'update',
-			    	  text: SuppAppMsg.usersUpdate,
-			    	  action: 'update',
-			    	  disabled: true,
-			            cls: 'buttonStyle'
-			      },
-			      {
-			    	  iconCls: 'icon-add',
-			    	  itemId: 'udcNew',
-			    	  text: SuppAppMsg.usersNew,
-			    	  action: 'new',
-			            cls: 'buttonStyle'
-			      },
-			      {
-                      name: 'searchUdc',
-                      itemId: 'searchUdc',
-                      emptyText: SuppAppMsg.suppliersSearch,
-                      xtype: 'trigger',
-                      triggerCls: 'x-form-search-trigger',
-                      onTriggerClick: function() {
-                    	    udcController.loadSearchList(this, this.getValue());
-                    },
-                      enableKeyEvents: true,
-                      listeners: {
-                    	  specialkey: function (field, e) {
-                    		  if (e.ENTER === e.getKey()) {
-                    			  field.onTriggerClick();
-                    		  }
-                    	  }
-                      }
-              }];
 		  this.callParent(arguments);	    
 	  }
 

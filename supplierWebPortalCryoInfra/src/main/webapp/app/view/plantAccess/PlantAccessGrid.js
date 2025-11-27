@@ -351,6 +351,7 @@
         this.dockedItems = [
         	{   xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
                 layout: {
                     type: 'hbox',
                     align: 'middle',
@@ -415,13 +416,14 @@
         	{
             	xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
                 layout: {
                     type: 'hbox',
                     align: 'middle',
                     pack: 'start'
                 },
                 defaults: {
-                    //margin: '0 20 0 10' 
+                	margin: '5 5 10 0'
                 },
                 items: [{
        		xtype:'button',

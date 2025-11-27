@@ -241,6 +241,7 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
             {
               xtype: 'toolbar',
               dock: 'top',
+              padding: '0',
               items: [{
       			xtype: 'textfield',
                 fieldLabel: SuppAppMsg.suppliersNumber,
@@ -269,6 +270,10 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
              {
                 xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
+                defaults: {
+                    margin: '5 5 10 0' 
+                },
                 items: [{
                		xtype:'button',
                     hidden: role.includes('ROLE_SUPPLIER')?true:false,

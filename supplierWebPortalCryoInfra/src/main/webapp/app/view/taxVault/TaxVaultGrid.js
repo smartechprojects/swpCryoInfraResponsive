@@ -381,11 +381,11 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
     		{
                 xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
                 layout: { 
                 	type: 'hbox'
               		  },
                 defaults: { 
-                		flex: .3,
                         labelAlign: 'top'
                 		},
                 items: [
@@ -446,6 +446,10 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
     		{
                 xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
+                defaults: {
+                    margin: '5 5 10 0' 
+                },
                 layout: {
                     type: 'hbox'
                 },

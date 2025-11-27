@@ -500,21 +500,82 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
         
         
         
-        this.dockedItems = [
+        this.dockedItems = [{
+            xtype: 'toolbar',
+            dock: 'top',
+            padding: '0',
+            defaults: {
+          	  labelAlign: 'top'
+            },
+            items: [{ 
+      			xtype: 'combodoctype'
+      		},{
+      			xtype: 'textfield',
+                  fieldLabel: 'UUID',
+                  id: 'fdUUID',
+                  itemId: 'fdUUID',
+                  name:'fdUUID',
+                  //value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
+                  //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
+                  //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
+                  //width:300,
+                  flex: 1,
+                  labelWidth:30
+      		},{ 
+      			xtype: 'combostatus'
+      		},{
+      			xtype: 'textfield',
+                  fieldLabel: SuppAppMsg.purchaseOrderNumber,
+                  id: 'poNumberFD',
+                  itemId: 'poNumberFD',
+                  name:'poNumberFD',
+                  //width:170,
+                  flex: .3,
+                  labelWidth:70
+      		},{
+      			xtype: 'textfield',
+                  fieldLabel: SuppAppMsg.suppliersNumber,
+                  id: 'supNumberFD',
+                  itemId: 'supNumberFD',
+                  name:'supNumberFD',
+                  value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
+                  fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
+                  readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
+                 // width:190,
+                flex: .4,
+                  labelWidth:90
+      		},{
+				xtype: 'displayfield',
+	            value: '',
+	            flex:.3,
+
+            	}
+            ]},
             {
               xtype: 'toolbar',
               dock: 'top',
+              padding: '0',
               layout: {
                   type: 'hbox',
                   align: 'middle',
                   pack: 'start'
               },
               defaults: {
-                  //margin: '5 10 5 0'
-            	  labelAlign: 'top'
+            	  margin: '5 5 10 0' 
               },
               items: [
             	  {
+                 		xtype:'button',
+                      text: SuppAppMsg.suppliersSearch,
+                      iconCls: 'icon-appgo',
+                      action:'fdSearch',
+                      cls: 'buttonStyle',
+                      listeners: {
+  	                    tap: function (button) {
+  	                    	fdController.fdSearch(button);
+  	                    }
+  	                }
+          		},{
           			iconCls : 'icon-save',
           			itemId : 'uploadNewFiscalDoc',
           			id : 'uploadNewFiscalDoc',
@@ -542,68 +603,9 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
           					}
           				}
           			}
-          		},{ 
-          			xtype: 'combodoctype'
-          		},{
-          			xtype: 'textfield',
-                      fieldLabel: 'UUID',
-                      id: 'fdUUID',
-                      itemId: 'fdUUID',
-                      name:'fdUUID',
-                      //value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
-                      //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
-                      //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-                      //width:300,
-                      flex: 1,
-                      labelWidth:30
-          		},{ 
-          			xtype: 'combostatus'
-          		},{
-          			xtype: 'textfield',
-                      fieldLabel: SuppAppMsg.purchaseOrderNumber,
-                      id: 'poNumberFD',
-                      itemId: 'poNumberFD',
-                      name:'poNumberFD',
-                      //width:170,
-                      flex: .3,
-                      labelWidth:70
-          		},{
-          			xtype: 'textfield',
-                      fieldLabel: SuppAppMsg.suppliersNumber,
-                      id: 'supNumberFD',
-                      itemId: 'supNumberFD',
-                      name:'supNumberFD',
-                      value: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?addressNumber:'',
-                      fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
-                      readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
-                     // width:190,
-                    flex: .4,
-                      labelWidth:90
-          		},{
-					xtype: 'displayfield',
-		            value: '',
-		            flex:.3,
-
-	            	}
+          		}
               ]},
-             {
-                xtype: 'toolbar',
-                dock: 'top',
-                items: [
-                	
-                	{
-                   		xtype:'button',
-                        text: SuppAppMsg.suppliersSearch,
-                        iconCls: 'icon-appgo',
-                        action:'fdSearch',
-                        cls: 'buttonStyle',
-                        listeners: {
-    	                    tap: function (button) {
-    	                    	fdController.fdSearch(button);
-    	                    }
-    	                }
-            		}
-              ]},
+              
               getPagingContent()
       ];
 

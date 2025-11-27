@@ -397,9 +397,9 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
             {
               xtype: 'toolbar',
               dock: 'top',
+              padding: '0',
               defaults: {
                   labelAlign: 'top',
-                  flex:.3
               },
               items: [{
       			xtype: 'textfield',
@@ -456,6 +456,10 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
              {
                 xtype: 'toolbar',
                 dock: 'top',
+                padding: '0',
+                defaults: {
+                    margin: '5 5 10 0' 
+                },
                 items: [{
                		xtype:'button',
                		text: SuppAppMsg.suppliersSearch,

@@ -5,7 +5,7 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 	  initComponent: function() {		
 		  var tokenController = SupplierApp.app.getController("SupplierApp.controller.Token");
 		  
-			this.items= [{
+			/*this.items= [{
 				xtype : 'container',
 				layout : 'hbox',
 				defaults : {
@@ -90,15 +90,98 @@ Ext.define('SupplierApp.view.token.TokenForm' ,{
 	    			}
 				}
 				]
-			}];
+			}];*/
 
 			
 			this.dockedItems = [{
+	              xtype: 'toolbar',
+	              dock: 'top',
+	              padding: '0',
+	              defaults : {
+						labelAlign: 'top',
+						xtype : 'textfield',
+					},
+	              items: [{
+						xtype: 'hidden',
+						name: 'id',
+						hidden:true
+					},{
+	     				xtype : 'hidden',
+	     				name : 'createdBy',
+	     				id:'createdBy'
+	     			},{
+	     				xtype : 'hidden',
+	     				name : 'creationDate',
+	     				id:'creationDate',
+	     				format : 'd-M-Y',
+	     			},{
+	     				xtype : 'hidden',
+	     				name : 'expirationDate',
+	     				id:'creationDate',
+	     				format : 'd-M-Y',
+	     			},{
+	     				name : 'assigned',
+	     				xtype : 'checkbox',
+	     				hidden:true
+	     			},{
+						name: 'company',
+						hidden:true
+					},{
+						fieldLabel: window.navigator.language.startsWith("es", 0)? 'Nombre del Proveedor':'Name Supplier',
+								name: 'registerName',
+								width:350,
+								listeners:{
+									change: function(field, newValue, oldValue){
+										field.setValue(newValue.toUpperCase());
+									},
+									afterrender: function(field) {
+								        field.focus(true);
+								    }
+							    },
+							    allowBlank:false
+							},{
+								fieldLabel: window.navigator.language.startsWith("es", 0)? 'Correo electronico':'Email',
+								vtype : 'email',
+								name: 'email',
+								width:250,
+								allowBlank:false
+							},{
+								xtype : 'checkbox',
+								fieldLabel : window.navigator.language.startsWith("es", 0)? 'Registro activo?':'Active register?',
+								name : 'enabled',
+								//maxWidth : 300,
+								width: 90,
+								checked: true
+							},
+							{
+				      			name : 'searchAccessToken',
+				    			itemId : 'searchAccessToken',
+				    			emptyText : SuppAppMsg.suppliersSearch,
+				    			xtype : 'trigger',
+				    			maxWidth : 300,
+				    			fieldLabel: '&nbsp;',      // crea espacio de label arriba
+				    			labelSeparator: '',        // elimina los dos puntos
+				    			labelPad: 0, 
+				    			width : 250,
+				    			triggerCls : 'x-form-search-trigger',
+				    			onTriggerClick: function() {
+				    				tokenController.loadSearchList(this, this.getValue());
+				            },
+				    			enableKeyEvents : true,
+				    			listeners : {
+				    				specialkey : function(field, e) {
+				    					if (e.ENTER === e.getKey()) {
+				    						field.onTriggerClick();
+				    					}
+				    				}
+				    			}
+							}
+	              ]},{
 		        xtype: 'toolbar',
-		        dock: 'bottom', // Specify the dock position
+		        dock: 'top', // Specify the dock position
 		        padding: '0',
 		        defaults: {
-                    margin: '0 20 15 0' 
+		        	margin: '5 5 10 0'
                 },
 		        items: [
 		        	{

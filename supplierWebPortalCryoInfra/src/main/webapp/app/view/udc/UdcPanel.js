@@ -16,7 +16,7 @@ Ext.define('SupplierApp.view.udc.UdcPanel' ,{
             	flex:.25
             },{
            	 xtype: 'udcGrid',
-           	 flex:.75
+           	 flex:1
             }]
         });
         this.callParent(arguments);

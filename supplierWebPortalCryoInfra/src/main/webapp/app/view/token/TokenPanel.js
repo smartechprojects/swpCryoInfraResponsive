@@ -13,7 +13,7 @@ Ext.define('SupplierApp.view.token.TokenPanel' ,{
             },  
             items: [{
             	xtype: 'tokenForm',
-            	height: 100
+            	//height: 100
             },{
            	 xtype: 'tokenGrid',
            	 flex: 1
