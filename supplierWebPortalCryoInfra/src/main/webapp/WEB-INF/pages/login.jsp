@@ -175,7 +175,7 @@ form {
 /* Usuario (superior) */
 .input-username {
     border-radius: 7px 7px 0 0;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 /* Password (inferior) */
@@ -197,6 +197,13 @@ form {
     margin: 0 auto;  /* centra igual que usuario */
     position: relative;
     padding: 0; /* 🔥 evita desplazamientos */
+}
+
+.footer {
+    white-space: nowrap;         /* ❗ NO permite saltos de línea */
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
 }
 
 </style>
@@ -241,11 +248,11 @@ form {
          style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); 
                 cursor: pointer; width: 20px; height: 20px; z-index: 2; background: white; padding: 2px;">
 		</div>
-		<br /><br />
+		<br />
 		<button name="buttonLogin" type="submit"  class="newSupplierButton" onClick="login(this.form)">Login</button>
 		
 		</form>
-		<br />					
+		<br />		
 		<%--
 		<form action="${pageContext.request.contextPath}/newRegister.action" method="get">
 			<input type="submit" value="Click aquí para registrarse como nuevo proveedor" class="newSupplierButton" name="newSupplierText" />
@@ -259,16 +266,15 @@ form {
 		<a class="forgetPass" href="${pageContext.request.contextPath}/requestResetPassword.action" style="font-size:13px;text-align:center;"
 		                    >Olvidó su contraseña?</a>
 		
-		<p></p><p></p><p></p><p></p><br/>	         
+		<br/>	         
+		<br/>	
 		<a href="resources/Manual Proveedores V_1.1.pdf" download >
   		<p style="font-size:13px" class="downloadDocSupp">Descargar manual de proveedores</p>
 		</a> 
-		                  		
-	
-
-
+		
 	<div class="footer">
-	    &copy; 2000-2025 Smartech Consulting Group S.A. de C.V. Derechos Reservados.</div>
+	    &copy; 2000-2025 Smartech Consulting Group S.A. de C.V.<br>Derechos Reservados.
+	    </div>
 
  </div>
 
