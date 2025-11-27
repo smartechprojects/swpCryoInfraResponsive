@@ -115,7 +115,26 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 							//hidden : role == 'ROLE_SUPPLIER'?true:false,
 							hidden:true,
 							fieldStyle: 'font-weight:bold;font-size:20px;'
-							},{//DACG
+							},{
+								fieldLabel : SuppAppMsg.suppliersNumber,
+								name : 'addresNumber',
+								labelAlign:'center',
+								margin:'10 0 0 10',
+								flex:1,
+								readOnly:true,
+								allowBlank:true,
+								hidden:role=='ANONYMOUS'?true:false,
+								fieldStyle: 'border:none;background-color: #ddd; background-image: none;',
+							    tip: 'Este campo está protegido',
+							    listeners: {
+							      render: function(c) {
+							        Ext.create('Ext.tip.ToolTip', {
+							          target: c.getEl(),
+							          html: c.tip 
+							        });
+							      }
+							    }
+							    },{//DACG
 								name : 'dataUpdateList',
 								itemId : 'dataUpdateList',
 								id : 'dataUpdateList',
@@ -201,26 +220,6 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									cls: 'buttonStyle'
 								}]
 							},{
-								fieldLabel : SuppAppMsg.suppliersNumber,
-								name : 'addresNumber',
-								labelAlign:'center',
-								margin:'10 0 0 10',
-								flex:1,
-								colspan:3,
-								readOnly:true,
-								allowBlank:true,
-								hidden:role=='ANONYMOUS'?true:false,
-								fieldStyle: 'border:none;background-color: #ddd; background-image: none;',
-							    tip: 'Este campo está protegido',
-							    listeners: {
-							      render: function(c) {
-							        Ext.create('Ext.tip.ToolTip', {
-							          target: c.getEl(),
-							          html: c.tip 
-							        });
-							      }
-							    }
-							    },{
 								xtype: 'combobox',
 				                name: 'country',
 				                id: 'country',
