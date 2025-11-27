@@ -160,6 +160,44 @@ form {
     display: inline-block;
 }
 
+.input-login {
+    width: 100%;
+    max-width: 350px;
+    height: 40px;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    font-weight: 700;
+    font-size: 13.3333px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Usuario (superior) */
+.input-username {
+    border-radius: 7px 7px 0 0;
+    margin-bottom: 10px;
+}
+
+/* Password (inferior) */
+.input-password {
+    border-radius: 0 0 7px 7px;
+    padding-right: 35px; /* Espacio para el icono */
+    margin: 0 auto;
+    background: #ffffff !important;
+    color: #000 !important;
+    border: 1px solid #ccc !important;
+    -webkit-appearance: none !important; /* Safari + Chrome */
+    -moz-appearance: none !important;    /* Firefox */
+    appearance: none !important;         /* Edge */
+}
+
+.password-container {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;  /* centra igual que usuario */
+    position: relative;
+    padding: 0; /* 🔥 evita desplazamientos */
+}
 
 </style>
 
@@ -195,19 +233,10 @@ form {
 		    </c:when>    
 		</c:choose>
 		<form action="${pageContext.request.contextPath}/login" method="POST">           
-           <input type="text" placeholder="usuario" name="username" id="usernameField" 
-           style="width: 100%; max-width: 350px; padding: 6px 12px; height: 40px; box-sizing: border-box; margin-bottom: 10px; 
-           border: 1.11111px solid rgb(204, 204, 204); border-radius: 7px 7px 0px 0px; font-weight: 700; font-size: 13.3333px; 
-           font-family: Arial, Helvetica, sans-serif;" autofocus required>
+           <input type="text" placeholder="usuario" name="username" id="usernameField" class="input-login input-username" autofocus required>
 		
-		<div class="bar">
-			<i></i>
-		</div>
-		
-		<div class="password-container" style="position: relative; width: 100%; max-width: 350px; margin-bottom: 10px;">
-    <input type="password" maxlength="12" placeholder="contraseña" name="password" id="passwordField" 
-           style="width: 100%; padding: 6px 35px 6px 12px; height: 40px; box-sizing: border-box; border: 1.11111px solid rgb(204, 204, 204); 
-           border-radius: 0px 0px 7px 7px; font-weight: 700; font-size: 13.3333px; font-family: Arial, Helvetica, sans-serif;" required>
+		<div class="password-container" style="position: relative; width: 100%; max-width: 350px;">
+    <input type="password" maxlength="12" placeholder="contraseña" name="password" id="passwordField" class="input-login input-password" required>
     <img id="togglePassword" src="${url}/resources/images/eye-open.png" alt="Mostrar contraseña"
          style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); 
                 cursor: pointer; width: 20px; height: 20px; z-index: 2; background: white; padding: 2px;">
