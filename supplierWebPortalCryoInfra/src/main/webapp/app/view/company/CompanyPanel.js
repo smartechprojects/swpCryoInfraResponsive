@@ -4,7 +4,7 @@ Ext.define('SupplierApp.view.company.CompanyPanel' ,{
     border:false,
     frame:false,
     layout: 'fit', 
-    scrollable: true,
+    autoScroll : false,
 	initComponent: function () {
         Ext.apply(this, {
         	layout: {
@@ -14,19 +14,24 @@ Ext.define('SupplierApp.view.company.CompanyPanel' ,{
             items: [{
             	xtype: 'companyForm',
             	flex:1,
+            	border:true,
+            	itemId: 'companyForm'
             },{
            	 xtype: 'companyGrid',
            	flex:2,
+           	border:true,
+        	itemId: 'companyGrid' 
             }]
         });
         this.callParent(arguments);
-     // Ajustar layout responsivo
+     
+        // Ajustar layout responsivo
         this.on('afterrender', function() {
             var me = this;
             var updateResponsiveLayout = function() {
                 var viewportWidth = Ext.Element.getViewportWidth();
-                var form = me.down('#usersForm');
-                var grid = me.down('#usersGrid');
+                var form = me.down('#companyForm');
+                var grid = me.down('#companyGrid');
                 
                 if (form && grid) {
                 	debugger
@@ -37,7 +42,7 @@ Ext.define('SupplierApp.view.company.CompanyPanel' ,{
                 	    form.setFlex(1.8);
                 	    grid.setFlex(2);
                 	} else if (viewportWidth >= 1200 && viewportWidth <= 1500) {
-                	    form.setFlex(1.8);
+                	    form.setFlex(0.8);
                 	    grid.setFlex(2);
                 	} else { // viewportWidth > 1500
                 	    form.setFlex(1);
