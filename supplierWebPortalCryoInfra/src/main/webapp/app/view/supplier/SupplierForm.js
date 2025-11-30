@@ -686,13 +686,13 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								id:'contCheckEditDataSupp',
 								layout:'hbox',
 								colspan:3,
-								margin: '25 0 0 0',
+								margin: '0 0 0 0',
 							    width:'100%',
 							    items:[{
 									xtype : 'displayfield',
 									value : SuppAppMsg.supplierForm4,
 									height:20,
-									//margin: '50 0 0 10',
+									margin: '25 0 0 10',
 									colspan:3,
 									fieldStyle: 'font-weight:bold',
 								    fieldCls: 'no-border-displayfield'
@@ -700,7 +700,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									xtype : 'checkbox',
 									name : 'checkEditDataSupp',
 									id : 'checkEditDataSupp',
-									margin: '0 0 0 90',
+									margin: '20 0 0 90',
 									//width : 20,
 									flex:1,
 									checked: false,
@@ -896,7 +896,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                        value: SuppAppMsg.supplierForm71,
 				                        id: 'lblEditDataSupp',
 				                       // height:20,
-										margin: '0 0 0 0',
+										margin: '20 0 0 20',
 										colspan:3,
 										hidden: isMainSupplierUser ? false : true //Solo el proveedor puede modificar su información
 				                    }]
@@ -1069,7 +1069,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                allowBlank:false,
 				                minChars: 1,
 				                queryMode: 'local',
-		                        margin:'10 0 0 10',
+		                        margin:'15 0 0 10',
 				                //forceSelection: true,
 								store : getAutoLoadUDCStore('CONTRIB', '', '', ''),
 				                displayField: 'strValue1',
@@ -1220,7 +1220,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								xtype : 'displayfield',
 								value : SuppAppMsg.supplierForm9,
 								height:20,
-								margin: '25 0 0 0',
+								margin: '25 0 0 10',
 								colspan:3,
 								fieldStyle: 'font-weight:bold',
 								fieldCls: 'no-border-displayfield'
@@ -1261,12 +1261,17 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									//fieldStyle:role=='ANONYMOUS'?'':'border:2px solid green;'
 						   },{
 								xtype:'container',
-				                colspan:3,
 								layout: {
 								    type: 'hbox',
-								    pack: 'start',
+								  //  pack: 'start',
 								    align: 'stretch'
 								},
+								margin: '0 10 0 10',
+								colspan: 3,
+								width: '44%', 
+								defaults: {
+							        flex: 1 // Todos los hijos tendrán el mismo flex
+							    },
 								items: [
 									{
 										xtype:'textfield',
@@ -1274,10 +1279,12 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 										name : 'codigoPostal',
 										id : 'codigoPostal',
 										labelAlign:'right',
+										labelWidth: 130, 
+										//margin:'0 10 0 0',
 										margin:'0 10 0 0',
 										//width:200,
 										flex:1,
-										colspan:2,
+										//colspan:2,
 										allowBlank:false,
 										   listeners:{
 												change: function(field, newValue, oldValue){
@@ -1291,6 +1298,9 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 			            				  id : 'searchCP',
 			            				  text: SuppAppMsg.supplierForm13,	
 			            				  cls: 'buttonStyle',
+			            				  width: 100,
+			            				  margin: '0 10 0 0',
+			            				  flex: null,
 			            				  listeners: {		
 			            				      click: function() {
 			            				    	  var box = Ext.MessageBox.wait( SuppAppMsg.supplierProcessRequest , SuppAppMsg.approvalExecution);
@@ -1382,7 +1392,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								queryMode: 'local',
 								displayField: 'name',
 								valueField: 'id_',
-								margin:'10 0 0 10',
+								//margin:'0 10 0 0',
+								margin:'16 0 0 10',
 								triggerAction: 'all',
 					            forceSelection: false,
 					            editable: true,
@@ -1400,9 +1411,9 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									name : 'estado',
 									id : 'estado',
 									xtype: 'combobox',
-									margin:'10 0 0 10',
+									margin:'16 0 0 10',
 									typeAhead: true,
-									labelWidth: 100,
+									//labelWidth: 100,
 									//editable: false,
 					                typeAheadDelay: 100,
 					                allowBlank:false,
@@ -1490,13 +1501,13 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								id:'contCheckEditContact',
 								layout:'hbox',
 								colspan:3,
-								margin: '25 0 0 0',
+								margin: '0 0 0 0',
 							    width:'100%',
 							    items:[{
 									xtype : 'displayfield',
 									value : SuppAppMsg.supplierForm19,
 									height:20,
-									//margin: '50 0 0 10',
+									margin: '25 0 0 10',
 									colspan:3,
 									fieldStyle: 'font-weight:bold',
 									fieldCls: 'no-border-displayfield'
@@ -1504,7 +1515,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									xtype : 'checkbox',
 									name : 'checkEditContact',
 									id : 'checkEditContact',
-									margin: '0 0 0 90',
+									margin: '20 0 0 90',
 									//width : 20,
 									flex:1,
 									checked: false,
@@ -1572,7 +1583,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                        value: SuppAppMsg.supplierForm71,
 				                        id: 'lblEditContact',
 				                       // height:20,
-										margin: '0 0 0 0',
+				                        margin: '20 0 0 20',
 										colspan:3,
 										hidden: isMainSupplierUser ? false : true //Solo el proveedor puede modificar su información
 				                    }]
@@ -1703,7 +1714,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								xtype : 'displayfield',
 								value : SuppAppMsg.supplierForm72,
 								height:20,
-								margin: '25 0 0 0',
+								margin: '25 0 0 10',
 								colspan:3,
 								width:'100%',
 								fieldStyle: 'font-weight:bold',
@@ -1714,7 +1725,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									id : 'emailSupplier',
 									//width:450,
 									flex:1,
-									margin:'10 0 0 10',
+									margin:'13 0 0 10',
 									allowBlank:false,blankText: SuppAppMsg.supplierForm74,
 									blankText: SuppAppMsg.supplierForm74,
 									maxLength : 254,
@@ -1747,7 +1758,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								fieldLabel : SuppAppMsg.supplierForm26 + ' 01*',
 								name : 'nombreCxP01',
 								id:'nombreCxP01',
-								margin:'10 0 0 10',
+								margin:'13 0 0 10',
 								//width:400,
 								flex:1,
 								allowBlank:false,
@@ -2299,13 +2310,13 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								id:'contCheckEditDataBank',
 								layout:'hbox',
 								colspan:3,
-								margin: '25 0 0 0',
+								margin: '0 0 0 0',
 							    width:'100%',
 							    items:[{
 									xtype : 'displayfield',
 									value : SuppAppMsg.supplierForm32,
 									height:20,
-									//margin: '50 0 0 10',
+									margin: '30 0 0 10',
 									colspan:3,
 									fieldStyle: 'font-weight:bold',
 									fieldCls: 'no-border-displayfield'
@@ -2313,7 +2324,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									xtype : 'checkbox',
 									name : 'checkEditDataBank',
 									id : 'checkEditDataBank',
-									margin: '0 0 0 90',
+									margin: '20 0 0 90',
 									//width : 20,
 									flex:1,
 									checked: false,
@@ -2379,7 +2390,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                        value: SuppAppMsg.supplierForm71,
 				                        id: 'lblEditDataBank',
 				                       // height:20,
-										margin: '0 0 0 0',
+				                        margin: '20 0 0 20',
 										colspan:3,
 										hidden: isMainSupplierUser ? false : true //Solo el proveedor puede modificar su información
 				                    }]
@@ -2470,7 +2481,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								typeAhead: true,
 				                typeAheadDelay: 100,
 				                allowBlank:false,
-                                margin:'16 0 0 10',
+                                margin:'8 0 0 10',
 				                //editable: false,
 				                minChars: 1,
 				                queryMode: 'local',
@@ -2539,6 +2550,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 								margin:'16 0 0 10',
 								//width:400,
 								flex:1,
+								colspan:3,
 								maxLength : 34,
 								readOnly:role == 'ANONYMOUS' ||role == 'ROLE_SUPPLIER' ? false:true,
 								allowBlank:true,
