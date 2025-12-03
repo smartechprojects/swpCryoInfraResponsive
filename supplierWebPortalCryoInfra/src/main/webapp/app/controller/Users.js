@@ -230,10 +230,12 @@ Ext.define('SupplierApp.controller.Users', {
                                 store.reload({
                                     callback: function() {
                                         if (selectedUserName) {
+                                        	
                                             // Buscar por userName en lugar de ID
                                             var updatedRecord = store.findRecord('userName', selectedUserName, 0, false, true, true);
                                             if (updatedRecord) {
                                                 // IMPORTANTE: Primero seleccionar en el grid
+                                            	
                                                 grid.getSelectionModel().select(updatedRecord);
                                                 // Luego cargar en el formulario
                                                 form.loadRecord(updatedRecord);
@@ -252,6 +254,8 @@ Ext.define('SupplierApp.controller.Users', {
                                                 if (typeCombo && updatedRecord.data.userType) {
                                                     typeCombo.store.load({
                                                         callback: function() {
+                                                        	
+                                                        	Ext.Msg.hide();  
                                                             typeCombo.setValue(updatedRecord.data.userType.id);
                                                             // Configurar visibilidad después de cargar combos
                                                             me.configurarVisibilidadDespuesUpdate(updatedRecord);
@@ -260,6 +264,7 @@ Ext.define('SupplierApp.controller.Users', {
                                                 }
                                             }
                                         }
+                                        
                                         grid.getView().refresh();
                                         me.enableUpdate();
                                         box.hide();
@@ -315,7 +320,7 @@ Ext.define('SupplierApp.controller.Users', {
     },
     
  // Función auxiliar para configurar visibilidad después del update
-    configurarVisibilidadDespuesUpdate: function(record) {
+    configurarVisibilidadDespuesUpdate: function(record) {    	
         var uRole = record.get('userRole.strValue1') || record.data.role;
         var uIsSupplier = record.get('supplier');
         var uIsSubUser = record.get('subUser');
