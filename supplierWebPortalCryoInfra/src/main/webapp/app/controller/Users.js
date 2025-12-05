@@ -205,6 +205,13 @@ Ext.define('SupplierApp.controller.Users', {
         	var selectedUserName = record ? record.get('userName') : null; // Guardar el userName en lugar del ID
         	
         	values = form.getFieldValues();
+        	
+        	// Asegurarse de que todos los campos estén incluidos
+            if (values.enabled === undefined) {
+                // Si el checkbox desactivado no envía valor, forzar false
+                values.enabled = false;
+            }
+        	
         	updatedRecord = populateObj(record, values);
         	
             if (values.id > 0){
@@ -212,6 +219,7 @@ Ext.define('SupplierApp.controller.Users', {
         		record.set(updatedRecord);
         		record.save({
         			callback: function (records, o, success, msg) {
+        				
         				if(success == true){
         		    		var r1 = Ext.decode(o._response.responseText);
         			    	var res = Ext.decode(r1);
@@ -229,6 +237,7 @@ Ext.define('SupplierApp.controller.Users', {
         			        	 // Recargar el store
                                 store.reload({
                                     callback: function() {
+                                    	
                                         if (selectedUserName) {
                                         	
                                             // Buscar por userName en lugar de ID
