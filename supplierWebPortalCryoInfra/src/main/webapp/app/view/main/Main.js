@@ -122,7 +122,7 @@ Ext.define('SupplierApp.view.main.Main', {
                 xtype: 'image',
                 src: (navigator.language || navigator.userLanguage).startsWith('es') 
                 ? 'resources/images/hdr-logo.png' 
-                : 'resources/images/hdr-logo.png',
+                : 'resources/images/hdr-logo-en.png',
                 margin: '25 0 0 0',
                 height: 25,
                 width: 230,
