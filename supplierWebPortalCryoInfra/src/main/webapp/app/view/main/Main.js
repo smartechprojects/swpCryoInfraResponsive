@@ -120,7 +120,9 @@ Ext.define('SupplierApp.view.main.Main', {
         items: [
         	 {
                 xtype: 'image',
-                src: 'resources/images/hdr-logo.png',
+                src: (navigator.language || navigator.userLanguage).startsWith('es') 
+                ? 'resources/images/hdr-logo.png' 
+                : 'resources/images/hdr-logo.png',
                 margin: '25 0 0 0',
                 height: 25,
                 width: 230,
@@ -144,7 +146,7 @@ Ext.define('SupplierApp.view.main.Main', {
             },
             {
                 xtype: 'image',
-                src: 'resources/images/logout-icon.png',
+                src: 'resources/images/logout-icon-red.png',
                 style: 'width:25px;height:25px;',
                 margin: '30 55 0 0',
                 cls: 'image-grow',

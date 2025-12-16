@@ -115,6 +115,7 @@ th {
         flex-direction: column;
         height: auto;
         min-height: 100vh;
+        background-color: #EFF5F9 !important; 
     }
 
     /* Ocultar panel izquierdo */
@@ -129,6 +130,7 @@ th {
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #EFF5F9 !important;
     }
 
     /* Ajustes del login */
@@ -138,10 +140,10 @@ th {
         width: 100%;
         padding: 20px;
         box-sizing: border-box;
-
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #EFF5F9 !important; 
     }
 
     .login-box {
@@ -210,19 +212,41 @@ form {
 
 </head>
 
-<body>
+<body style="background-color: #EFF5F9 !important;">
 
-<div style="display:flex; height:100vh; width:100%;">
+<div style="display:flex; height:100vh; width:100%;background-color: #EFF5F9 !important;">
 
-    <!-- IZQUIERDA 2/3 -->
-    <div style="flex:2; display:flex;">
+<!-- IZQUIERDA 2/3 -->
+    <!-- <div style="flex:2; display:flex;background-color: #EFF5F9 !important;">
         <img src="resources/images/Logo-Oficial-Login.jpg"
              style="max-width:100%; max-height:100%; object-fit:contain;">
+    </div> -->
+
+<!-- IZQUIERDA 2/3 -->
+<div style="flex:2; display:flex; background-color: #EFF5F9 !important; position: relative;">
+    
+    <div style="position: relative; width: 100%; height: 100%;">
+        
+        <!-- La imagen -->
+        <img src="resources/images/Logo-Oficial-Login.jpg"
+             style="width:100%; height:100%; object-fit:contain;">
+        
+        <!-- Texto superpuesto -->
+        <div style="position: absolute; top: 9%; left: 0; width: 100%; 
+                    text-align: center;">
+            <h1 style="color: white; font-family: Arial, Helvetica, sans-serif; 
+                       font-size: 40px; font-weight: bold; margin: 0;
+                       text-shadow: 2px 2px 8px black;">
+                Portal de Proveedores
+            </h1>
+        </div>
+        
     </div>
+</div>
 
     <!-- DERECHA 1/3  -->
-    <div style="flex:1; display:flex; justify-content:center; align-items:center; height:100%;">
-     <div class="login-container">
+    <div style="flex:1; display:flex; justify-content:center; align-items:center; height:100%;background-color: #EFF5F9 !important;">
+     <div class="login-container" style="background-color: #EFF5F9 !important;">
       <div class="login-box">
       <div id="loading" style="display:none;"></div>
       
@@ -263,7 +287,7 @@ form {
 			<input style="width:180px;" type="submit" value="Tickets de solicitud" class="newSupplierButton"/>
 		</form>
 		<br />
-		<a class="forgetPass" href="${pageContext.request.contextPath}/requestResetPassword.action" style="font-size:13px;text-align:center;"
+		<a class="forgetPass" href="${pageContext.request.contextPath}/requestResetPassword.action" style="font-size:13px;text-align:center;font-weight: bold;"
 		                    >Olvidó su contraseña?</a>
 		
 		<br/>	         
@@ -272,7 +296,7 @@ form {
   		<p style="font-size:13px" class="downloadDocSupp">Descargar manual de proveedores</p>
 		</a> 
 		
-	<div class="footer">
+	<div class="footer" style="background-color: #EFF5F9 !important;">
 	    &copy; 2000-2025 Smartech Consulting Group S.A. de C.V.<br>Derechos Reservados.
 	    </div>
 
