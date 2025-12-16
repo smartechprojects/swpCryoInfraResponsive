@@ -129,7 +129,7 @@ public class FiscalDocumentDao {
 		String sqlFilter = "";
 		
 		try {
-			if(!"".equals(uuid) || !"".equals(status) || !"".equals(documentType) || !"".equals(addressNumber) || orderNumber > 0) {
+			//if(!"".equals(uuid) || !"".equals(status) || !"".equals(documentType) || !"".equals(addressNumber) || orderNumber > 0) {
 				
 				if(orderNumber > 0) {
 					sqlFilter = sqlFilter + " and orderNumber = :orderNumber ";
@@ -313,9 +313,9 @@ public class FiscalDocumentDao {
 				dtoList = query.list();	
 				
 				return dtoList;				
-			} else {
+			/*} else {
 				return null;
-			}	
+			}*/	
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -739,7 +739,7 @@ public class FiscalDocumentDao {
 		 if(!b) {
 		 criteria.add(Subqueries.propertyIn("id",subquery));
 		 }
-		if(!"".equals(accountingAccount) || !"".equals(status)||!"".equals(batchIdParam)||!"".equals(semanaPago)) {
+		//if(!"".equals(accountingAccount) || !"".equals(status)||!"".equals(batchIdParam)||!"".equals(semanaPago)) {
 			if(!"".equals(accountingAccount)) criteria.add(Restrictions.eq("accountingAccount", accountingAccount));
 			if(!"".equals(semanaPago)) criteria.add(Restrictions.like("semanaPago", "%"+semanaPago+"%"));
 			if(!"".equals(status)) { 
@@ -753,9 +753,9 @@ public class FiscalDocumentDao {
 			
 			criteria.addOrder(Order.desc("id"));
 			return criteria.list();
-		} else {
+		/*} else {
 			return null;
-		}
+		}*/
 		
 
 	}
@@ -774,7 +774,7 @@ public class FiscalDocumentDao {
 	    if(!b) {
 	    criteria.add(Subqueries.propertyIn("id", subquery));
 	    }
-	    if (!"".equals(accountingAccount) || !"".equals(status) || !"".equals(batchIdParam) || !"".equals(semanaPago)) {
+	    //if (!"".equals(accountingAccount) || !"".equals(status) || !"".equals(batchIdParam) || !"".equals(semanaPago)) {
 	        if (!"".equals(accountingAccount)) criteria.add(Restrictions.eq("accountingAccount", accountingAccount));
 	        if (!"".equals(semanaPago)) criteria.add(Restrictions.like("semanaPago", "%" + semanaPago + "%"));
 	        if (!"".equals(status)) {
@@ -787,9 +787,9 @@ public class FiscalDocumentDao {
 	        criteria.equals(Restrictions.eq("toSend", 0));
 
 	        return (Long) criteria.uniqueResult();
-	    } else {
+	    /*} else {
 	        return null;
-	    }
+	    }*/
 	}
 
 	

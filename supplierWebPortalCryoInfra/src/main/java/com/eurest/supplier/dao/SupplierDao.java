@@ -145,7 +145,7 @@ public class SupplierDao {
     criteria.add((Criterion)Restrictions.ne("approvalStatus", "PENDIENTE"));
     criteria.setFirstResult(start);
     criteria.setMaxResults(limit);
-    boolean fields = false;
+    boolean fields = true;
     try {
       if (!"".equals(supAddNbr)) {
         criteria.add((Criterion)Restrictions.eq("addresNumber", supAddNbr));
@@ -192,7 +192,7 @@ public class SupplierDao {
     Criteria criteria = session.createCriteria(Supplier.class);
     criteria.add((Criterion)Restrictions.ne("approvalStatus", "PENDIENTE"));
     //criteria.add((Criterion)Restrictions.ne("observaciones", "INHABILITADO"));
-    boolean fields = false;
+    boolean fields = true;
     Long totalResult = Long.valueOf(0L);
     try {
       if (!"".equals(supAddNbr)) {
