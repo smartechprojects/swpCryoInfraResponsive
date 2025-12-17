@@ -13,8 +13,13 @@
 
 
 
-.x-tab-bar .x-box-inner {
+/*.x-tab-bar .x-box-inner {
     overflow: hidden !important;
+}*/
+
+.x-tab-bar .x-box-inner {
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .center-table{
@@ -1075,6 +1080,8 @@ input[readonly].x-form-text {
 .x-panel-header .x-title {
     column-width: 250px !important;  /* ajusta si es necesario */
     padding-left: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Evita que ExtJS lo centre */
@@ -1083,4 +1090,105 @@ input[readonly].x-form-text {
     padding-left: 0 !important;
     display: block !important;
 }
+
+
+/* HEADER DEL LOGO */
+.nav-logo-header {
+     height: 80px;    
+    background-color: #00306E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* CONTENEDOR INTERNO */
+.nav-logo-wrapper {
+    width: 100%;                /* 👈 ocupa todo el ancho */
+    text-align: center;
+}
+
+/* IMAGEN */
+.nav-logo-wrapper img {
+    width: 80%;                 /* 👈 CLAVE */
+    max-width: 220px;           /* límite real */
+    max-height: 48px;  
+    height: auto;
+    display: inline-block;
+    object-fit: contain;
+    transition: all 0.2s ease; 
+}
+
+.nav-logo-wrapper.collapsed img {
+    width: 16px;                /* Tamaño fijo para estado colapsado */
+    height: 16px;               /* Tamaño fijo para estado colapsado */
+    max-width: 16px !important;
+    max-height: 16px !important;
+}
+
+/*Ajustar menu hasta arriba*/
+.header-left-strip {
+    background-color: #00306E;
+}
+
+/* Contenedor principal del header */
+.custom-header-title {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* Contenedor que Ext JS usa para el título */
+.custom-header-title .x-title-text {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important; /* ocupa todo el ancho */
+    display: flex;
+    height: 100% 
+}
+
+/* Div interno que contiene tu texto "vcv" */
+.title-vcv {
+    background-color: #00306E;
+    color: #fff;
+    padding: 80px 0px;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+    width: 220px;           /* fuerza que ocupe todo el ancho */
+    box-sizing: border-box; /* que el padding no aumente el ancho */
+    height: 100%;
+}
+
+
+/* Versión colapsada del título */
+.title-vcv-collapsed {
+    background-color: #00306E;
+    color: #fff;
+    width: 46px; /* Mismo ancho que el tabBar colapsado */
+    height: 80px;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra el contenido */
+    box-sizing: border-box;
+    overflow: hidden; /* Oculta el texto "vcv" */
+}
+
+/* Versión expandida del título (ya existente) */
+.title-vcv {
+    background-color: #00306E;
+    color: #fff;
+    width: 220px; /* Mismo ancho que el tabBar expandido */
+    height: 80px;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+
 

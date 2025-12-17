@@ -208,6 +208,19 @@ form {
     font-size: 12px;
 }
 
+.error {
+    background-color: #EFF5F9 !important;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    color: red;
+}
+
+.error span {
+    color: red;
+    font-weight: bold;
+}
+
 </style>
 
 </head>

@@ -11,6 +11,16 @@ Ext.define('SupplierApp.view.main.Main', {
            // 'max-height': '100vh',  // ✅ limita el alto al viewport visible
         },
         items: [
+        	 {
+                 xtype: 'component',
+                 cls: 'nav-logo-header',
+                 itemId: 'navLogo',
+                 html: `
+                     <div class="nav-logo-wrapper">
+                         <img src="resources/images/cryoinfraBlanco.png" />
+                     </div>
+                 `
+             },
             {
                 xtype: 'button',
                 iconCls: 'fa fa-compress',
@@ -26,7 +36,7 @@ Ext.define('SupplierApp.view.main.Main', {
                 },
                 
 	            handler: function() {
-	            	var panel = this.up('tabpanel');
+	            	/*var panel = this.up('tabpanel');
 	                var tWidth = panel.tabBar.getWidth();
 	                if (tWidth >= 100) {
 	                panel.tabBar.width = 46;
@@ -34,7 +44,90 @@ Ext.define('SupplierApp.view.main.Main', {
 	                } else {
 	                    panel.tabBar.width = 220;
 	                    panel.updateLayout();
+	                }*/
+	            	
+	            	var panel = this.up('tabpanel');
+	                var w = panel.tabBar.getWidth();
+
+	                panel.tabBar.setWidth(w >= 100 ? 46 : 220);
+	                
+	                var logoCmp = panel.tabBar.down('#navLogo');
+	                var el = logoCmp.getEl();
+	                var wrapper = el.down('.nav-logo-wrapper');
+	                var imgEl   = logoCmp.el.down('img');
+
+	                if (w >= 100) {
+	                    //COLAPSADO
+	                    imgEl.set({
+	                        src: 'resources/images/cryoinfraBlanco-icono.png'
+	                    });
+	                    
+	                    imgEl.setStyle({
+	                        display: 'block',
+	                        maxWidth: '16px',
+	                        maxHeight: '16px',
+	                        marginLeft: '25px',   
+	                        marginRight: '0',
+	                        position: 'static'    
+	                    });
+	                    
+	                    // COLAPSAR EL HEADER TAMBIÉN
+	                    // Encontrar el contenedor del título en el header
+	                    var header = panel.header;
+	                    var titleComponent = header.down('component[html*="title-vcv"]') || 
+	                                        header.down('.title-vcv') ||
+	                                        header.getTitle();
+	                    
+	                    if (titleComponent) {
+	                        // Cambiar el HTML del título para versión colapsada
+	                        if (titleComponent.setHtml) {
+	                            titleComponent.setHtml('<div class="title-vcv-collapsed"></div>');
+	                        } else if (titleComponent.update) {
+	                            titleComponent.update('<div class="title-vcv-collapsed"></div>');
+	                        }
+	                        
+	                        // También ajustar el ancho del contenedor del header si es necesario
+	                        var headerStrip = header.down('.header-left-strip');
+	                        if (headerStrip) {
+	                            headerStrip.setWidth(46);
+	                        }
+	                    }
+	                    
+
+	                } else {
+	                    //EXPANDIDO
+	                    imgEl.set({
+	                        src: 'resources/images/cryoinfraBlanco.png'
+	                    });
+	                    
+	                    imgEl.setStyle({
+	                    	maxWidth: '220',  // Aumentado de 160px a 200px
+	                        maxHeight: '48px'   // Aumentado de 60px a 70px
+	                    });
+	                    
+	                 // EXPANDIR EL HEADER TAMBIÉN
+	                    var header = panel.header;
+	                    var titleComponent = header.down('component[html*="title-vcv"]') || 
+	                                        header.down('.title-vcv') ||
+	                                        header.getTitle();
+	                    
+	                    if (titleComponent) {
+	                        // Restaurar el HTML del título para versión expandida
+	                        if (titleComponent.setHtml) {
+	                            titleComponent.setHtml('<div class="title-vcv"></div>');
+	                        } else if (titleComponent.update) {
+	                            titleComponent.update('<div class="title-vcv"></div>');
+	                        }
+	                        
+	                        // Restaurar el ancho del contenedor del header
+	                        var headerStrip = header.down('.header-left-strip');
+	                        if (headerStrip) {
+	                            headerStrip.setWidth(220);
+	                        }
+	                    }
 	                }
+	                
+	                panel.updateLayout();
 	
 	            }
             }
@@ -110,14 +203,35 @@ Ext.define('SupplierApp.view.main.Main', {
         height:80,
         style: { backgroundColor: '#FFFFFF', padding: '0px' },
         //title: '<img src="resources/images/CryoInfra-logo-gris.png" style="max-width: 60%; display: block; height: auto;">',
-        title: '<img src="resources/images/CryoInfra-logo.png" style="height:70px; width:auto; object-fit:contain; display:block;">',
+        //title: '<img src="resources/images/CryoInfra-logo.png" style="height:70px; width:auto; object-fit:contain; display:block;">',
+       // title: '<div style="background-color:#00306E;color:#fff;padding:50px 10px;font-weight:bold;">vcv</div>',
+        title: '<div class="title-vcv"></div>',
         tabConfig: {
-            width: 220,
-            textAlign: 'left'   // ayuda pero no es suficiente sin el CSS
-        },
-
-        layout: { type: 'hbox', align: 'left', pack: 'start' },
+        width: 120,
+        height:80,
+        textAlign: 'left'   
+    },
+        layout: { type: 'hbox', align: 'left', pack: 'center' },
         items: [
+        	/*{
+                xtype: 'container',
+                width: 220,
+                cls: 'header-left-strip',
+                layout: {
+                    type: 'hbox',
+                    align: 'left'
+                },
+                items: [
+                    {
+                        xtype: 'component',
+                        html: 'vcv',
+                        style: {
+                            backgroundColor: '#00306E',
+                        }
+                    }
+                ]
+        	},*/
+        	
         	 {
                 xtype: 'image',
                 src: (navigator.language || navigator.userLanguage).startsWith('es') 
@@ -128,7 +242,8 @@ Ext.define('SupplierApp.view.main.Main', {
                 width: 230,
                 cls: 'header-user-info-container',
                 columnWidth: 1
-            },{
+            }
+        	 ,{
                 xtype: 'tbspacer', 
                 flex: 1,
                 columnWidth: 1
@@ -136,7 +251,7 @@ Ext.define('SupplierApp.view.main.Main', {
                 xtype: 'container',
                 layout: 'vbox',
                 margin: '25 100 10 0',
-                defaults: { xtype: 'label', style: 'color:#3F484D;' },
+                defaults: { xtype: 'label', style: 'color:#3F484D;'  },
                 items: [
                     { itemId: 'displayNameLabel', html: '', margin: '0 0 5 0',style: 'font-weight:bold;font-size:1.1em;color:#000;' },
                     { itemId: 'userInfoLabel', html: '', flex: 1 ,style: 'font-weight:bold;font-size:1.1em;color:#000;'},
@@ -244,8 +359,10 @@ Ext.define('SupplierApp.view.main.Main', {
                 textAlign: 'left'
             },
             tall: {
-                iconAlign: 'top',
-                textAlign: 'center',
+               // iconAlign: 'top',
+               // textAlign: 'center',
+            	iconAlign: 'left',
+                textAlign: 'left',
                 width: 120
             }
         },
@@ -781,6 +898,23 @@ Ext.define('SupplierApp.view.main.Main', {
 	xtype : 'panel',
 	id:'tabHelpId',
 	iconCls: 'fa fa-question',
-    }
+    }/*,
+    {
+        xtype : 'panel',
+        id: 'tabLogo',
+        title: '',
+        tabConfig: {
+            text: '',
+            cls: 'nav-logo-tab',
+            html: `
+                <div class="nav-logo-wrapper">
+                    <img src="resources/images/cryoinfraBlanco.png" />
+                </div>
+            `
+        }
+    }*/
+
+
+    
 	]
 });
