@@ -252,7 +252,22 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                 value: role.includes('ROLE_SUPPLIER')?addressNumber:'',
                 fieldStyle: role.includes('ROLE_SUPPLIER')?'border:none;background-color: #ddd; background-image: none;':'',
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
-                width:150
+                width:150,
+                listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="supAddNbrSrch"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
     		},{
     			xtype: 'textfield',
                 labelAlign:'top',
@@ -264,7 +279,22 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                 fieldStyle: role.includes('ROLE_SUPPLIER')?'border:none;background-color: #ddd; background-image: none;':'',
                 readOnly: role.includes('ROLE_SUPPLIER')?true:false,
                 width:380,
-                labelWidth:70
+                labelWidth:70,
+                listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="supAddNbrSrch"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
     		}
               ]},
              {
@@ -280,6 +310,8 @@ Ext.define('SupplierApp.view.supplier.SupplierGrid' ,{
                     text: SuppAppMsg.suppliersSearch,
                     iconCls: 'icon-doSearch',
                     action:'supAddNbrSrch',
+                    id:'supAddNbrSrch',
+                    itemId:'supAddNbrSrch',
 	                cls: 'buttonStyle'
         		},{
                		xtype:'button',

@@ -508,7 +508,22 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
           	  labelAlign: 'top'
             },
             items: [{ 
-      			xtype: 'combodoctype'
+      			xtype: 'combodoctype',
+      			listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="fdSearch"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
       		},{
       			xtype: 'textfield',
                   fieldLabel: 'UUID',
@@ -520,9 +535,39 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                   //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
                   //width:300,
                   flex: 1,
-                  labelWidth:30
+                  labelWidth:30,
+                  listeners: {
+                      specialkey: function(field, e) {
+                          if (e.getKey() === e.ENTER) {
+                              // Buscar el botón en el grid completo
+                              var grid = field.up('grid');
+                              if (grid) {
+                                  var button = grid.down('button[action="fdSearch"]');
+                                  if (button) {
+                                      // Disparar el evento click del botón
+                                      button.fireEvent('click', button);
+                                  }
+                              }
+                          }
+                      }
+                  }
       		},{ 
-      			xtype: 'combostatus'
+      			xtype: 'combostatus',
+      			listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="fdSearch"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
       		},{
       			xtype: 'textfield',
                   fieldLabel: SuppAppMsg.purchaseOrderNumber,
@@ -531,7 +576,22 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                   name:'poNumberFD',
                   //width:170,
                   flex: .3,
-                  labelWidth:70
+                  labelWidth:70,
+                  listeners: {
+                      specialkey: function(field, e) {
+                          if (e.getKey() === e.ENTER) {
+                              // Buscar el botón en el grid completo
+                              var grid = field.up('grid');
+                              if (grid) {
+                                  var button = grid.down('button[action="fdSearch"]');
+                                  if (button) {
+                                      // Disparar el evento click del botón
+                                      button.fireEvent('click', button);
+                                  }
+                              }
+                          }
+                      }
+                  }
       		},{
       			xtype: 'textfield',
                   fieldLabel: SuppAppMsg.suppliersNumber,
@@ -542,8 +602,23 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                   fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                   readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
                  // width:190,
-                flex: .4,
-                  labelWidth:90
+                  flex: .4,
+                  labelWidth:90,
+                  listeners: {
+                      specialkey: function(field, e) {
+                          if (e.getKey() === e.ENTER) {
+                              // Buscar el botón en el grid completo
+                              var grid = field.up('grid');
+                              if (grid) {
+                                  var button = grid.down('button[action="fdSearch"]');
+                                  if (button) {
+                                      // Disparar el evento click del botón
+                                      button.fireEvent('click', button);
+                                  }
+                              }
+                          }
+                      }
+                  }
       		},{
 				xtype: 'displayfield',
 	            value: '',

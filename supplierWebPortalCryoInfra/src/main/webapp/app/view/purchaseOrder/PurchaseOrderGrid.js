@@ -856,6 +856,21 @@
 			            itemId: 'poNumber',
 			            name:'poNumber',
 			            flex : .5,
+			            listeners: {
+		                    specialkey: function(field, e) {
+		                        if (e.getKey() === e.ENTER) {
+		                            // Buscar el botón en el grid completo
+		                            var grid = field.up('grid');
+		                            if (grid) {
+		                                var button = grid.down('button[action="poSearch"]');
+		                                if (button) {
+		                                    // Disparar el evento click del botón
+		                                    button.fireEvent('click', button);
+		                                }
+		                            }
+		                        }
+		                    }
+		                }
 					},
 					{
 						xtype: 'textfield',
@@ -869,8 +884,23 @@
 			            //width:150,
 			            //labelWidth:90,
 			            //margin:'20 20 0 10',
-			           	flex : .5
+			           	flex : .5,
 			           //labelAlign: 'top'
+			           	listeners: {
+		                    specialkey: function(field, e) {
+		                        if (e.getKey() === e.ENTER) {
+		                            // Buscar el botón en el grid completo
+		                            var grid = field.up('grid');
+		                            if (grid) {
+		                                var button = grid.down('button[action="poSearch"]');
+		                                if (button) {
+		                                    // Disparar el evento click del botón
+		                                    button.fireEvent('click', button);
+		                                }
+		                            }
+		                        }
+		                    }
+		                }
 					},{
 						 xtype: 'datefield',
 						    fieldLabel: SuppAppMsg.purchaseOrderDesde,
@@ -878,10 +908,25 @@
 						    itemId: 'poFromDate',
 						    name: 'poFromDate',
 						    //width: 100,
-						    flex : .5
+						    flex : .5,
 						    //labelWidth: 35,
 						    //margin: '0 20 0 10',
 						    //labelAlign: 'top' // Set label position to top
+						    listeners: {
+			                    specialkey: function(field, e) {
+			                        if (e.getKey() === e.ENTER) {
+			                            // Buscar el botón en el grid completo
+			                            var grid = field.up('grid');
+			                            if (grid) {
+			                                var button = grid.down('button[action="poSearch"]');
+			                                if (button) {
+			                                    // Disparar el evento click del botón
+			                                    button.fireEvent('click', button);
+			                                }
+			                            }
+			                        }
+			                    }
+			                }
 					},{
 						xtype: 'datefield',
 			            fieldLabel: SuppAppMsg.purchaseOrderHasta,
@@ -889,14 +934,59 @@
 			            itemId: 'poToDate',
 			            name:'poToDate',
 			            //width:100,
-			            flex : .5
+			            flex : .5,
 			            //labelWidth:35,
 			            //margin:'0 40 0 10',
 			            //labelAlign: 'top'
+			            listeners: {
+		                    specialkey: function(field, e) {
+		                        if (e.getKey() === e.ENTER) {
+		                            // Buscar el botón en el grid completo
+		                            var grid = field.up('grid');
+		                            if (grid) {
+		                                var button = grid.down('button[action="poSearch"]');
+		                                if (button) {
+		                                    // Disparar el evento click del botón
+		                                    button.fireEvent('click', button);
+		                                }
+		                            }
+		                        }
+		                    }
+		                }
 					},{ 
-						xtype: 'poComboStatus'
+						xtype: 'poComboStatus',
+						listeners: {
+		                    specialkey: function(field, e) {
+		                        if (e.getKey() === e.ENTER) {
+		                            // Buscar el botón en el grid completo
+		                            var grid = field.up('grid');
+		                            if (grid) {
+		                                var button = grid.down('button[action="poSearch"]');
+		                                if (button) {
+		                                    // Disparar el evento click del botón
+		                                    button.fireEvent('click', button);
+		                                }
+		                            }
+		                        }
+		                    }
+		                }
 					},{
-						xtype:'poTypeCombo'
+						xtype:'poTypeCombo',
+						listeners: {
+		                    specialkey: function(field, e) {
+		                        if (e.getKey() === e.ENTER) {
+		                            // Buscar el botón en el grid completo
+		                            var grid = field.up('grid');
+		                            if (grid) {
+		                                var button = grid.down('button[action="poSearch"]');
+		                                if (button) {
+		                                    // Disparar el evento click del botón
+		                                    button.fireEvent('click', button);
+		                                }
+		                            }
+		                        }
+		                    }
+		                }
 					},{
 				        xtype: 'displayfield',
 				        value: '',

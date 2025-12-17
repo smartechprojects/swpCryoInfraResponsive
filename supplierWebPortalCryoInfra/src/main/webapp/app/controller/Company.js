@@ -206,11 +206,19 @@ Ext.define('SupplierApp.controller.Company', {
         }
     },
     
-    loadSearchList: function (event){
+    /*loadSearchList: function (event){
     	this.getCompanyGrid().getStore().getProxy().extraParams={
     		query:event.getValue()
     	};
     	this.getCompanyGrid().getStore().load();
+    },*/
+    
+    loadSearchList: function (field, newValue) {
+        var store = this.getCompanyGrid().getStore();
+        store.getProxy().extraParams = {
+            query: newValue
+        };
+        store.load();
     },
 
     saveCompany: function (button) {  	

@@ -410,7 +410,20 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 listeners:{
     				change: function(field, newValue, oldValue){
     					field.setValue(newValue.toUpperCase());
-    				}
+    				},
+    				specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="searchAppSupplier"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
     			}
     		},{
     			xtype: 'textfield',
@@ -421,7 +434,20 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 listeners:{
     				change: function(field, newValue, oldValue){
     					field.setValue(newValue.toUpperCase());
-    				}
+    				},
+    				specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="searchAppSupplier"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
     			}
     		},{
     			fieldLabel : SuppAppMsg.purchaseOrderStatus,
@@ -431,7 +457,22 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
                 queryMode: 'local',
     			store : ticketSatusStore,
                 displayField: 'description',
-                valueField: 'status'
+                valueField: 'status',
+                listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="searchAppSupplier"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
     		},{
     			fieldLabel : SuppAppMsg.approvalLevel,
     			name : 'supSearchApprLevel',
@@ -441,12 +482,42 @@ Ext.define('SupplierApp.view.approval.ApprovalSearchGrid' ,{
     			store : apprLevelStore,
                 displayField: 'description',
                 valueField: 'status',
+                listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="searchAppSupplier"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
     		},{
     			xtype: 'textfield',
                 fieldLabel: SuppAppMsg.approvalCurrentApprover,
                 id: 'supSearchApprover',
                 itemId: 'supSearchApprover',
-                name:'supSearchApprover'
+                name:'supSearchApprover',
+                listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="searchAppSupplier"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
     		},{
 		        xtype: 'displayfield',
 		        value: '',

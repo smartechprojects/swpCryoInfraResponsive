@@ -617,6 +617,21 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //margin:'20 20 0 10'
                         maxWidth:220,
                         flex:.3,
+                        listeners: {
+                            specialkey: function(field, e) {
+                                if (e.getKey() === e.ENTER) {
+                                    // Buscar el botón en el grid completo
+                                    var grid = field.up('grid');
+                                    if (grid) {
+                                        var button = grid.down('button[action="fdSearch"]');
+                                        if (button) {
+                                            // Disparar el evento click del botón
+                                            button.fireEvent('click', button);
+                                        }
+                                    }
+                                }
+                            }
+                        }
             		},{
             			xtype: 'textfield',
                         fieldLabel: SuppAppMsg.freightApprovalBudgetAccount,
@@ -632,6 +647,21 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //margin:'20 20 0 10'
                         maxWidth:220,
                         flex:.3,
+                        listeners: {
+                            specialkey: function(field, e) {
+                                if (e.getKey() === e.ENTER) {
+                                    // Buscar el botón en el grid completo
+                                    var grid = field.up('grid');
+                                    if (grid) {
+                                        var button = grid.down('button[action="fdSearch"]');
+                                        if (button) {
+                                            // Disparar el evento click del botón
+                                            button.fireEvent('click', button);
+                                        }
+                                    }
+                                }
+                            }
+                        }
             		},{
             			xtype: 'textfield',
                         fieldLabel: SuppAppMsg.freightApprovalTitle6,
@@ -647,12 +677,42 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
                         //margin:'20 20 0 10'
                         maxWidth:220,
                         flex:.3,
+                        listeners: {
+                            specialkey: function(field, e) {
+                                if (e.getKey() === e.ENTER) {
+                                    // Buscar el botón en el grid completo
+                                    var grid = field.up('grid');
+                                    if (grid) {
+                                        var button = grid.down('button[action="fdSearch"]');
+                                        if (button) {
+                                            // Disparar el evento click del botón
+                                            button.fireEvent('click', button);
+                                        }
+                                    }
+                                }
+                            }
+                        }
             		},{ 
             			xtype: 'combostatus',
             			value: role == 'ROLE_SUPPLIER'?'APROBADO':'',
             			readOnly:  role == 'ROLE_SUPPLIER',		
             			maxWidth:220,
                         flex:.3,
+                        listeners: {
+                            specialkey: function(field, e) {
+                                if (e.getKey() === e.ENTER) {
+                                    // Buscar el botón en el grid completo
+                                    var grid = field.up('grid');
+                                    if (grid) {
+                                        var button = grid.down('button[action="fdSearch"]');
+                                        if (button) {
+                                            // Disparar el evento click del botón
+                                            button.fireEvent('click', button);
+                                        }
+                                    }
+                                }
+                            }
+                        }
             		},{
 						xtype: 'displayfield',
 			            value: '',

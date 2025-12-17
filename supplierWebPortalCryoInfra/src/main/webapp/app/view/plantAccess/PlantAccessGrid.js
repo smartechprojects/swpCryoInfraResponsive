@@ -390,6 +390,21 @@
                 //labelWidth:50,
                 flex :.3 ,
                 //margin:'20 20 0 10'
+                listeners: {
+                    specialkey: function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            // Buscar el botón en el grid completo
+                            var grid = field.up('grid');
+                            if (grid) {
+                                var button = grid.down('button[action="parSearch"]');
+                                if (button) {
+                                    // Disparar el evento click del botón
+                                    button.fireEvent('click', button);
+                                }
+                            }
+                        }
+                    }
+                }
     		},{
 			xtype: 'textfield',
             fieldLabel: SuppAppMsg.supplierForm5.substring(0,SuppAppMsg.supplierForm5.length - 1), 
@@ -402,11 +417,41 @@
             hidden: role == 'ROLE_SUPPLIER' ?true:false,
             //hidden: role == 'ROLE_SUPPLIER'?true:false,
             //width:200,
-            flex :.4		
+            flex :.4,		
             //labelWidth:50,
             //margin:'20 20 0 10'
+            listeners: {
+                specialkey: function(field, e) {
+                    if (e.getKey() === e.ENTER) {
+                        // Buscar el botón en el grid completo
+                        var grid = field.up('grid');
+                        if (grid) {
+                            var button = grid.down('button[action="parSearch"]');
+                            if (button) {
+                                // Disparar el evento click del botón
+                                button.fireEvent('click', button);
+                            }
+                        }
+                    }
+                }
+            }
 		},{ 
-			xtype: 'combostatus'
+			xtype: 'combostatus',
+			listeners: {
+                specialkey: function(field, e) {
+                    if (e.getKey() === e.ENTER) {
+                        // Buscar el botón en el grid completo
+                        var grid = field.up('grid');
+                        if (grid) {
+                            var button = grid.down('button[action="parSearch"]');
+                            if (button) {
+                                // Disparar el evento click del botón
+                                button.fireEvent('click', button);
+                            }
+                        }
+                    }
+                }
+            }
 		},{
 	        xtype: 'displayfield',
 	        value: '',

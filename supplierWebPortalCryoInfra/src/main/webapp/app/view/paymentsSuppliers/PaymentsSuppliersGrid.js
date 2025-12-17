@@ -446,40 +446,130 @@
     		          name: 'paymentsSuppliersAddressNumberGrid',
     		          value: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? addressNumber : '',
     		          fieldStyle: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? 'border:none;background-color: #ddd; background-image: none;' : '',
-    		          readOnly: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? true : false
+    		          readOnly: role == 'ROLE_SUPPLIER' || role == 'ROLE_SUPPLIER_OPEN' ? true : false,
+	        		  listeners: {
+	                      specialkey: function(field, e) {
+	                          if (e.getKey() === e.ENTER) {
+	                              // Buscar el botón en el grid completo
+	                              var grid = field.up('grid');
+	                              if (grid) {
+	                                  var button = grid.down('button[action="paymentsSupplierSearch"]');
+	                                  if (button) {
+	                                      // Disparar el evento click del botón
+	                                      button.fireEvent('click', button);
+	                                  }
+	                              }
+	                          }
+	                      }
+	                  }
     		        },
     		        {
     		          xtype: 'tipoDoc',
     		          id: 'paymentsSupplierstipoDocGrid',
     		          itemId: 'paymentsSupplierstipoDocGrid',
-    		          name: 'paymentsSupplierstipoDocGrid'
+    		          name: 'paymentsSupplierstipoDocGrid',
+    		          listeners: {
+	                      specialkey: function(field, e) {
+	                          if (e.getKey() === e.ENTER) {
+	                              // Buscar el botón en el grid completo
+	                              var grid = field.up('grid');
+	                              if (grid) {
+	                                  var button = grid.down('button[action="paymentsSupplierSearch"]');
+	                                  if (button) {
+	                                      // Disparar el evento click del botón
+	                                      button.fireEvent('click', button);
+	                                  }
+	                              }
+	                          }
+	                      }
+	                  }
     		        },{
     		          xtype: 'currencyCombo',
     		          fieldLabel: SuppAppMsg.paymentsSuppliersCurrencyCode,
     		          id: 'paymentsSuppliersCurrencyCodeGrid',
     		          itemId: 'paymentsSuppliersCurrencyCodeGrid',
-    		          name: 'paymentsSuppliersCurrencyCodeGrid'
+    		          name: 'paymentsSuppliersCurrencyCodeGrid',
+    		          listeners: {
+	                      specialkey: function(field, e) {
+	                          if (e.getKey() === e.ENTER) {
+	                              // Buscar el botón en el grid completo
+	                              var grid = field.up('grid');
+	                              if (grid) {
+	                                  var button = grid.down('button[action="paymentsSupplierSearch"]');
+	                                  if (button) {
+	                                      // Disparar el evento click del botón
+	                                      button.fireEvent('click', button);
+	                                  }
+	                              }
+	                          }
+	                      }
+	                  }
     		        },
     		        {
     		          xtype: 'statusPayCombo',
     		          fieldLabel: 'Estatus',
     		          id: 'paymentsSuppliersStatusPayGrid',
     		          itemId: 'paymentsSuppliersStatusPayGrid',
-    		          name: 'paymentsSuppliersStatusPayGrid'
+    		          name: 'paymentsSuppliersStatusPayGrid',
+    		          listeners: {
+	                      specialkey: function(field, e) {
+	                          if (e.getKey() === e.ENTER) {
+	                              // Buscar el botón en el grid completo
+	                              var grid = field.up('grid');
+	                              if (grid) {
+	                                  var button = grid.down('button[action="paymentsSupplierSearch"]');
+	                                  if (button) {
+	                                      // Disparar el evento click del botón
+	                                      button.fireEvent('click', button);
+	                                  }
+	                              }
+	                          }
+	                      }
+	                  }
     		        },
     		        {
     		          xtype: 'datefield',
     		          fieldLabel: SuppAppMsg.purchaseOrderDesde,
     		          id: 'paymentsSupplierspoFromDate',
     		          itemId: 'paymentsSupplierspoFromDate',
-    		          name: 'paymentsSupplierspoFromDate'
+    		          name: 'paymentsSupplierspoFromDate',
+    		          listeners: {
+	                      specialkey: function(field, e) {
+	                          if (e.getKey() === e.ENTER) {
+	                              // Buscar el botón en el grid completo
+	                              var grid = field.up('grid');
+	                              if (grid) {
+	                                  var button = grid.down('button[action="paymentsSupplierSearch"]');
+	                                  if (button) {
+	                                      // Disparar el evento click del botón
+	                                      button.fireEvent('click', button);
+	                                  }
+	                              }
+	                          }
+	                      }
+	                  }
     		        },
     		        {
     		          xtype: 'datefield',
     		          fieldLabel: SuppAppMsg.purchaseOrderHasta,
     		          id: 'paymentsSupplierspoToDate',
     		          itemId: 'paymentsSupplierspoToDate',
-    		          name: 'paymentsSupplierspoToDate'
+    		          name: 'paymentsSupplierspoToDate',
+    		          listeners: {
+	                      specialkey: function(field, e) {
+	                          if (e.getKey() === e.ENTER) {
+	                              // Buscar el botón en el grid completo
+	                              var grid = field.up('grid');
+	                              if (grid) {
+	                                  var button = grid.down('button[action="paymentsSupplierSearch"]');
+	                                  if (button) {
+	                                      // Disparar el evento click del botón
+	                                      button.fireEvent('click', button);
+	                                  }
+	                              }
+	                          }
+	                      }
+	                  }
     		        },{
 				        xtype: 'displayfield',
 				        value: '',

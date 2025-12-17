@@ -219,16 +219,14 @@ Ext.define('SupplierApp.view.company.CompanyGrid', {
 			        width: 300,
 			        triggerCls : 'x-form-search-trigger',
 			        onTriggerClick : function(e) {
-          				companyController.loadSearchList(e);
+          				companyController.loadSearchList(this, this.getValue());
           			},
           			enableKeyEvents : true,
           			listeners : {
-          				specialkey : function(field, e) {
-          					if (e.ENTER === e.getKey()) {
-          						field.onTriggerClick();
-          					}
-          				}
-          			}
+			            specialkey : function(field, e) {
+			                if (e.ENTER === e.getKey()) field.onTriggerClick();
+			            }
+			        }
 			    }]
 			};
 		
