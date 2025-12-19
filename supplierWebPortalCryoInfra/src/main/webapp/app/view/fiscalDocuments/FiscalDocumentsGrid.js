@@ -218,7 +218,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
     	    //allowBlank:false,
     	    //editable: false,
     	    displayField: 'name',
-			flex:.8,
+			flex:.2,
     	    valueField: 'id',
     	    //margin:'20 20 0 10',
     	    id:'comboDocumentType',    	    
@@ -241,7 +241,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
     	    //editable: false,
     	    displayField: 'name',
 			//width:150,
-    	    flex: .4,
+    	    flex: .2,
     	    labelWidth:40,
     	    valueField: 'id',
     	    //margin:'20 20 0 10',
@@ -534,7 +534,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                   //fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                   //readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
                   //width:300,
-                  flex: 1,
+                  flex: .3,
                   labelWidth:30,
                   listeners: {
                       specialkey: function(field, e) {
@@ -575,7 +575,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                   itemId: 'poNumberFD',
                   name:'poNumberFD',
                   //width:170,
-                  flex: .3,
+                  flex: .2,
                   labelWidth:70,
                   listeners: {
                       specialkey: function(field, e) {
@@ -602,7 +602,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
                   fieldStyle: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?'border:none;background-color: #ddd; background-image: none;':'',
                   readOnly: role == 'ROLE_SUPPLIER' || role=='ROLE_SUPPLIER_OPEN'?true:false,
                  // width:190,
-                  flex: .4,
+                  flex: .2,
                   labelWidth:90,
                   listeners: {
                       specialkey: function(field, e) {
@@ -622,7 +622,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
       		},{
 				xtype: 'displayfield',
 	            value: '',
-	            flex:.3,
+	            flex:.8,
 
             	}
             ]},
