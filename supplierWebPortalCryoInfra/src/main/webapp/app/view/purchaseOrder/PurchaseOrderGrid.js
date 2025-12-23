@@ -237,7 +237,7 @@
     	    itemId:'poTypeCombo',
     	    //width:150,
     	    labelAlign: 'top',
-    	    flex:.6
+    	    flex:.5
     	   /* listeners: {
     	        afterrender: function() {
     	           if(role == 'ROLE_WNS'){
@@ -260,7 +260,7 @@
     	    id:'poComboStatus',
     	    itemId:'poComboStatus',
     	    //width:150,
-    	    flex:.8,
+    	    flex:.5,
     	    listeners: {
     	        afterrender: function() {
     	           if(role == 'ROLE_WNS'){

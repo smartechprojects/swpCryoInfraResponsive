@@ -105,11 +105,22 @@ th {
   background-color: #dddddd;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
 /* ======================= */
 /* 📱 RESPONSIVE <= 900px   */
 /* ======================= */
 @media (max-width: 900px) {
-
     /* Contenedor principal pasa a una columna */
     body > div[style*="display:flex"] {
         flex-direction: column;
@@ -118,38 +129,27 @@ th {
         background-color: #EFF5F9 !important; 
     }
 
-    /* Ocultar panel izquierdo */
+    /* MODIFICADO: Mostrar panel izquierdo pero más pequeño */
     body > div[style*="display:flex"] > div:first-child {
-        display: none;
+        display: flex;
+        height: 200px; /* Altura fija para móvil */
+        min-height: 200px;
+        flex: none;
     }
 
-    /* Contenedor derecho ocupa todo */
+    /* Contenedor derecho ocupa el resto */
     body > div[style*="display:flex"] > div:last-child {
         height: auto;
-        min-height: 100vh;
+        min-height: calc(100vh - 200px);
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: #EFF5F9 !important;
     }
-
-    /* Ajustes del login */
-    .login-container {
-        height: auto !important;
-        min-height: 100vh;  /* 🔥 fuerza pantalla completa */
-        width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #EFF5F9 !important; 
-    }
-
-    .login-box {
-        width: 100%;
-        max-width: 400px;
-        margin: auto;
+    
+    /* Ajustar imagen para móvil */
+    body > div[style*="display:flex"] > div:first-child img {
+        object-fit: contain; /* En móvil, mejor contain */
     }
 }
 
@@ -227,7 +227,7 @@ form {
 
 <body style="background-color: #EFF5F9 !important;">
 
-<div style="display:flex; height:100vh; width:100%;background-color: #EFF5F9 !important;">
+<div style="display:flex; height:100vh; width:100vw; margin:0; padding:0; background-color: #EFF5F9 !important;">
 
 <!-- IZQUIERDA 2/3 -->
     <!-- <div style="flex:2; display:flex;background-color: #EFF5F9 !important;">
@@ -236,24 +236,13 @@ form {
     </div> -->
 
 <!-- IZQUIERDA 2/3 -->
-<div style="flex:2; display:flex; background-color: #EFF5F9 !important; position: relative;">
+<div style="flex:2; display:flex; background-color: #EFF5F9 !important; position: relative; margin:0; padding:0; overflow:hidden;">
     
-    <div style="position: relative; width: 100%; height: 100%;">
+        <div style="position: relative; width: 100%; height: 100%; margin:0; padding:0;">
         
         <!-- La imagen -->
         <img src="resources/images/Logo-Oficial-Login.jpg"
-             style="width:100%; height:100%; object-fit:contain;">
-        
-        <!-- Texto superpuesto -->
-        <div style="position: absolute; top: 9%; left: 0; width: 100%; 
-                    text-align: center;">
-            <h1 style="color: white; font-family: Arial, Helvetica, sans-serif; 
-                       font-size: 40px; font-weight: bold; margin: 0;
-                       text-shadow: 2px 2px 8px black;">
-                Portal de Proveedores
-            </h1>
-        </div>
-        
+             style="width:100%; height:100%; object-fit:cover; margin:0; padding:0; display:block;">              
     </div>
 </div>
 
@@ -264,10 +253,9 @@ form {
       <div id="loading" style="display:none;"></div>
       
        <div class="logo" style="text-align:center;">
-   <p> <img src="resources/images/hdr-logo.png" style="width:300px;"></p>
 </div>
 		<div class="avatar">
-      <img src="resources/images/CryoInfra-logo-gris.png" style="height:100%;width:100%;">
+      <img src="resources/images/CryoInfra-logo.png" style="height:100%;width:100%;">
 		</div>
       
 
@@ -301,7 +289,7 @@ form {
 		</form>
 		<br />
 		<a class="forgetPass" href="${pageContext.request.contextPath}/requestResetPassword.action" style="font-size:13px;text-align:center;font-weight: bold;"
-		                    >Olvidó su contraseña?</a>
+		                    >¿Olvidó su contraseña?</a>
 		
 		<br/>	         
 		<br/>	

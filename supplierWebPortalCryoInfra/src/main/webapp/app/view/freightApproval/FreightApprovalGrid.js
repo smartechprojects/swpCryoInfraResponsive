@@ -321,7 +321,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			                  }}]
 			        }, 	{
 			        	xtype: 'actioncolumn', 
-			            maxWidth: 90,
+			            maxWidth: 100,
 			        	flex: 1,
 			            header: SuppAppMsg.freightApprovalReportBatch,
 			            align: 'center',
