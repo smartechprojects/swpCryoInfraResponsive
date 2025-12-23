@@ -20,7 +20,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalForm',	{
 										xtype : 'textfield',
 										margin : '10 0 0 10',
 										align : 'stretch',
-										fieldStyle : 'padding-bottom:5px;font-size:18px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
+										fieldStyle : 'padding-bottom:5px;font-size:12px;vertical-align:top;border:none;background:transparent;color:black;font-weight:bold',
 										readOnly : true
 									},
 									items : [

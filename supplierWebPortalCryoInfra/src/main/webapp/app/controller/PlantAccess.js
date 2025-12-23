@@ -2092,12 +2092,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
-			//width : 1050,
-			//height : 600,
-			width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
-            maxWidth: 1050,                                // 👈 ancho mínimo
-            height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
-            maxHeight: 700,
+			width : 1050,
+			height : 700,
+			//width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
+            //maxWidth: 1050,                                // 👈 ancho mínimo
+            //height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
+            //maxHeight: 700,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : true,
@@ -5500,12 +5500,12 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
-			//width : 1050,
-			//height : 600,
-			width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
-            maxWidth: 1050,                                // 👈 ancho mínimo
-            height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
-            maxHeight: 700,
+			width : 1050,
+			height : 600,
+			//width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
+            //maxWidth: 1050,                                // 👈 ancho mínimo
+            //height: Ext.Element.getViewportHeight() * 0.90, // 👈 40% de alto
+            //maxHeight: 700,
 			modal : true,
 			closeAction : 'destroy',
 			resizable : true,

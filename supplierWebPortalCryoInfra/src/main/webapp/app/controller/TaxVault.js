@@ -113,15 +113,16 @@ Ext.define('SupplierApp.controller.TaxVault', {
         	this.winDetail = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.fiscalTitle1,
-        		//width : 1180,
-        		//height : 200,
-        		width: Ext.Element.getViewportWidth() * 0.45,   // 👈 40% de pantalla
-                minWidth: 680,                                // 👈 ancho mínimo
-                height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
-                minHeight: 200,
+        		width : 680,
+        		height : 200,
+        		//width: Ext.Element.getViewportWidth() * 0.45,   // 👈 40% de pantalla
+                //minWidth: 680,                                // 👈 ancho mínimo
+                //height: Ext.Element.getViewportHeight() * 0.2, // 👈 40% de alto
+                //minHeight: 200,
         		modal : true,
         		closeAction : 'destroy',
-        		resizable : false,
+        		scrollable  : true,
+        		resizable : true,
         		minimizable : false,
         		maximizable : false,
         		plain : true,
@@ -147,18 +148,18 @@ Ext.define('SupplierApp.controller.TaxVault', {
         	this.winDetail = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.taxvaultFiscalPeriods,
-        		//width : 1180,
-        		//height : 200,
+        		width : 680,
+        		height : 250,
         		modal : true,
         		scrollable: true,
         		closeAction : 'destroy',
-        		resizable : false,
+        		resizable : true,
         		minimizable : false,
         		maximizable : false,
-        		width: Ext.Element.getViewportWidth() * 0.4,   // 60% pantalla
-        	    height: Ext.Element.getViewportHeight() * 0.3, // 50% pantalla
-        	    minWidth: 680,                                // 👈 ancho mínimo
-                minHeight: 250,
+        		//width: Ext.Element.getViewportWidth() * 0.4,   // 60% pantalla
+        	    //height: Ext.Element.getViewportHeight() * 0.3, // 50% pantalla
+        	    //minWidth: 680,                                // 👈 ancho mínimo
+                //minHeight: 250,
         		plain : true,
         		items : [ {
         			xtype : 'taxVaultFiscalPeriodPanel',

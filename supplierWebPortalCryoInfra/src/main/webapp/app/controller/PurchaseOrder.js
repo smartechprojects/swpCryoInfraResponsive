@@ -285,15 +285,15 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 								me.receiptWindow = new Ext.Window({
 						    		layout : 'fit',
 						    		title : SuppAppMsg.purchaseReceipt,
-						    		//width : 1600,
-						    		//height : 500,
-						    		width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
-					                maxWidth: 1600,                                // 👈 ancho mínimo
-					                height: Ext.Element.getViewportHeight() * 0.70, // 👈 40% de alto
-					                maxHeight: 500,
+						    		width : 1600,
+						    		height : 500,
+						    		//width: Ext.Element.getViewportWidth() * 0.90,   // 👈 40% de pantalla
+					                //maxWidth: 1600,                                // 👈 ancho mínimo
+					                //height: Ext.Element.getViewportHeight() * 0.70, // 👈 40% de alto
+					                //maxHeight: 500,
 						    		modal : true,
 						    		closeAction : 'destroy',
-						    		//resizable : true,
+						    		resizable : true,
 						    		minimizable : false,
 						    		maximizable : false,
 						    		plain : true,
@@ -1077,16 +1077,16 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	   			    	me.winLoadInv = new Ext.Window({
     			    		layout : 'fit',
     			    		title : SuppAppMsg.purchaseUploadInvoice,
-    			    		//width : 600,
-    			    		//height : 500,
-    			    		width: Ext.Element.getViewportWidth() * 0.40,   // 👈 40% de pantalla
-    		                maxWidth: 500,                                // 👈 ancho mínimo
-    		                height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
-    		                maxHeight: 500,
+    			    		width : 500,
+    			    		height : 500,
+    			    		//width: Ext.Element.getViewportWidth() * 0.40,   // 👈 40% de pantalla
+    		                //maxWidth: 500,                                // 👈 ancho mínimo
+    		                //height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
+    		                //maxHeight: 500,
     			    		modal : true,
     			    		scrollable: true,
     			    		closeAction : 'destroy',
-    			    		resizable : false,
+    			    		resizable : true,
     			    		minimizable : false,
     			    		maximizable : false,
     			    		plain : true,
@@ -1289,15 +1289,15 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     			    	me.winLoadInv = new Ext.Window({
 				    		layout : 'fit',
 				    		title : SuppAppMsg.purchaseUploadInvoiceForeing,
-				    		//width : 740,
-				    		//height : 680,
-				    		width: Ext.Element.getViewportWidth() * 0.5,   // 👈 40% de pantalla
-			                maxWidth: 740,                                // 👈 ancho mínimo
-			                height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
-			                maxHeight: 680,
+				    		width : 740,
+				    		height : 680,
+				    		//width: Ext.Element.getViewportWidth() * 0.5,   // 👈 40% de pantalla
+			                //maxWidth: 740,                                // 👈 ancho mínimo
+			                //height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
+			                //maxHeight: 680,
 				    		modal : true,
 				    		closeAction : 'destroy',
-				    		resizable : false,
+				    		resizable : true,
 				    		minimizable : false,
 				    		maximizable : false,
 				    		plain : true,
@@ -2551,16 +2551,18 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         	new Ext.Window({
         		  //width        : 1115,
         		  //height       : 465,
-        		width: Ext.Element.getViewportWidth() * 0.7,   // 👈 40% de pantalla
+        		/*width: Ext.Element.getViewportWidth() * 0.7,   // 👈 40% de pantalla
                 maxWidth: 1115,                                // 👈 ancho mínimo
                 height: Ext.Element.getViewportHeight() * 0.5, // 👈 40% de alto
-                maxHeight: 465,
+                maxHeight: 465,*/
+        		width        : 1115,
+      		    height       : 465,
                 scrollable: true,
         		  title        : 'Complementos de Pago',
         		  border       : false,
     	      		modal : true,
     	    		closeAction : 'destroy',
-    	    		resizable : false,
+    	    		resizable : true,
     	    		minimizable : false,
     	    		maximizable : false,
     	    		plain : true,
@@ -2674,16 +2676,16 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         	me.orderDetailWindow = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.purchaseOrdersTitle2 ,
-        		//width : 1250,
-        		//height : 750,
-        		width: Ext.Element.getViewportWidth() * 0.80,   // 👈 40% de pantalla
-                maxWidth: 1150,                                // 👈 ancho mínimo
-                height: Ext.Element.getViewportHeight() * 0.80, // 👈 40% de alto
-                maxHeight: 750,
+        		width : 1150,
+        		height : 750,
+        		//width: Ext.Element.getViewportWidth() * 0.80,   // 👈 40% de pantalla
+                //maxWidth: 1150,                                // 👈 ancho mínimo
+                //height: Ext.Element.getViewportHeight() * 0.80, // 👈 40% de alto
+                //maxHeight: 750,
         		modal : true,
         		modal : true,
         		closeAction : 'destroy',
-        		//resizable : true,
+        		resizable : true,
         		minimizable : false,
         		maximizable : false,
         		plain : true,
@@ -4361,10 +4363,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         var view = grid.getView();
 
         new Ext.Window({
-            width: Ext.Element.getViewportWidth() * 0.40,
+            /*width: Ext.Element.getViewportWidth() * 0.40,
             maxWidth: 385,
             height: Ext.Element.getViewportHeight() * 0.45,
-            maxHeight: 500,
+            maxHeight: 500,*/
+        	width: 385,
+        	height: 500,
             title: SuppAppMsg.purchasePaymentCalendar,
             border: false,
             modal: true,
@@ -4374,7 +4378,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
             },
             scrollable: false,
             closeAction: 'destroy',
-            resizable: false,
+            resizable: true,
             minimizable: false,
             maximizable: false,
             plain: true,

@@ -127,7 +127,7 @@ Ext.define('SupplierApp.controller.FreightApproval', {
 				        	        },    
     				        		modal : true,
     				        		closeAction : 'destroy',
-    				        		resizable : false,
+    				        		resizable : true,
     				        		minimizable : false,
     				        		maximizable : false,
     				        		plain : true,

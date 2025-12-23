@@ -936,9 +936,9 @@ Ext.define('SupplierApp.controller.Supplier', {
         		//width : 1200,
         		//height : 550,
         		width: Ext.Element.getViewportWidth() * 0.80,   // 👈 40% de pantalla
-                maxWidth: 1200,                                // 👈 ancho mínimo
+               // maxWidth: 1200,                                // 👈 ancho mínimo
                 height: Ext.Element.getViewportHeight() * 0.80, // 👈 40% de alto
-                maxHeight: 550,
+               // maxHeight: 550,
         		modal : true,
         		scrollable  : true,
         		closeAction : 'destroy',

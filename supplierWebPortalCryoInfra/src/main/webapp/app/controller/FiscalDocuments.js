@@ -227,15 +227,15 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
         	this.winDetail = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.fiscalTitle1,
-        		//width : 550,
-        		//height : 550,
-        		maxWidth: 500,
-        	    maxHeight: 750,
-        	    width: Ext.Element.getViewportWidth() * 0.35,  // 80% del ancho
-        	    height: Ext.Element.getViewportHeight() * 0.6,
+        		width : 450,
+        		height : 650,
+        		//maxWidth: 500,
+        	    //maxHeight: 750,
+        	    //width: Ext.Element.getViewportWidth() * 0.35,  // 80% del ancho
+        	    //height: Ext.Element.getViewportHeight() * 0.6,
         		modal : true,
         		closeAction : 'destroy',
-        		resizable : false,
+        		resizable : true,
         		minimizable : false,
         		maximizable : false,
         		plain : true,
