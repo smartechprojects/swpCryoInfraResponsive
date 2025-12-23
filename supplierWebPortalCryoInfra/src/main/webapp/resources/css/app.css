@@ -1102,6 +1102,16 @@ input[readonly].x-form-text {
     box-sizing: border-box;
 }
 
+/*.nav-logo-header {
+    height: 80px;    
+    background-color: #00306E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: auto;  /* Esto empujará el elemento hacia abajo si el padre es flex */
+}*/
+
 /* CONTENEDOR INTERNO */
 .nav-logo-wrapper {
     width: 100%;                /* 👈 ocupa todo el ancho */
@@ -1180,15 +1190,17 @@ input[readonly].x-form-text {
 .title-vcv {
     background-color: #00306E;
     color: #fff;
-    width: 220px; /* Mismo ancho que el tabBar expandido */
+    width: 220px;
     height: 80px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 13px;
     display: flex;
     align-items: center;
-    padding-left: 15px;
+    justify-content: center;
     box-sizing: border-box;
+    text-align: center;
+    line-height: normal;
+    padding: 0 10px; /* Un poco de padding a los lados */
+    word-break: break-word; /* Permite que las palabras largas se rompan */
+    white-space: normal; /* Permite múltiples líneas */
 }
-
-
-

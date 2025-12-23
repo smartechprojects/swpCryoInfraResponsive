@@ -11,17 +11,7 @@ Ext.define('SupplierApp.view.main.Main', {
            // 'max-height': '100vh',  // ✅ limita el alto al viewport visible
         },
         items: [
-        	 {
-                 xtype: 'component',
-                 cls: 'nav-logo-header',
-                 itemId: 'navLogo',
-                 html: `
-                     <div class="nav-logo-wrapper">
-                         <img src="resources/images/cryoinfraBlanco.png" />
-                     </div>
-                 `
-             },
-            {
+        	{
                 xtype: 'button',
                 iconCls: 'fa fa-compress',
                 margin: '28 0 0 23',
@@ -55,6 +45,10 @@ Ext.define('SupplierApp.view.main.Main', {
 	                var el = logoCmp.getEl();
 	                var wrapper = el.down('.nav-logo-wrapper');
 	                var imgEl   = logoCmp.el.down('img');
+	                
+	                var titleText = (navigator.language || navigator.userLanguage).startsWith('es') 
+	                ? 'PORTAL DE PROVEEDORES' 
+	                : 'SUPPLIER PORTAL';
 
 	                if (w >= 100) {
 	                    //COLAPSADO
@@ -81,9 +75,9 @@ Ext.define('SupplierApp.view.main.Main', {
 	                    if (titleComponent) {
 	                        // Cambiar el HTML del título para versión colapsada
 	                        if (titleComponent.setHtml) {
-	                            titleComponent.setHtml('<div class="title-vcv-collapsed"></div>');
+	                        	 titleComponent.setHtml('<div class="title-vcv-collapsed"></div>');
 	                        } else if (titleComponent.update) {
-	                            titleComponent.update('<div class="title-vcv-collapsed"></div>');
+	                        	titleComponent.update('<div class="title-vcv-collapsed"></div>');
 	                        }
 	                        
 	                        // También ajustar el ancho del contenedor del header si es necesario
@@ -114,9 +108,9 @@ Ext.define('SupplierApp.view.main.Main', {
 	                    if (titleComponent) {
 	                        // Restaurar el HTML del título para versión expandida
 	                        if (titleComponent.setHtml) {
-	                            titleComponent.setHtml('<div class="title-vcv"></div>');
+	                        	 titleComponent.setHtml('<div class="title-vcv">' + titleText + '</div>');
 	                        } else if (titleComponent.update) {
-	                            titleComponent.update('<div class="title-vcv"></div>');
+	                        	 titleComponent.setHtml('<div class="title-vcv">' + titleText + '</div>');
 	                        }
 	                        
 	                        // Restaurar el ancho del contenedor del header
@@ -130,7 +124,22 @@ Ext.define('SupplierApp.view.main.Main', {
 	                panel.updateLayout();
 	
 	            }
-            }
+            },
+        	{
+                xtype: 'tbspacer', 
+                flex: 1  /* Espacio flexible que empuja el logo hacia abajo */
+            },
+        	 {
+                 xtype: 'component',
+                 cls: 'nav-logo-header',
+                 itemId: 'navLogo',
+                 html: `
+                     <div class="nav-logo-wrapper">
+                         <img src="resources/images/cryoinfraBlanco.png" />
+                     </div>
+                 `
+             },
+            
         ]
         
     },
@@ -205,7 +214,11 @@ Ext.define('SupplierApp.view.main.Main', {
         //title: '<img src="resources/images/CryoInfra-logo-gris.png" style="max-width: 60%; display: block; height: auto;">',
         //title: '<img src="resources/images/CryoInfra-logo.png" style="height:70px; width:auto; object-fit:contain; display:block;">',
        // title: '<div style="background-color:#00306E;color:#fff;padding:50px 10px;font-weight:bold;">vcv</div>',
-        title: '<div class="title-vcv"></div>',
+        title: '<div class="title-vcv">' + 
+        ((navigator.language || navigator.userLanguage).startsWith('es') 
+            ? 'PORTAL DE PROVEEDORES' 
+            : 'SUPPLIER PORTAL') + 
+        '</div>',
         tabConfig: {
         width: 120,
         height:80,
@@ -898,23 +911,6 @@ Ext.define('SupplierApp.view.main.Main', {
 	xtype : 'panel',
 	id:'tabHelpId',
 	iconCls: 'fa fa-question',
-    }/*,
-    {
-        xtype : 'panel',
-        id: 'tabLogo',
-        title: '',
-        tabConfig: {
-            text: '',
-            cls: 'nav-logo-tab',
-            html: `
-                <div class="nav-logo-wrapper">
-                    <img src="resources/images/cryoinfraBlanco.png" />
-                </div>
-            `
-        }
-    }*/
-
-
-    
+    }
 	]
 });
