@@ -221,6 +221,17 @@ form {
     font-weight: bold;
 }
 
+/* Para 1366x768 - Reducción moderada */
+@media (max-width: 1366px) and (max-height: 800px) {
+    /* Solo ajustamos el tamaño de la imagen */
+    body > div[style*="display:flex"] > div:first-child img {
+        object-fit: contain !important;
+        /* 80% es un buen balance - ajusta según necesites */
+        /*transform: scale(1) !important;*/
+        transform-origin: center !important;
+    }
+}
+
 </style>
 
 </head>

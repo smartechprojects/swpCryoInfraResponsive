@@ -245,7 +245,7 @@ Ext.define('SupplierApp.view.main.Main', {
                 ]
         	},*/
         	
-        	 {
+        	 /*{
                 xtype: 'image',
                 src: (navigator.language || navigator.userLanguage).startsWith('es') 
                 ? 'resources/images/hdr-logo.png' 
@@ -256,7 +256,7 @@ Ext.define('SupplierApp.view.main.Main', {
                 cls: 'header-user-info-container',
                 columnWidth: 1
             }
-        	 ,{
+        	 ,*/{
                 xtype: 'tbspacer', 
                 flex: 1,
                 columnWidth: 1
@@ -349,7 +349,9 @@ Ext.define('SupplierApp.view.main.Main', {
                                 
                 header.down('#displayNameLabel').setHtml(displayName);
                 header.down('#userInfoLabel').setHtml(SuppAppMsg.headerAccount + ': ' + userName + ' <b>' + userDesc + '</b>');
-                header.down('#envLabel').setHtml('Ambiente TEST');
+                header.down('#envLabel').setHtml((navigator.language || navigator.userLanguage).startsWith('es') 
+    	                ? 'Ambiente TEST' 
+    	    	                : 'TEST Environment');
             }
         }
     },
