@@ -48,6 +48,8 @@ Ext.define('SupplierApp.Application', {
     },
     init: function() {
     	
+    	Ext.tip.QuickTipManager.init();
+    	
     	// Aplicar override para campos de formulario
     	Ext.override(Ext.form.field.Text, {
             blankText: 'Este campo es requerido',

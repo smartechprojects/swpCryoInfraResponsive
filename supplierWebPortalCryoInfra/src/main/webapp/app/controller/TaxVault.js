@@ -113,7 +113,7 @@ Ext.define('SupplierApp.controller.TaxVault', {
         	this.winDetail = new Ext.Window({
         		layout : 'fit',
         		title : SuppAppMsg.fiscalTitle1,
-        		width : 680,
+        		width : 750,
         		height : 200,
         		//width: Ext.Element.getViewportWidth() * 0.45,   // 👈 40% de pantalla
                 //minWidth: 680,                                // 👈 ancho mínimo

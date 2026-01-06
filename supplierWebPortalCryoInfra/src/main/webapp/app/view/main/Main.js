@@ -282,7 +282,16 @@ Ext.define('SupplierApp.view.main.Main', {
                 listeners: {
                     render: function(img) {
                         // Cambia el cursor al pasar sobre la imagen
-                        //img.getEl().setStyle('cursor', 'pointer');
+                        img.getEl().setStyle('cursor', 'pointer');
+                    	
+                    	 var text = (navigator.language || navigator.userLanguage).startsWith('es')
+                         ? 'Salir'
+                         : 'Log out';
+
+                     // ✅ Tooltip REAL para imágenes
+                     img.getEl().set({
+                         'data-qtip': text
+                     });
 
                         img.getEl().on('click', function() {
                             window.location.href = 'j_spring_security_logout';
@@ -349,6 +358,10 @@ Ext.define('SupplierApp.view.main.Main', {
                                 
                 header.down('#displayNameLabel').setHtml(displayName);
                 header.down('#userInfoLabel').setHtml(SuppAppMsg.headerAccount + ': ' + userName + ' <b>' + userDesc + '</b>');
+                header.down('#userInfoLabel').setHtml(
+                	    "<span style='font-weight:normal;'>" + SuppAppMsg.headerAccount + ":</span> " +
+                	    userName + " <b>" + userDesc + "</b>"
+                	);
                 header.down('#envLabel').setHtml((navigator.language || navigator.userLanguage).startsWith('es') 
     	                ? 'Ambiente TEST' 
     	    	                : 'TEST Environment');
