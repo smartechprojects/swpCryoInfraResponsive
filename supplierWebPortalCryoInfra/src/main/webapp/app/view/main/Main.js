@@ -408,10 +408,10 @@ Ext.define('SupplierApp.view.main.Main', {
                      if(width >= 768){ // Pantallas grandes
 			           var homeContent = "<table class='center-table'>" +
 			                    	"   <tr style='height:45%;'>" +
-			                    	"        <td style=' vertical-align: bottom;'><img src='resources/images/CryoInfra-logo-gris.png' style='height:35%;width:40%;'/></td>" +
+			                    	"        <td style=' vertical-align: bottom;padding-bottom: 30px;'><img src='resources/images/CryoInfra-logo-gris.png' style='height:35%;width:40%;'/></td>" +
 			                    	"    </tr>" +
 			                    	"   <tr>" +
-			                    	"        <td style='vertical-align: top;padding:30px;line-height: 1.5;font-size:1.2em;'>" + SuppAppMsg.homeHeaderMessage + "</td>" +
+			                    	"        <td style='vertical-align: top;padding:30px;line-height: 1.5;font-size:1.2em; text-align: justify;'>" + SuppAppMsg.homeHeaderMessage + "</td>" +
 			                    	"    </tr>" +
 			                    	"</table>";
                      
@@ -419,19 +419,20 @@ Ext.define('SupplierApp.view.main.Main', {
                       
                      } else { // Pantallas pequeñas
                     	 var homeContent = "<div style='display: grid; place-items: center;'>" +
-                         "<div style='width: 50%; font-size:14px; color: black;padding: 10px; margin: 10px;'>" +
-                         "<div style='display: grid; place-items: center; padding: 10px; margin: 10px;'>" +
-                             "<img src='resources/images/CryoInfra-logo-gris.png' width='40%' height='80%' style='align: center;'>" +
-                         "</div>" +
-                         "<div style='display: grid; place-items: center; padding: 10px; margin: 40px;'>" +
-                             "<span style='text-align: justify; font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height: 1.5;'>" +
-                                 "<p style='padding-left: 10px;'>" + SuppAppMsg.homeHeaderMessage + "</p>" +
-                             "</span>" +
-                         "</div>" +                            
-                         "</div>" +
-                         "</div>";
-                     
-                     panel.update(homeContent);
+                    	    "<div style='width: 50%; font-size:14px; color: black; padding: 10px; margin: 10px;'>" +
+                    	        "<div style='display: grid; place-items: center; padding: 10px; margin: 10px;'>" +
+                    	            "<img src='resources/images/CryoInfra-logo-gris.png' width='40%' height='80%' style='margin-bottom: 30px;' />" +
+                    	        "</div>" +
+                    	        "<div style='display: grid; place-items: center; padding: 10px; margin: 40px;'>" +
+                    	            "<p style='padding-left: 10px; text-align: justify; font-family: Arial, Helvetica, sans-serif; font-size:14px; line-height: 1.5;'>" +
+                    	                SuppAppMsg.homeHeaderMessage +
+                    	            "</p>" +
+                    	        "</div>" +
+                    	    "</div>" +
+                    	"</div>";
+
+                    	panel.update(homeContent);
+
                      }
             	
                  }
