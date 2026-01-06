@@ -232,6 +232,25 @@ form {
     }
 }
 
+.avatar {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.avatar img {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    display: block;
+}
+
 </style>
 
 </head>
@@ -266,7 +285,8 @@ form {
        <div class="logo" style="text-align:center;">
 </div>
 		<div class="avatar">
-      <img src="resources/images/CryoInfra-logo.png" style="height:100%;width:100%;">
+      <img src="resources/images/CryoInfra-logo.png"
+     style="max-width:100%; height:auto; display:block;">
 		</div>
       
 
