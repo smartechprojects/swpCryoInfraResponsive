@@ -282,7 +282,7 @@ Ext.define('SupplierApp.view.main.Main', {
                 listeners: {
                     render: function(img) {
                         // Cambia el cursor al pasar sobre la imagen
-                        img.getEl().setStyle('cursor', 'pointer');
+                        //img.getEl().setStyle('cursor', 'pointer');
                     	
                     	 var text = (navigator.language || navigator.userLanguage).startsWith('es')
                          ? 'Salir'
@@ -495,7 +495,7 @@ Ext.define('SupplierApp.view.main.Main', {
             tooltip: 'This is the quick hint for Tab 1' // The tooltip
         },
 		style: 'background-color: #00306E;',
-		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX'?false:true,
+		hidden:role=='ROLE_ADMIN' || role == 'ROLE_PURCHASE' || role == 'ROLE_ADMIN_PURCHASE' || role=='ROLE_PURCHASE_IMPORT' || role=='ROLE_CXP' || role=='ROLE_CXP_IMPORT' || role=='ROLE_MANAGER' || role=='ROLE_TAX' || role=='ROLE_SUPPLIER' ?false:true,
 		tabConfig: {
             iconCls: 'fa fa-solid fa-bars',
             listeners: {
@@ -520,36 +520,40 @@ Ext.define('SupplierApp.view.main.Main', {
                         	{ 
                             	text: SuppAppMsg.tabProveedores ,
                             	iconCls: 'x-fa fa-share-alt',
+                            	hidden: role == 'ROLE_SUPPLIER',
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(suppliers);
                                     }
                                 },
-                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:182px;',
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:178px;',
                             },
                         	{ 
                             	text: SuppAppMsg.tabToken ,
                             	iconCls: 'x-fa fa-user-plus',
+                            	hidden: role == 'ROLE_SUPPLIER',
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(token);
                                     }
                                 },
-                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:178px;',
                             },
                             { 
                             	text: SuppAppMsg.tabApproval ,
                             	iconCls: 'x-fa fa-check-circle',
+                            	hidden: role == 'ROLE_SUPPLIER',
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(approvals);
                                     }
                                 },
-                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:178px;',
                             },
                             { 
                             	text: SuppAppMsg.tabSearchApproval ,
                             	iconCls: 'x-fa fa-tasks',
+                            	hidden: role == 'ROLE_SUPPLIER',
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(approvalSearch);
@@ -565,7 +569,7 @@ Ext.define('SupplierApp.view.main.Main', {
                                     	 tabs.setActiveTab(supplierPayment);
                                     }
                                 },
-                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:178px;',
                             }
                         ]
                     });
