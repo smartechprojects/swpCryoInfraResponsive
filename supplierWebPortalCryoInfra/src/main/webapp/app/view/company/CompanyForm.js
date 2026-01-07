@@ -137,15 +137,15 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						            layout: 'hbox',
 						            width: '95%',  // mismo ancho que los defaults
 						            items: [
-						                {
-						                    xtype: 'textfield',
-						                    fieldLabel: SuppAppMsg.supplierFile + ' .pfx',
-						                    name: 'taxFileRef',
-						                    id: 'taxFileRef',
-						                    readOnly: true,
-						                    width: '69%',
-
-						                },
+						            	{
+						            	    xtype: 'textfield',
+						            	    fieldLabel: SuppAppMsg.supplierFile + ' .pfx',
+						            	    name: 'taxFileRef',
+						            	    id: 'taxFileRef',
+						            	    readOnly: true,
+						            	    width: '69%',
+						            	    minHeight: 25
+						            	},
 						                {
 						                    xtype: 'button',
 						                    itemId: 'loadTaxFileRef',
@@ -242,6 +242,7 @@ Ext.define('SupplierApp.view.company.CompanyForm', {
 						                    id: 'keyFileRef',
 						                    readOnly: true,
 						                    width: '69%',
+						                    minHeight: 25
 
 						                },
 						                {
