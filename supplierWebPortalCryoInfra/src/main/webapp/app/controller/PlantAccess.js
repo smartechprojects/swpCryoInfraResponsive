@@ -1943,21 +1943,21 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
 	
     showRequestFile: function(button) {
-    	debugger
+    	
        	var win = new Ext.Window(
 				{
 					title : SuppAppMsg.taxvaultUploandDocuments,
 					layout : 'fit',
 					autoScroll : true,
-					//width : 850,
-					//height : 440,
-					width: Ext.Element.getViewportWidth() * 0.65,   // 👈 40% de pantalla
-	                maxWidth: 850,                                // 👈 ancho mínimo
-	                height: Ext.Element.getViewportHeight() * 0.50, // 👈 40% de alto
-	                maxHeight: 440,
+					width : 1080,
+					height : 540,
+					//width: Ext.Element.getViewportWidth() * 0.65,   // 👈 40% de pantalla
+	                //maxWidth: 850,                                // 👈 ancho mínimo
+	                //height: Ext.Element.getViewportHeight() * 0.50, // 👈 40% de alto
+	                //maxHeight: 440,
 					modal : true,
 					closeAction : 'destroy',
-					resizable : false,
+					resizable : true,
 					minimizable : false,
 					maximizable : false,
 					scrollable: true,

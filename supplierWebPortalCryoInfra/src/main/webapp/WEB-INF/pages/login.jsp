@@ -119,37 +119,28 @@
     /* 📱 RESPONSIVE <= 900px   */
     /* ======================= */
     @media (max-width: 900px) {
-        /* Contenedor principal pasa a una columna */
-        body > div[style*="display:flex"] {
-            flex-direction: column;
-            height: auto;
-            min-height: 100vh;
-            background-color: #EFF5F9 !important; 
-        }
-
-        /* MODIFICADO: Mostrar panel izquierdo pero más pequeño */
-        body > div[style*="display:flex"] > div:first-child {
-            display: flex;
-            height: 200px; /* Altura fija para móvil */
-            min-height: 200px;
-            flex: none;
-        }
-
-        /* Contenedor derecho ocupa el resto */
-        body > div[style*="display:flex"] > div:last-child {
-            height: auto;
-            min-height: calc(100vh - 200px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #EFF5F9 !important;
-        }
-        
-        /* Ajustar imagen para móvil */
-        body > div[style*="display:flex"] > div:first-child img {
-            object-fit: contain !important;
-        }
+    body > div[style*="display:flex"] {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        background-color: #EFF5F9 !important; 
     }
+
+    /* Ocultar solo la imagen grande */
+    body > div[style*="display:flex"] > div:first-child {
+        display: none !important; /* 👈 Esto oculta todo el div con la imagen */
+    }
+
+    /* Formulario ocupa toda la pantalla */
+    body > div[style*="display:flex"] > div:last-child {
+        height: 100vh;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #EFF5F9 !important;
+    }
+}
 
     form {
         text-align: center;
@@ -385,9 +376,13 @@
                     <p style="font-size:13px" class="downloadDocSupp">Descargar manual de proveedores</p>
                 </a> 
                 
-                <div class="footer" style="background-color: #EFF5F9 !important;">
+                <!-- <div class="footer" style="background-color: #EFF5F9 !important;">
                     &copy; 2000-2025 Smartech Consulting Group S.A. de C.V.<br>Derechos Reservados.
-                </div>
+                </div> -->
+                
+                <div class="footer" style="background-color: #EFF5F9 !important;">
+				    &copy; 2000-<%= java.time.Year.now().getValue() %> Smartech Consulting Group S.A. de C.V.<br>Derechos Reservados.
+				</div>
             </div>
         </div>
     </div>

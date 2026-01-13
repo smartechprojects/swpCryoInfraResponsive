@@ -1093,7 +1093,8 @@ var GridUtils = {
   */
  performRowHeightAdjustment: function(grid, view) {
      // Calcular altura disponible
-     var containerHeight = grid.getHeight();
+     //var containerHeight = grid.getHeight();
+	 var containerHeight = view.el.getHeight();
      var headerHeight = 0;
      var headerContainer = grid.headerCt;
      
@@ -1111,7 +1112,9 @@ var GridUtils = {
          });
      }
      
-     var availableHeight = containerHeight - headerHeight - dockedHeight - 10;
+    // var availableHeight = containerHeight - headerHeight - dockedHeight - 10;
+     //var availableHeight = containerHeight - 2;
+     var availableHeight = containerHeight;
      var rows = view.getNodes();
      var realRowCount = rows.length;
      var targetRowCount = 12;

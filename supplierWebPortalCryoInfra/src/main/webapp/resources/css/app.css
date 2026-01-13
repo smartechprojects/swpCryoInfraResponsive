@@ -68,8 +68,16 @@
 	visibility: hidden;
 }
 
+/* Tamaño inicial más grande */
+.increaseSize {
+    transform: scale(1.2); /* 20% más grande */
+    transform-origin: center;
+    transition: transform 0.2s ease; /* Transición suave */
+}
+
+/* Efecto hover - aún más grande */
 .increaseSize:hover {
-	transform: scale(1.2);
+    transform: scale(1.4); /* 40% más grande desde el tamaño original */
 }
 
 #resultado {
@@ -1204,3 +1212,43 @@ input[readonly].x-form-text {
     word-break: break-word; /* Permite que las palabras largas se rompan */
     white-space: normal; /* Permite múltiples líneas */
 }
+
+/* Bordes blancos para encabezados de columnas del grid */
+.x-column-header {
+    border-color: white !important;
+}
+
+/* Para el contenedor de todos los encabezados */
+.x-grid-header-ct {
+    border-color: white !important;
+}
+
+/* Para cada encabezado individual */
+.x-column-header-inner {
+    border-color: white !important;
+}
+
+/* Bordes entre columnas (separadores) */
+.x-column-header.x-column-header-last {
+    border-right-color: white !important;
+}
+
+/* Si quieres bordes también en la parte inferior */
+.x-grid-header-ct {
+    border-bottom-color: white !important;
+}
+
+
+/* =============================================== */
+/* BORDES BLANCOS PARA ENCABEZADOS DE GRID - MÁS ESPECÍFICO */
+/* =============================================== */
+
+.x-column-header,
+.x-column-header-inner,
+.x-grid-header-ct,
+.x-column-header.x-column-header-first,
+.x-column-header.x-column-header-last {
+    border: solid white !important;
+    border: 0.2px solid white !important;
+}
+
