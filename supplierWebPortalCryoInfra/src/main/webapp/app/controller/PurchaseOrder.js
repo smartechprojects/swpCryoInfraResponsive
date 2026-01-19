@@ -4745,7 +4745,8 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
   	
     openPONotes : function(grid, rowIndex, colIndex, record) {
     	var me = this;
-    	var record = grid.store.getAt(rowIndex);
+    	//var record = grid.store.getAt(rowIndex);
+    	var record = rowIndex.data;
     	
      	var notesWindow = new Ext.Window({
     		layout : 'fit',
@@ -4758,7 +4759,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     		minimizable : false,
     		maximizable : false,
     		plain : true,
-    		html: record.data.notes
+    		html: record.notes
     	});
      	
      	notesWindow.show();

@@ -349,33 +349,37 @@
                     return '';
                 }
             }
+        },
+        
+        {
+            text: SuppAppMsg.purchaseTitle30,
+            align: 'center',
+            flex : 1,
+            hidden: false,
+            renderer: function(value, meta, record) {
+                if (record.data.notes != null && record.data.notes != '') {
+                    var id = Ext.id();
+                    Ext.defer(function() {
+                        new Ext.Button({
+                            name: 'openPONotes',
+                            itemId: 'openPONotes',
+                            iconCls: 'notepad',
+                            cls: 'buttonStyle',
+                            handler: function(grid, rowIndex, colIndex) {
+                                this.fireEvent('buttonclick', grid, record);
+                            }
+                        }).render(document.body, id);
+                    }, 50);
+                    return Ext.String.format('<div id="{0}"></div>', id);
+                } else {
+                    // Si orderType no es 'OP', no mostrar el componente
+                    return '';
+                }
+            }
         }
 
         
-        /*{
-            text     : SuppAppMsg.purchaseOrderCreditNotes,
-            align: 'center',
-            width: 120,
-            hidden:false,
-            renderer: function(value, meta, record) {
-            	var id = Ext.id();
-        		 Ext.defer(function(){
-                     new Ext.Button({
-             			 name : 'showCreditNotes',
-            			 itemId : 'showCreditNotes',
-            			 iconCls:'icon-cancel',
-                         text: SuppAppMsg.purchaseOpen,
-                         handler: function(grid, rowIndex, colIndex) {
-                         	this.fireEvent('buttonclick', grid, record);
-                         }
-                     }).render(document.body, id);
-                 },50);
-                 return Ext.String.format('<div id="{0}"></div>', id);
-		            	
-             }
-        }*/
-        
-        ,{
+        /*,{
             xtype: 'actioncolumn', 
             //width: 50,
             flex : 0.5,
@@ -398,7 +402,7 @@
                   handler: function(grid, rowIndex, colIndex) {
                   	this.fireEvent('buttonclick', grid, rowIndex, colIndex);
              }}]
-        },{
+        }*/,{
             align: 'center',
             //width: 140,
             flex : 1,
@@ -757,6 +761,7 @@
 						    id: 'poFromDate',
 						    itemId: 'poFromDate',
 						    name: 'poFromDate',
+						    format: 'd/m/Y',
 						    //width: 100,
 						    flex : .5,
 						    //labelWidth: 35,
@@ -783,6 +788,7 @@
 			            id: 'poToDate',
 			            itemId: 'poToDate',
 			            name:'poToDate',
+			            format: 'd/m/Y',
 			            //width:100,
 			            flex : .5,
 			            //labelWidth:35,

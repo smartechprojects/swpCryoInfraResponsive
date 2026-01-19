@@ -68,16 +68,8 @@
 	visibility: hidden;
 }
 
-/* Tamaño inicial más grande */
-.increaseSize {
-    transform: scale(1.2); /* 20% más grande */
-    transform-origin: center;
-    transition: transform 0.2s ease; /* Transición suave */
-}
-
-/* Efecto hover - aún más grande */
 .increaseSize:hover {
-    transform: scale(1.4); /* 40% más grande desde el tamaño original */
+    transform: scale(1.2);
 }
 
 #resultado {

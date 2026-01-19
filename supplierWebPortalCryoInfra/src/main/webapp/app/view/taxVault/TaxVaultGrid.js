@@ -330,6 +330,7 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
                         itemId: 'tvFromDate',
                         name:'tvFromDate',
                         allowBlank:false,
+                        format: 'd/m/Y',
                         maxValue: new Date(), // Fecha máxima, hoy
                         value: Ext.Date.add(new Date(), Ext.Date.MONTH, -3), //Fecha inicial Desde 3 meses hacia atrás
                         	listeners:{
@@ -359,6 +360,7 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
                         maxValue: new Date(), // Fecha máxima, hoy
                         value: new Date(), //Fecha inicial hoy
                         allowBlank:false,
+                        format: 'd/m/Y',
                         listeners: {
                             specialkey: function(field, e) {
                                 if (e.getKey() === e.ENTER) {

@@ -331,7 +331,13 @@ public class PurchaseOrderDao {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(poFromDate); 
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+		    calendar.set(Calendar.MINUTE, 0);
+		    calendar.set(Calendar.SECOND, 0);
+		    calendar.set(Calendar.MILLISECOND, 0);
 			q.setParameter("dateRequestedFrom", calendar.getTime());
+			
+			
 			//q.setParameter("dateRequestedFrom", poFromDate);
 		}
 		
@@ -339,6 +345,10 @@ public class PurchaseOrderDao {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(poToDate); // Configuramos la fecha que se recibe
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+		    calendar.set(Calendar.MINUTE, 59);
+		    calendar.set(Calendar.SECOND, 59);
+		    calendar.set(Calendar.MILLISECOND, 999);
 			q.setParameter("dateRequestedTo", calendar.getTime());
 			//q.setParameter("dateRequestedTo", poToDate);
 		}
@@ -368,84 +378,99 @@ public class PurchaseOrderDao {
 	}
 	
 	
-	public int searchbyOrderNumberHQLCount(int orderNumber, String addressBook, 
-										            Date poFromDate, Date poToDate,String poTypeCombo, String status,
-										            String role, String email,
-										            String foreign){
+	public int searchbyOrderNumberHQLCount(int orderNumber, String addressBook, Date poFromDate, Date poToDate,
+			String poTypeCombo, String status, String role, String email, String foreign) {
 		try {
-		Session session = this.sessionFactory.getCurrentSession();
-		String sql = "select count(distinct o.orderNumber) from PurchaseOrder o, Supplier s " +
-			         " where 1=1 ";
-		
-		if(orderNumber > 0) {
-			sql = sql + " and o.orderNumber = :orderNumber ";
-		}
-		
-		if(!"".equals(addressBook)) {
-			sql = sql + " and o.addressNumber = :addressNumber ";
-		}
-		
-		if(poFromDate != null) {
-			sql = sql + " and o.dateRequested >= :dateRequestedFrom ";
-		}
-		
-		if(poToDate != null) {
-			sql = sql + " and o.dateRequested <= :dateRequestedTo ";
-		}
-		
-		if(poTypeCombo != null && poTypeCombo.equals("OP")) { // para notas de credito
-			sql = sql + " and o.orderType = :poTypeCombo ";
-		}
-		
-		if(!"".equals(status)) {
-			sql = sql + " and o.orderStauts = :orderStauts ";
-		}
+			Session session = this.sessionFactory.getCurrentSession();
+			String sql = "select count(distinct o.orderNumber) from PurchaseOrder o " + " where 1=1 ";
 
-		if(!"".equals(foreign)) {
-			if(!"".equals(email)) {
-				sql = sql + " and (o.email = :email or (o.invoiceNumber = 'OC EXTRANJERO' and orderStauts = 'OC ENVIADA')) ";
+			if (orderNumber > 0) {
+				sql = sql + " and o.orderNumber = :orderNumber ";
 			}
-		}else {
-			if(!"".equals(email)) {
-				sql = sql + " and o.email = :email ";
-			}
-		}
-		
-		Query q = session.createQuery(sql);
-		
-		if(orderNumber > 0) {
-			q.setParameter("orderNumber", orderNumber);
-		}
-		
-		if(!"".equals(addressBook)) {
-			q.setParameter("addressNumber", addressBook);
-		}
-		
-		if(poFromDate != null) {
-			q.setParameter("dateRequestedFrom", poFromDate);
-		}
-		
-		if(poToDate != null) {
-			q.setParameter("dateRequestedTo", poToDate);
-		}
-		
-		if(poTypeCombo != null && poTypeCombo.equals("OP")) { // para notas de credito
-			q.setParameter("poTypeCombo", poTypeCombo);
-		}
-		
-		if(!"".equals(status)) {
-			q.setParameter("orderStauts", status);
-		}
-		
-		if(!"".equals(email)) {
-			q.setParameter("email", email);
-		}
-		
-		Long count = (Long) q.uniqueResult();
-		return count.intValue();
 
-		}catch(Exception e) {
-			log4j.error("Exception" , e);
+			if (!"".equals(addressBook)) {
+				sql = sql + " and o.addressNumber = :addressNumber ";
+			}
+
+			if (poFromDate != null) {
+				sql = sql + " and o.dateRequested >= :dateRequestedFrom ";
+			}
+
+			if (poToDate != null) {
+				sql = sql + " and o.dateRequested <= :dateRequestedTo ";
+			}
+
+			if (poTypeCombo != null && poTypeCombo.equals("OP")) {
+				sql = sql + " and o.orderType = :poTypeCombo ";
+			} else if (poTypeCombo != null && poTypeCombo.equals("OS")) {
+				sql = sql + " and o.orderType not in ('OP') ";
+			}
+
+			if (!"".equals(status)) {
+				sql = sql + " and o.orderStauts = :orderStauts ";
+			}
+
+			if (!"".equals(foreign)) {
+				if (!"".equals(email)) {
+					sql = sql
+							+ " and (o.email = :email or (o.invoiceNumber = 'OC EXTRANJERO' and o.orderStauts = 'OC ENVIADA')) ";
+				}
+			} else {
+				if (!"".equals(email)) {
+					sql = sql + " and o.email = :email ";
+				}
+			}
+
+			Query q = session.createQuery(sql);
+
+			if (orderNumber > 0) {
+				q.setParameter("orderNumber", orderNumber);
+			}
+
+			if (!"".equals(addressBook)) {
+				q.setParameter("addressNumber", addressBook);
+			}
+
+			// Aplicar la misma lógica de fechas que en el primer método
+			if (poFromDate != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(poFromDate);
+				calendar.add(Calendar.DAY_OF_YEAR, 1);
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				q.setParameter("dateRequestedFrom", calendar.getTime());
+			}
+
+			if (poToDate != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(poToDate);
+				calendar.add(Calendar.DAY_OF_YEAR, 1);
+				calendar.set(Calendar.HOUR_OF_DAY, 23);
+				calendar.set(Calendar.MINUTE, 59);
+				calendar.set(Calendar.SECOND, 59);
+				calendar.set(Calendar.MILLISECOND, 999);
+				q.setParameter("dateRequestedTo", calendar.getTime());
+			}
+
+			if (poTypeCombo != null && poTypeCombo.equals("OP")) {
+				q.setParameter("poTypeCombo", poTypeCombo);
+			}
+
+			if (!"".equals(status)) {
+				q.setParameter("orderStauts", status);
+			}
+
+			if (!"".equals(email)) {
+				q.setParameter("email", email);
+			}
+
+			Long count = (Long) q.uniqueResult();
+			return count.intValue();
+
+		} catch (Exception e) {
+			log4j.error("Exception", e);
 			e.printStackTrace();
 			return 0;
 		}

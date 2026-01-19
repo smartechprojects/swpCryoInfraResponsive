@@ -383,6 +383,7 @@
     		          id: 'paymentsSupplierspoFromDate',
     		          itemId: 'paymentsSupplierspoFromDate',
     		          name: 'paymentsSupplierspoFromDate',
+    		          format: 'd/m/Y',
     		          listeners: {
 	                      specialkey: function(field, e) {
 	                          if (e.getKey() === e.ENTER) {
@@ -405,6 +406,7 @@
     		          id: 'paymentsSupplierspoToDate',
     		          itemId: 'paymentsSupplierspoToDate',
     		          name: 'paymentsSupplierspoToDate',
+    		          format: 'd/m/Y',
     		          listeners: {
 	                      specialkey: function(field, e) {
 	                          if (e.getKey() === e.ENTER) {
