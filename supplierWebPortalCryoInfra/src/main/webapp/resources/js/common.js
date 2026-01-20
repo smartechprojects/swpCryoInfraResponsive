@@ -964,564 +964,709 @@ function getCompanyStore() {
 
 /*Funciones para ajuste de Grids en diferentes modulos*/
 
-//==============================================
-//NAMESPACE: GridUtils - VERSIÓN COMPLETA
-//==============================================
-//==============================================
-//NAMESPACE: GridUtils - VERSIÓN COMPLETA CON 12 FILAS FIJO
-//==============================================
 var GridUtils = {
 
- /**
-  * Función principal de ajuste de grid
-  * @param {Ext.grid.Panel} grid - El grid a ajustar
-  * @param {boolean} isRefresh - Indica si es un refresh o resize
-  */
- adjustGridLayout: function(grid, isRefresh) {
-     if (!grid || !grid.isXType('gridpanel')) return;
-     
-     //console.log('=== adjustGridLayout ===');
-     //console.log('Grid:', grid.id || grid.itemId);
-     
-     Ext.defer(function() {
-         // Paso 1: Autoajustar columnas
-         //console.log('🔧 Autoajustando columnas...');
-         GridUtils.adjustColumns(grid);
-         
-         // Paso 2: Ajustar alturas de filas (SIEMPRE 12 FILAS)
-         Ext.defer(function() {
-             //console.log('📏 Ajustando alturas de filas (12 filas fijo)...');
-             GridUtils.adjustRowHeightsFixed12(grid);
-         }, 100);
-         
-     }, 200);
- },
+	    /**
+	     * Función principal de ajuste de grid
+	     * @param {Ext.grid.Panel} grid - El grid a ajustar
+	     * @param {boolean} isRefresh - Indica si es un refresh o resize
+	     */
+	    adjustGridLayout: function(grid, isRefresh) {
+	        if (!grid || !grid.isXType('gridpanel')) return;
+	        
+	        console.log('=== adjustGridLayout ===');
+	        console.log('Grid:', grid.id || grid.itemId);
+	        
+	        Ext.defer(function() {
+	            // Paso 1: Autoajustar columnas
+	            console.log('🔧 Autoajustando columnas...');
+	            GridUtils.adjustColumns(grid);
+	            
+	            // Paso 2: Ajustar alturas de filas (SIEMPRE 12 FILAS)
+	            Ext.defer(function() {
+	                console.log('📏 Ajustando alturas de filas (12 filas fijo)...');
+	                GridUtils.adjustRowHeightsFixed12(grid);
+	            }, 100);
+	            
+	        }, 200);
+	    },
 
- /**
-  * Ajustar columnas según contenido
-  * @param {Ext.grid.Panel} grid - El grid a ajustar
-  */
- adjustColumns: function(grid) {
-     //console.log('=== adjustColumns (100% GENÉRICA) ===');
-     
-     var gridWidth = grid.getWidth();
-     var visibleCount = 0;
-     
-     // 1. Contar columnas visibles
-     Ext.each(grid.columns, function(col) {
-         if (!col.hidden) visibleCount++;
-     });
-     
-     //console.log('Grid ancho:', gridWidth, 'px, Columnas visibles:', visibleCount);
-     
-     // 2. Autoajustar cada columna según su contenido
-     var columnData = [];
-     var totalCurrentWidth = 0;
-     
-     Ext.each(grid.columns, function(col, index) {
-         if (col.hidden) return;
-         
-         var headerText = col.text || '';
-         var currentWidth = col.getWidth() || 0;
-         
-         // Autoajustar si es posible
-         if (col.autoSize || col.autoSizeColumn) {
-             try {
-                 //console.log('Columna', index, '("' + headerText + '"): autoajustando...');
-                 if (col.autoSize) col.autoSize();
-                 else if (col.autoSizeColumn) col.autoSizeColumn();
-                 currentWidth = col.getWidth();
-             } catch(e) {
-                 //console.log('Autoajuste falló:', e.message);
-             }
-         }
-         
-         // Calcular ancho mínimo basado SOLO en el header
-         var minWidth = 80; // Mínimo absoluto para cualquier columna
-         
-         if (headerText) {
-             try {
-                 var measureEl = Ext.getBody().createChild({
-                     tag: 'div',
-                     style: 'position:absolute;left:-1000px;top:-1000px;font:12px tahoma,arial,helvetica,sans-serif;white-space:nowrap;padding:0 8px;',
-                     html: headerText
-                 });
-                 minWidth = measureEl.getWidth() + 25;
-                 measureEl.remove();
-             } catch(e) {
-                 minWidth = headerText.length * 9 + 25;
-             }
-         }
-         
-         minWidth = Math.max(80, minWidth);
-         
-         // Aplicar mínimo si es necesario
-         if (currentWidth < minWidth) {
-             currentWidth = minWidth;
-             col.setWidth(currentWidth);
-         }
-         
-         columnData.push({
-             col: col,
-             index: index,
-             headerText: headerText,
-             currentWidth: currentWidth,
-             minWidth: minWidth
-         });
-         
-         totalCurrentWidth += currentWidth;
-     });
-     
-     //console.log('Ancho total después de autoajuste:', totalCurrentWidth, 'px');
-     
-     // 3. Calcular espacio sobrante
-     var spaceLeft = gridWidth - totalCurrentWidth;
-     //console.log('Espacio sobrante:', spaceLeft, 'px');
-     
-     // 4. ESTRATEGIA GENÉRICA DE EXPANSIÓN
-     if (spaceLeft > 0 && visibleCount > 0) {
-         //console.log('📏 Expandiendo columnas para llenar espacio...');
-         
-         // Calcular factor de expansión basado en número de columnas
-         var expansionFactor = 1.0;
-         
-         // REGLA GENÉRICA: Menos columnas = más expansión por columna
-         if (visibleCount <= 3) {
-             expansionFactor = 3.0; // Máxima expansión para muy pocas columnas
-         } else if (visibleCount <= 6) {
-             expansionFactor = 2.0; // Expansión media
-         } else if (visibleCount <= 10) {
-             expansionFactor = 1.5; // Expansión moderada
-         } else {
-             expansionFactor = 1.2; // Mínima expansión para muchas columnas
-         }
-         
-         //console.log('Factor de expansión:', expansionFactor, '(basado en', visibleCount, 'columnas)');
-         
-         // Aplicar expansión proporcional
-         Ext.each(columnData, function(item) {
-             var newWidth = Math.floor(item.currentWidth * expansionFactor);
-             
-             // Límite máximo genérico basado en expansión
-             var maxWidth = 0;
-             
-             // REGLA GENÉRICA: Columnas con headers largos pueden expandirse más
-             if (item.headerText && item.headerText.length > 20) {
-                 maxWidth = 600; // Headers muy largos
-             } else if (item.headerText && item.headerText.length > 10) {
-                 maxWidth = 400; // Headers largos
-             } else {
-                 maxWidth = 300; // Headers cortos
-             }
-             
-             // Ajustar límite por número de columnas
-             if (visibleCount <= 3) {
-                 maxWidth = Math.max(maxWidth, 800); // Más ancho para pocas columnas
-             } else if (visibleCount <= 6) {
-                 maxWidth = Math.max(maxWidth, 500);
-             }
-             
-             newWidth = Math.min(newWidth, maxWidth);
-             
-             /*console.log('  Columna', item.index, '("' + item.headerText + '"):', 
-                        item.currentWidth, '->', newWidth, 'px');*/
-             
-             item.col.setWidth(newWidth);
-             item.currentWidth = newWidth;
-         });
-         
-         // 5. Recalcular después de expansión
-         var newTotalWidth = 0;
-         Ext.each(columnData, function(item) {
-             newTotalWidth += item.currentWidth;
-         });
-         
-         var finalSpaceLeft = gridWidth - newTotalWidth;
-         //console.log('Ancho total después de expansión:', newTotalWidth, 'px');
-         //console.log('Espacio final sobrante:', finalSpaceLeft, 'px');
-         
-         // 6. Si aún sobra espacio, repartir equitativamente
-         if (finalSpaceLeft > 0 && visibleCount > 0) {
-             //console.log('📐 Repartiendo espacio final sobrante...');
-             
-             var extraPerColumn = Math.floor(finalSpaceLeft / visibleCount);
-             
-             Ext.each(columnData, function(item) {
-                 var finalWidth = item.currentWidth + extraPerColumn;
-                 // Última expansión con límite muy alto
-                 finalWidth = Math.min(finalWidth, 1000);
-                 item.col.setWidth(finalWidth);
-                 //console.log('  Final columna', item.index, ':', item.currentWidth, '->', finalWidth, 'px');
-             });
-         }
-         
-     } else if (spaceLeft < 0) {
-         //console.log('✅ Columnas más anchas que el grid - Scrollbar necesario');
-     } else {
-         //console.log('⚖️ Ancho perfecto');
-     }
-     
-     //console.log('✅ adjustColumns completado');
- },
+	    /**
+	     * Ajustar columnas según contenido - VERSIÓN 100% GARANTIZADO
+	     * @param {Ext.grid.Panel} grid - El grid a ajustar
+	     */
+	    adjustColumns: function(grid) {
+	        console.log('=== adjustColumns (100% GARANTIZADO) ===');
+	        
+	        var gridWidth = grid.getWidth();
+	        var visibleCount = 0;
+	        
+	        // 1. Contar columnas visibles
+	        Ext.each(grid.columns, function(col) {
+	            if (!col.hidden) visibleCount++;
+	        });
+	        
+	        console.log('Grid ancho:', gridWidth, 'px, Columnas visibles:', visibleCount);
+	        
+	        // 2. Autoajustar cada columna según su contenido
+	        var columnData = [];
+	        var totalCurrentWidth = 0;
+	        
+	        Ext.each(grid.columns, function(col, index) {
+	            if (col.hidden) return;
+	            
+	            var headerText = col.text || '';
+	            var currentWidth = col.getWidth() || 0;
+	            
+	            // Autoajustar si es posible
+	            if (col.autoSize || col.autoSizeColumn) {
+	                try {
+	                    console.log('Columna', index, '("' + headerText + '"): autoajustando...');
+	                    if (col.autoSize) col.autoSize();
+	                    else if (col.autoSizeColumn) col.autoSizeColumn();
+	                    currentWidth = col.getWidth();
+	                } catch(e) {
+	                    console.log('Autoajuste falló:', e.message);
+	                }
+	            }
+	            
+	            // Calcular ancho mínimo basado SOLO en el header
+	            var minWidth = 80; // Mínimo absoluto para cualquier columna
+	            
+	            if (headerText) {
+	                try {
+	                    var measureEl = Ext.getBody().createChild({
+	                        tag: 'div',
+	                        style: 'position:absolute;left:-1000px;top:-1000px;font:12px tahoma,arial,helvetica,sans-serif;white-space:nowrap;padding:0 8px;',
+	                        html: headerText
+	                    });
+	                    minWidth = measureEl.getWidth() + 25;
+	                    measureEl.remove();
+	                } catch(e) {
+	                    minWidth = headerText.length * 9 + 25;
+	                }
+	            }
+	            
+	            minWidth = Math.max(80, minWidth);
+	            
+	            // Aplicar mínimo si es necesario
+	            if (currentWidth < minWidth) {
+	                currentWidth = minWidth;
+	                col.setWidth(currentWidth);
+	            }
+	            
+	            columnData.push({
+	                col: col,
+	                index: index,
+	                headerText: headerText,
+	                currentWidth: currentWidth,
+	                minWidth: minWidth,
+	                headerLength: headerText.length
+	            });
+	            
+	            totalCurrentWidth += currentWidth;
+	        });
+	        
+	        console.log('Ancho total después de autoajuste:', totalCurrentWidth, 'px');
+	        
+	        // 3. Calcular espacio sobrante
+	        var spaceLeft = gridWidth - totalCurrentWidth;
+	        console.log('Espacio sobrante:', spaceLeft, 'px');
+	        
+	        // 4. DETECCIÓN: ¿Hay MUCHO espacio sobrante?
+	        var percentageLeft = (spaceLeft / gridWidth) * 100;
+	        console.log('Porcentaje de espacio sobrante:', percentageLeft.toFixed(1) + '%');
+	        
+	        // 5. ESTRATEGIA INTELIGENTE:
+	        if (spaceLeft > 0 && visibleCount > 0) {
+	            // CASO A: MUCHO espacio sobrante (>20%) - EXPANSIÓN AGRESIVA
+	            if (percentageLeft > 20) {
+	                console.log('🚀 MUCHO espacio sobrante (' + percentageLeft.toFixed(1) + '%), aplicando expansión agresiva...');
+	                GridUtils._applyAggressiveExpansion(grid, columnData, gridWidth, spaceLeft, visibleCount);
+	            }
+	            // CASO B: Espacio moderado (5-20%) - EXPANSIÓN PROPORCIONAL MEJORADA
+	            else if (percentageLeft > 5) {
+	                console.log('📏 Espacio moderado (' + percentageLeft.toFixed(1) + '%), aplicando expansión mejorada...');
+	                GridUtils._applyImprovedExpansion(grid, columnData, gridWidth, spaceLeft, visibleCount);
+	            }
+	            // CASO C: Poco espacio (<5%) - DISTRIBUCIÓN SIMPLE
+	            else {
+	                console.log('📐 Poco espacio (' + percentageLeft.toFixed(1) + '%), distribuyendo equitativamente...');
+	                GridUtils._applySimpleDistribution(grid, columnData, spaceLeft, visibleCount);
+	            }
+	            
+	        } else if (spaceLeft < 0) {
+	            console.log('✅ Columnas más anchas que el grid - Scrollbar necesario');
+	            // Asegurar al menos los mínimos
+	            Ext.each(columnData, function(item) {
+	                if (item.currentWidth < item.minWidth) {
+	                    item.col.setWidth(item.minWidth);
+	                }
+	            });
+	        } else {
+	            console.log('⚖️ Ancho perfecto');
+	        }
+	        
+	        // 6. VERIFICACIÓN FINAL
+	        var finalTotal = 0;
+	        Ext.each(grid.columns, function(col) {
+	            if (!col.hidden) finalTotal += col.getWidth();
+	        });
+	        
+	        var finalSpaceLeft = gridWidth - finalTotal;
+	        console.log('📊 RESULTADO FINAL:');
+	        console.log('   Ancho grid:', gridWidth, 'px');
+	        console.log('   Ancho columnas:', finalTotal, 'px');
+	        console.log('   Diferencia:', finalSpaceLeft, 'px');
+	        console.log('   % ocupación:', ((finalTotal / gridWidth) * 100).toFixed(1) + '%');
+	        
+	        grid.updateLayout();
+	        console.log('✅ adjustColumns completado');
+	    },
 
- /**
-  * Distribuir espacio sobrante entre columnas
-  * @param {Ext.grid.Panel} grid - El grid a ajustar
-  */
- distributeExtraSpace: function(grid) {
-     //console.log('=== distributeExtraSpace (GENÉRICA SIMPLE) ===');
-     
-     var totalWidth = 0;
-     var gridWidth = grid.getWidth();
-     var visibleCount = 0;
-     
-     // Calcular ancho total
-     Ext.each(grid.columns, function(col) {
-         if (!col.hidden) {
-             totalWidth += col.getWidth();
-             visibleCount++;
-         }
-     });
-     
-     var spaceLeft = gridWidth - totalWidth;
-     //console.log('Ancho total:', totalWidth, 'px, Espacio sobrante:', spaceLeft, 'px');
-     
-     // REGLA GENÉRICA: Solo ajustar si sobra poco espacio
-     // (para no interferir con adjustColumns)
-     if (spaceLeft > 0 && spaceLeft < 200 && visibleCount > 0) {
-         //console.log('📏 Ajuste fino final...');
-         
-         var extraPerColumn = Math.floor(spaceLeft / visibleCount);
-         
-         Ext.each(grid.columns, function(col) {
-             if (!col.hidden) {
-                 var newWidth = col.getWidth() + extraPerColumn;
-                 col.setWidth(newWidth);
-             }
-         });
-     }
-     
-     grid.updateLayout();
-     //console.log('✅ distributeExtraSpace completado');
- },
+	    /**
+	     * EXPANSIÓN AGRESIVA: Para cuando hay MUCHO espacio sobrante (>20%)
+	     */
+	    _applyAggressiveExpansion: function(grid, columnData, gridWidth, spaceLeft, visibleCount) {
+	        console.log('💪 EXPANSIÓN AGRESIVA ACTIVADA');
+	        
+	        // 1. Calcular ancho objetivo por columna (distribución ideal)
+	        var targetWidthPerColumn = Math.floor(gridWidth / visibleCount);
+	        console.log('Ancho objetivo por columna:', targetWidthPerColumn, 'px');
+	        
+	        // 2. Calcular cuánto necesita expandirse cada columna
+	        var totalNeededExpansion = 0;
+	        Ext.each(columnData, function(item) {
+	            var needed = Math.max(0, targetWidthPerColumn - item.currentWidth);
+	            item.neededExpansion = needed;
+	            totalNeededExpansion += needed;
+	        });
+	        
+	        // 3. Si el espacio sobrante es suficiente para la expansión ideal
+	        if (spaceLeft >= totalNeededExpansion) {
+	            console.log('✅ Espacio suficiente para expansión ideal');
+	            Ext.each(columnData, function(item) {
+	                var newWidth = item.currentWidth + item.neededExpansion;
+	                // Asegurar mínimos
+	                newWidth = Math.max(newWidth, item.minWidth);
+	                item.col.setWidth(newWidth);
+	                console.log('  Columna', item.index, '("' + item.headerText + '"):', 
+	                          item.currentWidth, '->', newWidth, 'px (+' + item.neededExpansion + 'px)');
+	            });
+	        } else {
+	            // 4. Si no hay suficiente espacio, expandir proporcionalmente
+	            console.log('⚠️ Espacio insuficiente para expansión ideal, distribuyendo proporcionalmente...');
+	            var expansionRatio = spaceLeft / totalNeededExpansion;
+	            
+	            Ext.each(columnData, function(item) {
+	                var expansion = Math.floor(item.neededExpansion * expansionRatio);
+	                var newWidth = item.currentWidth + expansion;
+	                // Asegurar mínimos
+	                newWidth = Math.max(newWidth, item.minWidth);
+	                item.col.setWidth(newWidth);
+	                console.log('  Columna', item.index, '("' + item.headerText + '"):', 
+	                          item.currentWidth, '->', newWidth, 'px (+' + expansion + 'px)');
+	            });
+	            
+	            // 5. Distribuir cualquier espacio restante
+	            var currentTotal = 0;
+	            Ext.each(columnData, function(item) {
+	                currentTotal += item.col.getWidth();
+	            });
+	            
+	            var remainingSpace = gridWidth - currentTotal;
+	            if (remainingSpace > 0) {
+	                console.log('📐 Distribuyendo espacio restante:', remainingSpace, 'px');
+	                var extraPerColumn = Math.floor(remainingSpace / visibleCount);
+	                var remainder = remainingSpace % visibleCount;
+	                
+	                Ext.each(columnData, function(item, idx) {
+	                    var extra = extraPerColumn;
+	                    if (idx < remainder) extra += 1;
+	                    var finalWidth = item.col.getWidth() + extra;
+	                    item.col.setWidth(finalWidth);
+	                });
+	            }
+	        }
+	    },
 
- /**
-  * Ajustar alturas de filas para SIEMPRE usar 12 filas como referencia
-  * @param {Ext.grid.Panel} grid - El grid a ajustar
-  */
- adjustRowHeightsFixed12: function(grid) {
-     //console.log('=== adjustRowHeightsFixed12 (12 FILAS SIEMPRE) ===');
-     
-     var view = grid.getView();
-     if (!view) {
-         //console.log('❌ Vista no disponible');
-         return;
-     }
-     
-     // Calcular altura disponible del grid
-     var gridHeight = grid.getHeight();
-     //console.log('Altura total del grid:', gridHeight, 'px');
-     
-     // Calcular altura de encabezados y elementos docked
-     var headerHeight = 0;
-     var headerContainer = grid.headerCt;
-     if (headerContainer && headerContainer.getHeight()) {
-         headerHeight = headerContainer.getHeight();
-     }
-     
-     var dockedHeight = 0;
-     if (grid.dockedItems) {
-         grid.dockedItems.each(function(item) {
-             if (item.isVisible() && item.getHeight) {
-                 dockedHeight += item.getHeight();
-             }
-         });
-     }
-     
-     // Calcular altura disponible para las filas
-     var availableHeight = gridHeight - headerHeight - dockedHeight - 2; // -2 para borde
-     //console.log('Altura disponible para filas:', availableHeight, 'px');
-     //console.log('  - Altura grid:', gridHeight);
-     //console.log('  - Altura header:', headerHeight);
-     //console.log('  - Altura docked:', dockedHeight);
-     
-     // Obtener filas visibles actuales
-     var rows = view.getNodes();
-     var actualRowCount = rows.length;
-     //console.log('Filas visibles actuales:', actualRowCount);
-     
-     // Obtener el pageSize del store (si no existe, usar 12 por defecto)
-     var store = grid.getStore();
-     var pageSize = 12; // Valor por defecto
-     
-     if (store && store.pageSize) {
-         pageSize = store.pageSize;
-         //console.log('PageSize obtenido del store:', pageSize);
-     } else {
-         //console.log('Usando pageSize por defecto:', pageSize);
-     }
-     
-     // SIEMPRE usar 12 (o el pageSize) como referencia
-     var targetRowCount = pageSize;
-     //console.log('Filas objetivo (target):', targetRowCount);
-     
-     // Calcular altura por fila basada en espacio disponible y 12 filas
-     var rowHeight = Math.floor(availableHeight / targetRowCount);
-     //console.log('Altura calculada por fila (basada en ' + targetRowCount + ' filas):', rowHeight, 'px');
-     
-     // Aplicar altura uniforme a todas las filas VISIBLES
-     if (actualRowCount > 0) {
-         Ext.each(rows, function(row, index) {
-             Ext.get(row).setHeight(rowHeight);
-             //console.log('  Fila visible ' + (index + 1) + ' de ' + actualRowCount + ': altura = ' + rowHeight + 'px');
-         });
-     }
-     
-     // Si hay menos de 12 filas, también ajustar el espacio vacío
-     if (actualRowCount < targetRowCount) {
-         var emptySpaceHeight = rowHeight * (targetRowCount - actualRowCount);
-         //console.log('Espacio vacío equivalente a ' + (targetRowCount - actualRowCount) + ' filas: ' + emptySpaceHeight + 'px');
-         
-         // Crear un div temporal para ocupar el espacio vacío si es necesario
-         // (Opcional - solo si quieres mantener el scroll consistente)
-         if (rows.length > 0) {
-             var lastRow = rows[rows.length - 1];
-             var lastRowEl = Ext.get(lastRow);
-             lastRowEl.setStyle('margin-bottom', emptySpaceHeight + 'px');
-             //console.log('Añadido margen inferior a última fila:', emptySpaceHeight, 'px');
-         }
-     }
-     
-     // Forzar actualización del layout
-     grid.updateLayout();
-     
-     //console.log('✅ Alturas de filas ajustadas exitosamente');
-     //console.log('   Cada fila tiene:', rowHeight, 'px de altura');
-     //console.log('   Basado en:', targetRowCount, 'filas (pageSize)');
-     //console.log('   Filas visibles:', actualRowCount);
-     //console.log('   Espacio total imitado:', (rowHeight * targetRowCount), 'px de', availableHeight, 'px disponibles');
- },
+	    /**
+	     * EXPANSIÓN MEJORADA: Para espacio moderado (5-20%)
+	     */
+	    _applyImprovedExpansion: function(grid, columnData, gridWidth, spaceLeft, visibleCount) {
+	        console.log('📈 EXPANSIÓN MEJORADA ACTIVADA');
+	        
+	        // 1. Calcular factor de expansión DINÁMICO basado en espacio sobrante
+	        var baseExpansion = 1.0;
+	        
+	        if (visibleCount <= 3) {
+	            baseExpansion = 3.0;
+	        } else if (visibleCount <= 6) {
+	            baseExpansion = 2.0;
+	        } else if (visibleCount <= 10) {
+	            baseExpansion = 1.5;
+	        } else {
+	            baseExpansion = 1.2;
+	        }
+	        
+	        // Ajustar factor según porcentaje de espacio sobrante
+	        var percentageLeft = (spaceLeft / gridWidth) * 100;
+	        var dynamicFactor = baseExpansion * (1 + (percentageLeft / 100));
+	        
+	        console.log('Factor de expansión dinámico:', dynamicFactor.toFixed(2), 
+	                   '(base:', baseExpansion, ', espacio:', percentageLeft.toFixed(1) + '%)');
+	        
+	        // 2. Aplicar expansión proporcional con límites inteligentes
+	        Ext.each(columnData, function(item) {
+	            var newWidth = Math.floor(item.currentWidth * dynamicFactor);
+	            
+	            // Límites inteligentes basados en tipo de contenido
+	            var maxWidth = 0;
+	            
+	            // Headers largos pueden expandirse más
+	            if (item.headerLength > 20) {
+	                maxWidth = 600;
+	            } else if (item.headerLength > 10) {
+	                maxWidth = 400;
+	            } else {
+	                maxWidth = 300;
+	            }
+	            
+	            // Ajustar por número de columnas
+	            if (visibleCount <= 3) {
+	                maxWidth = Math.max(maxWidth, 800);
+	            } else if (visibleCount <= 6) {
+	                maxWidth = Math.max(maxWidth, 500);
+	            }
+	            
+	            // Para expansión mejorada, aumentar límites
+	            maxWidth = Math.min(maxWidth, gridWidth * 0.3);
+	            
+	            newWidth = Math.min(newWidth, maxWidth);
+	            newWidth = Math.max(newWidth, item.minWidth);
+	            
+	            item.col.setWidth(newWidth);
+	            console.log('  Columna', item.index, '("' + item.headerText + '"):', 
+	                      item.currentWidth, '->', newWidth, 'px');
+	        });
+	        
+	        // 3. Distribuir espacio restante si lo hay
+	        var currentTotal = 0;
+	        Ext.each(columnData, function(item) {
+	            currentTotal += item.col.getWidth();
+	        });
+	        
+	        var remainingSpace = gridWidth - currentTotal;
+	        if (remainingSpace > 0 && remainingSpace < 100) {
+	            console.log('📐 Ajuste fino final:', remainingSpace, 'px');
+	            GridUtils._applySimpleDistribution(grid, columnData, remainingSpace, visibleCount);
+	        }
+	    },
 
- /**
-  * Versión alternativa: Mantener scroll consistente con filas fantasma
-  * @param {Ext.grid.Panel} grid - El grid a ajustar
-  */
- adjustRowHeightsWithGhostRows: function(grid) {
-     //console.log('=== adjustRowHeightsWithGhostRows (CON FILAS FANTASMA) ===');
-     
-     var view = grid.getView();
-     if (!view) return;
-     
-     // Calcular altura disponible
-     var gridHeight = grid.getHeight();
-     var headerHeight = grid.headerCt ? grid.headerCt.getHeight() : 0;
-     var dockedHeight = 0;
-     
-     if (grid.dockedItems) {
-         grid.dockedItems.each(function(item) {
-             if (item.isVisible() && item.getHeight) {
-                 dockedHeight += item.getHeight();
-             }
-         });
-     }
-     
-     var availableHeight = gridHeight - headerHeight - dockedHeight - 2;
-     
-     // Obtener pageSize (por defecto 12)
-     var store = grid.getStore();
-     var pageSize = (store && store.pageSize) ? store.pageSize : 12;
-     
-     // Obtener filas actuales
-     var rows = view.getNodes();
-     var actualRowCount = rows.length;
-     
-     // Calcular altura por fila
-     var rowHeight = Math.floor(availableHeight / pageSize);
-     
-     // Ajustar filas visibles
-     Ext.each(rows, function(row) {
-         Ext.get(row).setHeight(rowHeight);
-     });
-     
-     // Si hay menos filas que el pageSize, ajustar el contenedor
-     if (actualRowCount < pageSize) {
-         var viewBody = view.getEl().down('.x-grid-view');
-         if (viewBody) {
-             var minHeight = rowHeight * pageSize;
-             viewBody.setStyle('min-height', minHeight + 'px');
-             //console.log('Ajustado min-height del viewBody a:', minHeight, 'px');
-         }
-     }
-     
-     grid.updateLayout();
-     //console.log('✅ Ajuste con filas fantasma completado');
- },
+	    /**
+	     * DISTRIBUCIÓN SIMPLE: Para poco espacio (<5%)
+	     */
+	    _applySimpleDistribution: function(grid, columnData, spaceLeft, visibleCount) {
+	        console.log('📐 DISTRIBUCIÓN SIMPLE');
+	        
+	        var extraPerColumn = Math.floor(spaceLeft / visibleCount);
+	        var remainder = spaceLeft % visibleCount;
+	        
+	        Ext.each(columnData, function(item, idx) {
+	            var extra = extraPerColumn;
+	            if (idx < remainder) extra += 1;
+	            
+	            var newWidth = item.col.getWidth() + extra;
+	            item.col.setWidth(newWidth);
+	            console.log('  Columna', item.index, '("' + item.headerText + '"): +' + extra + 'px');
+	        });
+	    },
 
- /**
-  * Función de ajuste de altura de filas (legacy - se mantiene por compatibilidad)
-  * @param {Ext.grid.Panel} grid - El grid a ajustar
-  */
- adjustRowHeights: function(grid) {
-     //console.log('=== adjustRowHeights (LEGACY - usa Fixed12) ===');
-     GridUtils.adjustRowHeightsFixed12(grid);
- },
+	    /**
+	     * Distribuir espacio sobrante entre columnas
+	     * @param {Ext.grid.Panel} grid - El grid a ajustar
+	     */
+	    distributeExtraSpace: function(grid) {
+	        console.log('=== distributeExtraSpace ===');
+	        
+	        var totalWidth = 0;
+	        var gridWidth = grid.getWidth();
+	        var visibleCount = 0;
+	        
+	        // Calcular ancho total
+	        Ext.each(grid.columns, function(col) {
+	            if (!col.hidden) {
+	                totalWidth += col.getWidth();
+	                visibleCount++;
+	            }
+	        });
+	        
+	        var spaceLeft = gridWidth - totalWidth;
+	        console.log('Ancho total:', totalWidth, 'px, Espacio sobrante:', spaceLeft, 'px');
+	        
+	        if (spaceLeft > 0 && spaceLeft < 200 && visibleCount > 0) {
+	            console.log('📏 Ajuste fino final...');
+	            
+	            var extraPerColumn = Math.floor(spaceLeft / visibleCount);
+	            
+	            Ext.each(grid.columns, function(col) {
+	                if (!col.hidden) {
+	                    var newWidth = col.getWidth() + extraPerColumn;
+	                    col.setWidth(newWidth);
+	                }
+	            });
+	        }
+	        
+	        grid.updateLayout();
+	        console.log('✅ distributeExtraSpace completado');
+	    },
 
- /**
-  * Configurar listeners estándar para un grid
-  * @param {Ext.grid.Panel} grid - El grid a configurar
-  */
- setupGridListeners: function(grid) {
-     var view = grid.getView();
-     
-     view.on('refresh', function(view) {
-         //console.log('📈 Evento REFRESH en grid:', grid.id || grid.itemId);
-         GridUtils.adjustGridLayout(grid, true);
-     });
-     
-     view.on('resize', function(view) {
-         //console.log('📐 Evento RESIZE en grid:', grid.id || grid.itemId);
-         GridUtils.adjustGridLayout(grid, false);
-     });
-     
-     // También escuchar carga del store
-     var store = grid.getStore();
-     if (store) {
-         store.on('load', function() {
-             //console.log('📊 Store cargado, ajustando grid:', grid.id || grid.itemId);
-             Ext.defer(function() {
-                 GridUtils.adjustGridLayout(grid, true);
-             }, 100);
-         });
-     }
- }
-};
+	    /**
+	     * Ajustar alturas de filas para SIEMPRE usar 12 filas como referencia
+	     * @param {Ext.grid.Panel} grid - El grid a ajustar
+	     */
+	    adjustRowHeightsFixed12: function(grid) {
+	        console.log('=== adjustRowHeightsFixed12 (12 FILAS SIEMPRE) ===');
+	        
+	        var view = grid.getView();
+	        if (!view) {
+	            console.log('❌ Vista no disponible');
+	            return;
+	        }
+	        
+	        // Calcular altura disponible del grid
+	        var gridHeight = grid.getHeight();
+	        console.log('Altura total del grid:', gridHeight, 'px');
+	        
+	        // Calcular altura de encabezados y elementos docked
+	        var headerHeight = 0;
+	        var headerContainer = grid.headerCt;
+	        if (headerContainer && headerContainer.getHeight()) {
+	            headerHeight = headerContainer.getHeight();
+	        }
+	        
+	        var dockedHeight = 0;
+	        if (grid.dockedItems) {
+	            grid.dockedItems.each(function(item) {
+	                if (item.isVisible() && item.getHeight) {
+	                    dockedHeight += item.getHeight();
+	                }
+	            });
+	        }
+	        
+	        // Calcular altura disponible para las filas
+	        var availableHeight = gridHeight - headerHeight - dockedHeight - 2; // -2 para borde
+	        console.log('Altura disponible para filas:', availableHeight, 'px');
+	        console.log('  - Altura grid:', gridHeight);
+	        console.log('  - Altura header:', headerHeight);
+	        console.log('  - Altura docked:', dockedHeight);
+	        
+	        // Obtener filas visibles actuales
+	        var rows = view.getNodes();
+	        var actualRowCount = rows.length;
+	        console.log('Filas visibles actuales:', actualRowCount);
+	        
+	        // Obtener el pageSize del store (si no existe, usar 12 por defecto)
+	        var store = grid.getStore();
+	        var pageSize = 12; // Valor por defecto
+	        
+	        if (store && store.pageSize) {
+	            pageSize = store.pageSize;
+	            console.log('PageSize obtenido del store:', pageSize);
+	        } else {
+	            console.log('Usando pageSize por defecto:', pageSize);
+	        }
+	        
+	        // SIEMPRE usar 12 (o el pageSize) como referencia
+	        var targetRowCount = pageSize;
+	        console.log('Filas objetivo (target):', targetRowCount);
+	        
+	        // Calcular altura por fila basada en espacio disponible y 12 filas
+	        var rowHeight = Math.floor(availableHeight / targetRowCount);
+	        console.log('Altura calculada por fila (basada en ' + targetRowCount + ' filas):', rowHeight, 'px');
+	        
+	        // Aplicar altura uniforme a todas las filas VISIBLES
+	        if (actualRowCount > 0) {
+	            Ext.each(rows, function(row, index) {
+	                Ext.get(row).setHeight(rowHeight);
+	                console.log('  Fila visible ' + (index + 1) + ' de ' + actualRowCount + ': altura = ' + rowHeight + 'px');
+	            });
+	        }
+	        
+	        // Si hay menos de 12 filas, también ajustar el espacio vacío
+	        if (actualRowCount < targetRowCount) {
+	            var emptySpaceHeight = rowHeight * (targetRowCount - actualRowCount);
+	            console.log('Espacio vacío equivalente a ' + (targetRowCount - actualRowCount) + ' filas: ' + emptySpaceHeight + 'px');
+	            
+	            if (rows.length > 0) {
+	                var lastRow = rows[rows.length - 1];
+	                var lastRowEl = Ext.get(lastRow);
+	                lastRowEl.setStyle('margin-bottom', emptySpaceHeight + 'px');
+	                console.log('Añadido margen inferior a última fila:', emptySpaceHeight, 'px');
+	            }
+	        }
+	        
+	        // Forzar actualización del layout
+	        grid.updateLayout();
+	        
+	        console.log('✅ Alturas de filas ajustadas exitosamente');
+	        console.log('   Cada fila tiene:', rowHeight, 'px de altura');
+	        console.log('   Basado en:', targetRowCount, 'filas (pageSize)');
+	        console.log('   Filas visibles:', actualRowCount);
+	        console.log('   Espacio total imitado:', (rowHeight * targetRowCount), 'px de', availableHeight, 'px disponibles');
+	    },
 
-//==============================================
-//FUNCIONES DE DEBUG GLOBALES
-//==============================================
-var recordWorker = {};
+	    /**
+	     * Versión alternativa: Mantener scroll consistente con filas fantasma
+	     * @param {Ext.grid.Panel} grid - El grid a ajustar
+	     */
+	    adjustRowHeightsWithGhostRows: function(grid) {
+	        console.log('=== adjustRowHeightsWithGhostRows (CON FILAS FANTASMA) ===');
+	        
+	        var view = grid.getView();
+	        if (!view) return;
+	        
+	        // Calcular altura disponible
+	        var gridHeight = grid.getHeight();
+	        var headerHeight = grid.headerCt ? grid.headerCt.getHeight() : 0;
+	        var dockedHeight = 0;
+	        
+	        if (grid.dockedItems) {
+	            grid.dockedItems.each(function(item) {
+	                if (item.isVisible() && item.getHeight) {
+	                    dockedHeight += item.getHeight();
+	                }
+	            });
+	        }
+	        
+	        var availableHeight = gridHeight - headerHeight - dockedHeight - 2;
+	        
+	        // Obtener pageSize (por defecto 12)
+	        var store = grid.getStore();
+	        var pageSize = (store && store.pageSize) ? store.pageSize : 12;
+	        
+	        // Obtener filas actuales
+	        var rows = view.getNodes();
+	        var actualRowCount = rows.length;
+	        
+	        // Calcular altura por fila
+	        var rowHeight = Math.floor(availableHeight / pageSize);
+	        
+	        // Ajustar filas visibles
+	        Ext.each(rows, function(row) {
+	            Ext.get(row).setHeight(rowHeight);
+	        });
+	        
+	        // Si hay menos filas que el pageSize, ajustar el contenedor
+	        if (actualRowCount < pageSize) {
+	            var viewBody = view.getEl().down('.x-grid-view');
+	            if (viewBody) {
+	                var minHeight = rowHeight * pageSize;
+	                viewBody.setStyle('min-height', minHeight + 'px');
+	                console.log('Ajustado min-height del viewBody a:', minHeight, 'px');
+	            }
+	        }
+	        
+	        grid.updateLayout();
+	        console.log('✅ Ajuste con filas fantasma completado');
+	    },
 
-//Función para debug manual
-function debugGridUtils() {
- //console.log('=== DEBUG GridUtils ===');
- //console.log('Versión: 2.0 (12 filas fijo)');
- //console.log('Funciones disponibles:', Object.keys(GridUtils));
- 
- // Obtener todos los grids
- var grids = Ext.ComponentQuery.query('grid');
- //console.log('Grids encontrados:', grids.length);
- 
- grids.forEach(function(grid, index) {
-     //console.log('--- Grid ' + (index + 1) + ' ---');
-     //console.log('ID:', grid.id || grid.itemId);
-     //console.log('XTYPE:', grid.xtype);
-     //console.log('Ancho:', grid.getWidth(), 'px');
-     //console.log('Alto:', grid.getHeight(), 'px');
-     
-     // Info del store
-     var store = grid.getStore();
-     //console.log('Store pageSize:', store ? store.pageSize : 'N/A');
-     //console.log('Registros en store:', store ? store.getCount() : 'N/A');
-     //console.log('Total registros:', store ? store.totalCount : 'N/A');
-     
-     // Info de filas
-     var view = grid.getView();
-     var rows = view ? view.getNodes() : [];
-     //console.log('Filas visibles:', rows.length);
-     if (rows.length > 0) {
-         //console.log('Altura primera fila:', Ext.get(rows[0]).getHeight(), 'px');
-     }
-     
-     // Alturas calculadas
-     var headerHeight = grid.headerCt ? grid.headerCt.getHeight() : 0;
-     var dockedHeight = 0;
-     if (grid.dockedItems) {
-         grid.dockedItems.each(function(item) {
-             if (item.isVisible() && item.getHeight) {
-                 dockedHeight += item.getHeight();
-             }
-         });
-     }
-     var availableHeight = grid.getHeight() - headerHeight - dockedHeight - 2;
-     //console.log('Altura disponible:', availableHeight, 'px');
-     
-     var pageSize = store && store.pageSize ? store.pageSize : 12;
-     var calculatedHeight = Math.floor(availableHeight / pageSize);
-     //console.log('Altura calculada (basada en ' + pageSize + ' filas):', calculatedHeight, 'px');
- });
-}
+	    /**
+	     * Función de ajuste de altura de filas (legacy - se mantiene por compatibilidad)
+	     * @param {Ext.grid.Panel} grid - El grid a ajustar
+	     */
+	    adjustRowHeights: function(grid) {
+	        console.log('=== adjustRowHeights (LEGACY - usa Fixed12) ===');
+	        GridUtils.adjustRowHeightsFixed12(grid);
+	    },
 
-//==============================================
-//INICIALIZACIÓN AL CARGAR
-//==============================================
-Ext.onReady(function() {
- // Hacer las funciones globales
- window.debugGrids = debugGridUtils;
- 
- window.adjustAllGrids = function() {
-     var grids = Ext.ComponentQuery.query('grid');
-     //console.log('🔧 Ajustando todos los grids (' + grids.length + ' encontrados)');
-     grids.forEach(function(grid, index) {
-         //console.log('  [' + (index + 1) + '] Grid:', grid.id || grid.itemId);
-         GridUtils.adjustGridLayout(grid, true);
-     });
- };
- 
- window.adjustGridById = function(gridId) {
-     var grid = Ext.getCmp(gridId);
-     if (grid) {
-         //console.log('🔧 Ajustando grid específico:', gridId);
-         GridUtils.adjustGridLayout(grid, true);
-     } else {
-         //console.log('❌ Grid no encontrado:', gridId);
-         //console.log('Grids disponibles:');
-         var grids = Ext.ComponentQuery.query('grid');
-         grids.forEach(function(g) {
-             //console.log('  -', g.id || g.itemId || 'sin-id');
-         });
-     }
- };
- 
- window.adjustGridHeightsFixed12 = function(gridId) {
-     var grid = Ext.getCmp(gridId);
-     if (grid) {
-         //console.log('📏 Ajustando alturas (12 filas fijo) en grid:', gridId);
-         GridUtils.adjustRowHeightsFixed12(grid);
-     } else {
-         //console.log('❌ Grid no encontrado:', gridId);
-     }
- };
- 
- window.adjustGridHeightsWithGhost = function(gridId) {
-     var grid = Ext.getCmp(gridId);
-     if (grid) {
-         //console.log('👻 Ajustando con filas fantasma en grid:', gridId);
-         GridUtils.adjustRowHeightsWithGhostRows(grid);
-     } else {
-         //console.log('❌ Grid no encontrado:', gridId);
-     }
- };
- 
- //console.log('✅ GridUtils v2.0 cargado (12 filas fijo)');
- //console.log('Comandos disponibles en la consola:');
- //console.log('  - debugGrids(): muestra info de todos los grids');
- //console.log('  - adjustAllGrids(): ajusta todos los grids');
- //console.log('  - adjustGridById("id"): ajusta grid específico por ID');
- //console.log('  - adjustGridHeightsFixed12("id"): ajusta alturas basado en 12 filas');
- //console.log('  - adjustGridHeightsWithGhost("id"): ajusta con filas fantasma');
- 
- // Aplicar ajuste automático a todos los grids existentes
- Ext.defer(function() {
-     var grids = Ext.ComponentQuery.query('grid');
-     //console.log('🔧 Aplicando ajuste automático a', grids.length, 'grids existentes');
-     
-     grids.forEach(function(grid) {
-         // Aplicar ajuste inicial
-         Ext.defer(function() {
-             GridUtils.adjustGridLayout(grid, true);
-         }, 300);
-     });
- }, 500);
-});
+	    /**
+	     * Configurar listeners estándar para un grid
+	     * @param {Ext.grid.Panel} grid - El grid a configurar
+	     */
+	    setupGridListeners: function(grid) {
+	        var view = grid.getView();
+	        
+	        view.on('refresh', function(view) {
+	            console.log('📈 Evento REFRESH en grid:', grid.id || grid.itemId);
+	            GridUtils.adjustGridLayout(grid, true);
+	        });
+	        
+	        view.on('resize', function(view) {
+	            console.log('📐 Evento RESIZE en grid:', grid.id || grid.itemId);
+	            GridUtils.adjustGridLayout(grid, false);
+	        });
+	        
+	        // También escuchar carga del store
+	        var store = grid.getStore();
+	        if (store) {
+	            store.on('load', function() {
+	                console.log('📊 Store cargado, ajustando grid:', grid.id || grid.itemId);
+	                Ext.defer(function() {
+	                    GridUtils.adjustGridLayout(grid, true);
+	                }, 100);
+	            });
+	        }
+	    },
 
-var recordWorker={};
+	    /**
+	     * NUEVA: Función para forzar 100% de ocupación inmediatamente
+	     * @param {Ext.grid.Panel} grid - El grid a ajustar
+	     */
+	    force100PercentWidth: function(grid) {
+	        console.log('💪 FORZANDO 100% DE OCUPACIÓN');
+	        
+	        var gridWidth = grid.getWidth();
+	        var visibleCount = 0;
+	        var columns = [];
+	        
+	        // Obtener columnas visibles
+	        Ext.each(grid.columns, function(col, index) {
+	            if (!col.hidden) {
+	                visibleCount++;
+	                columns.push({
+	                    col: col,
+	                    index: index,
+	                    header: col.text || '',
+	                    currentWidth: col.getWidth()
+	                });
+	            }
+	        });
+	        
+	        if (visibleCount === 0) return;
+	        
+	        // Distribución equitativa simple
+	        var widthPerColumn = Math.floor(gridWidth / visibleCount);
+	        var remainder = gridWidth % visibleCount;
+	        
+	        console.log('Ancho por columna:', widthPerColumn, 'px, Resto:', remainder);
+	        
+	        columns.forEach(function(item, index) {
+	            var finalWidth = widthPerColumn;
+	            if (index < remainder) finalWidth += 1;
+	            
+	            // Asegurar un mínimo razonable
+	            finalWidth = Math.max(80, finalWidth);
+	            
+	            item.col.setWidth(finalWidth);
+	            console.log('  Columna', index, '("' + item.header + '"):', 
+	                      item.currentWidth, '->', finalWidth, 'px');
+	        });
+	        
+	        grid.updateLayout();
+	        console.log('✅ 100% de ancho forzado exitosamente');
+	    }
+	};
+
+	//==============================================
+	//FUNCIONES DE DEBUG GLOBALES
+	//==============================================
+	var recordWorker = {};
+
+	//Función para debug manual
+	function debugGridUtils() {
+	    console.log('=== DEBUG GridUtils ===');
+	    console.log('Versión: 2.5 (100% garantizado)');
+	    console.log('Funciones disponibles:', Object.keys(GridUtils));
+	    
+	    var grids = Ext.ComponentQuery.query('grid');
+	    console.log('Grids encontrados:', grids.length);
+	    
+	    grids.forEach(function(grid, index) {
+	        console.log('--- Grid ' + (index + 1) + ' ---');
+	        console.log('ID:', grid.id || grid.itemId);
+	        console.log('XTYPE:', grid.xtype);
+	        console.log('Ancho:', grid.getWidth(), 'px');
+	        console.log('Alto:', grid.getHeight(), 'px');
+	        
+	        var visibleCols = 0;
+	        var totalColWidth = 0;
+	        Ext.each(grid.columns, function(col) {
+	            if (!col.hidden) {
+	                visibleCols++;
+	                totalColWidth += col.getWidth();
+	            }
+	        });
+	        
+	        console.log('Columnas visibles:', visibleCols);
+	        console.log('Ancho total columnas:', totalColWidth, 'px');
+	        console.log('Espacio sobrante:', grid.getWidth() - totalColWidth, 'px');
+	        console.log('% de ocupación:', ((totalColWidth / grid.getWidth()) * 100).toFixed(1) + '%');
+	        
+	        var store = grid.getStore();
+	        console.log('Store pageSize:', store ? store.pageSize : 'N/A');
+	    });
+	}
+
+	//==============================================
+	//INICIALIZACIÓN AL CARGAR
+	//==============================================
+	Ext.onReady(function() {
+	    // Hacer las funciones globales
+	    window.debugGrids = debugGridUtils;
+	    
+	    window.adjustAllGrids = function() {
+	        var grids = Ext.ComponentQuery.query('grid');
+	        console.log('🔧 Ajustando todos los grids (' + grids.length + ' encontrados)');
+	        grids.forEach(function(grid, index) {
+	            console.log('  [' + (index + 1) + '] Grid:', grid.id || grid.itemId);
+	            GridUtils.adjustGridLayout(grid, true);
+	        });
+	    };
+	    
+	    window.adjustGridById = function(gridId) {
+	        var grid = Ext.getCmp(gridId);
+	        if (grid) {
+	            console.log('🔧 Ajustando grid específico:', gridId);
+	            GridUtils.adjustGridLayout(grid, true);
+	        } else {
+	            console.log('❌ Grid no encontrado:', gridId);
+	        }
+	    };
+	    
+	    window.adjustGridHeightsFixed12 = function(gridId) {
+	        var grid = Ext.getCmp(gridId);
+	        if (grid) {
+	            console.log('📏 Ajustando alturas (12 filas fijo) en grid:', gridId);
+	            GridUtils.adjustRowHeightsFixed12(grid);
+	        }
+	    };
+	    
+	    window.adjustGridHeightsWithGhost = function(gridId) {
+	        var grid = Ext.getCmp(gridId);
+	        if (grid) {
+	            console.log('👻 Ajustando con filas fantasma en grid:', gridId);
+	            GridUtils.adjustRowHeightsWithGhostRows(grid);
+	        }
+	    };
+	    
+	    // NUEVO: Forzar 100% de ancho
+	    window.force100Percent = function(gridId) {
+	        var grid = Ext.getCmp(gridId);
+	        if (grid) {
+	            console.log('💪 Forzando 100% de ocupación en grid:', gridId);
+	            GridUtils.force100PercentWidth(grid);
+	        }
+	    };
+	    
+	    console.log('✅ GridUtils v2.5 cargado (100% garantizado)');
+	    console.log('Comandos disponibles:');
+	    console.log('  - debugGrids(): info de todos los grids');
+	    console.log('  - adjustAllGrids(): ajusta todos los grids');
+	    console.log('  - adjustGridById("id"): ajusta grid específico');
+	    console.log('  - force100Percent("id"): fuerza 100% de ocupación');
+	    
+	    // Aplicar ajuste automático
+	    Ext.defer(function() {
+	        var grids = Ext.ComponentQuery.query('grid');
+	        console.log('🔧 Aplicando ajuste a', grids.length, 'grids existentes');
+	        
+	        grids.forEach(function(grid) {
+	            Ext.defer(function() {
+	                GridUtils.adjustGridLayout(grid, true);
+	            }, 300);
+	        });
+	    }, 500);
+	});
+
+	var recordWorker = {};
