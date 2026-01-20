@@ -3,15 +3,12 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsPanel' ,{
     alias : 'widget.fiscalDocumentsPanel',
     border:false,
     frame:false,
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
-    },
+    layout: 'fit',
+    scrollable: true,
 	initComponent: function () {
         Ext.apply(this, {  
             items: [{
            	 xtype: 'fiscalDocumentsGrid',
-           	 //height:430
            	 flex:1,
             }]
         });

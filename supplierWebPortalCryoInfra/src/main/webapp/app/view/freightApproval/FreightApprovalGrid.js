@@ -4,7 +4,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
     loadMask: true,
 	frame:false,
 	border:false,
-	//flex: 1,
+	flex: 1,
 	//autoScroll: true,
 	cls: 'extra-large-cell-grid',  
 	store : {
@@ -138,7 +138,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
         	
 		        	{
 			        	xtype: 'actioncolumn', 
-			            maxWidth: 110,
+			            //maxWidth: 110,
 			        	flex: 1,
 			            header: SuppAppMsg.freightApprovalCover,
 			            align: 'center',
@@ -171,7 +171,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			                  }}]
 			        }, 	{
 			        	xtype: 'actioncolumn', 
-			            maxWidth: 100,
+			           // maxWidth: 100,
 			        	flex: 1,
 			            header: SuppAppMsg.freightApprovalReportBatch,
 			            align: 'center',
@@ -204,14 +204,14 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			                  }}]
 			        },{
 			            text     : SuppAppMsg.freightApprovalKey,
-			            maxWidth: 100,
+			            //maxWidth: 100,
 			            flex: 1,
 			            dataIndex: 'id',
 			            itemId : 'freightApprovalId',
 			            hidden:role == 'ROLE_SUPPLIER'
 			        },{
 			            text     : SuppAppMsg.freightApprovalAmount,
-			            maxWidth: 120,
+			            //maxWidth: 120,
 			            flex: 1,
 			            dataIndex: 'amount',
 			            renderer: function(value) {
@@ -233,7 +233,7 @@ Ext.define('SupplierApp.view.freightApproval.FreightApprovalGrid' ,{
 			            hidden:role == 'ROLE_SUPPLIER'	
 			        },{
 			            text     : SuppAppMsg.fiscalTitle22,
-			            minWidth: 70,
+			            //minWidth: 70,
 			            flex: 1,
 			            dataIndex: 'status'
 			        },{
