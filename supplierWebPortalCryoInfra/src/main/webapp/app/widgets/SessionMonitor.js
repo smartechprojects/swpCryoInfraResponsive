@@ -78,11 +78,13 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
       }],
       buttons: [{
         text: 'Continuar Trabajando',
+        cls: 'buttonStyle',
         handler: function() {
           me.handleContinue();
         }
       },{
         text: 'Terminar sesión',
+        cls: 'buttonStyle',
         handler: function() {
           me.forceLogout();
         }
