@@ -1244,3 +1244,28 @@ input[readonly].x-form-text {
     border: 0.2px solid white !important;
 }
 
+/* En tu archivo CSS principal */
+.x-datepicker {
+    min-width: 220px !important;
+    min-height: 200px !important;
+    z-index: 20000 !important;
+}
+
+.x-monthpicker {
+    min-width: 220px !important;
+}
+
+.x-yearpicker {
+    min-width: 220px !important;
+}
+
+/* Asegurar que el header del datepicker tenga espacio */
+.x-datepicker-header {
+    min-height: 30px !important;
+}
+
+/* Ajustar los botones de navegación */
+.x-datepicker-next, .x-datepicker-prev {
+    width: 20px !important;
+    height: 20px !important;
+}

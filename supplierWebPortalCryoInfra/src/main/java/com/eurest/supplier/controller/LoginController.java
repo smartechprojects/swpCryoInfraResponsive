@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -323,12 +324,22 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value ="/isAlive/ping.action")
-	public @ResponseBody Map<String, Object> view(@RequestParam int start,
-												  @RequestParam int limit,
-												  @RequestParam String query){	
-
-		return mapOK("OK");
+	public @ResponseBody Map<String, Object> view(){
 		
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		HttpSession session = request.getSession(false);
+
+	    if (session == null) {
+	        return mapOK("ERROR");
+	    }
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
+		log4j.info("isAlive/ping.action - usr: " + auth.getName());
+		if(auth == null || "anonymousUser".equals(auth.getName())) {
+			return mapOK("ERROR");
+		}else {
+			return mapOK("OK");
+		}		
 	}
 	
 	@RequestMapping(value="/getLocalization.action",method = RequestMethod.GET)
