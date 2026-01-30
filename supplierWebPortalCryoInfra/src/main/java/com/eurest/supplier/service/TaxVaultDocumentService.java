@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -1583,7 +1584,7 @@ public class TaxVaultDocumentService {
 				
 	}
 	
-//	@Scheduled(cron = "0 0/5 * * * ?") 
+	@Scheduled(cron = "0 0/5 * * * ?") 
 		public void sendMailDemon() {
 				
 			
