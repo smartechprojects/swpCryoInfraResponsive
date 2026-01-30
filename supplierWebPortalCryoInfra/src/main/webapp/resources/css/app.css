@@ -1352,3 +1352,46 @@ input[readonly].x-form-text {
 .x-monthpicker:not([style*="display: none"]) ~ .x-datepicker-footer {
     visibility: hidden;
 }
+
+
+
+/* Forzar contenedor flex SOLO para meses */
+.x-monthpicker-months {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+/* Ancho 3 columnas */
+.x-monthpicker-months .x-monthpicker-item {
+    width: 33.3333% !important;
+}
+
+/*
+ ORDEN REAL DE EXT JS (column-first):
+ 1 Ene
+ 2 Jul
+ 3 Feb
+ 4 Ago
+ 5 Mar
+ 6 Sep
+ 7 Abr
+ 8 Oct
+ 9 May
+10 Nov
+11 Jun
+12 Dic
+*/
+
+/* Reordenar a cronológico */
+.x-monthpicker-months .x-monthpicker-item:nth-child(1)  { order: 1; }  /* Ene */
+.x-monthpicker-months .x-monthpicker-item:nth-child(3)  { order: 2; }  /* Feb */
+.x-monthpicker-months .x-monthpicker-item:nth-child(5)  { order: 3; }  /* Mar */
+.x-monthpicker-months .x-monthpicker-item:nth-child(7)  { order: 4; }  /* Abr */
+.x-monthpicker-months .x-monthpicker-item:nth-child(9)  { order: 5; }  /* May */
+.x-monthpicker-months .x-monthpicker-item:nth-child(11) { order: 6; }  /* Jun */
+.x-monthpicker-months .x-monthpicker-item:nth-child(2)  { order: 7; }  /* Jul */
+.x-monthpicker-months .x-monthpicker-item:nth-child(4)  { order: 8; }  /* Ago */
+.x-monthpicker-months .x-monthpicker-item:nth-child(6)  { order: 9; }  /* Sep */
+.x-monthpicker-months .x-monthpicker-item:nth-child(8)  { order: 10; } /* Oct */
+.x-monthpicker-months .x-monthpicker-item:nth-child(10) { order: 11; } /* Nov */
+.x-monthpicker-months .x-monthpicker-item:nth-child(12) { order: 12; } /* Dic */
