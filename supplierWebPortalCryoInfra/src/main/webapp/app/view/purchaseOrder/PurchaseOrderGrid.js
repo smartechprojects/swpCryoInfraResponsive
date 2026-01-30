@@ -5,11 +5,11 @@
 	frame:false,
 	border:false,
 	flex: 1,
-	selModel: {
+	/*selModel: {
         checkOnly: true,
         mode: 'SIMPLE'
     },
-    selType: 'checkboxmodel',
+    selType: 'checkboxmodel',*/
 	cls: 'extra-large-cell-grid',  
 	scroll :  true,
 	viewConfig: {

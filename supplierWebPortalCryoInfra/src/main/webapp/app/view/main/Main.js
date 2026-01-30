@@ -1,3 +1,101 @@
+Ext.onReady(function() {
+   // console.log('=== INICIANDO BLOQUEO NUCLEAR DE ENTER ===');
+    
+ // Función para bloquear Enter
+    var blockEnter = function(e) {
+        // Solo si es Enter
+        if (e.keyCode === 13 || e.key === 'Enter') {
+            /*console.log('=== BLOQUEO NUCLEAR ACTIVADO ===');
+            console.log('Target:', e.target);
+            console.log('Target ID:', e.target.id);
+            console.log('Target tagName:', e.target.tagName);*/
+            
+            var target = e.target;
+            var tag = target.tagName ? target.tagName.toLowerCase() : '';
+            var type = target.type ? target.type.toLowerCase() : '';
+            
+            // **PERMITIR Enter en:**
+            // 1. Textareas (siempre)
+            // 2. Campos de texto normales (text, search)
+            // 3. Contenido editable
+            var allowed = false;
+            
+            if (tag === 'textarea') {
+                allowed = true;
+                //console.log('BLOQUEO NUCLEAR: Enter PERMITIDO en textarea');
+            } 
+            else if (tag === 'input') {
+                if (type === 'text' || type === 'search') {
+                    // ✅ **CAMBIAR: PERMITIR Enter en campos de búsqueda**
+                    allowed = true;
+                  //  console.log('BLOQUEO NUCLEAR: Enter PERMITIDO en campo de texto/búsqueda');
+                    
+                    // **NOTA: NO bloquear aquí. Dejar que el listener specialkey del campo maneje el Enter**
+                    // El listener specialkey ya existe y llama a onTriggerClick()
+                    // NO hagas nada más aquí
+                }
+            } 
+            else if (target.isContentEditable) {
+                allowed = true;
+               // console.log('BLOQUEO NUCLEAR: Enter PERMITIDO en contenido editable');
+            }
+            
+            // **SOLO BLOQUEAR en elementos NO permitidos**
+            if (!allowed) {
+                //console.log('BLOQUEO NUCLEAR: Enter PREVENIDO en elemento no permitido');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                
+                // También prevenir el evento ExtJS
+                if (e.stopEvent) e.stopEvent();
+                
+                // Mostrar notificación (opcional)
+                /*Ext.toast({
+                    html: '<div style="color: #d9534f; font-weight: bold;">Enter bloqueado</div>' +
+                          '<div style="font-size: 12px;">Use los botones correspondientes</div>',
+                    align: 't',
+                    slideInDuration: 300,
+                    autoCloseDelay: 1500
+                });*/
+                
+                return false;
+            } else {
+                //console.log('BLOQUEO NUCLEAR: Enter PERMITIDO - dejar que se propague');
+                // Dejar que el evento continúe a los listeners de ExtJS
+            }
+        }
+    };
+    
+    // Agregar listener con CAPTURE phase (se ejecuta PRIMERO)
+    document.addEventListener('keydown', blockEnter, true); // true = capture phase
+    document.addEventListener('keypress', blockEnter, true);
+    
+   // console.log('Bloqueo nuclear configurado - CAPTURE phase activado');
+    
+    // También verificar si hay formularios HTML envolviendo todo
+    setTimeout(function() {
+        var forms = document.querySelectorAll('form');
+       // console.log('Formularios HTML encontrados:', forms.length);
+        
+        forms.forEach(function(form, index) {
+            console.log('Form ' + index + ':', {
+                id: form.id,
+                name: form.name,
+                className: form.className,
+                action: form.action
+            });
+            
+            // Deshabilitar submit automático
+            form.onsubmit = function() {
+              //  console.log('Form submit bloqueado:', form.id || form.name);
+                return false;
+            };
+        });
+    }, 1000);
+});
+
+
 Ext.define('SupplierApp.view.main.Main', {
     extend: 'Ext.tab.Panel',
     xtype: 'app-main',

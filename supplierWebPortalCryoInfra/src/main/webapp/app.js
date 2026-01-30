@@ -31,6 +31,17 @@ Ext.onReady(function() {
     
     // Configurar el formato por defecto de fecha
     Ext.Date.defaultFormat = 'd/m/Y';
+    
+    Ext.override(Ext.picker.Date, {
+        todayText: 'Hoy',
+        okText: 'Aceptar',
+        cancelText: 'Cerrar'
+    });
+
+    Ext.override(Ext.picker.Month, {
+        okText: 'Aceptar',
+        cancelText: 'Cerrar'
+    });
 });
 
 Ext.application({

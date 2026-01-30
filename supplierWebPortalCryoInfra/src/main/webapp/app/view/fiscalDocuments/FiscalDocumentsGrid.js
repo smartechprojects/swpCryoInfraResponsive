@@ -180,7 +180,7 @@ Ext.define('SupplierApp.view.fiscalDocuments.FiscalDocumentsGrid' ,{
 			        		                    var formattedDate = Ext.util.Format.date(date, 'd-m-Y H:i:s');
 			        		                    metaData.tdAttr = 'data-qtip="' + formattedDate + '"';
 			        		                    record.set('fechComple', formattedDate); // Utilizar el nombre correcto del campo
-			        		                    gridView.refresh(); // Actualizar la visualización del grid
+			        		                   // gridView.refresh(); // Actualizar la visualización del grid
 			        		                }
 			        		            },
 			        		            failure: function() {

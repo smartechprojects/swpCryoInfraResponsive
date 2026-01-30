@@ -143,7 +143,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
         localStorage.setItem(this.storageKey, this._lastActive.getTime().toString());
       }
     } catch(e) {
-      console.warn('Error sincronizando entre pestañas:', e);
+     // console.warn('Error sincronizando entre pestañas:', e);
     }
   },
   
@@ -221,7 +221,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
       }
     } catch(e) {
       // Ignorar error si la task ya no existe
-      console.warn('Error deteniendo task:', e);
+      //console.warn('Error deteniendo task:', e);
     }
   },
   
@@ -470,7 +470,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
       this.syncAcrossTabs();
     }.bind(this), 10000);
     
-    console.log('SessionMonitor iniciado');
+    //console.log('SessionMonitor iniciado');
     return this;
   },
   
@@ -489,11 +489,11 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
           this.ui.un(event, this.throttledCapture, this);
         }, this);
       } catch(e) {
-        console.warn('Error removiendo event listeners:', e);
+        //console.warn('Error removiendo event listeners:', e);
       }
     }
     
-    console.log('SessionMonitor detenido');
+    //console.log('SessionMonitor detenido');
   },
   
   // Limpieza completa
@@ -525,7 +525,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
       try {
         this.window.destroy();
       } catch(e) {
-        console.warn('Error destruyendo ventana:', e);
+        //console.warn('Error destruyendo ventana:', e);
       }
       this.window = null;
     }
@@ -537,7 +537,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
       // Ignorar error si no hay acceso a localStorage
     }
     
-    console.log('SessionMonitor destruido');
+    //console.log('SessionMonitor destruido');
   },
   
   // Contador regresivo
@@ -564,7 +564,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
       try {
         this.window.hide();
       } catch(e) {
-        console.warn('Error ocultando ventana:', e);
+        //console.warn('Error ocultando ventana:', e);
       }
     }
     
@@ -572,7 +572,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
     try {
       this.destroy();
     } catch(e) {
-      console.warn('Error en destroy durante forceLogout:', e);
+      // console.warn('Error en destroy durante forceLogout:', e);
     }
     
     // Redirigir a logout
@@ -580,7 +580,7 @@ Ext.define('SupplierApp.widgets.SessionMonitor', {
       try {
         location.href = "j_spring_security_logout";
       } catch(e) {
-        console.error('Error redirigiendo a logout:', e);
+        //console.error('Error redirigiendo a logout:', e);
       }
     }, 100);
   }
@@ -603,9 +603,9 @@ Ext.onReady(function() {
           // Verificar si ya está iniciado
           if (!monitor._lastActive || (new Date() - monitor.getLastActive()) > 60000) {
             monitor.start();
-            console.log('SessionMonitor iniciado correctamente');
+            //console.log('SessionMonitor iniciado correctamente');
           } else {
-            console.log('SessionMonitor ya estaba iniciado, reanudando...');
+            //console.log('SessionMonitor ya estaba iniciado, reanudando...');
             // Solo reanudar las tasks si es necesario
             if (monitor.isOnline) {
               monitor.startSessionTask();
@@ -614,13 +614,13 @@ Ext.onReady(function() {
           }
           
         } else {
-          console.error('SessionMonitor no está definido correctamente');
+          //console.error('SessionMonitor no está definido correctamente');
         }
       } catch(e) {
-        console.error('Error en inicialización de SessionMonitor:', e);
+        //console.error('Error en inicialización de SessionMonitor:', e);
       }
     }, 1000); // Delay de 1 segundo para mayor seguridad
   } catch(e) {
-    console.error('Error en Ext.onReady:', e);
+    //console.error('Error en Ext.onReady:', e);
   }
 });

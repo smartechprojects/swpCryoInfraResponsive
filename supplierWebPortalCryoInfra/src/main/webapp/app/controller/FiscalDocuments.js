@@ -3523,7 +3523,7 @@ Ext.define('SupplierApp.controller.FiscalDocuments', {
 				    	    	documentType: documentType?documentType:""
     	    			        }
     	store.loadPage(1);
-    	grid.getView().refresh()
+    	//grid.getView().refresh()
     	/*
     	gblMassiveLoadEx = getUDCStore('MASSIVEUP', '', '', '');
     	gblMassiveLoadEx.load();*/

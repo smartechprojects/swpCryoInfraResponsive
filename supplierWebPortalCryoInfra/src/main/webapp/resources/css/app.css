@@ -1244,7 +1244,8 @@ input[readonly].x-form-text {
     border: 0.2px solid white !important;
 }
 
-/* En tu archivo CSS principal */
+
+/* ====== TU CSS ORIGINAL (MANTENER) ====== 
 .x-datepicker {
     min-width: 220px !important;
     min-height: 200px !important;
@@ -1259,13 +1260,95 @@ input[readonly].x-form-text {
     min-width: 220px !important;
 }
 
-/* Asegurar que el header del datepicker tenga espacio */
 .x-datepicker-header {
     min-height: 30px !important;
 }
 
-/* Ajustar los botones de navegación */
 .x-datepicker-next, .x-datepicker-prev {
     width: 20px !important;
     height: 20px !important;
+}*/
+
+/* Meses: 3 columnas */
+.x-monthpicker-months .x-monthpicker-item {
+    float: left;
+    width: 33.3333% !important;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Años: 2 columnas */
+.x-monthpicker-years .x-monthpicker-item {
+    float: left;
+    width: 50% !important;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Evitar colapso por zoom */
+.x-monthpicker {
+    min-width: 320px !important;
+}
+
+.x-monthpicker-body {
+    overflow: hidden;
+}
+
+/* Botones OK / Cancel bien posicionados */
+.x-monthpicker-buttons {
+    clear: both;
+    text-align: left;
+}
+
+
+.x-datepicker .x-monthpicker {
+    z-index: 10;
+}
+
+.x-datepicker .x-monthpicker ~ .x-datepicker-footer,
+.x-datepicker .x-monthpicker ~ .x-datepicker-inner {
+    display: none !important;
+}
+
+.x-datepicker {
+    position: relative;
+}
+
+/* MonthPicker siempre arriba y sólido */
+.x-monthpicker {
+    position: absolute;
+    inset: 0; /* top:0 right:0 bottom:0 left:0 */
+    background: #fff;
+    z-index: 20;
+}
+
+/* Footer (Aceptar / Cancelar) siempre visible */
+.x-monthpicker-buttons {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    z-index: 5;
+    padding-top: 4px;
+    border-top: 1px solid #ddd;
+}
+
+
+.x-datepicker {
+    position: relative;
+}
+
+/* MonthPicker cubre todo el datepicker */
+.x-monthpicker {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    z-index: 20;
+}
+
+/* SOLO cuando el monthpicker está visible, desactivar fondo */
+.x-monthpicker:not([style*="display: none"]) ~ .x-datepicker-inner,
+.x-monthpicker:not([style*="display: none"]) ~ .x-datepicker-footer {
+    visibility: hidden;
 }
