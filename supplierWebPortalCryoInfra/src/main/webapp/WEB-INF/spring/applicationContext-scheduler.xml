@@ -8,10 +8,10 @@
             http://www.springframework.org/schema/task
             http://www.springframework.org/schema/task/spring-task-4.0.xsd">
  
- <!-- 
+ 
     <task:scheduler id="taskScheduler" pool-size="10"/>
     <task:annotation-driven scheduler="taskScheduler"/>
     
-    -->
+  
  
 </beans>
