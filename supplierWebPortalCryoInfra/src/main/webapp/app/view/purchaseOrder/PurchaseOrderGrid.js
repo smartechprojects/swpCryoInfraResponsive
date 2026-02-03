@@ -789,6 +789,8 @@
 			            itemId: 'poToDate',
 			            name:'poToDate',
 			            format: 'd/m/Y',
+			            maxValue: serverDate, // Fecha máxima, hoy
+                        value: serverDate, //Fecha inicial hoy
 			            //width:100,
 			            flex : .5,
 			            //labelWidth:35,

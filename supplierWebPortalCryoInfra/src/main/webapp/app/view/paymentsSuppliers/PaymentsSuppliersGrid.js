@@ -407,6 +407,8 @@
     		          itemId: 'paymentsSupplierspoToDate',
     		          name: 'paymentsSupplierspoToDate',
     		          format: 'd/m/Y',
+    		          maxValue: serverDate, // Fecha máxima, hoy
+                      value: serverDate, //Fecha inicial hoy
     		          listeners: {
 	                      specialkey: function(field, e) {
 	                          if (e.getKey() === e.ENTER) {

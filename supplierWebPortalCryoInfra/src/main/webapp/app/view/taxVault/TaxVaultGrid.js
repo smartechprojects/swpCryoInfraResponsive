@@ -358,7 +358,9 @@ Ext.define('SupplierApp.view.taxVault.TaxVaultGrid' ,{
                         itemId: 'tvToDate',
                         name:'tvToDate',
                         maxValue: new Date(), // Fecha máxima, hoy
-                        value: new Date(), //Fecha inicial hoy
+                      //  value: new Date(), //Fecha inicial hoy
+                       // maxValue: serverDate, // Fecha máxima, hoy
+                        value: serverDate, //Fecha inicial hoy
                         allowBlank:false,
                         format: 'd/m/Y',
                         listeners: {

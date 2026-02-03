@@ -19,6 +19,15 @@
 	<link rel="stylesheet" type="text/css" href="${url}/resources/css/app.css">    
     <script type="text/javascript" charset="utf-8" src="${url}/ext/build/ext-all.js"></script>
 	<script type="text/javascript" charset="utf-8" src="${url}/resources/js/common.js"></script>
+	
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%
+    // Obtener fecha actual del servidor
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String serverDate = sdf.format(new Date());
+%>
+
 
 <script>
     var SuppAppMsg='';
@@ -51,6 +60,8 @@
 	var numeroUsuario = "";
 	var telefono = "";	
 	var correo = "";
+	
+	var serverDate = '<%= serverDate %>'; 
 	
 	Ext.Ajax.request({
 	    url: 'supplier/getByAddressNumber.action',
