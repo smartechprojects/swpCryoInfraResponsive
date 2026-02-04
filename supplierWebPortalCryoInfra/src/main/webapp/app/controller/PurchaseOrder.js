@@ -2187,6 +2187,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	
     	grid.headerCt.items.getAt(0).hide();
     	
+    	if (poFromDate && poToDate && poToDate < poFromDate) {
+    		Ext.MessageBox.alert({ maxWidth: 250, minWidth: 350, title: window.navigator.language.startsWith("es", 0) ? 'Fechas inválidas' : 'Invalid dates'
+    			, msg: window.navigator.language.startsWith("es", 0) ? 'La Fecha Desde debe ser menor o igual a la Fecha Hasta'  : 'The Start Date must be less than or equal to the End Date' });
+    	    return; 
+    	}
+
     	/*if(comboStatus == status.STATUS_OC_INVOICED){
         	grid.headerCt.items.getAt(0).show();
     	}

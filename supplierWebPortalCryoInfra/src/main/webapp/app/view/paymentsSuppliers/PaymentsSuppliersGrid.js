@@ -384,6 +384,7 @@
     		          itemId: 'paymentsSupplierspoFromDate',
     		          name: 'paymentsSupplierspoFromDate',
     		          format: 'd/m/Y',
+    		          maxValue: serverDate,
     		          listeners: {
 	                      specialkey: function(field, e) {
 	                          if (e.getKey() === e.ENTER) {
@@ -397,7 +398,14 @@
 	                                  }
 	                              }
 	                          }
-	                      }
+	                      },
+	                      change: function(field, newValue) {		                   
+		                        var toDate = Ext.getCmp('paymentsSupplierspoToDate');
+		                        if (toDate) {
+		                            toDate.setMinValue(newValue);
+		                            toDate.validate();
+		                        }
+		                    }
 	                  }
     		        },
     		        {
@@ -408,7 +416,7 @@
     		          name: 'paymentsSupplierspoToDate',
     		          format: 'd/m/Y',
     		          maxValue: serverDate, // Fecha máxima, hoy
-                      value: serverDate, //Fecha inicial hoy
+                      //value: serverDate, //Fecha inicial hoy
     		          listeners: {
 	                      specialkey: function(field, e) {
 	                          if (e.getKey() === e.ENTER) {

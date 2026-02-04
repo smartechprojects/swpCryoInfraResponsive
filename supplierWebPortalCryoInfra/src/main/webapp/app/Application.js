@@ -66,7 +66,10 @@ Ext.define('SupplierApp.Application', {
 	        blankText: 'La fecha es requerida',
 	        requiredMessage: 'La fecha es requerida',
 	        disabledDaysText: 'Día no disponible',
-	        disabledDatesText: 'Fecha no disponible'
+	        disabledDatesText: 'Fecha no disponible',
+	        minText: 'La fecha debe ser mayor o igual a la fecha desde',
+	        maxText: 'La fecha debe ser menor o igual a la fecha hasta',
+	        formatText: '',
 	    });
 	    
 	    Ext.override(Ext.form.field.ComboBox, {

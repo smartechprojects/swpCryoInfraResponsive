@@ -762,6 +762,7 @@
 						    itemId: 'poFromDate',
 						    name: 'poFromDate',
 						    format: 'd/m/Y',
+						    maxValue: serverDate,
 						    //width: 100,
 						    flex : .5,
 						    //labelWidth: 35,
@@ -780,6 +781,13 @@
 			                                }
 			                            }
 			                        }
+			                    },
+			                    change: function(field, newValue) {			                 
+			                        var toDate = Ext.getCmp('poToDate');
+			                        if (toDate) {
+			                            toDate.setMinValue(newValue);
+			                            toDate.validate();
+			                        }
 			                    }
 			                }
 					},{
@@ -790,7 +798,7 @@
 			            name:'poToDate',
 			            format: 'd/m/Y',
 			            maxValue: serverDate, // Fecha máxima, hoy
-                        value: serverDate, //Fecha inicial hoy
+                        //value: serverDate, //Fecha inicial hoy
 			            //width:100,
 			            flex : .5,
 			            //labelWidth:35,

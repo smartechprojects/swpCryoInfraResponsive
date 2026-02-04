@@ -136,6 +136,13 @@ Ext.define('SupplierApp.controller.PaymentsSuppliers', {
     	
     	
     	var paymentsSuppliersStatusPayGrid = Ext.getCmp('paymentsSuppliersStatusPayGrid').getValue();
+    	
+    	if (paymentsSupplierspoFromDate && paymentsSupplierspoToDate && paymentsSupplierspoToDate < paymentsSupplierspoFromDate) {
+    		Ext.MessageBox.alert({ maxWidth: 250, minWidth: 350, title: window.navigator.language.startsWith("es", 0) ? 'Fechas inválidas' : 'Invalid dates'
+    			, msg: window.navigator.language.startsWith("es", 0) ? 'La Fecha Desde debe ser menor o igual a la Fecha Hasta'  : 'The Start Date must be less than or equal to the End Date' });
+    	    return; 
+    	}
+    	
     	store.removeAll();    	
     	store.proxy.extraParams = {
     			addressNumber : paymentsSuppliersAddressNumberGrid?paymentsSuppliersAddressNumberGrid:"",
