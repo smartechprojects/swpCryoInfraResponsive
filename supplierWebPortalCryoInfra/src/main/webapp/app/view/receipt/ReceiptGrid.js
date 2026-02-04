@@ -11,7 +11,14 @@ Ext.define('SupplierApp.view.receipt.ReceiptGrid' ,{
         checkOnly: true,
         mode: 'SIMPLE',
         showHeaderCheckbox: false,
-        injectCheckbox: 0
+        injectCheckbox: 0,
+        listeners: {
+            beforeselect: function (selModel, record) {
+                if (record.get('uuid')) {
+                    return false;
+                }
+            }
+        }
     },
 	store : {
 		type:'receipt'
