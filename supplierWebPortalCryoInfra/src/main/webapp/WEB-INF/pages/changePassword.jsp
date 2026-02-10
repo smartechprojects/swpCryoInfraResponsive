@@ -62,21 +62,26 @@
 	content: "✖";
 }
 
+.newSupplierButton {
+        margin: 0 auto;   /* Centrará el botón */
+        display: inline-block;
+    }
+    
+.avatar {
+    margin-top: 100px; /* Añade espacio arriba del logo */
+    margin-bottom: 20px; /* Añade espacio abajo del logo */
+}
+
 </style>
 </head>
 <body>
 	<div class="wrap">
-		<div
-			style="margin-top: 50px; margin-bottom: 50px; text-align: center;">
-			<p>
-				<img src="resources/images/hand-click.png" style="width: 300px;">
-			</p>
 
-		</div>
 		<div class="avatar">
-			<img src="resources/images/CryoInfra-logo-gris.png"
-				style="height: 60px; width: 250px;">
-		</div>
+    <img src="resources/images/CryoInfra-logo.png"
+         style="max-width: 120%; height:auto; display:block; margin: 0 auto;"
+         alt="CryoInfra Logo">
+</div>
 
 		<div style="text-align: center;">
 			<h2>Cambio de contraseña</h2>
@@ -84,18 +89,23 @@
 			<form
 				action="${pageContext.request.contextPath}/changePassword.action"
 				method="post">
-				<label for="usrname">Usuario:</label>
-				<input type="text" id="usrname" name="usrname" required style="border: none;text-align:center;"> 
-
-					<label for="psw">Nueva
-					Contraseña:</label> <input type="password" id="psw" name="psw"
-					style="width: 100px;" maxlength="8"
+				
+				<div style="font-size: 13px; line-height: 1.4;">
+        Usuario:
+    </div>
+				<input type="text" id="usrname" name="usrname" required style="border: none;text-align:center;"> 			
+					<div style="font-size: 13px; line-height: 1.4;">
+        Contraseña:
+    </div>
+    <br /> 
+     <input type="password" id="psw" name="psw"
+					style="width: 150px;" maxlength="8"
 					pattern="(?=.*[!@#&$|_.%])[0-9a-zA-Z!@#&$|_.%0-9]{8}$"
 					title="Contraseña de 8 caracteres. Alfanumérica. Debe manejar 1 o mas caracteres especiales: !@#&$|_.%"
 					oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-					required> <br /> 
+					required> <br /> <br /> 
 					
-					<button name="buttonLogin" type="submit"
+					<button name="buttonLogin" type="submit" class="newSupplierButton"
 					onClick="validAll()">Enviar</button>
 
 			</form>
@@ -104,22 +114,24 @@
 	</div>
 
 
-	<div id="message" style="text-align:center;">
-		<h3>La contraseña debe cumplir lo siguiente:</h3>
-		<p id="letter" class="invalid">
-			Una o más <b>letras minúsculas</b>
-		</p>
-		<p id="capital" class="invalid">
-			Una o más <b>letras mayúsculas</b>
-		</p>
-		<p id="number" class="invalid">
-			Uno o más <b>dígitos</b>
-		</p>
-		<p id="length" class="invalid">8 caracteres exactamente</p>
-		<p id="special" class="invalid">
-			Mínimo <b>dos de los siguientes caracteres especiales: </b>!@#&$|_.%
-		<p>
-	</div>
+	<div id="message" style="text-align:center; width: 100%;">
+    <div style="display: inline-block; text-align: left;font-size: 13px;">
+        <h3>La contraseña debe cumplir lo siguiente:</h3>
+        <p id="letter" class="invalid">
+            Una o más <b>letras minúsculas</b>
+        </p>
+        <p id="capital" class="invalid">
+            Una o más <b>letras mayúsculas</b>
+        </p>
+        <p id="number" class="invalid">
+            Uno o más <b>dígitos</b>
+        </p>
+        <p id="length" class="invalid">8 caracteres exactamente</p>
+        <p id="special" class="invalid">
+            Mínimo <b>dos de los siguientes caracteres especiales: </b>!@#&$|_.%
+        </p>
+    </div>
+</div>
 
 	<script>
 		function validAll() {

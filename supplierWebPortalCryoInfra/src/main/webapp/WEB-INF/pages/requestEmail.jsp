@@ -20,10 +20,27 @@
 
 <script type="text/javascript">
 	function submitform() {
+		
+		var errorMsgDiv = document.getElementById("errorMsg");
+		if (errorMsgDiv) {
+			errorMsgDiv.style.display = "none";
+		}
+		
 		document.getElementById("sendMsg").innerHTML = "Enviando mensaje. Espere unos segundos...";
 		document.getElementById("resetPassword").submit();
 	}
 </script>
+<style>
+.newSupplierButton {
+        margin: 0 auto;   /* Centrará el botón */
+        display: inline-block;
+    }
+    
+    .avatar {
+    margin-top: 100px; /* Añade espacio arriba del logo */
+    margin-bottom: 20px; /* Añade espacio abajo del logo */
+}
+</style>
 </head>
 <body>
 
@@ -31,37 +48,37 @@
 	<div class="wrap">
 		<div
 			style="margin-top: 50px; margin-bottom: 50px; text-align: center;">
-			<p>
-				<img src="resources/images/hand-click.png" style="width: 300px;">
-			</p>
 		</div>
 		<div class="avatar">
-			<img src="resources/images/CryoInfra-logo-gris.png"
-				style="height: auto; max-width: 90%;">
-		</div>
+    <img src="resources/images/CryoInfra-logo.png"
+         style="max-width: 120%; height:auto; display:block; margin: 0 auto;"
+         alt="CryoInfra Logo">
+</div>
 
 		<div style="text-align: center;">
 			<h2>Recuperación de contraseña.</h2>
-
-			Proporcione su usuario. <br /> <br />Dentro de los siguientes
-			minutos recibirá un correo con las instrucciones para reestablecer su
-			contraseña. De no ser así comuníquese con su contacto en CryoInfra. <br />
+<br />
+			<div style="font-size: 13px; line-height: 1.4;">
+        Proporcione su usuario. <br /><br />
+        Dentro de los siguientes minutos recibirá un correo con las instrucciones 
+        para reestablecer su contraseña. De no ser así comuníquese con su contacto 
+        en CryoInfra.
+    </div> <br />
 			<br />
 			<form id="resetPassword" method="POST"
 				action="${pageContext.request.contextPath}/resetPassword.action">
-				<input id="usrname" name="usrname" placeholder="usuario"
-					style="width: 160px;" autofocus /> <br />
-				<button name="buttonLogin" type="submit"
+				<input id="usrname" name="usrname" placeholder="Usuario"
+					style="width: 190px;" autofocus /> <br />
+				<button name="buttonLogin" type="submit" class="newSupplierButton"
 					onClick="submitform(this.form)">Enviar</button>
 			</form>
 			<br />
-
-			<div id="sendMsg" style="font-color: red; font-size: 12px;"></div>
+			<div id="sendMsg" style="color: black; font-size: 12px;"></div>
 
 			<c:if test="${not empty msg}">
-				<div style="font-color: red; font-size: 13px;">
-					<strong>${msg}</strong> <br />
-				</div>
+			    <div id="errorMsg" style="color: red; font-size: 13px;">
+			        <strong>${msg}</strong> <br />
+			    </div>
 			</c:if>
 			<br /> <a class="loginPage"
 				href="${pageContext.request.contextPath}/login"
