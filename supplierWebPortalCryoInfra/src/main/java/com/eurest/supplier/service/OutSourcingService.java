@@ -152,7 +152,7 @@ public class OutSourcingService {
 
     public final String OUTSOURCING_RECEIPT_SUBJECT_QUARTER = "PSmartREPSE: Nueva documentación cuatrimestral del proveedor _SUPPLIER_";
         
-    private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(OutSourcingService.class);
+    private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(OutSourcingService.class);
     
     public synchronized String validateInvoiceFromOrder(InvoiceDTO inv, String addressBook, int documentNumber, String documentType, 
     		                               String tipoComprobante, String receiptList, String xmlContent, List<MultipartFile> uploadedFiles,

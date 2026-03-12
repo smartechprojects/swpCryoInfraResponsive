@@ -1,9 +1,11 @@
 package com.eurest.supplier.util;
 
+import java.awt.Rectangle;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,9 +16,12 @@ import java.util.Map;
 
 import javax.imageio.stream.FileImageInputStream;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -33,6 +38,7 @@ import com.eurest.supplier.model.UDC;
 import com.eurest.supplier.service.EmailService;
 import com.eurest.supplier.service.SupplierService;
 import com.eurest.supplier.service.UdcService;
+import com.google.gson.Gson;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -50,7 +56,7 @@ public class PDFUtils {
 	@Autowired
 	SupplierService supplierService;
 	
-	private Logger log4j = Logger.getLogger(PDFUtils.class);
+	private Logger log4j = LogManager.getLogger(PDFUtils.class);
 	
 	@SuppressWarnings("deprecation")
 	public  byte[] getFilePDFFleightCover(FiscalDocuments fisDoc, Supplier supplier, List<FiscalDocumentsConcept> fisDocConcept,String approvalMsg,UdcService udcService) {
@@ -490,5 +496,146 @@ public class PDFUtils {
 		
 		return null;
 	}
+	
+	
+	 public String extractTextFromRegion(byte[] pdfBytes,int page, int x, int y, int width, int height) {
+	        try (PDDocument document = PDDocument.load(pdfBytes)) {
+	            // Configurar la extracción por área
+	            PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+	            stripper.setSortByPosition(true);
+
+	            // Definir el área de extracción
+	            Rectangle region = new Rectangle(x, y, width, height);
+	            stripper.addRegion("targetRegion", region);
+
+	            // Extraer texto de la primera página
+	            PDPage firstPage = document.getPage(page);
+	            stripper.extractRegions(firstPage);
+
+	            // Retornar el texto extraído
+	            return stripper.getTextForRegion("targetRegion").trim();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+	   
+	   
+	   public byte[] loadPdfAsBytes(String filePath) {
+	        try {
+	            return Files.readAllBytes(new File(filePath).toPath());
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+	   
+	 
+	   
+	   
+	   
+	   // Método unificado que recibe el texto y un arreglo de etiquetas
+	    public String getJsonText(String texto, String[] etiquetas) {
+	        // Limpiar el texto: asegurar que cada etiqueta y valor estén en una línea separada
+	        String textoLimpio = limpiarTexto(texto, etiquetas);
+
+	        // Unir líneas que no tienen dos puntos (continuación de valores)
+	        textoLimpio = unirLineasSinDosPuntos(textoLimpio);
+
+	        // Procesar el texto limpio y extraer los valores
+	        Map<String, String> direccion = extraerValores(textoLimpio);
+
+	        // Convertir el Map a un string JSON usando Gson
+	        Gson gson = new Gson();
+	        return gson.toJson(direccion);
+	    }
+
+	    // Método para limpiar el texto
+	    private static String limpiarTexto(String texto, String[] etiquetas) {
+	        // Recorrer las etiquetas y asegurar que estén en líneas separadas
+	        for (String etiqueta : etiquetas) {
+	            texto = texto.replace(etiqueta, "\n" + etiqueta); // Insertar un salto de línea antes de cada etiqueta
+	        }
+
+	        // Eliminar el primer salto de línea si existe
+	        if (texto.startsWith("\n")) {
+	            texto = texto.substring(1);
+	        }
+
+	        return texto;
+	    }
+
+	    // Método para unir líneas que no tienen dos puntos
+	    private static String unirLineasSinDosPuntos(String texto) {
+	        StringBuilder textoLimpio = new StringBuilder();
+	        String[] lineas = texto.split("\n"); // Dividir el texto por líneas
+
+	        for (String linea : lineas) {
+	            if (!linea.contains(":")) {
+	                // Si la línea no tiene dos puntos, es una continuación del valor anterior
+	                textoLimpio.append(" ").append(linea.trim()); // Unir con la línea anterior
+	            } else {
+	                // Si tiene dos puntos, es una nueva etiqueta y valor
+	                textoLimpio.append("\n").append(linea.trim());
+	            }
+	        }
+
+	        return textoLimpio.toString().trim(); // Eliminar espacios en blanco al inicio y final
+	    }
+
+	    // Método para extraer valores del texto limpio
+	    private static Map<String, String> extraerValores(String texto) {
+	        Map<String, String> map = new HashMap<>();
+	        String[] lineas = texto.split("\n"); // Dividir el texto por líneas
+
+	        // Recorrer cada línea y extraer etiqueta y valor
+	        for (String linea : lineas) {
+	            int separador = linea.indexOf(":"); // Buscar el separador entre etiqueta y valor
+	            if (separador != -1) {
+	                String etiquetaOriginal = linea.substring(0, separador).trim(); // Extraer la etiqueta original
+	                String valor = linea.substring(separador + 1).trim(); // Extraer el valor
+
+	                // Normalizar la etiqueta: eliminar espacios y acentos
+	                String etiquetaNormalizada = normalizarEtiqueta(etiquetaOriginal);
+
+	                // Guardar en el Map usando la etiqueta normalizada
+	                map.put(etiquetaNormalizada, valor);
+	            }
+	        }
+
+	        return map;
+	    }
+
+	    // Método para normalizar etiquetas (eliminar espacios y acentos)
+	    private static String normalizarEtiqueta(String etiqueta) {
+	        // Eliminar espacios y convertir a minúsculas
+	        String normalizada = etiqueta.replace(" ", "").toLowerCase();
+
+	        // Eliminar acentos y caracteres especiales
+	        normalizada = normalizada.replace("á", "a")
+	                                .replace("é", "e")
+	                                .replace("í", "i")
+	                                .replace("ó", "o")
+	                                .replace("ú", "u")
+	                                .replace("ñ", "n")
+	                                .replace(":", ""); // Eliminar los dos puntos
+
+	        return normalizada;
+	    }
+	    
+		   /**
+		    * Normaliza un RFC eliminando caracteres especiales y convirtiéndolo a mayúsculas.
+		    * Elimina guiones, puntos, espacios y otros caracteres no alfanuméricos.
+		    * @param rfc RFC a normalizar
+		    * @return RFC normalizado en mayúsculas sin caracteres especiales
+		    */
+		   public static String normalizarRFC(String rfc) {
+		       if (rfc == null || rfc.trim().isEmpty()) {
+		           return rfc;
+		       }
+		       
+		       // Convertir a mayúsculas y eliminar todos los caracteres que no sean letras o números
+		       return rfc.toUpperCase().replaceAll("[^A-Z0-9]", "");
+		   }
 	
 }

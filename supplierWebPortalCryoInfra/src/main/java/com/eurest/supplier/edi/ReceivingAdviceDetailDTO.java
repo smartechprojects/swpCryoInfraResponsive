@@ -19,7 +19,7 @@ public class ReceivingAdviceDetailDTO {
 	
 	private double SZLNID;
 	private String SZLITM;
-	private String SZLSTS; // Ver UDC (47 LS), Valores: 1,7 o 9
+	private String SZLSTS; // Ver UDCÂ (47 LS), Valores: 1,7 o 9
 	private double SZUREC;
 	private double SZAREC;
 	private double SZPRRC;

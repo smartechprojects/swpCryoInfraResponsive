@@ -10,7 +10,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.apache.commons.validator.GenericValidator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Cronato {
 	String DAY_WEEK="L,M,X,J,V,S,D,1,2,3,4,5,6,7,LUNES,MARTES,"
@@ -21,7 +22,7 @@ public class Cronato {
 	SimpleDateFormat parser2;
 	SimpleDateFormat parser3;
 	
-	private Logger log4j = Logger.getLogger(Cronato.class);
+	private Logger log4j = LogManager.getLogger(Cronato.class);
 	
 	public boolean validateAcces(boolean acceso, String dataVerify) {
 		String reglas[]=dataVerify.split("\\|");

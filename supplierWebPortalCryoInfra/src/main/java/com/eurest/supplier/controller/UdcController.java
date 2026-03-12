@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +27,7 @@ public class UdcController {
 @Autowired
 private UdcService udcService;
 
-Logger log4j = Logger.getLogger(UdcController.class);
+Logger log4j = LogManager.getLogger(UdcController.class);
 
 @RequestMapping(value ="/admin/udc/view.action")
 public @ResponseBody Map<String, Object> view(@RequestParam int start,

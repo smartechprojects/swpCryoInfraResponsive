@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +40,7 @@ public class CompanyController {
 	@Autowired
 	UsersService userService;
 	
-	Logger log4j = Logger.getLogger(CompanyController.class);
+	Logger log4j = LogManager.getLogger(CompanyController.class);
 
 	@RequestMapping(value = "company/searchByQuery.action")
 	public @ResponseBody Map<String, Object> searchUser(@RequestParam String query, @RequestParam int start,

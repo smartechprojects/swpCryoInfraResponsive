@@ -3,7 +3,8 @@ package com.smartech.supplier.sat;
 import org.w3c.dom.Document;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -13,7 +14,7 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
 public class Download extends RequestBase {
-	private Logger log4j = Logger.getLogger(Download.class);
+	private Logger log4j = LogManager.getLogger(Download.class);
     /**
      * Constructor of Download class
      *

@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -90,7 +91,7 @@ public class FreightInvoiceController {
 	@Autowired
 	UdcService udcService;
 	
-	Logger log4j = Logger.getLogger(FreightInvoiceController.class);	
+	Logger log4j = LogManager.getLogger(FreightInvoiceController.class);	
 	
 	@RequestMapping(value ="/freight/view.action")
 	public @ResponseBody Map<String, Object> view(@RequestParam int start,

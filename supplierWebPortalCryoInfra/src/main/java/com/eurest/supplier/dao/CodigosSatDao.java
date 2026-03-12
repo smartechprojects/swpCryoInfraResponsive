@@ -6,7 +6,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -29,7 +30,7 @@ public class CodigosSatDao {
 	@Autowired
 	DataSource dataSource;
 	
-	private Logger log4j = Logger.getLogger(CodigosSatDao.class);
+	private Logger log4j = LogManager.getLogger(CodigosSatDao.class);
 	
 	@SuppressWarnings("unchecked")
 	public List<CodigosSAT> getOrders(int start, int limit) {

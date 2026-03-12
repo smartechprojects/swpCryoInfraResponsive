@@ -16,7 +16,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,7 +116,7 @@ public class FiscalDocumentConceptService {
 	static String TIMESTAMP_DATE_PATTERN_NEW = "yyyy-MM-dd HH:mm:ss";
 	static String DATE_PATTERN = "dd/MM/yyyy";
 	
-	Logger log4j = Logger.getLogger(FiscalDocumentConceptService.class);
+	Logger log4j = LogManager.getLogger(FiscalDocumentConceptService.class);
 	
 	public FiscalDocumentsConcept getById(int id) {
 		return fiscalDocumentConceptDao.getById(id);

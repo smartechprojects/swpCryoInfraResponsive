@@ -1,4 +1,4 @@
-Ext.define('SupplierApp.controller.PlantAccess', {
+﻿Ext.define('SupplierApp.controller.PlantAccess', {
     extend: 'Ext.app.Controller',
     stores: ['PlantAccess', 'PlantAccessWorker', 'PlantAccessFile'],
     models: ['PlantAccess','PlantAccessDetail','PlantAccessFile'],
@@ -66,6 +66,8 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     init: function() {
     	this.viewAccessPlant = null;
 		this.winLoadInv = null;
+		hasAskedForPreviousWorkers = false;
+		plantAccessRequestId = undefined;
 		this.winLoadInvFile = null;
 		this.winDetail = null;
         this.control({
@@ -379,7 +381,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
     
     onCloseMainPanel: function(window) {
-  	  debugger;
   	 var me = this;
   	var status = Ext.getCmp('paRequestStatus').getValue();
 
@@ -393,7 +394,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
      var saveButton = window.down('#savePlantAccessRequest');
      saveButton.fireEvent('click', saveButton);
      if (Ext.getCmp('paWorkerForm').isVisible()) {
-    	 debugger;
     	 try {
 			 var saveButton = window.down('#plantAccessFinishWorker');
          saveButton.fireEvent('click', saveButton);
@@ -742,7 +742,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	var recordWorker = grid.store.getAt(rowIndex).data;
     	uuidPlantAccessWorker = recordWorker.datefolioIDcard;
     	
-    	var win = new Ext.Window(
+    	var win = Ext.create('Ext.window.Window', 
 				{
 					title : SuppAppMsg.plantAccess95,
 					layout : 'fit',
@@ -888,7 +888,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 					}]
 				});
 
-    	me.winLoadInv = new Ext.Window({
+    	me.winLoadInv = Ext.create('Ext.window.Window', {
     		layout : 'fit',
     		title : SuppAppMsg.taxvaultAdditionalInformation,
     		width : 550,
@@ -908,7 +908,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
     
     loadFileWorkerNew:function(button){
-    	debugger;
     	var me = this;
     	var pawForm = this.getPlantAccessWorkerForm().getForm();
         
@@ -1045,7 +1044,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	                            }
     	                        },
     	                        change: function (field, value) {
-    	                            debugger;
     	                            var ext = value ? value.split('.').pop().toLowerCase() : '';
     	                            if (ext !== 'pdf') {
     	                                Ext.Msg.show({
@@ -1150,7 +1148,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     					}]
     		});
 
-    		this.winLoadInv = new Ext.Window({
+    		this.winLoadInv = Ext.create('Ext.window.Window', {
     			layout : 'fit',
     			title : SuppAppMsg.plantAccess93,
     			width : 450,
@@ -1192,7 +1190,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
     
     loadFileWorker:function(button){
-    	debugger
     	var me = this; 
     	var grid = this.getPlantAccessWorkerFileGrid();
     	
@@ -1207,7 +1204,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
         }
     	
     	var store = grid.getStore();
-    	debugger
     	Ext.getCmp('uploadFileRequest').show();
     	var paField = "";
     	switch (button.action) {
@@ -1349,7 +1345,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 							handler : function() {
 								var form = this.up('form').getForm();
 								if (form.isValid()) {
-									debugger
 									form.submit({
 												//url : 'plantAccess/uploadFileRequest.action',
 												url : 'plantAccess/uploadFileWorker.action?idworker='+(Ext.getCmp('addemployeeId').getValue()),
@@ -1450,7 +1445,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						}]
 				});
 
-		this.winLoadInv = new Ext.Window({
+		this.winLoadInv = Ext.create('Ext.window.Window', {
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
 			width : 450,
@@ -1669,7 +1664,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 					}]
 		});
 
-		this.winLoadInv = new Ext.Window({
+		this.winLoadInv = Ext.create('Ext.window.Window', {
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
 			width : 450,
@@ -1715,7 +1710,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 	var me = this;
 	var paForm = this.getPlantAccessForm().getForm();
 	var values = paForm.getFieldValues();
-	debugger
 	Ext.getCmp('uploadFileRequest').show();
 	//var grid = this.getPlantAccessFileGrid();
 	//var store = grid.getStore();
@@ -1918,7 +1912,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						}]
 				});
 
-		this.winLoadInv = new Ext.Window({
+		this.winLoadInv = Ext.create('Ext.window.Window', {
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
 			//width : 600,
@@ -1944,7 +1938,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 	
     showRequestFile: function(button) {
     	
-       	var win = new Ext.Window(
+       	var win = Ext.create('Ext.window.Window', 
 				{
 					title : SuppAppMsg.taxvaultUploandDocuments,
 					layout : 'fit',
@@ -1983,7 +1977,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    	requestId:paRequestId
 	        },
 		    success: function(fp, o) {
-		    	debugger
 		    	var res = Ext.decode(fp.responseText);
 				var rec =Ext.create('SupplierApp.model.PlantAccessDetail',res.data);
 				store.removeAll();
@@ -2027,7 +2020,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    }
 		}); */
       
-       	var win = new Ext.Window(
+       	var win = Ext.create('Ext.window.Window', 
 				{
 					title : SuppAppMsg.taxvaultUploandDocuments,
 					layout : 'fit',
@@ -2087,9 +2080,8 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
     
     gridSelectionChange: function(model, record) { 
-    	debugger;
     	var me = this;
-		me.viewAccessPlant = new Ext.Window({
+		me.viewAccessPlant = Ext.create('Ext.window.Window', {
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
 			width : 1050,
@@ -2188,7 +2180,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	
     	//Habilita o deshabilita control Enviar Solicitud
     	this.showRequestViewAvailableByStatus();
-    	debugger
     	//Deshabilita Agregar Trabajador
     	Ext.getCmp('plantAccessAddWorker').setVisible(false);
     	
@@ -2200,7 +2191,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		    	requestId:paRequestId
 	        },
 		    success: function(fp, o) {
-		    	debugger
 		    	var res = Ext.decode(fp.responseText);
 				var rec =Ext.create('SupplierApp.model.PlantAccessDetail',res.data);
 				var fileArray = res.data;
@@ -2215,7 +2205,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						}
 					});
 				}
-		    	debugger
 				//Valida documentos de la solicitud cargados y habilita control Agregar Trabajador
 		    	if (formDoc.isValid()) {
 		    		//Habilita control Agregar Trabajador
@@ -2225,6 +2214,11 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 				//Se actualiza el grid de PlantAccessRequestGrid
 				Ext.getCmp('listActivities').show();
 				me.refreshRequestWorkersGrid(false);
+				
+				// Inicializar bandera según si hay trabajadores cargados
+				var workersGrid = me.getPlantAccessRequestGrid();
+				hasAskedForPreviousWorkers = (workersGrid && workersGrid.store && workersGrid.store.getCount() > 0);
+				console.log('Solicitud retomada, hasAskedForPreviousWorkers:', hasAskedForPreviousWorkers);
 		    	
 		    },
 		    failure: function() {
@@ -2234,13 +2228,13 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
     
     gridSelectionChangeOld: function(model, record) { 
-    	debugger;
     	checkPlantAccess = true;
     	statusPlantAccess = record.data.status;
     	uuidPlantAccess = record.data.rfc;
+    	plantAccessRequestId = record.data.id; // Guardar ID de la solicitud
     	
     	var me = this;
-		me.viewAccessPlant = new Ext.Window({
+		me.viewAccessPlant = Ext.create('Ext.window.Window', {
 			layout : 'fit',
 			//title : SuppAppMsg.approvalDetailsSupplier ,
 			title : SuppAppMsg.plantAccess47 ,
@@ -2367,6 +2361,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 					form.findField('addchemicalsubstances').setValue(true); */
 				
 				uuidPlantAccess = res.data.rfc;
+				plantAccessRequestId = res.data.id; // Guardar ID de la solicitud
 		    	
 		    	Ext.Ajax.request({
 				    url: 'plantAccess/searchWorkersPlantAccessByIdRequest.action',
@@ -2472,6 +2467,190 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	var dto = Ext.create('SupplierApp.model.PlantAccess',record.data);
     	var status ="APROBADO";
     	
+    	// Primero validar trabajadores contra cédula antes de mostrar formulario
+    	var validationBox = Ext.MessageBox.wait('Validando trabajadores...', 'Validación');
+    	
+    	Ext.Ajax.request({
+    		url: 'plantAccess/updateAprov.action',
+    		method: 'POST',
+    		params: {
+    			status: status,
+    			note: '',
+    			idReques: record.data.id,
+    			paFromDate: new Date(),
+    			paToDate: new Date()
+    		},
+    		jsonData: dto.data,
+    		success: function(response) {
+    			var res = Ext.decode(response.responseText);
+    			validationBox.hide();
+    			
+    			// Detectar si hay errores de validación
+    			if(!res.success && res.message && res.message.startsWith('CONFIRM_APPROVE:')) {
+    				// Hay errores - mostrar confirmación
+    				var confirmMessage = res.message.substring(16);
+    				
+    				var approveConfirmWindow = Ext.create('Ext.window.Window', {
+    					title: 'Confirmar Aprobación de Solicitud',
+    					modal: true,
+    					width: 900,
+    					height: 550,
+    					layout: 'fit',
+    					items: [{
+    						xtype: 'panel',
+    						layout: {
+    							type: 'vbox',
+    							align: 'stretch'
+    						},
+    						bodyPadding: 15,
+    						autoScroll: true,
+    						items: [{
+    							xtype: 'container',
+    							html: '<div style="margin-bottom: 15px; font-size: 14px; line-height: 1.6;">' +
+    								  '<b>No se encontraron los siguientes empleados en la cédula vigente:</b>' +
+    								  '</div>',
+    							height: 50
+    						}, {
+    							xtype: 'panel',
+    							flex: 1,
+    							layout: 'fit',
+    							bodyPadding: 0,
+    							html: '<div style="overflow: auto; max-height: 300px; border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9;">' +
+    								  '<table style="width: 100%; border-collapse: collapse; font-size: 12px;">' +
+    								  '<thead>' +
+    								  '<tr style="background-color: #f0f0f0; font-weight: bold;">' +
+    								  '<th style="padding: 8px; border: 1px solid #ddd; text-align: left; width: 40%;">Trabajador</th>' +
+    								  '<th style="padding: 8px; border: 1px solid #ddd; text-align: left; width: 60%;">Descripción mensaje</th>' +
+    								  '</tr>' +
+    								  '</thead>' +
+    								  '<tbody>' +
+    								  (function() {
+    								  	var rows = '';
+    								  	var lines = confirmMessage.split('<br>');
+    								  	for(var i = 0; i < lines.length; i++) {
+    								  		var line = lines[i].trim();
+    								  		if(line.startsWith('•')) {
+    								  			var parts = line.substring(2).split(' - <b>');
+    								  			if(parts.length === 2) {
+    								  				var workerName = parts[0].trim();
+    								  				var error = parts[1].replace('</b>', '').trim();
+    								  				rows += '<tr style="background-color: #fff3f3;">' +
+    								  					   '<td style="padding: 8px; border: 1px solid #ddd; vertical-align: top;">' + workerName + '</td>' +
+    								  					   '<td style="padding: 8px; border: 1px solid #ddd; vertical-align: top; color: #d9534f;">' + error + '</td>' +
+    								  					   '</tr>';
+    								  			}
+    								  		}
+    								  	}
+    								  	return rows;
+    								  })() +
+    								  '</tbody>' +
+    								  '</table>' +
+    								  '</div>'
+    						}, {
+    							xtype: 'container',
+    							html: '<div style="margin-top: 15px; padding: 12px; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">' +
+    								  '<b style="font-size: 14px;">¿Esta seguro de autorizar el acceso a planta?</b><br><br>' +
+    								  '<i style="font-size: 12px;">Nota: Si continúa, podrá ingresar comentarios y fechas de vigencia.</i>' +
+    								  '</div>',
+    							height: 90
+    						}]
+    					}],
+    					buttons: [{
+    						text: 'Rechazar',
+    						handler: function() {
+    							approveConfirmWindow.close();
+    							
+    							// Mostrar diálogo de rechazo
+    							var dlgRejected = Ext.MessageBox.show({
+    								title: SuppAppMsg.rejectDoc,
+    								msg: SuppAppMsg.approvalNoteReject,
+    								buttons: Ext.MessageBox.YESNO,
+    								multiline: true,
+    								width: 500,
+    								buttonText: {
+    									yes: SuppAppMsg.approvalAcept,
+    									no: SuppAppMsg.approvalExit
+    								},
+    								fn: function(btn, text) {
+    									if (btn === 'yes') {
+    										if (text != "") {
+    											var box = Ext.MessageBox.wait(
+    												SuppAppMsg.approvalUpdateData,
+    												SuppAppMsg.approvalExecution);
+    											var notes = text;
+    											Ext.Ajax.request({
+    												url: 'plantAccess/updateAprov.action',
+    												method: 'POST',
+    												params: {
+    													status: "RECHAZADO",
+    													note: notes,
+    													idReques: record.data.id,
+    													paFromDate: new Date(),
+    													paToDate: new Date()
+    												},
+    												jsonData: dto.data,
+    												success: function(fp, o) {
+    													var res = Ext.decode(fp.responseText);
+    													grid.store.load();
+    													box.hide();
+    													if (res.message == "Success") {
+    														Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.plantAccess53);
+    													} else if (res.message == "Error JDE") {
+    														Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalInvRespErrorJDE);
+    													} else if (res.message == "Succ Update") {
+    														Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalInvRespAprobadoSucc);
+    													} else if (res.message == "Rejected") {
+    														Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.freightApprovalRespRejected);
+    													} else {
+    														Ext.Msg.alert(SuppAppMsg.approvalResponse, res.message);
+    													}
+    												},
+    												failure: function() {
+    													box.hide();
+    													Ext.MessageBox.show({
+    														title: 'Error',
+    														msg: SuppAppMsg.approvalUpdateError,
+    														buttons: Ext.Msg.OK
+    													});
+    												}
+    											});
+    										} else {
+    											Ext.Msg.alert(SuppAppMsg.approvalAlert, SuppAppMsg.approvalMessages);
+    										}
+    									}
+    								}
+    							});
+    							
+    							dlgRejected.textArea.inputEl.set({
+    								maxLength: 255
+    							});
+    						}
+    					}, {
+    						text: 'Continuar con aprobación',
+    						handler: function() {
+    							approveConfirmWindow.close();
+    							// Continuar y mostrar formulario con forceApproveWithErrors
+    							me.showApprovalForm(grid, record, dto, status, true);
+    						}
+    					}]
+    				});
+    				approveConfirmWindow.show();
+    				return;
+    			}
+    			
+    			// No hay errores - mostrar formulario normal
+    			me.showApprovalForm(grid, record, dto, status, false);
+    		},
+    		failure: function() {
+    			validationBox.hide();
+    			Ext.Msg.alert('Error', 'Error al validar la solicitud');
+    		}
+    	});
+    },
+    
+    showApprovalForm : function(grid, record, dto, status, forceApproveWithErrors) {
+    	var me = this;
+    	
     	var filePanel = Ext.create(
 				'Ext.form.Panel',
 				{
@@ -2551,8 +2730,13 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 										SuppAppMsg.approvalUpdateData,
 										SuppAppMsg.approvalExecution);
 
+								var ajaxUrl = 'plantAccess/updateAprov.action';
+								if(forceApproveWithErrors) {
+									ajaxUrl += '?forceApproveWithErrors=true';
+								}
+
 								Ext.Ajax.request({
-								    url: 'plantAccess/updateAprov.action',
+								    url: ajaxUrl,
 								    method: 'POST',
 								    params: {
 								    	status:status,
@@ -2563,7 +2747,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 							        },
 								    jsonData: dto.data,
 								    success: function(fp, o) {
-								    	debugger
 								    	var res = Ext.decode(fp.responseText);
 								    	grid.store.load();
 								    	box.hide();
@@ -2614,7 +2797,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 					} ]
 				});
 
-					me.winLoadInvFile = new Ext.Window({
+					me.winLoadInvFile = Ext.create('Ext.window.Window', {
 						layout : 'fit',
 						title : SuppAppMsg.approvalAceptSupp,
 						//width : 500,
@@ -2751,7 +2934,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 					        },
 						    jsonData: dto.data,
 						    success: function(fp, o) {
-						    	debugger;
 						    	var res = Ext.decode(fp.responseText);
 						    	grid.store.load();
 						    	box.hide();
@@ -2864,7 +3046,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     						} ]
     					});
 
-    	this.winLoadInv = new Ext.Window({
+    	this.winLoadInv = Ext.create('Ext.window.Window', {
     		layout : 'fit',
     		title : SuppAppMsg.plantAccess96,
     		width : 600,
@@ -5095,7 +5277,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	    			    						}]
     	    			    					});
 
-    	    			    	me.winLoadInv = new Ext.Window({
+    	    			    	me.winLoadInv = Ext.create('Ext.window.Window', {
     	    			    		layout : 'fit',
     	    			    		title : SuppAppMsg.purchaseUploadInvoice,
     	    			    		width : 900,
@@ -5113,7 +5295,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     	    			    	
     	    			    } else if(sup.data.country != null && sup.data.country != "") {
     	    			    	
-    				    		me.winLoadInv = new Ext.Window({
+    				    		me.winLoadInv = Ext.create('Ext.window.Window', {
     					    		layout : 'fit',
     					    		title : SuppAppMsg.purchaseUploadInvoiceForeing,
     					    		width : me.isTransportCB==true?515:1200,
@@ -5277,7 +5459,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						} ]
 					});
 
-						me.winLoadInvFile = new Ext.Window({
+						me.winLoadInvFile = Ext.create('Ext.window.Window', {
 							layout : 'fit',
 							title : SuppAppMsg.purchaseUploadDocumentsAditional,
 							width : 600,
@@ -5454,7 +5636,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 						} ]
 					});
 
-					this.winLoadInv = new Ext.Window({
+					this.winLoadInv = Ext.create('Ext.window.Window', {
 						layout : 'fit',
 						title : SuppAppMsg.purchaseOrdersTitle3,
 						width : 600,
@@ -5497,7 +5679,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 
     addNewPlantAccessRequest : function(button) {        
     	var me = this;
-		me.viewAccessPlant = new Ext.Window({
+		me.viewAccessPlant = Ext.create('Ext.window.Window', {
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
 			width : 1050,
@@ -5521,17 +5703,20 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 		        beforeclose: this.onCloseMainPanel
 		    }
 		
-		});
-		debugger
-		me.viewAccessPlant.show();		
-		Ext.getCmp('paContractorCompany').setValue(supplierProfile.data.razonSocial);
-		Ext.getCmp('paRequestAddressNumber').setValue(addressNumber);
-		Ext.getCmp('plantAccessAddWorker').setVisible(false);
-		Ext.getCmp('paRequestRfc').setValue('');//Nueva Solicitud
-		Ext.getCmp('pawRequestNumber').setValue('');//Nueva Solicitud
-		Ext.getCmp('pawTempId').setValue('');//Nuevo Trabajador
-		
-		//Limpia grid de trabajadores PlantAccessRequestGrid
+	});
+	me.viewAccessPlant.show();
+	me.viewAccessPlant.center();
+	Ext.getCmp('paContractorCompany').setValue(supplierProfile.data.razonSocial);
+	Ext.getCmp('paRequestAddressNumber').setValue(addressNumber);
+	Ext.getCmp('plantAccessAddWorker').setVisible(false);
+	Ext.getCmp('paRequestRfc').setValue('');//Nueva Solicitud
+	Ext.getCmp('pawRequestNumber').setValue('');//Nueva Solicitud
+	Ext.getCmp('pawTempId').setValue('');//Nuevo Trabajador
+	
+	// Limpiar ID de solicitud anterior para nueva solicitud
+	plantAccessRequestId = undefined;
+	hasAskedForPreviousWorkers = false;
+	console.log('Nueva solicitud creada, plantAccessRequestId limpiado:', plantAccessRequestId);		//Limpia grid de trabajadores PlantAccessRequestGrid
     	var gWorkers = me.getPlantAccessRequestGrid();
     	gWorkers.store.loadData([], false);
     	gWorkers.getView().refresh();
@@ -5556,7 +5741,7 @@ Ext.define('SupplierApp.controller.PlantAccess', {
         });
         
     	var me = this;
-		me.viewAccessPlant = new Ext.Window({
+		me.viewAccessPlant = Ext.create('Ext.window.Window', {
 			layout : 'fit',
 			//title : SuppAppMsg.approvalDetailsSupplier ,
 			title : SuppAppMsg.plantAccess47 ,
@@ -5629,7 +5814,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
                 				datefolioIDcard: Ext.Date.format(Ext.getCmp('addDatefolioIDcard').getValue(), 'd-m-Y')+'/'+Ext.getCmp('addfolioIDcard').getValue(),
                 				activities:activities
                 			    });
-                	 debugger;
                 	 Ext.Ajax.request({
              		    url: 'plantAccess/uploadWorker.action',
              		    method: 'POST',
@@ -5642,7 +5826,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
               				id:Ext.getCmp('addemployeeId').getValue()
               			    },
              		    success: function(fp, o) {
-             		    	debugger;
              		    	var res = Ext.decode(fp.responseText);
              		    	Ext.getCmp('addemployeeId').setValue(res.data.id);
              		    	var sup = Ext.create('SupplierApp.model.PlantAccessDetail',res.data);
@@ -5673,7 +5856,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
     },
     
     plantAccessEditWorker: function(grid, rowIndex, colIndex) {
-    	debugger;
     	var me = this;
     	this.changeToPlantAccessWorkerView();
     	
@@ -5734,7 +5916,6 @@ Ext.define('SupplierApp.controller.PlantAccess', {
 
 		    // Separar la cadena en registros individuales
 		    var recordsArray =  ordenNumberValue.split('|');
-debugger
 		    
 		    // Iterar sobre cada registro y agregarlo al store
 		    recordsArray.forEach(function(recordString) {
@@ -5778,14 +5959,12 @@ debugger
     		    	idWorker: paWorkerId
     	        },
     		    success: function(fp, o) {
-    		    	debugger;
     		    	var res = Ext.decode(fp.responseText);
     				var rec =Ext.create('SupplierApp.model.PlantAccessFile',res.data);
     				var fileArray = res.data;
     		    	
     				//Carga el nombre de los archivos de la solicitud
     				fileArray.forEach(function(element) {
-    					debugger;
     					var field = formWorker.findField('text_'+element.documentType.replace('WORKER_',''));
     					if(field){
     						field.setValue(element.originName);
@@ -5809,52 +5988,211 @@ debugger
     },
     
     plantAccessAddWorker: function(button) {
-    	debugger
-    	this.changeToPlantAccessWorkerView();
+    	var me = this;
     	
-    	//Nuevo Trabajador
-    	Ext.getCmp('pawTempId').setValue('');
+    	// Verificar si ya se preguntó o si hay trabajadores en el grid
+    	var workersGrid = me.getPlantAccessRequestGrid();
+    	var hasWorkers = (workersGrid && workersGrid.store && workersGrid.store.getCount() > 0);
     	
+    	if (hasAskedForPreviousWorkers || hasWorkers) {
+    		console.log('Saltando pregunta, ir directo al formulario normal');
+    		me.openNormalWorkerForm();
+    		return;
+    	}
+    	
+    	// Verificar que la solicitud esté guardada antes de poder agregar trabajadores
+    	console.log('plantAccessAddWorker iniciado, plantAccessRequestId actual:', (typeof plantAccessRequestId !== 'undefined' ? plantAccessRequestId : 'NO DEFINIDO'));
+    	
+    	if(typeof plantAccessRequestId === 'undefined' || !plantAccessRequestId){
+    		// Si no hay ID, intentar obtenerlo del RFC (solicitud ya guardada anteriormente)
+    		var rfc = Ext.getCmp('paRequestRfc') ? Ext.getCmp('paRequestRfc').getValue() : null;
+    		console.log('plantAccessRequestId undefined, intentando obtener de RFC:', rfc);
+    		
+    		if(rfc){
+    			// La solicitud ya tiene RFC, buscar su ID
+    			plantAccessRequestId = parseInt(rfc);
+    			console.log('plantAccessRequestId obtenido de RFC:', plantAccessRequestId);
+    		}
+    		
+    		if(!plantAccessRequestId){
+    			Ext.Msg.alert('Aviso', 'Por favor, guarde la solicitud antes de agregar trabajadores.');
+    			return;
+    		}
+    	}
+    	
+    	console.log('plantAccessRequestId final para usar:', plantAccessRequestId);
+    	
+    	// Abrir ventana intermedia para elegir si cargar desde solicitud previa
+		var win = Ext.create('SupplierApp.view.plantAccess.PlantAccessLoadPrevWindow');
+
+		// cuando el usuario elige 'no', continuar con el flujo actual
+		win.on('choiceMade', function(w, choice){
+			console.log('Usuario eligió:', choice);
+			hasAskedForPreviousWorkers = true;
+			if(choice === 'no'){
+				me.openNormalWorkerForm();
+			}
+		});
+
+		// cuando el usuario elige 'yes', cargar solicitudes previas y manejar la carga
+		win.on('loadPrevWorkers', function(w, sourceRequestId){
+			console.log('Event loadPrevWorkers fired! sourceRequestId:', sourceRequestId);
+			// obtener id de solicitud destino desde la variable global
+			var targetId = (typeof plantAccessRequestId !== 'undefined') ? plantAccessRequestId : null;
+			console.log('targetId:', targetId);
+			
+			if(!targetId){
+				Ext.Msg.alert('Error','No se encontró la solicitud destino. Por favor, guarde la solicitud primero.');
+				return;
+			}
+
+			// si existen trabajadores en la solicitud actual, pedir confirmación
+			var gridStore = me.getPlantAccessRequestGrid().getStore();
+			console.log('Current worker count:', gridStore.getCount());
+			if(gridStore.getCount() > 0){
+				Ext.Msg.confirm('Confirmar','La solicitud actual ya contiene trabajadores. Cargar desde otra solicitud eliminará los registros actuales, ¿desea continuar?', function(btn){
+					if(btn === 'yes'){
+						console.log('User confirmed, calling copyWorkersFromPrevRequest...');
+						me.copyWorkersFromPrevRequest(sourceRequestId, targetId, true);
+					}
+				});
+			} else {
+				console.log('No workers, calling copyWorkersFromPrevRequest...');
+				me.copyWorkersFromPrevRequest(sourceRequestId, targetId, false);
+			}
+		});
+
+		// cargar solicitudes aprobadas de los últimos 2 meses del usuario
+		var userReq = (typeof userName !== 'undefined') ? userName : '';
+		
+		// Calcular fecha hace 2 meses
+		var twoMonthsAgo = new Date();
+		twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+		var dateFrom = Ext.Date.format(twoMonthsAgo, 'Y-m-d');
+		
+		Ext.Ajax.request({
+			url: 'plantAccess/view.action',
+			method: 'GET',
+			params: { start: 0, limit: 999, rFC: '', status: 'APROBADO' //o '' para todas
+				, approver: '', addressNumberPA: userReq, dateFrom: dateFrom },
+			success: function(res){
+				try{
+					var data = Ext.decode(res.responseText);
+					var items = data.rows || data.data || data || [];
+					
+					// Si no hay solicitudes previas, continuar con flujo normal
+					if(!items || items.length === 0){
+						win.close();
+						Ext.Msg.alert('Información', 'No se encontraron solicitudes previas aprobadas.<br/>Se procederá a agregar trabajador de forma normal.', function(){
+							// Ejecutar flujo normal de agregar trabajador directamente
+							me.openNormalWorkerForm();
+						});
+						return;
+					}
+					
+					// Si hay solicitudes, mostrar la ventana
+					win.loadPrevRequests(items);
+					win.show();
+				} catch(e){ 
+					console.error('Error loading prev requests:', e);
+					win.close();
+					Ext.Msg.alert('Error', 'Error al cargar solicitudes previas.<br/>Se procederá a agregar trabajador de forma normal.', function(){
+						me.openNormalWorkerForm();
+					});
+				}
+			},
+			failure: function(){ 
+				win.close();
+				Ext.Msg.alert('Error', 'No se pudieron cargar las solicitudes previas.<br/>Se procederá a agregar trabajador de forma normal.', function(){
+					me.openNormalWorkerForm();
+				});
+			}
+		});
+    },
+    
+		copyWorkersFromPrevRequest: function(sourceRequestId, targetRequestId, replaceExisting){
+		var me = this;
+		console.log('copyWorkersFromPrevRequest called with:', {sourceRequestId, targetRequestId, replaceExisting});
+		// Mostrar ventana de carga
+		var loadingBox = Ext.MessageBox.wait('Copiando trabajadores y documentos...', 'Procesando');
+	
+		Ext.Ajax.request({
+			url: 'plantAccess/copyWorkersFromRequest.action',
+			method: 'POST',
+			timeout: 300000, // 5 minutos (en milisegundos)
+			params: {
+				sourceRequestId: sourceRequestId,
+				targetRequestId: targetRequestId,
+				replaceExisting: replaceExisting
+			},
+			success: function(resp){
+				console.log('AJAX success, response:', resp.responseText);
+				loadingBox.hide(); // Ocultar ventana de carga
+				var d = Ext.decode(resp.responseText);
+				console.log('Decoded response:', d);
+				if(d.success){
+					hasAskedForPreviousWorkers = true;
+					Ext.Msg.alert('Éxito','Carga de trabajadores finalizada.', function(){
+						// refrescar grid de trabajadores después de cerrar el mensaje
+						me.refreshRequestWorkersGrid(false);
+					});
+				} else {
+					Ext.Msg.alert('Error', d.message || 'Error al copiar trabajadores.');
+				}
+			},
+			failure: function(resp, opts){
+				console.error('AJAX failure:', resp, opts);
+				loadingBox.hide(); // Ocultar ventana de carga
+				Ext.Msg.alert('Error','Error al copiar trabajadores.');
+			}
+		});
+	},
+    
+    openNormalWorkerForm: function(){
+    	var me = this;
+    	
+		// Cambiar a vista de trabajador
+		me.changeToPlantAccessWorkerView();
+		
+		//Nuevo Trabajador
+		if(Ext.getCmp('pawTempId')) {
+			Ext.getCmp('pawTempId').setValue('');
+		}
+		
 		//Limpia grid de archivos de trabajadores PlantAccessWorkerGrid
-    	var gFiles = this.getPlantAccessWorkerGrid();
-    	gFiles.store.loadData([], false);
-    	gFiles.getView().refresh();
-    	
-    	// lenar el calatolo de ordenes ingresadas
-    	var ordenNumberValue = Ext.getCmp('paOrdenNumber').value;  
-    	
-    	
-    	
-    	
-    	 var grid = Ext.getCmp('selectionGrid'); // Obtener la referencia al grid
-		    var store = grid.getStore(); // Obtener el store del grid
-
-		    // Limpiar el store actual
-		    store.removeAll();
-
-		    // Separar la cadena en registros individuales
-		    var recordsArray =  ordenNumberValue.split('|');
-
-		    // Iterar sobre cada registro y agregarlo al store
-		    recordsArray.forEach(function(recordString) {
-		        var fields = recordString.split(',');
-		       if (fields.length > 1) {
-		            store.add({
-		                order: fields[0],
-		                description: fields.slice(1).join(",")
-		            });
-		        }
-		    });
-    	
-    	
-    	
-    	
-    	
-    	
+		try {
+			var gFiles = me.getPlantAccessWorkerGrid();
+			if(gFiles && gFiles.store) {
+				gFiles.store.loadData([], false);
+				gFiles.getView().refresh();
+			}
+		} catch(e) {
+			console.warn('Error limpiando grid de archivos:', e);
+		}
+		
+		// llenar el catálogo de ordenes ingresadas
+		var ordenNumberValue = Ext.getCmp('paOrdenNumber') ? Ext.getCmp('paOrdenNumber').value : '';
+		
+		if (ordenNumberValue) {
+			var grid = Ext.getCmp('selectionGrid');
+			if (grid && grid.getStore()) {
+				var store = grid.getStore();
+				store.removeAll();
+				var recordsArray = ordenNumberValue.split('|');
+				recordsArray.forEach(function(recordString) {
+					var fields = recordString.split(',');
+					if (fields.length > 1) {
+						store.add({
+							order: fields[0],
+							description: fields.slice(1).join(',')
+						});
+					}
+				});
+			}
+		}
     },
 
     plantAccessFinishWorker: function(button) {
-    	debugger;
     	var me = this;
     	var isValidInfo = true;
     	var validationMessage = '';
@@ -5993,14 +6331,12 @@ debugger
 	},
 	
 	changeToPlantAccessRequestView: function() {
-		debugger
 		//Formulario de datos y actividades del trabajador
 		Ext.getCmp('paWorkerForm').hide();
     	
 		//Opciones barra de tareas (Arriba)
     	Ext.getCmp('savePlantAccessRequest').show();
     	Ext.getCmp('showPlantAccessRequestFiles').show();
-    	debugger
     	//Opciones barra de tareas (Abajo)
     	Ext.getCmp('plantAccessAddWorker').show();
     	Ext.getCmp('plantAccessFinishWorker').hide();
@@ -6023,7 +6359,6 @@ debugger
 		//Opciones barra de tareas (Arriba)
     	Ext.getCmp('savePlantAccessRequest').hide();
     	Ext.getCmp('showPlantAccessRequestFiles').hide();
-    	debugger
     	//Opciones barra de tareas (Abajo)
     	Ext.getCmp('plantAccessAddWorker').hide();
     	Ext.getCmp('plantAccessFinishWorker').show();
@@ -6054,7 +6389,6 @@ debugger
     	
         	var form = this.getPlantAccessRequestForm().getForm();
 
-        	debugger
         	// Definir los campos a omitir en la validación
         	var omitFields = ['paOrdenNumberInput', 'description']; 
 
@@ -6154,7 +6488,6 @@ debugger
     },
     
     updatePlantAccessWorkerDocsCheck: function(checkbox, newValue, oldValue, eOpts) {
-    	debugger;
     	
     	//recargar la seleccion de ordenes 
     	var grid = Ext.getCmp('selectionGrid');
@@ -6275,7 +6608,6 @@ debugger
     },
     
     updatePlantAccessRequest: function() {
-    	debugger
     	//var box = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
     	var me = this;
     	var form = this.getPlantAccessRequestForm().getForm();
@@ -6320,7 +6652,10 @@ debugger
 			    	const r1Obj = JSON.parse(r1);
 
 			    	// Obtener el valor time de fechafirmGui
-			    	const timeValue = r1Obj.data.fechafirmGui.time;
+			    	console.log('[DEBUG] r1Obj.data completo:', JSON.stringify(r1Obj.data));
+			    	console.log('[DEBUG] fechafirmGui raw:', r1Obj.data.fechafirmGui);
+			    	const timeValue = r1Obj.data.fechafirmGui && r1Obj.data.fechafirmGui.time ? r1Obj.data.fechafirmGui.time : null;
+			    	console.log('[DEBUG] timeValue extraído:', timeValue);
 
 			    	if(res.message != ''){
 			    		box.hide();
@@ -6333,24 +6668,52 @@ debugger
 			    		//Actualiza información del formulario PlantAccessRequestForm
 			    		var recordNew = Ext.create('SupplierApp.model.PlantAccessRequest', res.data);
 			    		form.loadRecord(recordNew);
-			    		//var rawDate = res.data.fechafirmGui.time; // Suponiendo que el campo en record.raw se llama 'fechafirmGui'
-					    	res.data.fechafirmGui = r1Obj.data.fechafirmGui;
-			    		 var rawDate = res.data.fechafirmGui && res.data.fechafirmGui.time;
+			    		
+			    		console.log('updatePlantAccessRequest callback - res.data:', res.data);
+			    		console.log('updatePlantAccessRequest callback - res.data.id:', res.data ? res.data.id : 'NO DATA');
+			    		
+			    		// Guardar ID de la solicitud después del guardado automático
+			    		if(res.data && res.data.id){
+			    			plantAccessRequestId = res.data.id;
+			    			console.log('✓ plantAccessRequestId actualizado a:', plantAccessRequestId);
+			    		} else {
+			    			console.error('✗ No se pudo obtener ID del response');
+			    		}
+			    		 
+			    		var rawDate = res.data.fechafirmGui && res.data.fechafirmGui.time ? res.data.fechafirmGui.time
+			    		          : (r1Obj.data.fechafirmGui && r1Obj.data.fechafirmGui.time ? r1Obj.data.fechafirmGui.time : null);
+			    		console.log('[DEBUG] res.data.fechafirmGui:', res.data.fechafirmGui);
+			    		console.log('[DEBUG] r1Obj.data.fechafirmGui:', r1Obj.data.fechafirmGui);
+			    		console.log('[DEBUG] rawDate para datepicker:', rawDate);
 			 		    if (rawDate) {
 			 		        var dateField = form.findField('fechafirmGui');
-			 		        var date = new Date(rawDate); // Convertir timestamp a objeto Date
+			 		        var date = new Date(rawDate);
 			 		        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
-			 		        dateField.setValue(date); // Establecer el valor en el campo de fecha
+			 		        dateField.setValue(date);
+			 		        console.log('[DEBUG] fecha seteada en el campo:', date);
+			 		    } else {
+			 		        console.warn('[DEBUG] fechafirmGui vino null o sin .time — el datepicker NO se setea');
 			 		    }
 			    						    		
 			    		//Se actualiza campos del formulario PlantAccessRequestDocForm			    		
 			    		Ext.getCmp('heavyEquipmentRequestDoc').setValue(recordNew.data.heavyEquipment);
 			    		
 			    		//Valida documentos de la solicitud cargados y habilita control Agregar Trabajador
-			    		var formDoc = me.getPlantAccessRequestDocForm().getForm();		
-			    		debugger
+			    		var formDoc = me.getPlantAccessRequestDocForm().getForm();
+			    		var docFields = formDoc.getFields();
+			    		var invalidFields = [];
+			    		docFields.each(function(field) {
+			    		    if (!field.isValid()) {
+			    		        invalidFields.push(field.getName() + '=' + field.getValue());
+			    		    }
+			    		});
+			    		console.log('[DEBUG] formDoc.isValid():', formDoc.isValid());
+			    		console.log('[DEBUG] Campos inv\u00e1lidos en formDoc (' + invalidFields.length + '):');
+			    		invalidFields.forEach(function(f){ console.log('   campo invalido:', f); });
+			    		var statusVal = Ext.getCmp('paRequestStatus') ? Ext.getCmp('paRequestStatus').getValue() : 'NO ENCONTRADO';
+			    		console.log('[DEBUG] paRequestStatus:', statusVal);
+			    		console.log('[DEBUG] role global:', typeof role !== "undefined" ? role : 'NO DEFINIDO');
 				    	if (formDoc.isValid()) {
-				    		//Habilita control Agregar Trabajador
 				    		me.showAddNewWorkerBtnByStatus();
 				    	} else {
 				    		Ext.getCmp('plantAccessAddWorker').setVisible(false);
@@ -6365,7 +6728,6 @@ debugger
     },
     
     updatePlantAccessWorker: function(isUpdateForm, isResetForm, isShowMessage) {
-    	debugger;
     	
 //recargar la seleccion de ordenes 
     	var grid = Ext.getCmp('selectionGrid');
@@ -6416,7 +6778,6 @@ debugger
 		//record.set(updatedRecord);
 		record.save({
 			callback: function (records, o, success, msg) {
-				debugger;
 				if(success == true){
 		    		var r1 = Ext.decode(o._response.responseText);
 			    	var res = Ext.decode(r1);
@@ -6451,7 +6812,6 @@ debugger
 			    		return true;
 			    	}
 				} else {
-					debugger
 		    		var r1 = Ext.decode(o.response.responseText);
 			    	var res = Ext.decode(r1);
 
@@ -6470,7 +6830,6 @@ debugger
     },
     
     savePlantAccessRequest: function() {
-    	debugger;
     	var form = this.getPlantAccessRequestForm().getForm();
     	var formDoc = this.getPlantAccessRequestDocForm().getForm();
     	
@@ -6523,8 +6882,10 @@ debugger
         var duplicatedMemberships = Object.keys(membershipIMSSCounts).filter(function(key) {
             return membershipIMSSCounts[key] > 1;  
         });
-        grid.getView().refresh(); 
-        if (duplicatedMemberships.length > 0) {
+        grid.getView().refresh();
+        // Solo mostrar aviso de duplicados si NO es un guardado automático al cerrar
+        var currentStatus = Ext.getCmp('paRequestStatus').getValue();
+        if (duplicatedMemberships.length > 0 && currentStatus !== 'GUARDADODSALIDA') {
 //            Ext.Msg.alert('Valores Duplicados', 'Los siguientes valores de membershipIMSS se repiten: ' + duplicatedMemberships.join(', '));
             
             Ext.create('Ext.window.Window', {
@@ -6597,14 +6958,293 @@ debugger
         			    		}
         			    		
         			    		box.hide();
-        			    		Ext.MessageBox.alert({
-        			    			maxWidth: 700,
-        			    			minWidth: 650,
+				    		
+				    		// Detectar si es mensaje de confirmación (validación que puede ser bypasseada)
+				    		// Al cerrar automáticamente (GUARDADODSALIDA), omitir el diálogo de confirmación
+				    		if(res.message.startsWith('CONFIRM:') && oldStatus !== 'GUARDADODSALIDA') {
+				    			// Extraer el mensaje sin el prefijo
+				    			var confirmMessage = res.message.substring(8); // Quita "CONFIRM:"
+				    			
+				    			// Marcar trabajadores inválidos si vienen
+				    			if(res.data && res.data.invalidWorkerIds && res.data.invalidWorkerIds.trim() !== '') {
+				    				var invalidIds = res.data.invalidWorkerIds.split(',');
+				    				var invalidIdsSet = {};
+				    				for(var i = 0; i < invalidIds.length; i++) {
+				    					invalidIdsSet[invalidIds[i].trim()] = true;
+				    				}
+				    				
+				    				try {
+				    					var workerGrid = me.getPlantAccessRequestGrid();
+				    					if(workerGrid) {
+				    						var workerStore = workerGrid.getStore();
+				    						workerStore.each(function(record) {
+				    							var recordId = String(record.get('id'));
+				    							if(invalidIdsSet[recordId]) {
+				    								record.set('isInvalidWorker', true);
+				    							} else {
+				    								record.set('isInvalidWorker', false);
+				    							}
+				    						});
+				    						workerGrid.getView().refresh();
+				    						
+				    						setTimeout(function() {
+				    							var rows = workerGrid.getView().getNodes();
+				    							Ext.each(rows, function(row, rowIndex) {
+				    								var record = workerStore.getAt(rowIndex);
+				    								if(record && record.get('isInvalidWorker')) {
+				    									Ext.get(row).setStyle({
+				    										'background-color': '#ffcccc !important',
+				    										'background': '#ffcccc !important'
+				    									});
+				    									Ext.get(row).addCls('invalid-worker-row');
+				    								} else {
+				    									Ext.get(row).removeCls('invalid-worker-row');
+				    									Ext.get(row).setStyle('background-color', '');
+				    								}
+				    							});
+				    						}, 100);
+				    					}
+				    				} catch(e) {
+				    					console.error('Error al marcar trabajadores:', e);
+				    				}
+				    			}
+				    			
+				    			// Mostrar diálogo de confirmación con tabla scrolleable
+				    			var confirmWindow = Ext.create('Ext.window.Window', {
+				    				title: 'Confirmar Envío de Solicitud',
+				    				modal: true,
+				    				width: 900,
+				    				height: 550,
+				    				layout: 'fit',
+				    				items: [{
+				    					xtype: 'panel',
+				    					layout: {
+				    						type: 'vbox',
+				    						align: 'stretch'
+				    					},
+				    					bodyPadding: 15,
+				    					autoScroll: true,
+				    					items: [{
+				    						xtype: 'container',
+				    						html: '<div style="margin-bottom: 15px; font-size: 14px; line-height: 1.6;">' +
+				    							  '<b>Los siguientes trabajadores tienen datos que NO coinciden con la Cédula de Determinación de Cuotas:</b>' +
+				    							  '</div>',
+				    						height: 50
+				    					}, {
+				    						xtype: 'panel',
+				    						flex: 1,
+				    						layout: 'fit',
+				    						bodyPadding: 0,
+				    						html: '<div style="overflow: auto; max-height: 300px; border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9;">' +
+				    							  '<table style="width: 100%; border-collapse: collapse; font-size: 12px;">' +
+				    							  '<thead>' +
+				    							  '<tr style="background-color: #f0f0f0; font-weight: bold;">' +
+				    							  '<th style="padding: 8px; border: 1px solid #ddd; text-align: left; width: 40%;">Trabajador</th>' +
+				    							  '<th style="padding: 8px; border: 1px solid #ddd; text-align: left; width: 60%;">Descripción mensaje</th>' +
+				    							  '</tr>' +
+				    							  '</thead>' +
+				    							  '<tbody>' +
+				    							  (function() {
+				    							  	// Parsear el mensaje para extraer trabajadores y errores
+				    							  	var rows = '';
+				    							  	var lines = confirmMessage.split('<br>');
+				    							  	for(var i = 0; i < lines.length; i++) {
+				    							  		var line = lines[i].trim();
+				    							  		if(line.startsWith('•')) {
+				    							  			// Formato: • NombreTrabajador - <b>Error</b>
+				    							  			var parts = line.substring(2).split(' - <b>');
+				    							  			if(parts.length === 2) {
+				    							  				var workerName = parts[0].trim();
+				    							  				var error = parts[1].replace('</b>', '').trim();
+				    							  				rows += '<tr style="background-color: #fff3f3;">' +
+				    							  					   '<td style="padding: 8px; border: 1px solid #ddd; vertical-align: top;">' + workerName + '</td>' +
+				    							  					   '<td style="padding: 8px; border: 1px solid #ddd; vertical-align: top; color: #d9534f;">' + error + '</td>' +
+				    							  					   '</tr>';
+				    							  			}
+				    							  		}
+				    							  	}
+				    							  	return rows;
+				    							  })() +
+				    							  '</tbody>' +
+				    							  '</table>' +
+				    							  '</div>'
+				    					}, {
+				    						xtype: 'container',
+				    						html: '<div style="margin-top: 15px; padding: 12px; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">' +
+				    							  '<b style="font-size: 14px;">¿Desea enviar la solicitud de todas formas?</b><br><br>' +
+				    							  '<i style="font-size: 12px;">Nota: Los trabajadores con errores se han marcado en rojo en la lista.</i>' +
+				    							  '</div>',
+				    						height: 90
+				    					}]
+				    				}],
+				    				buttons: [{
+				    					text: 'Cancelar',
+				    					handler: function() {
+				    						confirmWindow.close();
+				    						console.log('Usuario canceló el envío');
+				    					}
+				    				}, {
+				    					text: 'Enviar solicitud',
+				    					handler: function() {
+				    						confirmWindow.close();
+				    						// Usuario confirmó: enviar con forceIncludeMissingWorkers=true
+				    						// Usuario confirmó: enviar con forceIncludeMissingWorkers=true
+				    						var box2 = Ext.MessageBox.wait(SuppAppMsg.supplierProcessRequest, SuppAppMsg.approvalExecution);
+				    						
+				    						// Cambiar status a PENDIENTE de nuevo
+				    						Ext.getCmp('paRequestStatus').setValue('PENDIENTE');
+				    						
+				    						// Obtener valores del formulario
+				    						var form = me.getPlantAccessRequestForm().getForm();
+				    						var values = form.getFieldValues();
+				    						var recordForced = Ext.create('SupplierApp.model.PlantAccessRequest');
+				    						var updatedRecordForced = populateObj(recordForced, values);
+				    						recordForced.set(updatedRecordForced);
+				    						
+				    						// Hacer request Ajax con parámetro forceIncludeMissingWorkers=true
+				    						Ext.Ajax.request({
+				    							url: 'plantAccess/savePlantAccessRequest.action?forceIncludeMissingWorkers=true',
+				    							method: 'POST',
+				    							jsonData: recordForced.data,
+				    							success: function(response) {
+				    								var r1 = Ext.decode(response.responseText);
+				    								var res = Ext.decode(r1);
+				    								
+				    								if(res.message != '') {
+				    									// Aún hay error (de otro tipo)
+				    									box2.hide();
+				    									Ext.getCmp('paRequestStatus').setValue(oldStatus);
+				    									Ext.create('Ext.window.Window', {
+				    										title: SuppAppMsg.plantAccess89,
+				    										modal: true,
+				    										width: 700,
+				    										height: 450,
+				    										layout: 'fit',
+				    										items: [{
+				    											xtype: 'panel',
+				    											autoScroll: true,
+				    											bodyPadding: 15,
+				    											html: res.message,
+				    											bodyStyle: {
+				    												'background-color': '#ffffff',
+				    												'font-size': '13px',
+				    												'line-height': '1.5'
+				    											}
+				    										}],
+				    										buttons: [{
+				    											text: 'Aceptar',
+				    											handler: function() {
+				    												this.up('window').close();
+				    											}
+				    										}]
+				    									}).show();
+				    								} else {
+				    									// Éxito - cerrar ventana y refrescar
+				    									me.viewAccessPlant.destroy();
+				    									var grid = me.getPlantAccessGrid();
+				    									var store = grid.getStore();
+				    									store.reload();
+				    									grid.getView().refresh();
+				    									box2.hide();
+				    									Ext.MessageBox.show({
+				    										title: SuppAppMsg.plantAccess89,
+				    										msg: SuppAppMsg.plantAccess97
+				    									});
+				    								}
+				    							},
+				    							failure: function() {
+				    								box2.hide();
+				    								Ext.getCmp('paRequestStatus').setValue(oldStatus);
+				    								Ext.Msg.alert('Error', 'Ocurrió un error al enviar la solicitud.');
+				    							}
+				    						});
+				    					}
+				    				}]
+				    			});
+				    			confirmWindow.show();
+				    			return false;
+				    		}
+				    		
+				    		// Si NO es mensaje de confirmación, es error bloqueante
+				    		// Marcar trabajadores inválidos si vienen
+				    		if(res.data && res.data.invalidWorkerIds && res.data.invalidWorkerIds.trim() !== '') {
+				    			var invalidIds = res.data.invalidWorkerIds.split(',');
+				    			var invalidIdsSet = {};
+				    			for(var i = 0; i < invalidIds.length; i++) {
+				    				invalidIdsSet[invalidIds[i].trim()] = true;
+				    			}
+				    			
+				    			try {
+				    				var workerGrid = me.getPlantAccessRequestGrid();
+				    				if(workerGrid) {
+				    					var workerStore = workerGrid.getStore();
+				    					workerStore.each(function(record) {
+				    						var recordId = String(record.get('id'));
+				    						if(invalidIdsSet[recordId]) {
+				    							record.set('isInvalidWorker', true);
+				    						} else {
+				    							record.set('isInvalidWorker', false);
+				    						}
+				    					});
+				    					workerGrid.getView().refresh();
+				    					
+				    					setTimeout(function() {
+				    						var rows = workerGrid.getView().getNodes();
+				    						Ext.each(rows, function(row, rowIndex) {
+				    							var record = workerStore.getAt(rowIndex);
+				    							if(record && record.get('isInvalidWorker')) {
+				    								Ext.get(row).setStyle({
+				    									'background-color': '#ffcccc !important',
+				    									'background': '#ffcccc !important'
+				    								});
+				    								Ext.get(row).addCls('invalid-worker-row');
+				    							} else {
+				    								Ext.get(row).removeCls('invalid-worker-row');
+				    								Ext.get(row).setStyle('background-color', '');
+				    							}
+				    						});
+				    					}, 100);
+				    				}
+				    			} catch(e) {
+				    				console.error('Error al marcar trabajadores:', e);
+				    			}
+				    		}
+        			    		
+        			    		// Crear ventana personalizada con scroll para mensajes largos de validación
+        			    		// Solo mostrar si NO es un cierre automático
+        			    		if(oldStatus !== 'GUARDADODSALIDA') {
+        			    		Ext.create('Ext.window.Window', {
         			    			title: SuppAppMsg.plantAccess89,
-        			    			msg: res.message
-        			    		});
+        			    			modal: true,
+        			    			width: 700,
+        			    			height: 450,
+        			    			layout: 'fit',
+        			    			items: [{
+        			    				xtype: 'panel',
+        			    				autoScroll: true,
+        			    				bodyPadding: 15,
+        			    				html: res.message,
+        			    				bodyStyle: {
+        			    					'background-color': '#ffffff',
+        			    					'font-size': '13px',
+        			    					'line-height': '1.5'
+        			    				}
+        			    			}],
+        			    			buttons: [{
+        			    				text: 'Aceptar',
+        			    				handler: function() {
+        			    					this.up('window').close();
+        			    				}
+        			    			}]
+        			    		}).show();
+        			    		}
         			    		return false;
         			    	} else {
+        			    		// Guardar ID de la solicitud recién guardada
+        			    		if(records && records.data && records.data.id){
+        			    			plantAccessRequestId = records.data.id;
+        			    			console.log('Solicitud guardada con ID:', plantAccessRequestId);
+        			    		}
         			    		//Cierra ventana
         			    		me.viewAccessPlant.destroy();
         			    		var grid = me.getPlantAccessGrid();
@@ -6625,16 +7265,18 @@ debugger
         			}
         		});
         	} else {
-        		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.plantAccess89, msg: SuppAppMsg.plantAccessTempMessage17 })
+        		if(Ext.getCmp('paRequestStatus').getValue() !== 'GUARDADODSALIDA') {
+        			Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.plantAccess89, msg: SuppAppMsg.plantAccessTempMessage17 })
+        		}
         	}
     	} else {
-    		debugger
-    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.plantAccess89, msg: SuppAppMsg.plantAccessTempMessage16 })
+    		if(Ext.getCmp('paRequestStatus').getValue() !== 'GUARDADODSALIDA') {
+    			Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.plantAccess89, msg: SuppAppMsg.plantAccessTempMessage16 })
+    		}
     	}
     },
     
     refreshRequestWorkersGrid: function(isShowMessage) {
-    	debugger;
     	var me = this;
     	var paRequestId = Ext.getCmp('paRequestRfc').getValue();
     	
@@ -6699,7 +7341,6 @@ debugger
     },
 
     refreshWorkerFileGrid: function() {
-    	debugger;
     	var me = this;
     	var paRequestId = Ext.getCmp('paRequestRfc').getValue();
     	var paWorkerId = Ext.getCmp('pawTempId').getValue();
@@ -6714,7 +7355,6 @@ debugger
     		    	idWorker: paWorkerId
     	        },
     		    success: function(fp, o) {
-    		    	debugger
     		    	var res = Ext.decode(fp.responseText);
     		    	var grid = me.getPlantAccessWorkerGrid();
     		    	grid.store.loadData([], false);
@@ -6817,16 +7457,19 @@ debugger
     
     showAddNewWorkerBtnByStatus: function(){
     	//Definición de controles por estatus
-    	debugger
     	var statusPlantAccess = Ext.getCmp('paRequestStatus').getValue();
+    	console.log('[DEBUG showAddNewWorkerBtnByStatus] statusPlantAccess:', statusPlantAccess);
+    	console.log('[DEBUG showAddNewWorkerBtnByStatus] role:', typeof role !== 'undefined' ? role : 'NO DEFINIDO');
     	Ext.getCmp('plantAccessAddWorker').setVisible(true);
-    	 if(['RECHAZADO','GUARDADO'].includes(statusPlantAccess) && role == 'ROLE_SUPPLIER'){
+    	if(['RECHAZADO','GUARDADO'].includes(statusPlantAccess) && (role == 'ROLE_SUPPLIER' || role == 'ROLE_ADMIN')){
+    		console.log('[DEBUG] Caso RECHAZADO/GUARDADO + ROLE_SUPPLIER/ADMIN -> visible=true');
         	Ext.getCmp('plantAccessAddWorker').setVisible(true);
-        }else
+        } else
         if(['PENDIENTE','RECHAZADO','APROBADO','GUARDADO'].includes(statusPlantAccess)){
+        	console.log('[DEBUG] Caso PENDIENTE/RECHAZADO/APROBADO/GUARDADO -> visible=false');
         	Ext.getCmp('plantAccessAddWorker').setVisible(false);
-        }    		        
-       
+        }
+        console.log('[DEBUG showAddNewWorkerBtnByStatus] visible final:', Ext.getCmp('plantAccessAddWorker').isVisible());
     },
     
     uploadPlantAccessRequestAct:function(button) {  
@@ -6839,7 +7482,6 @@ debugger
     	var workers = store.data.items;
     
     	
-debugger;
 //    	for (var i = 0; i < workers.length; i++) {
 //    		if(!workers[i].data.allDocuments ||
 //    			!workers[i].data.docsActivity1 ||
@@ -6879,7 +7521,6 @@ documentWorkers = true
 			    }
 			});
 		}*/
-    	 debugger;
     	var form = this.getPlantAccessForm().getForm();
     	if (form.isValid()) {
     		if(documentWorkers){
@@ -6897,7 +7538,6 @@ documentWorkers = true
     			    	var res = Ext.decode(fp.responseText);
     			    	var extraDocst = Ext.getCmp('addHeavyequipment').getValue();
     			    	if(extraDocst) totalDocs=5;
-    			    	debugger;
     			    	if(totalDocs == res.total){
     			    		if(workers.length==0){
     		    	    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: 'Error', msg: 'Se debe agregar almenos un trabajador' });
@@ -6929,7 +7569,6 @@ documentWorkers = true
     		        		    	
     		        	        },
     		        		    success: function(fp, o) {
-    		        		    	debugger;
     		        		    	res=JSON.parse(fp.responseText);
     		        		    	
     		        		    	if(!res.success){
@@ -7044,7 +7683,6 @@ documentWorkers = true
 		    	
 	        },
 		    success: function(fp, o) {
-		    	debugger
 		    	Ext.getCmp('AgrTabNuevo').show();
 		    	Ext.getCmp('rfcPlantAccess').setValue(JSON.parse(fp.responseText).data.rfc);
 //		    	Ext.MessageBox.show({
@@ -7114,7 +7752,7 @@ documentWorkers = true
     	var supNumber = Ext.getCmp('supNumberFD').getValue() == ''?'':Ext.getCmp('supNumberFD').getValue();
 
     	if(supNumber != ""){
-        	new Ext.Window({
+        	Ext.create('Ext.window.Window', {
         		  width        : 1120,
         		  height       : 465,
         		  title        : 'Complementos de Pago',

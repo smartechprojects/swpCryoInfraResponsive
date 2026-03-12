@@ -86,6 +86,14 @@ public class FileStoreService {
 	public void save(FileStore doc) {
 		fileStoreDao.save(doc);
 	}
+
+	/**
+	 * Save the FileStore and return the generated id assigned by the database.
+	 * Keeps existing `save` for callers that don't need the id.
+	 */
+	public int saveAndReturnId(FileStore doc) {
+		return fileStoreDao.saveAndReturnId(doc);
+	}
 	
 	public void update(FileStore doc) {
 		fileStoreDao.update(doc);

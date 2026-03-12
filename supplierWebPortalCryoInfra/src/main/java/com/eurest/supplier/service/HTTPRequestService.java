@@ -20,7 +20,8 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.eurest.supplier.util.AppConstants;
@@ -28,7 +29,7 @@ import com.eurest.supplier.util.AppConstants;
 @Service("HTTPRequestService")
 public class HTTPRequestService {
 	
-	private static Logger log4j = Logger.getLogger(HTTPRequestService.class);
+	private static Logger log4j = LogManager.getLogger(HTTPRequestService.class);
 
 
 	public static String httpPost(String destUrl, String postData) throws Exception {

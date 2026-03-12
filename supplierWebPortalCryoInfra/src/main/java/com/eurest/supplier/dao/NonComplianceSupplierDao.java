@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.CacheMode;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
@@ -26,7 +27,7 @@ public class NonComplianceSupplierDao {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	private Logger log4j = Logger.getLogger(NonComplianceSupplierDao.class);
+	private Logger log4j = LogManager.getLogger(NonComplianceSupplierDao.class);
 
 	public NonComplianceSupplier getNonComplianceSupplierById(int id) {
 		Session session = this.sessionFactory.getCurrentSession();

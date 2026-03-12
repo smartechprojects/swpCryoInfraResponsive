@@ -1395,3 +1395,17 @@ input[readonly].x-form-text {
 .x-monthpicker-months .x-monthpicker-item:nth-child(8)  { order: 10; } /* Oct */
 .x-monthpicker-months .x-monthpicker-item:nth-child(10) { order: 11; } /* Nov */
 .x-monthpicker-months .x-monthpicker-item:nth-child(12) { order: 12; } /* Dic */
+
+/* Estilo para trabajadores no encontrados en cédula */
+.invalid-worker-row {
+    background-color: #ffcccc !important;
+    background: #ffcccc !important;
+}
+.invalid-worker-row td {
+    background-color: #ffcccc !important;
+    background: #ffcccc !important;
+}
+.invalid-worker-row .x-grid-cell {
+    background-color: #ffcccc !important;
+    background: #ffcccc !important;
+}

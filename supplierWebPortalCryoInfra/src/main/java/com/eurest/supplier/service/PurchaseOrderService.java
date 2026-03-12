@@ -142,7 +142,7 @@ public class PurchaseOrderService {
 	static String TIMESTAMP_DATE_PATTERN_NEW = "yyyy-MM-dd HH:mm:ss";
 	static String DATE_PATTERN = "dd/MM/yyyy";	
 	
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(PurchaseOrderService.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(PurchaseOrderService.class);
 
 	public List<PurchaseOrder> getOrders(int start, int limit) {
 		return purchaseOrderDao.getOrders(start, limit);

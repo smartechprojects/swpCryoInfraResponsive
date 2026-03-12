@@ -37,7 +37,7 @@ public class SFTPClient {
 
 	public SFTPClient() {}
 
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(SFTPClient.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(SFTPClient.class);
 
 	public SFTPClient(String rEMOTE_HOST, String uSERNAME, String keyFile) {
 		super();

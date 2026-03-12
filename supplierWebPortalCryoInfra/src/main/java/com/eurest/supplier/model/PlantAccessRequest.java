@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -70,6 +71,10 @@ public class PlantAccessRequest {
     private boolean subcontractService;
     private String subContractedCompany;
     private String subContractedCompanyRFC;
+    
+    // Campo temporal (no persistente) para almacenar IDs de trabajadores no encontrados en cédula
+    @Transient
+    private String invalidWorkerIds;
     
 	public int getId() {
 		return id;
@@ -247,6 +252,12 @@ public class PlantAccessRequest {
 		this.subContractedCompanyRFC = subContractedCompanyRFC;
 	}
 	
+	public String getInvalidWorkerIds() {
+		return invalidWorkerIds;
+	}
 	
+	public void setInvalidWorkerIds(String invalidWorkerIds) {
+		this.invalidWorkerIds = invalidWorkerIds;
+	}
 	
 }

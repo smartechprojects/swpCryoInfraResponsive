@@ -23,7 +23,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.lang.SerializationUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,7 +148,7 @@ public class MiddlewareService {
 	  
 	  final long MAX_ATTACHED_SIZE = 20971520L; //20MB Aprox.
 	  static String TIMESTAMP_DATE_PATTERN = "yyyy-MM-dd";	  
-	  private Logger log4j = Logger.getLogger(MiddlewareService.class);
+	  private Logger log4j = LogManager.getLogger(MiddlewareService.class);
 	
 	public Map<String, Object> setPayents(List<Receipt> receipList) {
 		int total =0 ;

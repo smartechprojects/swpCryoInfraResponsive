@@ -155,7 +155,7 @@ public class MassiveDownloadService {
 	@Autowired
 	CompanyService companyService;
 	
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(MassiveDownloadService.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(MassiveDownloadService.class);
 	static WebDriver driver;
 	
 	@Scheduled(cron = "0 0 21 * * ?")

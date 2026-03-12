@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -100,7 +101,7 @@ public class SupplierService {
   
   private final String SECRET = "aink_45$11SecKey";
   
-  private Logger log4j = Logger.getLogger(SupplierService.class);
+  private Logger log4j = LogManager.getLogger(SupplierService.class);
   
   public Supplier getSupplierById(int id) {
     Supplier s = this.supplierDao.getSupplierById(id);

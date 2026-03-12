@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,7 +48,7 @@ private CustomBrokerService customBrokerService;
 @Autowired
 private FiscalDocumentService fiscalDocumentService;
 
-Logger log4j = Logger.getLogger(DocumentsController.class);
+Logger log4j = LogManager.getLogger(DocumentsController.class);
 
 @RequestMapping(value ="/documents/view.action")
 public @ResponseBody Map<String, Object> view(@RequestParam int start,

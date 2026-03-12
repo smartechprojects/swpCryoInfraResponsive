@@ -1,10 +1,10 @@
-Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
+﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestDocForm',	{
 	extend : 'Ext.form.Panel',
 	alias : 'widget.plantAccessRequestDocForm',
 	border : false,
 	frame : false,
 	style : 'border: solid #fff 1px',
-	autoScroll : true,
+    scrollable : true,
     layout: {
         type: 'vbox',
         align: 'stretch'

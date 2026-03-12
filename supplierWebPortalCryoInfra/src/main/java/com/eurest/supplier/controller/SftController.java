@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -60,7 +61,7 @@ public class SftController {
 	@Autowired
 	private UdcService udcService;
 
-	private Logger log4j = Logger.getLogger(SftController.class);
+	private Logger log4j = LogManager.getLogger(SftController.class);
 	
 	@CrossOrigin
 	@RequestMapping(value ="/sft/validateInvoiceFreight", method=RequestMethod.POST)

@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -50,6 +51,7 @@ import com.eurest.supplier.model.Tolerances;
 import com.eurest.supplier.model.UDC;
 import com.eurest.supplier.model.UserDocument;
 import com.eurest.supplier.model.Users;
+import com.eurest.supplier.pdfDocumentReader.CedulaDeCuotasAlIMSS;
 import com.eurest.supplier.service.ApprovalBatchFreightService;
 import com.eurest.supplier.service.BatchJournalService;
 import com.eurest.supplier.service.DocumentsService;
@@ -58,6 +60,7 @@ import com.eurest.supplier.service.EmailServiceAsync;
 import com.eurest.supplier.service.FileStoreService;
 import com.eurest.supplier.service.FiscalDocumentConceptService;
 import com.eurest.supplier.service.FiscalDocumentService;
+import com.eurest.supplier.service.OutSourcingService;
 import com.eurest.supplier.service.PlantAccessRequestService;
 import com.eurest.supplier.service.PlantAccessWorkerService;
 import com.eurest.supplier.service.PurchaseOrderService;
@@ -124,7 +127,10 @@ public class PlantAccessController {
 	@Autowired
 	private JavaMailSender mailSenderObj;
 	
-	Logger log4j = Logger.getLogger(PlantAccessController.class);
+	@Autowired
+	private OutSourcingService outSourcingService;
+	
+	Logger log4j = LogManager.getLogger(PlantAccessController.class);
 	
 	@RequestMapping(value ="/plantAccess/view.action")
 	public @ResponseBody Map<String, Object> view(@RequestParam int start,
@@ -133,7 +139,8 @@ public class PlantAccessController {
 												  @RequestParam String status,
 												  @RequestParam String approver,
 												  @RequestParam String addressNumberPA,
-												  HttpServletRequest request){	
+										  @RequestParam(required = false) String dateFrom,
+										  HttpServletRequest request){	
 		try{
 			final String OLD_FORMAT = "dd-MM-yyyy";
 			SimpleDateFormat sdf = new SimpleDateFormat();
@@ -141,8 +148,8 @@ public class PlantAccessController {
 			
 			List<PlantAccessRequest> list=null;
 			int total=0;
-			list = plantAccessRequestService.getPlantAccessRequests(rFC, status, approver, addressNumberPA, start, limit);
-			total = plantAccessRequestService.getPlantAccessRequestsTotal(rFC, status, approver, addressNumberPA);
+			list = plantAccessRequestService.getPlantAccessRequests(rFC, status, approver, addressNumberPA, dateFrom, start, limit);
+			total = plantAccessRequestService.getPlantAccessRequestsTotal(rFC, status, approver, addressNumberPA, dateFrom);
 			/*for (PlantAccessRequest x : list) {
 
 				x.setFechaSolicitudStr(sdf.format(x.getFechaSolicitud()));
@@ -432,6 +439,139 @@ public class PlantAccessController {
 	    	e.printStackTrace();
 	      return mapError(e.getMessage());
 	    }
+	}
+
+	@RequestMapping(value ="/plantAccess/copyWorkersFromRequest.action", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> copyWorkersFromRequest(
+							String sourceRequestId,
+							String targetRequestId,
+							boolean replaceExisting,
+							HttpServletResponse response) {
+
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		log4j.info("[copyWorkersFromRequest] INICIO - sourceRequestId=" + sourceRequestId
+				+ " | targetRequestId=" + targetRequestId
+				+ " | replaceExisting=" + replaceExisting);
+		try {
+			if(org.apache.commons.lang.StringUtils.isBlank(sourceRequestId) || org.apache.commons.lang.StringUtils.isBlank(targetRequestId)) {
+				log4j.warn("[copyWorkersFromRequest] Parámetros inválidos - sourceRequestId='" + sourceRequestId + "' targetRequestId='" + targetRequestId + "'");
+				return mapError("Parámetros inválidos.");
+			}
+
+			// Si se solicita reemplazar, eliminar trabajadores existentes y sus archivos
+			if(replaceExisting) {
+				log4j.info("[copyWorkersFromRequest] replaceExisting=true -> eliminando trabajadores existentes en solicitud destino: " + targetRequestId);
+				List<PlantAccessWorker> existing = plantAccessWorkerService.searchWorkersPlantAccessByIdRequest(targetRequestId);
+				if(existing != null) {
+					log4j.info("[copyWorkersFromRequest] Trabajadores existentes a eliminar: " + existing.size());
+					for(PlantAccessWorker w : existing) {
+						log4j.info("[copyWorkersFromRequest] Eliminando trabajador id=" + w.getId()
+								+ " | nombre=" + w.getEmployeeName() + " " + w.getEmployeeLastName()
+								+ " | CURP=" + w.getEmployeeCurp());
+						// borrar archivos asociados
+						List<FileStore> files = fileStoreService.getFilesPlantAccessWorker(targetRequestId, w.getId(), false);
+						if(files != null) {
+							log4j.info("[copyWorkersFromRequest] Eliminando " + files.size() + " archivo(s) del trabajador id=" + w.getId());
+							for(FileStore f : files) {
+								log4j.info("[copyWorkersFromRequest]   - Eliminando archivo id=" + f.getId() + " | tipo=" + f.getDocumentType() + " | nombre=" + f.getOriginName());
+								fileStoreService.deleteFilesPlantAccess(f);
+							}
+						} else {
+							log4j.info("[copyWorkersFromRequest] Trabajador id=" + w.getId() + " no tiene archivos asociados.");
+						}
+						plantAccessWorkerService.deleteWorkerPlantAccess(w);
+						log4j.info("[copyWorkersFromRequest] Trabajador id=" + w.getId() + " eliminado OK.");
+					}
+				} else {
+					log4j.info("[copyWorkersFromRequest] No hay trabajadores existentes en solicitud destino: " + targetRequestId);
+				}
+			}
+
+			// Leer trabajadores de origen
+			log4j.info("[copyWorkersFromRequest] Leyendo trabajadores de solicitud origen: " + sourceRequestId);
+			List<PlantAccessWorker> sourceWorkers = plantAccessWorkerService.searchWorkersPlantAccessByIdRequest(sourceRequestId);
+			log4j.info("[copyWorkersFromRequest] Trabajadores encontrados en origen: " + (sourceWorkers != null ? sourceWorkers.size() : 0));
+
+			List<PlantAccessWorker> newWorkers = new java.util.ArrayList<>();
+			if(sourceWorkers != null) {
+				int workerIndex = 1;
+				for(PlantAccessWorker sw : sourceWorkers) {
+					log4j.info("[copyWorkersFromRequest] --- Procesando trabajador " + workerIndex + "/" + sourceWorkers.size()
+							+ " | id origen=" + sw.getId()
+							+ " | nombre=" + sw.getEmployeeName() + " " + sw.getEmployeeLastName()
+							+ " | CURP=" + sw.getEmployeeCurp()
+							+ " | RFC=" + sw.getEmployeeRfc());
+
+					PlantAccessWorker nw = new PlantAccessWorker();
+					// copiar campos relevantes
+					nw.setActivities(sw.getActivities());
+					nw.setAllDocuments(sw.isAllDocuments());
+					nw.setCardNumber(sw.getCardNumber());
+					nw.setDatefolioIDcard(sw.getDatefolioIDcard());
+					nw.setDateInduction(sw.getDateInduction());
+					nw.setEmployeeCurp(sw.getEmployeeCurp());
+					nw.setEmployeeLastName(sw.getEmployeeLastName());
+					nw.setEmployeeSecondLastName(sw.getEmployeeSecondLastName());
+					nw.setEmployeeName(sw.getEmployeeName());
+					nw.setEmployeeOrdenes(sw.getEmployeeOrdenes());
+					nw.setEmployeePuesto(sw.getEmployeePuesto());
+					nw.setEmployeeRfc(sw.getEmployeeRfc());
+					nw.setFechaRegistro(new Date());
+					nw.setListDocuments(sw.getListDocuments());
+					nw.setMembershipIMSS(sw.getMembershipIMSS());
+					nw.setDocsActivity1(sw.isDocsActivity1());
+					nw.setDocsActivity2(sw.isDocsActivity2());
+					nw.setDocsActivity3(sw.isDocsActivity3());
+					nw.setDocsActivity4(sw.isDocsActivity4());
+					nw.setDocsActivity5(sw.isDocsActivity5());
+					nw.setDocsActivity6(sw.isDocsActivity6());
+					nw.setDocsActivity7(sw.isDocsActivity7());
+					nw.setRequestNumber(targetRequestId);
+
+					// guardar nuevo trabajador
+					plantAccessWorkerService.save(nw);
+					log4j.info("[copyWorkersFromRequest] Trabajador guardado en destino con id=" + nw.getId()
+							+ " | requestNumber=" + targetRequestId);
+
+					// copiar archivos asociados al trabajador
+					List<FileStore> files = fileStoreService.getFilesPlantAccessWorker(sourceRequestId, sw.getId(), true);
+					int filesCopied = 0;
+					if(files != null) {
+						log4j.info("[copyWorkersFromRequest] Copiando " + files.size() + " archivo(s) del trabajador origen id=" + sw.getId() + " al nuevo id=" + nw.getId());
+						for(FileStore f : files) {
+							log4j.info("[copyWorkersFromRequest]   - Copiando archivo | tipo=" + f.getDocumentType() + " | nombre=" + f.getOriginName() + " | fileType=" + f.getFileType());
+							FileStore copy = new FileStore();
+							copy.setContent(f.getContent());
+							copy.setFileType(f.getFileType());
+							copy.setOriginName(f.getOriginName());
+							copy.setDocumentType(f.getDocumentType());
+							copy.setStatus(f.getStatus());
+							copy.setNumRefer(nw.getId());
+							copy.setNamefile(String.valueOf(nw.getId()));
+							copy.setUuid(targetRequestId);
+							fileStoreService.save(copy);
+							filesCopied++;
+							log4j.info("[copyWorkersFromRequest]   - Archivo copiado OK con nuevo id=" + copy.getId());
+						}
+					} else {
+						log4j.info("[copyWorkersFromRequest] Trabajador origen id=" + sw.getId() + " no tiene archivos para copiar.");
+					}
+					log4j.info("[copyWorkersFromRequest] Trabajador " + workerIndex + " completado | archivos copiados: " + filesCopied);
+					newWorkers.add(nw);
+					workerIndex++;
+				}
+			}
+
+			log4j.info("[copyWorkersFromRequest] FIN OK - total trabajadores copiados: " + newWorkers.size()
+					+ " | source=" + sourceRequestId + " -> target=" + targetRequestId);
+			return mapOKW(newWorkers, newWorkers.size());
+		} catch (Exception e) {
+			log4j.error("[copyWorkersFromRequest] ERROR inesperado - source=" + sourceRequestId + " target=" + targetRequestId, e);
+			e.printStackTrace();
+			return mapError(e.getMessage());
+		}
 	}
 	@RequestMapping(value ="/plantAccess/deleteWorkerPlantAccessById.action")
 	public @ResponseBody Map<String, Object> deleteWorkerPlantAccessById(@RequestParam String workerId){
@@ -858,7 +998,7 @@ public class PlantAccessController {
 	    	      }
 	    	    }
 			
-			fileToSave.setDateUpload(new Date());
+				fileToSave.setDateUpload(new Date());
 			fileToSave.setContent(file.getFile().getBytes());
 			fileToSave.setFileType(file.getFile().getContentType());
 			fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
@@ -868,10 +1008,32 @@ public class PlantAccessController {
 			fileToSave.setNamefile(idRequest);
 			fileToSave.setUuid(idRequest);
 			
-			fileStoreService.save(fileToSave);
+			// 20250412 detetccion de sua para proceso de validacion
+			if(documentType.equals("SUA")) {
+				if(new CedulaDeCuotasAlIMSS().ValidDoc(file.getFile().getBytes())) {
+					
+					int idRES=fileStoreService.saveAndReturnId(fileToSave);
+					int res=outSourcingService.savingODDDCFromPDF(fileToSave.getContent(),idRES);
+					if(res==0) {
+						return mapError("Error No se encontro CÉDULA DE DETERMINACIÓN DE CUOTAS para lista nominal en el archivo");
+					}else {
+						
+					}
+				}else {
+					return mapError("Documento SUA INVALIDO.");
+				}
+			}else {
+				fileStoreService.save(fileToSave);
+			
+			}
+			
 			fileToSave.setContent(null);
+			
+		
+			
+			
 		} else {
-			mapError("El documento cargado supera los 10 MB.");
+			return mapError("El documento cargado supera los 10 MB.");
 		}
 		return mapOK(fileToSave);
 	}
@@ -1219,7 +1381,9 @@ public class PlantAccessController {
 	}
 	
 	@RequestMapping(value ="/plantAccess/savePlantAccessRequest.action", produces={MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody public String  savePlantAccessRequest(@RequestBody PlantAccessRequest request,
+	@ResponseBody public String  savePlantAccessRequest(
+														@RequestBody PlantAccessRequest request,
+														@RequestParam(required = false, defaultValue = "false") boolean forceIncludeMissingWorkers,
 														HttpServletResponse response){
 		JSONObject json = new JSONObject();
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -1303,11 +1467,11 @@ public class PlantAccessController {
 					
 					//Validaciones antes de enviar solicitud a flujo de aprobación
 					if(isSendRequest) {
-						String message = plantAccessRequestService.validatePlantAccessRequest(plantAccessRequest, true);						
+						String message = plantAccessRequestService.validatePlantAccessRequest(plantAccessRequest, true, forceIncludeMissingWorkers);						
 						if(!"".equals(message)) {
 							json.put("success", true);
 				            json.put("message", message);
-				            json.put("data", request); //Se envía información inicial
+				            json.put("data", plantAccessRequest); //Se envía objeto modificado con invalidWorkerIds
 				            return json.toString();
 						}
 					}
@@ -1513,7 +1677,8 @@ public class PlantAccessController {
 													@RequestParam String note,
 													@RequestParam String idReques,
 													@RequestParam String paFromDate,
-													@RequestParam String paToDate
+													@RequestParam String paToDate,
+													@RequestParam(required = false, defaultValue = "false") boolean forceApproveWithErrors
 													){
 		
 		try{ 
@@ -1534,6 +1699,21 @@ public class PlantAccessController {
 				}
 				
 				if("APROBADO".equals(status)) {
+					// Validar trabajadores contra cédula antes de aprobar
+					if(!forceApproveWithErrors) {
+						PlantAccessRequest paRequestForValidation = plantAccessRequestService.getPlantAccessRequests(obj.getRfc());
+						String validationMessage = plantAccessRequestService.validatePlantAccessRequest(paRequestForValidation, false, false);
+						
+						if(validationMessage != null && !validationMessage.trim().isEmpty()) {
+							// Hay errores de validación - agregar prefijo CONFIRM_APPROVE:
+							Map<String, Object> response = new HashMap<>();
+							response.put("success", false);
+							response.put("message", "CONFIRM_APPROVE:" + validationMessage);
+							response.put("data", paRequestForValidation);
+							return response;
+						}
+					}
+					
 					Users userAprob = usersService.getByUserName(usr);
 					PDFUtils pdfUtils = new PDFUtils();
 					PlantAccessRequest paRequest = plantAccessRequestService.getPlantAccessRequests(obj.getRfc());

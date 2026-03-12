@@ -20,7 +20,7 @@ public class GetDownloadCFDIByUuidDriver {
 	public WebDriver driver;
 	public int chromeDriverProcessID = 0;
 	public int chromeProcesID = 0;
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(GetDownloadCFDIByUuidDriver.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(GetDownloadCFDIByUuidDriver.class);
 	
 	public WebDriver setUp() {
 		

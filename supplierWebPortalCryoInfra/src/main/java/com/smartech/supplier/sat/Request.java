@@ -10,13 +10,14 @@ import java.security.SignatureException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Request extends RequestBase {
 
     private String typeRequest;
     
-    private Logger log4j = Logger.getLogger(Request.class);
+    private Logger log4j = LogManager.getLogger(Request.class);
 
     /**
      * Constructor of Request class
@@ -104,7 +105,7 @@ public class Request extends RequestBase {
         	    "<CanonicalizationMethod Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\"/>" +
         	    "<SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\"/>" +
         	    "<Reference URI=\"\">" +
-        	    "<Transforms>" +  // <- Nota: "Transforms" con 's' aquí
+        	    "<Transforms>" +  // <- Nota: "Transforms" con 's' aquÃ­
         	    "<Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>" +
         	    "</Transforms>" +
         	    "<DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\"/>" +
@@ -174,7 +175,7 @@ public class Request extends RequestBase {
 			fechaFinal = fechaFinal + "T23:59:59";
 		}
 
-		// 2. Creación del digest (SHA-1)
+		// 2. CreaciÃ³n del digest (SHA-1)
 		String canonicalTimestamp = "<des:SolicitaDescargaRecibidos xmlns:des=\"http://DescargaMasivaTerceros.sat.gob.mx\">"
 				+ "<des:solicitud EstadoComprobante=\"Vigente\" " + "FechaInicial=\"" + fechaInicial + "\" "
 				+ "FechaFinal=\"" + fechaFinal + "\" " + "TipoSolicitud=\"" + this.typeRequest + "\" "
@@ -193,7 +194,7 @@ public class Request extends RequestBase {
 		String signature = sign(canonicalSignedInfo, privateKey);
 		String certificateEncoded = Base64.encodeBase64String(certificate.getEncoded());
 
-		// 4. Construcción del SOAP request
+		// 4. ConstrucciÃ³n del SOAP request
 		String xmlRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" "
 				+ "xmlns:des=\"http://DescargaMasivaTerceros.sat.gob.mx\" "
 				+ "xmlns:xd=\"http://www.w3.org/2000/09/xmldsig#\">" + "<soapenv:Header/>" + "<soapenv:Body>"
@@ -217,7 +218,7 @@ public class Request extends RequestBase {
 		log4j.debug("XML generado para SAT:\n" + xmlRequest);
 	}
 
-	// Método auxiliar para escape de caracteres XML
+	// MÃ©todo auxiliar para escape de caracteres XML
 	private String escapeXml(String input) {
 		return input.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
 				.replace("'", "&apos;");

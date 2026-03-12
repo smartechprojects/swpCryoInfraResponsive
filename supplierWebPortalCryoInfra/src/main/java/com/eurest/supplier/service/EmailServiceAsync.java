@@ -6,7 +6,8 @@ import java.util.Date;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,7 +35,7 @@ public class EmailServiceAsync implements Runnable{
 	
 	ApplicationContext context = null;
 	
-	private Logger log4j = Logger.getLogger(EmailServiceAsync.class);
+	private Logger log4j = LogManager.getLogger(EmailServiceAsync.class);
 	
 	public void setProperties(String subject, String message, String recipient, String CCrecipient) {
 		this.recipient = recipient;

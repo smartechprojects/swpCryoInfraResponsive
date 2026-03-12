@@ -1,4 +1,4 @@
-function sortByKey(array, key) {
+﻿function sortByKey(array, key) {
     return array.sort(function(a, b) {
         var x = a[key]; var y = b[key];
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
@@ -30,7 +30,7 @@ function renderTip(val, meta, rec, rowIndex, colIndex, store) {
 };
 Ext.QuickTips.init();
 
-var store = Ext.create('Ext.data.Store', {
+var storeDetail = Ext.create('Ext.data.Store', {
 	model: 'SupplierApp.model.PlantAccessDetail',
 	autoLoad: false,
 	pageSize: 20,
@@ -57,7 +57,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailGrid' ,{
 	frame:false,
 	border:false,
 	cls: 'extra-large-cell-grid',  
-	store:store,
+	store:storeDetail,
 	scroll : true,
 	viewConfig: {
 		stripeRows: true,
@@ -177,7 +177,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailGrid' ,{
 						                    
 						                      
 									    	var store = grid.getStore();
-									    	debugger
 											Ext.Ajax.request({
 											    url: 'plantAccess/searchFilesPlantAccess.action',
 											    method: 'POST',

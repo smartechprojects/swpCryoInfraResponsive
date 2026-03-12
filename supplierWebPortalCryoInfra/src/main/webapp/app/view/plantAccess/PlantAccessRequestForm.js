@@ -1,10 +1,10 @@
-Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
+﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
 	extend : 'Ext.form.Panel',
 	alias : 'widget.plantAccessRequestForm',
 	border : false,
 	frame : false,
 	style : 'border: solid #fff 1px',
-	autoScroll : true,
+	scrollable : true,
 	layout: {
         type: 'vbox',
         align: 'stretch'
@@ -512,7 +512,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     enforceMaxLength: true,
                     formBind: false,
                     validator: function(value) {
-                       debugger
                         if (value.length > 10) {
                             return 'Solo se permiten hasta 10 caracteres';
                         }
@@ -529,7 +528,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                                 	order: value
                                 },
                                 success: function(response) {
-                                	debugger
                                     var data = Ext.decode(response.responseText);
                                     // Asumiendo que la respuesta contiene campos llamados 'ordenNumber' y 'empresaPlant'
                                     var ordenNumberField = Ext.getCmp('paOrdenNumberInput');
@@ -703,7 +701,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                     	 var form = this.up('form');
                          var grid = form.down('gridpanel'); // Obtener la referencia al grid
                          var store = grid.getStore(); // Obtener el store del grid
-                         debugger
                          if (store.getCount() >= 4) {
                              //Ext.Msg.alert('Error', 'Llegó al máximo de ordenes');
                              //return;
@@ -745,7 +742,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                          var parempresaPlantRequest = form.down('textfield[name=empresaPlantRequest]').getValue();
                          // Obtener el valor del campo de entrada "Descripción"
                          var description = form.down('textfield[name=description]').getValue();
-                         debugger
                         
                          var empresaField = form.down('textfield[name=empresaPlantRequest]');
                          var descriptionField = form.down('textfield[name=description]');
@@ -859,10 +855,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                                  description:description
                              },
                              success: function(response) {
-                            	 debugger
                                  var result = Ext.decode(response.responseText);
                                  if (result.success) {
-                                	 debugger
                                      var order = result.message;
                                 	 var ordenNumberField = Ext.getCmp('paOrdenNumberInput');
                                 	 
@@ -975,7 +969,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestForm',	{
                         icon: 'resources/images/delete.png',
                         tooltip: 'Eliminar',
                         handler: function(grid, rowIndex, colIndex) {
-                        	debugger;
                             var store = grid.getStore();
                             store.removeAt(rowIndex);
                             

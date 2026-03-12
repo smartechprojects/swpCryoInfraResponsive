@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -89,7 +90,7 @@ public class PlantAccessWorkerService {
 	@Autowired
 	FileStoreService fileStoreService;
 	
-	Logger log4j = Logger.getLogger(PlantAccessController.class);
+	Logger log4j = LogManager.getLogger(PlantAccessController.class);
 	
 	static String TIMESTAMP_DATE_PATTERN = "yyyy-MM-dd";
 	static String TIMESTAMP_DATE_PATTERN_NEW = "yyyy-MM-dd HH:mm:ss";

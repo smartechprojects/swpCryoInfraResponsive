@@ -18,7 +18,7 @@ public class GetDownloadCFDIByUuidThread extends Thread  {
 	public volatile int threadsComplete = 0;
 	GetDownloadCFDIByUuid getDownloadCFDIByUuid;
 	
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(GetDownloadCFDIByUuidThread.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(GetDownloadCFDIByUuidThread.class);
 	
 	public GetDownloadCFDIByUuidThread(String rfc, String folioFiscal, UserDocument docCert, UserDocument doceKey, Company company, MassiveDownloadService massiveDownloadService) {
 		super();

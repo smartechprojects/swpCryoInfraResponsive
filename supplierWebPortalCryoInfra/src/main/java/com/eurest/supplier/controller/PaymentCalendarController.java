@@ -7,7 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +32,7 @@ public class PaymentCalendarController {
 	@Autowired
 	private PaymentCalendarService paymentCalendarService;
 	
-	Logger log4j = Logger.getLogger(PaymentCalendarController.class);
+	Logger log4j = LogManager.getLogger(PaymentCalendarController.class);
 
 	@RequestMapping(value = "/paymentCalendar/view.action")
 	public @ResponseBody Map<String, Object> view(@RequestParam int start, @RequestParam int limit) {

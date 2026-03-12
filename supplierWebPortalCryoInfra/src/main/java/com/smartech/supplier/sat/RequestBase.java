@@ -1,6 +1,7 @@
 package com.smartech.supplier.sat;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -25,7 +26,7 @@ abstract class RequestBase {
     private final String url;
     private final String SOAPAction;
 
-    static Logger log4j = Logger.getLogger(RequestBase.class);
+    static Logger log4j = LogManager.getLogger(RequestBase.class);
     /**
      * Constructor of RequestBase class
      *

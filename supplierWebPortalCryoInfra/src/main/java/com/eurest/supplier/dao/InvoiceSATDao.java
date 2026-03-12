@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.CacheMode;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
@@ -29,7 +30,7 @@ public class InvoiceSATDao{
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	private Logger log4j = Logger.getLogger(InvoiceSATDao.class);
+	private Logger log4j = LogManager.getLogger(InvoiceSATDao.class);
 	
 	
 	public InvoiceSAT saveDocuments(InvoiceSAT o) {

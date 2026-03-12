@@ -1,4 +1,4 @@
-	Ext.define('SupplierApp.view.plantAccess.PlantAccessGrid' ,{
+﻿	Ext.define('SupplierApp.view.plantAccess.PlantAccessGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.plantAccessGrid',
     itemId: 'paMainGrid',
@@ -54,7 +54,7 @@
     	
     	
     	Ext.define('statusCombo', {
-    	    extend: 'Ext.form.ComboBox',
+    	    extend: 'Ext.form.field.ComboBox',
     	    fieldLabel: SuppAppMsg.fiscalTitle22,
     	    store: invStatus,
     	    alias: 'widget.combostatus',
@@ -328,7 +328,7 @@
             cls: 'buttonStyle',
            // margin:'0 20 0 10',
             listeners: {
-                tap: function (button) {
+                click: function (button) {
                 	plantAccessController.parSearch(button);
                 }
             }

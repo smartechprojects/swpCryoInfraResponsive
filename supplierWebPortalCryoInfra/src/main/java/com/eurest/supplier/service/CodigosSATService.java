@@ -21,7 +21,7 @@ public class CodigosSATService {
 	@Autowired
 	private CodigosSatDao codigosSatDao;
 	
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(CodigosSATService.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(CodigosSATService.class);
 	
 	public List<CodigosSAT> getList(int start, int limit) {
 		return codigosSatDao.getOrders(start, limit);

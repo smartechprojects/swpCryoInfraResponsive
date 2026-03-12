@@ -106,7 +106,7 @@ public class PurchaseOrderController {
 	  
 	
 	  
-	  org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(PurchaseOrderController.class);
+	  org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(PurchaseOrderController.class);
 	  	
 	@RequestMapping(value ="/supplier/orders/view.action")
 	public @ResponseBody Map<String, Object> view(@RequestParam int start,

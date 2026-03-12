@@ -8,7 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class ApprovalController {
 	@Autowired
 	private ApprovalService approvalService;
 	
-	Logger log4j = Logger.getLogger(ApprovalController.class);
+	Logger log4j = LogManager.getLogger(ApprovalController.class);
 	
 	@RequestMapping(value ="/approval/view.action")
 	public @ResponseBody Map<String, Object> view(@RequestParam int start,

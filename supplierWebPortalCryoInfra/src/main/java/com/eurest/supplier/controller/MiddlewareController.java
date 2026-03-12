@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -71,7 +72,7 @@ public class MiddlewareController {
 	  @Autowired
 	  FiscalDocumentService fiscalDocumentService;
 	  
-	  Logger log4j = Logger.getLogger(MiddlewareController.class);
+	  Logger log4j = LogManager.getLogger(MiddlewareController.class);
 	//Vacio
 	/*@RequestMapping(value ="/middleware/getInvoiceForPayment")
 	public @ResponseBody Map<String, Object> getInvoiceForPayment(@RequestParam int start,

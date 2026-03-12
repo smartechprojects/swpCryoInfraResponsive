@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -111,7 +112,7 @@ public class JDERestService {
   @Autowired
   private JavaMailSender mailSenderObj;
   
-  private Logger log4j = Logger.getLogger(JDERestService.class);
+  private Logger log4j = LogManager.getLogger(JDERestService.class);
 
   	//@Scheduled(cron = "0 30 23 * * ?")
   	//@Scheduled(fixedDelay = 4200000, initialDelay = 30000)

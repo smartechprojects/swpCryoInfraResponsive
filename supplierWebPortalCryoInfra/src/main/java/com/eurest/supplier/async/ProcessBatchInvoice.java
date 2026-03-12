@@ -71,7 +71,7 @@ public class ProcessBatchInvoice implements Runnable{
 	private Users user;
 	private FTPService ftpService;
 	
-    private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(ProcessBatchInvoice.class);
+    private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(ProcessBatchInvoice.class);
 	
 	@Override
 	public void run() {

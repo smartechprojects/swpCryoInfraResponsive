@@ -9,7 +9,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 public class PDFutils2 {
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(PDFutils2.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(PDFutils2.class);
 	public String[] getPdfText(byte[] input, int area, int pages){
 			System.out.println("getPdfText area: " + area + " pages: " + pages);
 		PDDocument pdDocument = null;

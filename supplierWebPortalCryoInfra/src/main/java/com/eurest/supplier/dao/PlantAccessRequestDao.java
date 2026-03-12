@@ -45,8 +45,9 @@ public class PlantAccessRequestDao {
 			                                      String status,
 			                                      String approver,
 			                                      String addressNumberPA,
-			                                      int start,
-			                                      int limit) {
+		                                      String dateFrom,
+		                                      int start,
+		                                      int limit) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(PlantAccessRequest.class);
 		criteria.setFirstResult(start);
@@ -61,8 +62,26 @@ public class PlantAccessRequestDao {
 		if(!approver.equals(""))
 			criteria.add(Restrictions.like("aprovUserDef", "%"+approver+"%"));
 		
-		if(!addressNumberPA.equals(""))
-			criteria.add(Restrictions.like("addressNumberPA", "%"+addressNumberPA+"%"));
+		if(!addressNumberPA.equals("")) {
+			// Si addressNumberPA solo contiene d�gitos, buscar en userRequest
+			// De lo contrario, buscar en addressNumberPA
+			if(addressNumberPA.matches("\\d+")) {
+				criteria.add(Restrictions.like("userRequest", "%"+addressNumberPA+"%"));
+			} else {
+				criteria.add(Restrictions.like("addressNumberPA", "%"+addressNumberPA+"%"));
+			}
+		}
+		
+		// Filtrar por fecha de aprobaci�n (�ltimos 2 meses)
+		if(dateFrom != null && !dateFrom.isEmpty()) {
+			try {
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date = sdf.parse(dateFrom);
+				criteria.add(Restrictions.ge("fechaAprobacion", date));
+			} catch(Exception e) {
+				// Si hay error parseando la fecha, continuar sin filtro de fecha
+			}
+		}
 		
 		criteria.addOrder(Order.desc("id"));
 		return criteria.list();
@@ -72,7 +91,8 @@ public class PlantAccessRequestDao {
 	public  int getPlantAccessRequestTotal(String rfc,
 			                                      String status,
 			                                      String approver,
-			                                      String addressNumberPA) {
+			                                      String addressNumberPA,
+			                                      String dateFrom) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(PlantAccessRequest.class);
 		
@@ -87,7 +107,17 @@ public class PlantAccessRequestDao {
 		
 		if(!addressNumberPA.equals(""))
 			criteria.add(Restrictions.like("addressNumberPA", "%"+addressNumberPA+"%"));
-		
+
+		if(dateFrom != null && !dateFrom.isEmpty()) {
+			try {
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date = sdf.parse(dateFrom);
+				criteria.add(Restrictions.ge("fechaAprobacion", date));
+			} catch(Exception e) {
+				// Si hay error parseando la fecha, continuar sin filtro de fecha
+			}
+		}
+
         criteria.setProjection(Projections.rowCount());
         Long count = (Long) criteria.uniqueResult();
         return count != null ? count.intValue() : 0;

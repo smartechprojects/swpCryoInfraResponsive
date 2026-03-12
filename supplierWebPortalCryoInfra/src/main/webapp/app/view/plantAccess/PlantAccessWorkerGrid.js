@@ -1,11 +1,10 @@
-Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerGrid',	{
+﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerGrid',	{
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.plantAccessWorkerGrid',
 	border : false,
 	frame : false,
-	store: 'PlantAccessFile',
+	store: 'PlantAccessWorker',
 	style : 'border: solid #ccc 1px',
-	autoScroll : true,
 	//scroll :  true,
 	viewConfig: {
 	    stripeRows: true,

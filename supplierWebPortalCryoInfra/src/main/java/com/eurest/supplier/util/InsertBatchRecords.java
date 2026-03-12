@@ -2,7 +2,8 @@ package com.eurest.supplier.util;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.eurest.supplier.dao.NonComplianceSupplierDao;
 import com.eurest.supplier.model.NonComplianceSupplier;
@@ -12,7 +13,7 @@ public class InsertBatchRecords implements Runnable {
 	List<NonComplianceSupplier> list;
 	NonComplianceSupplierDao nonComplianceSupplierDao;
 	
-	private Logger log4j = Logger.getLogger(InsertBatchRecords.class);
+	private Logger log4j = LogManager.getLogger(InsertBatchRecords.class);
 	
 	public InsertBatchRecords(List<NonComplianceSupplier> list, NonComplianceSupplierDao nonComplianceSupplierDao) {
         this.list = list;

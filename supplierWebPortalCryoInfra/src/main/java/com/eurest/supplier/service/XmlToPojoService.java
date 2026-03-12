@@ -12,7 +12,8 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.eurest.supplier.dto.InvoiceDTO;
@@ -25,7 +26,7 @@ import com.google.gson.Gson;
 @Service("xmlToPojoService")
 public class XmlToPojoService {
 	
-	Logger log4j = Logger.getLogger(XmlToPojoService.class);
+	Logger log4j = LogManager.getLogger(XmlToPojoService.class);
 	
 	public InvoiceDTO convert(String xml){
 		

@@ -117,7 +117,7 @@ public class FileUploadController {
 	@Autowired
 	DataAuditService dataAuditService;
 	
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(FileUploadController.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(FileUploadController.class);
 	
 	 @RequestMapping(value = "/uploadInvoiceFromReceipt.action", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	    public @ResponseBody String uploadInvoiceFromReceipt(FileUploadBean uploadItem, 

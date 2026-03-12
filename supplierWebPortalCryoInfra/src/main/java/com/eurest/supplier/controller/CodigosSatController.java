@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class CodigosSatController {
 	@Autowired
 	private CodigosSATService codigosSatService;
 	
-	Logger log4j = Logger.getLogger(CodigosSatController.class);
+	Logger log4j = LogManager.getLogger(CodigosSatController.class);
 	
 	@RequestMapping(value ="/codsat/view.action")
 	public @ResponseBody Map<String, Object> view(@RequestParam int start,

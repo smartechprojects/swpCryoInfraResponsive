@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.CacheMode;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
@@ -49,7 +50,7 @@ public class PurchaseOrderDao {
 	@Autowired
 	UdcService udcService;
 	
-	private Logger log4j = Logger.getLogger(PurchaseOrderDao.class);
+	private Logger log4j = LogManager.getLogger(PurchaseOrderDao.class);
 	
 	public PurchaseOrder getOrderById(int id) {
 		Session session = this.sessionFactory.getCurrentSession();

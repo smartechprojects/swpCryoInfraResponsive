@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -28,7 +29,7 @@ public class PaymentCalendarService {
 	@Autowired
 	private PaymentCalendarDao paymentCalendarDao;
 	
-	Logger log4j = Logger.getLogger(PaymentCalendarService.class);
+	Logger log4j = LogManager.getLogger(PaymentCalendarService.class);
 	
 	public List<PaymentCalendar> getPaymentCalendarByYear(int year,int start, int limit){
 		return paymentCalendarDao.getPaymentCalendarByYear(year, start, limit);

@@ -18,7 +18,8 @@ import java.util.Set;
 
 import javax.persistence.criteria.Order;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -34,6 +35,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.eurest.supplier.dao.CDDDCEmployeeDao;
 import com.eurest.supplier.dao.LogDataAprovalActionDao;
 import com.eurest.supplier.dao.PlantAccessRequestDao;
 import com.eurest.supplier.dto.AccesoEmpleadoRequestDTO;
@@ -41,6 +43,7 @@ import com.eurest.supplier.dto.AtencionOrdenesRequestDTO;
 import com.eurest.supplier.dto.OrdenRequestDTO;
 import com.eurest.supplier.dto.PlantAccessRequestDTO;
 import com.eurest.supplier.dto.ResponseServiceCryoDTO;
+import com.eurest.supplier.model.CDDDCEmployee;
 import com.eurest.supplier.model.FileStore;
 import com.eurest.supplier.model.PlantAccessRequest;
 import com.eurest.supplier.model.PlantAccessWorker;
@@ -62,6 +65,9 @@ public class PlantAccessRequestService {
 	
 	@Autowired
 	PlantAccessRequestDao plantAccessRequestDao;
+	
+	@Autowired
+	CDDDCEmployeeDao cdddcEmployeeDao;
 
 	@Autowired
 	UsersService usersService;
@@ -94,7 +100,7 @@ public class PlantAccessRequestService {
 	static String TIMESTAMP_DATE_PATTERN_NEW = "yyyy-MM-dd HH:mm:ss";
 	static String DATE_PATTERN = "dd/MM/yyyy";
 	
-	Logger log4j = Logger.getLogger(PlantAccessRequestService.class);
+	Logger log4j = LogManager.getLogger(PlantAccessRequestService.class);
 	
 	public PlantAccessRequest getById(int id) {
 		return plantAccessRequestDao.getById(id);
@@ -139,12 +145,12 @@ public class PlantAccessRequestService {
 		return plantAccessRequestDao.getPlantAccessRequests(uuid);
 	}
 		
-	public List<PlantAccessRequest> getPlantAccessRequests(String rfc, String status,String approver,String addressNumberPA, int start, int limit) {
-		return plantAccessRequestDao.getPlantAccessRequest(rfc, status, approver, addressNumberPA, start, limit);		
+	public List<PlantAccessRequest> getPlantAccessRequests(String rfc, String status,String approver,String addressNumberPA, String dateFrom, int start, int limit) {
+		return plantAccessRequestDao.getPlantAccessRequest(rfc, status, approver, addressNumberPA, dateFrom, start, limit);		
 	}
 	
-	public int getPlantAccessRequestsTotal(String rfc, String status,String approver,String addressNumberPA) {
-		return plantAccessRequestDao.getPlantAccessRequestTotal(rfc, status, approver, addressNumberPA);		
+	public int getPlantAccessRequestsTotal(String rfc, String status,String approver,String addressNumberPA,String dateFrom) {
+		return plantAccessRequestDao.getPlantAccessRequestTotal(rfc, status, approver, addressNumberPA, dateFrom);		
 	}
 	
 	public String getAddNewActivity(boolean isAddActivity, String targetString, String currentString) {
@@ -158,7 +164,7 @@ public class PlantAccessRequestService {
 		return targetString;
 	}
 	
-	public String validatePlantAccessRequest(PlantAccessRequest plantAccessRequest, boolean isSendMail) {
+	public String validatePlantAccessRequest(PlantAccessRequest plantAccessRequest, boolean isSendMail, boolean forceIncludeMissingWorkers) {
 		try {
 			
 			//Valida los archivos de la solicitud
@@ -242,6 +248,152 @@ public class PlantAccessRequestService {
 			} else {
 				return "Es necesario registrar por lo menos un trabajador por solicitud.";
 			}
+			
+			// ===== NUEVA VALIDACIÓN: Verificar que trabajadores registrados existan en la cédula =====
+			// Si forceIncludeMissingWorkers=true, omitir esta validación
+			if(!forceIncludeMissingWorkers) {
+			// Buscar el PDF de la cédula (REQUEST_MPDF o REQUEST_SUA)
+			FileStore cedulaFile = null;
+			if(files != null) {
+				for(FileStore file : files) {
+					if("REQUEST_MPDF".equals(file.getDocumentType()) || "REQUEST_SUA".equals(file.getDocumentType())) {
+						cedulaFile = file;
+						break;
+					}
+				}
+			}
+			
+			if(cedulaFile != null && workersList != null && !workersList.isEmpty()) {
+				// Obtener trabajadores de la cédula (ya guardados en CDDDC/CDDDCEmployee cuando se cargó el PDF)
+				List<CDDDCEmployee> cedulaEmployees = cdddcEmployeeDao.getEmployeesByFileStoreId(cedulaFile.getId());
+				
+				if(cedulaEmployees != null && !cedulaEmployees.isEmpty()) {
+					// Crear un mapa de empleados de la cédula para búsqueda eficiente
+					// Key: nombre normalizado, Value: objeto CDDDCEmployee
+					Map<String, CDDDCEmployee> cedulaEmployeesMap = new HashMap<>();
+					
+					for(CDDDCEmployee emp : cedulaEmployees) {
+						String nombre = emp.getNombre();
+						if(nombre != null && !nombre.trim().isEmpty()) {
+							// Normalizar: quitar espacios extras, convertir a mayúsculas, quitar acentos
+							nombre = nombre.trim().toUpperCase()
+									.replaceAll("\\s+", " ") // Espacios múltiples a uno solo
+									.replace("Á", "A").replace("É", "E").replace("Í", "I")
+									.replace("Ó", "O").replace("Ú", "U").replace("Ñ", "N");
+							cedulaEmployeesMap.put(nombre, emp);
+						}
+					}
+					
+					// Verificar que cada trabajador registrado esté en la cédula con datos válidos
+					List<String> workersNotInCedula = new ArrayList<String>();
+					List<Integer> workerIdsNotInCedula = new ArrayList<Integer>(); // Para marcar en rojo
+					
+					for(PlantAccessWorker worker : workersList) {
+						// Construir nombre completo del trabajador como se captura
+						String workerFullName = (worker.getEmployeeName() + " " + 
+												worker.getEmployeeLastName() + " " + 
+												worker.getEmployeeSecondLastName()).trim();
+						
+						// El PDF tiene el orden: Apellido1 Apellido2 Nombre
+						// Nosotros capturamos: Nombre Apellido1 Apellido2
+						// Reorganizar para comparar con el formato del PDF
+						String workerNameForComparison = (worker.getEmployeeLastName() + " " + 
+														 worker.getEmployeeSecondLastName() + " " + 
+														 worker.getEmployeeName()).trim();
+						
+						// Normalizar nombre reorganizado del trabajador
+						String workerNormalizado = workerNameForComparison.toUpperCase()
+								.replaceAll("\\s+", " ")
+								.replace("Á", "A").replace("É", "E").replace("Í", "I")
+								.replace("Ó", "O").replace("Ú", "U").replace("Ñ", "N");
+						
+						// Buscar trabajador en la cédula
+						CDDDCEmployee cedulaEmployee = cedulaEmployeesMap.get(workerNormalizado);
+						
+						if(cedulaEmployee == null) {
+							// Trabajador NO encontrado por nombre en cédula
+							workersNotInCedula.add(workerFullName + " - <b>No encontrado en la cédula (Nombre no coincide)</b>");
+							workerIdsNotInCedula.add(worker.getId());
+						} else {
+							// Trabajador encontrado por nombre, ahora validar NSS y RFC/CURP
+							List<String> erroresValidacion = new ArrayList<>();
+							
+							// 1. Validar NSS (Número de Seguro Social)
+							String nssWorker = normalizeForComparison(worker.getMembershipIMSS());
+							String nssCedula = normalizeForComparison(cedulaEmployee.getNumSegSoci());
+							
+							if(nssWorker == null || nssWorker.isEmpty() || nssCedula == null || nssCedula.isEmpty()) {
+								erroresValidacion.add("NSS faltante");
+							} else if(!nssWorker.equals(nssCedula)) {
+								erroresValidacion.add("NSS no coincide (Registrado: " + worker.getMembershipIMSS() + 
+													  ", Cédula: " + cedulaEmployee.getNumSegSoci() + ")");
+							}
+							
+							// 2. Validar RFC o CURP (en la cédula puede venir uno u otro en el mismo campo)
+							String rfcWorker = normalizeForComparison(worker.getEmployeeRfc());
+							String curpWorker = normalizeForComparison(worker.getEmployeeCurp());
+							String rfcCurpCedula = normalizeForComparison(cedulaEmployee.getRfcCurp());
+							
+							boolean rfcCurpValido = false;
+							
+							if(rfcCurpCedula != null && !rfcCurpCedula.isEmpty()) {
+								// Verificar si el RFC del trabajador coincide con el RFC/CURP de la cédula
+								if(rfcWorker != null && !rfcWorker.isEmpty() && rfcWorker.equals(rfcCurpCedula)) {
+									rfcCurpValido = true;
+								}
+								// O si el CURP del trabajador coincide con el RFC/CURP de la cédula
+								else if(curpWorker != null && !curpWorker.isEmpty() && curpWorker.equals(rfcCurpCedula)) {
+									rfcCurpValido = true;
+								}
+							}
+							
+							if(!rfcCurpValido) {
+								String registradoStr = "";
+								if(rfcWorker != null && !rfcWorker.isEmpty()) {
+									registradoStr = "RFC: " + worker.getEmployeeRfc();
+								}
+								if(curpWorker != null && !curpWorker.isEmpty()) {
+									if(!registradoStr.isEmpty()) registradoStr += ", ";
+									registradoStr += "CURP: " + worker.getEmployeeCurp();
+								}
+								if(registradoStr.isEmpty()) {
+									registradoStr = "No registrado";
+								}
+								
+								erroresValidacion.add("RFC/CURP no coincide (Registrado: " + registradoStr + 
+													  ", Cédula: " + (cedulaEmployee.getRfcCurp() != null ? cedulaEmployee.getRfcCurp() : "No disponible") + ")");
+							}
+							
+							// Si hay errores de validación, agregar a la lista
+							if(!erroresValidacion.isEmpty()) {
+								workersNotInCedula.add(workerFullName + " - <b>" + String.join(", ", erroresValidacion) + "</b>");
+								workerIdsNotInCedula.add(worker.getId());
+							}
+						}
+					}
+					
+					// Si hay trabajadores con validaciones fallidas, retornar mensaje con prefijo CONFIRM:
+					if(!workersNotInCedula.isEmpty()) {
+						StringBuilder message = new StringBuilder();
+						message.append("CONFIRM:");
+						message.append("No se encontraron los siguientes empleados en la cédula vigente:");
+						message.append("<br><br>");
+						for(String workerError : workersNotInCedula) {
+							message.append("• ").append(workerError).append("<br>");
+						}
+						message.append("<br><br><b>¿Desea continuar con el envio de la solicitud?</b>");
+						message.append("<br><br><i>Nota: Los trabajadores con errores se han marcado en rojo en la lista.</i>");
+						
+						// Guardar IDs de trabajadores inválidos para que el frontend pueda marcarlos
+						plantAccessRequest.setInvalidWorkerIds(String.join(",", 
+							workerIdsNotInCedula.stream().map(String::valueOf).toArray(String[]::new)));
+						
+						return message.toString();
+					}
+				}
+			}
+			} // Cierra if(!forceIncludeMissingWorkers)
+			// ===== FIN NUEVA VALIDACIÓN =====
 			
 			//Si pasa el flujo de aprobación obtiene aprobadores
 			String currentApprover ="";
@@ -559,6 +711,18 @@ public class PlantAccessRequestService {
 		e.printStackTrace();
 	}
 		return null;
+	}
+	
+	/**
+	 * Normaliza una cadena para comparación: trim, uppercase, quita espacios extras y guiones
+	 * @param value Cadena a normalizar
+	 * @return Cadena normalizada o null si es vacía
+	 */
+	private String normalizeForComparison(String value) {
+		if(value == null || value.trim().isEmpty()) {
+			return null;
+		}
+		return value.trim().toUpperCase().replaceAll("\\s+", "").replaceAll("-", "");
 	}
 	
 	

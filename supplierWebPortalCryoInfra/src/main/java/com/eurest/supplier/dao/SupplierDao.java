@@ -8,7 +8,8 @@ import com.eurest.supplier.util.AppConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.CacheMode;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
@@ -28,7 +29,7 @@ public class SupplierDao {
   @Autowired
   SessionFactory sessionFactory;
   
-  private Logger log4j = Logger.getLogger(SupplierDao.class);
+  private Logger log4j = LogManager.getLogger(SupplierDao.class);
   
   public Supplier getSupplierById(int id) {
     Session session = this.sessionFactory.getCurrentSession();

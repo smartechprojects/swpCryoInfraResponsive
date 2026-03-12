@@ -3,7 +3,6 @@ Ext.define('SupplierApp.model.PlantAccessRequest', {
     fields: [
 				//{name:  'id'},
     			{ name: 'id', type: 'int' },
-				{ name: 'fechaSolicitud', type: 'int' },
 				{ name: 'fechaSolicitudStr', type: 'string' },
 				{name:  'addressNumberPA'},
 				{name:  'razonSocial'},
@@ -46,7 +45,6 @@ Ext.define('SupplierApp.model.PlantAccessRequest', {
             writer: {
             	type: 'json',
                 writeAllFields: true,
-                encode: true,
                 encode: false
             }
         }

@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
@@ -74,7 +75,7 @@ public class OutSourcingController {
 	@Autowired
 	XmlToPojoService xmlToPojoService;
 	
-	Logger log4j = Logger.getLogger(OutSourcingController.class);
+	Logger log4j = LogManager.getLogger(OutSourcingController.class);
 	
     @RequestMapping(value = "/rejectOutSourcingDocument.action", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
    	public @ResponseBody String rejectOutSourcingDocument(@RequestParam int id, @RequestParam String notes, 

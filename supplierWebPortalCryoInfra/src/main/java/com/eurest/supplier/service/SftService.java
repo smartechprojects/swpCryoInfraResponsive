@@ -11,7 +11,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -75,7 +76,7 @@ public class SftService {
 	@Autowired
 	private JavaMailSender mailSenderObj;
 	
-	private Logger log4j = Logger.getLogger(SftService.class);
+	private Logger log4j = LogManager.getLogger(SftService.class);
 	
 	
 	@SuppressWarnings("unused")

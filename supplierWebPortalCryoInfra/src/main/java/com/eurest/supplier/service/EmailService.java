@@ -6,7 +6,8 @@ import java.util.Date;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -34,7 +35,7 @@ public class EmailService {
 	private String emailSubject = "";
 	private String emailMessage = "";
 
-	Logger log4j = Logger.getLogger(EmailService.class);
+	Logger log4j = LogManager.getLogger(EmailService.class);
 
 	public synchronized void sendEmail(String subject, String message, String recipient){
 		this.emailSubject = subject;

@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
@@ -125,7 +126,7 @@ public class TaxVaultController {
 	@Autowired
 	DataAuditService dataAuditService;
 	
-	Logger log4j = Logger.getLogger(TaxVaultController.class);
+	Logger log4j = LogManager.getLogger(TaxVaultController.class);
 	
 	@RequestMapping(value ="/taxVault/view.action")
 	public @ResponseBody Map<String, Object> view(@RequestParam int start,

@@ -1,6 +1,7 @@
 package com.eurest.supplier.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,7 +18,7 @@ public class FiscalDocumentsDao {
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	//private Logger log4j = Logger.getLogger(FiscalDocumentsDao.class);
+	//private Logger log4j = LogManager.getLogger(FiscalDocumentsDao.class);
 	
 	public int getReceipt(int orderNumber, String orderType) {
 		System.out.println("entra a getReceipt: orderNumber: " + orderNumber + "orderType: " + orderType);

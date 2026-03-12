@@ -8,10 +8,10 @@ public class ReceivingAdviceHeaderDTO {
 	private int SYEDSQ; // Default 1
 	
 	//Generic EDI transaction
-	private String SYEDST; // UDC (40 ST), default = 861
-	private String SYEDER; // Ver UDC (H00 ED), default = R
+	private String SYEDST; // UDCÂ (40 ST), default = 861
+	private String SYEDER; // Ver UDCÂ (H00 ED), default = R
 	private int SYEDDL;
-	private String SYTPUR; //Ver UDC 47/PU
+	private String SYTPUR; //Ver UDCÂ 47/PU
 	private String SYRATY; //Default = 1
 	
 	//JDE Purchase Order

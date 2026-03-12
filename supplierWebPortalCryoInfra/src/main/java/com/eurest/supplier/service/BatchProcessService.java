@@ -19,7 +19,7 @@ public class BatchProcessService implements Runnable{
 	CodigosSatDao codigosSatDao = null;
 	Logger logger = null;
 	
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(BatchProcessService.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(BatchProcessService.class);
 	
 	@Override
 	public void run() {

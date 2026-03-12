@@ -8,7 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,7 +51,7 @@ public class SupplierController {
   @Autowired
   UdcService udcService;
   
-  private Logger log4j = Logger.getLogger(SupplierController.class);
+  private Logger log4j = LogManager.getLogger(SupplierController.class);
   
   @RequestMapping({"/supplier/view.action"})
   @ResponseBody

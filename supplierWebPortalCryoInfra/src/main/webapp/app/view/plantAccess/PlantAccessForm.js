@@ -1,10 +1,9 @@
-Ext.define('SupplierApp.view.plantAccess.PlantAccessForm',	{
+﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessForm',	{
 	extend : 'Ext.form.Panel',
 	alias : 'widget.plantAccessForm',
 	border : false,
 	frame : false,
 	style : 'border: solid #ccc 1px',
-	autoScroll : true,
 	initComponent : function() {
 	
 		

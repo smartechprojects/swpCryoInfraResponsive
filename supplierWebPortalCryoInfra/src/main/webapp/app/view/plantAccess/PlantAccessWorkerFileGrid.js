@@ -1,4 +1,4 @@
-
+﻿
 
 Ext.QuickTips.init();
 
@@ -34,7 +34,6 @@ var guardarWorkerAlter=function(){
 }
 
 var eliminarFileWork=function(idWorker,idCheckbox){
-debugger
 try{Ext.Ajax.request({
     url: 'plantAccess/updateCheckBoxWorker.action',
     method: 'POST',
@@ -44,7 +43,6 @@ try{Ext.Ajax.request({
     	selected:false
     },
     success: function(fp, o) {
-    	debugger
     	 var jsonData = Ext.JSON.decode(fp.responseText).data; // Convertir fp en JSON
     	  
 
@@ -1323,7 +1321,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerFileGrid' ,{
 			
 			         
 			     ],
-			     autoScroll: true
 			 }
 
             ]

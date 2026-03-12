@@ -7,7 +7,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class NonComplianceSupplierService {
 	@Autowired
 	NonComplianceSupplierDao nonComplianceSupplierDao;
 	
-	private Logger log4j = Logger.getLogger(NonComplianceSupplierService.class);
+	private Logger log4j = LogManager.getLogger(NonComplianceSupplierService.class);
 	
 	public NonComplianceSupplier getNonComplianceSupplierById(int id) {
 		return nonComplianceSupplierDao.getNonComplianceSupplierById(id);

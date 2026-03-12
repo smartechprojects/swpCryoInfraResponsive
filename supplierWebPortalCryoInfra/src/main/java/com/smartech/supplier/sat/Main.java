@@ -36,7 +36,8 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.eurest.supplier.invoiceXml.Comprobante;
 
@@ -64,7 +65,7 @@ public class Main {
     
     static boolean special = false;
     
-    private static Logger log4j = Logger.getLogger(Main.class);
+    private static Logger log4j = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
         

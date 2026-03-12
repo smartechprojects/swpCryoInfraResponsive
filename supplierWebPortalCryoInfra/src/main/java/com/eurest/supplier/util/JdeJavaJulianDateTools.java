@@ -7,11 +7,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class JdeJavaJulianDateTools {
 	
-	private static Logger log4j = Logger.getLogger(JdeJavaJulianDateTools.class);
+	private static Logger log4j = LogManager.getLogger(JdeJavaJulianDateTools.class);
 	
 	public static class Methods {
 		/**

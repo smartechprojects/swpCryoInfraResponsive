@@ -15,7 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +62,7 @@ public class LoginController {
 	@Autowired
 	PurchaseOrderService purchaseOrderService;
 	
-	Logger log4j = Logger.getLogger(LoginController.class);
+	Logger log4j = LogManager.getLogger(LoginController.class);
 	
 	@RequestMapping(value="/home.action",method = RequestMethod.GET)
 	public String home(Model model){

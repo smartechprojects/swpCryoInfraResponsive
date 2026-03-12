@@ -17,6 +17,17 @@
 		<jasper.version>6.10.0</jasper.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>jaspersoft-third-party</id>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+		</repository>
+		<repository>
+			<id>jr-ce-releases</id>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/jr-ce-releases/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -183,35 +194,20 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j-version}</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.17.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		        <dependency>
         	<groupId>org.apache.logging.log4j</groupId>
-        	<artifactId>log4j</artifactId>
+        	<artifactId>log4j-api</artifactId>
         	<version>2.17.0</version>
-        	<type>pom</type>
-        <exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.logging.log4j</groupId>
+        	<artifactId>log4j-core</artifactId>
+        	<version>2.17.0</version>
         </dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -276,11 +272,6 @@
 			<version>0.1.55</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.6</version>
@@ -296,6 +287,12 @@
     <artifactId>pdfbox</artifactId>
     <version>2.0.19</version>
 </dependency>
+<dependency>
+    <groupId>technology.tabula</groupId>
+    <artifactId>tabula</artifactId>
+    <version>1.0.5</version>
+</dependency>
+
 <dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-lang3</artifactId>
@@ -369,6 +366,7 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>

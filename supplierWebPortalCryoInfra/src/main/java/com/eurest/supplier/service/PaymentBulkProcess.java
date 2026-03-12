@@ -13,7 +13,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -42,7 +43,7 @@ public class PaymentBulkProcess implements Runnable{
 	
 	String additionalRecipient = "";
 	
-	Logger log4j = Logger.getLogger(PaymentBulkProcess.class);
+	Logger log4j = LogManager.getLogger(PaymentBulkProcess.class);
 	
 
 	@Override

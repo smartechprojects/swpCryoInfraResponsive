@@ -12,7 +12,8 @@ import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang.SerializationUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
@@ -81,7 +82,7 @@ public class EDIService {
   @Autowired
   UDCDao udcDao;
   
-  private Logger log4j = Logger.getLogger(EDIService.class);
+  private Logger log4j = LogManager.getLogger(EDIService.class);
   
   public boolean createNewAddressBook(Supplier s) {
     Random rnd = new Random();

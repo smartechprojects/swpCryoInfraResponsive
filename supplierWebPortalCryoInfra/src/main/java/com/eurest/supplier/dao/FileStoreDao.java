@@ -120,6 +120,23 @@ public class FileStoreDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(o);
 	}
+
+	/**
+	 * Persist the FileStore and return the generated identifier.
+	 * Uses Session#save which returns the generated primary key.
+	 */
+	
+		public int saveAndReturnId(FileStore o) {
+			Session session = this.sessionFactory.getCurrentSession();
+			Object pk = session.save(o);
+		if (pk instanceof Integer) {
+			return (Integer) pk;
+		} else if (pk instanceof Long) {
+			return ((Long) pk).intValue();
+		} else {
+			return Integer.parseInt(pk.toString());
+		}
+	}
 	
 	public void update(FileStore o) {
 		Session session = this.sessionFactory.getCurrentSession();

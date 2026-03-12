@@ -48,4 +48,19 @@ public class CDDDCEmployeeDao {
 		
 	}
 	
+	/**
+	 * Obtiene lista de empleados de la cédula asociada a un documento (FileStore)
+	 * @param fileStoreId ID del FileStore (documento REQUEST_MPDF)
+	 * @return Lista de empleados encontrados en la cédula
+	 */
+	public List<CDDDCEmployee> getEmployeesByFileStoreId(int fileStoreId){
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<CDDDCEmployee> res = (List<CDDDCEmployee>) session.createQuery(
+				"from CDDDCEmployee where cdddc_id in (select id from CDDDC where idOutsourcingDocument = :fileId)")
+				.setParameter("fileId", fileStoreId)
+				.list();
+		return res;
+	}
+	
 }

@@ -47,7 +47,7 @@ public class FTPService implements Runnable{
 	String pass = ""; 
 	int port = 0;
 	
-	private static org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(FTPService.class);
+	private static org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(FTPService.class);
 
 	//@Scheduled(cron="0 0 22 * * MON-FRI")
 	public void execute() {

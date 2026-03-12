@@ -9,7 +9,8 @@ import java.security.SignatureException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class VerifyRequest extends RequestBase {
 
@@ -20,7 +21,7 @@ public class VerifyRequest extends RequestBase {
      * @param SOAPAction
      */
 	
-	private Logger log4j = Logger.getLogger(VerifyRequest.class);
+	private Logger log4j = LogManager.getLogger(VerifyRequest.class);
 			
     public VerifyRequest(String url, String SOAPAction) {
         super(url, SOAPAction);

@@ -1,5 +1,5 @@
-Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailPanel', {
-  extend: 'Ext.Panel',
+﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailPanel', {
+  extend: 'Ext.panel.Panel',
   alias: 'widget.plantAccessDetailPanel',
   border: false,
   frame: false,
@@ -44,7 +44,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailPanel', {
           id: 'cancelarAgrTab',
           hidden: true,
           handler: function() {
-        	debugger;
           	if (Ext.getCmp('addemployeename').getValue().trim() != ''&&
             		Ext.getCmp('addemployeenappat').getValue().trim() != ''&&
             		Ext.getCmp('addemployeenapmat').getValue().trim() != ''&&
@@ -77,7 +76,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailPanel', {
         		      		    	idWorker:Ext.getCmp('addemployeeId').value,        		    	
         		      		    },
         		      		    success: function(fp, o) {
-        		      		    	debugger;
         		      		    dta=JSON.parse(fp.responseText);
         		      		    
         		      		    if(!dta.success){
@@ -148,7 +146,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailPanel', {
           id: 'AgrTabNuevo',
           hidden: true,
           handler: function() {
-        	debugger;
         	//Primero valida que ya se hayan cargado los archivos de la Solicitud
         	var uuid = uuidPlantAccess;    	
     		Ext.Ajax.request({
@@ -158,7 +155,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessDetailPanel', {
     		    	uuid:uuid
     	        },
     		    success: function(fp, o) {
-    		    	debugger;
     		    	//Valida el total de documentos de la solicitud.
     		    	var totalDocs = 3;
 			    	var res = Ext.decode(fp.responseText);

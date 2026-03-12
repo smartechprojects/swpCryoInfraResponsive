@@ -4,6 +4,11 @@ Ext.define('SupplierApp.store.PlantAccess', {
     alias:'store.plantaccess',
     autoLoad: false,
     pageSize: 12,
+    remoteSort: false,
+    sorters: [{
+        property: 'id',
+        direction: 'DESC'
+    }],
     proxy: {
         enablePaging: true,
         type: 'ajax',

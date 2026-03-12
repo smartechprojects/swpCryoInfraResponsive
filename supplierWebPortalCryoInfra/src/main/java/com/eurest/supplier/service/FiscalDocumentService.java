@@ -15,7 +15,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -135,7 +136,7 @@ public class FiscalDocumentService {
 	static String TIMESTAMP_DATE_PATTERN_NEW = "yyyy-MM-dd HH:mm:ss";
 	static String DATE_PATTERN = "dd/MM/yyyy";
 	
-	private Logger log4j = Logger.getLogger(FiscalDocumentService.class);
+	private Logger log4j = LogManager.getLogger(FiscalDocumentService.class);
 	
 	public FiscalDocuments getById(int id) {
 		return fiscalDocumentDao.getById(id);

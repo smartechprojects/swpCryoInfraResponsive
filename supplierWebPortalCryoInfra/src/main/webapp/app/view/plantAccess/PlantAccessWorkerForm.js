@@ -1,10 +1,10 @@
-Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
+﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
 	extend : 'Ext.form.Panel',
 	alias : 'widget.plantAccessWorkerForm',
 	border : false,
 	frame : false,
 	style : 'border: solid #ccc 1px',
-	autoScroll : true,
+	scrollable : true,
 	initComponent : function() {
 		
 		this.dockedItems = [{
@@ -262,6 +262,16 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 labelWidth: 130,
                 margin: '5 10 0 10',
                 autoComplete: 'off',
+                listeners: {
+                    change: function(field, newValue, oldValue) {
+                        // Solo si el valor es válido, se transforma a mayúsculas
+                        if (/^[a-zA-Z0-9]*$/.test(newValue) && newValue.length <= 18) {
+                            field.setValue(newValue.toUpperCase());
+                        } else {
+                            field.setValue(oldValue); // Revertimos si hay caracteres no válidos
+                        }
+                    }
+                },
                 validator: function(value) {
                     // Expresión regular para validar el formato del CURP
                     var curpPattern = /^[A-Z]{4}\d{6}[H|M][A-Z]{5}[A-Z0-9]{2}$/;
@@ -352,7 +362,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                 mode: 'MULTI',
                 listeners: {
                     selectionchange: function(selModel, selectedRecords) {
-                    	debugger
                     	
                     	  var concatenatedData = '';
                         var store = Ext.getCmp('selectionGrid').getStore(); // Obtener la tienda del grid
@@ -366,7 +375,6 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerForm',	{
                             }
                         }
                         Ext.getCmp('pawEmployeeOrdenes').setValue(concatenatedData);
-                       debugger
                         console.log("Cantidad de elementos seleccionados: " + selectedRecords.length);
                     }
                 }

@@ -35,7 +35,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.tomcat.jni.User;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -185,7 +184,7 @@ public class DocumentsService {
 	
 	static String TIMESTAMP_DATE_PATTERN = "yyyy-MM-dd";
 	
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(DocumentsService.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(DocumentsService.class);
 	
 	public List<UserDocument> getDocumentsList(int start, int limit) {
 		return documentsDao.getDocumentsList(start, limit);

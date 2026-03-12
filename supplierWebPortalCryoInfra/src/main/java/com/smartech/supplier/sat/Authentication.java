@@ -1,7 +1,8 @@
 package com.smartech.supplier.sat;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 
 import java.security.InvalidKeyException;
@@ -15,7 +16,7 @@ import java.util.*;
 
 public class Authentication extends RequestBase {
 	
-	private Logger log4j = Logger.getLogger(Authentication.class);
+	private Logger log4j = LogManager.getLogger(Authentication.class);
 
     /**
      * Constructor of Authentication class

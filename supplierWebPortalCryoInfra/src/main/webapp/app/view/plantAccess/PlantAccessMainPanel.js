@@ -1,11 +1,10 @@
-Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
-	extend: 'Ext.Panel',
+﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
+	extend: 'Ext.panel.Panel',
 	alias : 'widget.plantAccessMainPanel',
 	id: 'paMainPanel',
 	itemId: 'paMainPanel',
 	border : false,
 	frame : false,
-	autoScroll : true,
 	layout: {
         type: 'vbox',
         align: 'stretch'
@@ -66,14 +65,12 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessMainPanel', {
     		cls: 'hide-tabs hide-border',
     		items:[{
     			title: 'Solicitud',//------------------ Pestaña Solicitud -----------------------    			
-    			autoScroll : true,
     			layout: 'fit',
     			items:[{
     				xtype: 'plantAccessRequestPanel'
     			}]
     		},{
     			title: 'Trabajador',//------------------ Pestaña Trabajador ---------------------
-    			autoScroll : true,
     			layout: 'fit',
     			items:[{
     				xtype: 'plantAccessWorkerPanel'

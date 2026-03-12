@@ -26,7 +26,7 @@ import com.eurest.supplier.model.UserDocument;
 
 public class GetDownloadCFDIByUuid extends GetDownloadCFDIByUuidDriver {
 		
-	private org.apache.log4j.Logger log4j = org.apache.log4j.Logger.getLogger(GetDownloadCFDIByUuid.class);
+	private org.apache.logging.log4j.Logger log4j = org.apache.logging.log4j.LogManager.getLogger(GetDownloadCFDIByUuid.class);
 
 	public void downloadCFDI(String rfc, String folioFiscal, UserDocument docCert, UserDocument doceKey, Company company, MassiveDownloadService massiveDownloadService){
 		
