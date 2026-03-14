@@ -262,16 +262,16 @@
                 labelWidth: 130,
                 margin: '5 10 0 10',
                 autoComplete: 'off',
-                listeners: {
-                    change: function(field, newValue, oldValue) {
-                        // Solo si el valor es válido, se transforma a mayúsculas
-                        if (/^[a-zA-Z0-9]*$/.test(newValue) && newValue.length <= 18) {
-                            field.setValue(newValue.toUpperCase());
-                        } else {
-                            field.setValue(oldValue); // Revertimos si hay caracteres no válidos
-                        }
-                    }
-                },
+	            listeners: {
+	            	change: function(field, newValue, oldValue) {
+	            		// Solo si el valor es válido, se transforma a mayúsculas
+	            		if (/^[a-zA-Z0-9]*$/.test(newValue) && newValue.length <= 18) {
+	            			field.setValue(newValue.toUpperCase());
+	            		} else {
+	            			field.setValue(oldValue); // Revertimos si hay caracteres no válidos
+	            		}
+	            	}
+	            },
                 validator: function(value) {
                     // Expresión regular para validar el formato del CURP
                     var curpPattern = /^[A-Z]{4}\d{6}[H|M][A-Z]{5}[A-Z0-9]{2}$/;
@@ -301,6 +301,16 @@
                 labelWidth: 130,
                 margin: '5 10 0 10',
                 autoComplete: 'off',
+	            listeners: {
+	            	change: function(field, newValue, oldValue) {
+	            		// Solo si el valor es válido, se transforma a mayúsculas
+	            		if (/^[a-zñ&A-ZÑ&0-9]*$/.test(newValue) && newValue.length <= 13) {
+	            			field.setValue(newValue.toUpperCase());
+	            		} else {
+	            			field.setValue(oldValue); // Revertimos si hay caracteres no válidos
+	            		}
+	            	}
+	            },
                 validator: function(value) {
                     // Expresión regular para validar el formato del RFC
                     var rfcPattern = /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/;
