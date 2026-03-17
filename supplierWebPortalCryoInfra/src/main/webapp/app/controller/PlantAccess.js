@@ -2461,7 +2461,6 @@
     },
     
     approvePlantAccess : function(grid, rowIndex, colIndex, record) {
-    	
     	var me = this;
     	var record = grid.store.getAt(rowIndex);
     	var dto = Ext.create('SupplierApp.model.PlantAccess',record.data);
@@ -2556,7 +2555,8 @@
     						}]
     					}],
     					buttons: [{
-    						text: 'Rechazar',
+    						text: SuppAppMsg.approvalReject,
+    						cls: 'buttonStyle',
     						handler: function() {
     							approveConfirmWindow.close();
     							
@@ -2626,7 +2626,8 @@
     							});
     						}
     					}, {
-    						text: 'Continuar con aprobación',
+    						text: SuppAppMsg.plantAccess103,
+    						cls: 'buttonStyle',
     						handler: function() {
     							approveConfirmWindow.close();
     							// Continuar y mostrar formulario con forceApproveWithErrors
@@ -2650,7 +2651,6 @@
     
     showApprovalForm : function(grid, record, dto, status, forceApproveWithErrors) {
     	var me = this;
-    	
     	var filePanel = Ext.create(
 				'Ext.form.Panel',
 				{
@@ -2752,22 +2752,26 @@
 								    	box.hide();
 								    	me.winLoadInvFile.destroy();
 								    	if(res.message == "Success"){
-								    		Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalRespAprobadoSucc);
+								    		//Ext.MessageBox.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalRespAprobadoSucc);
+								    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.approvalResponse, msg: SuppAppMsg.approvalRespAprobadoSucc});
 								    	}else if(res.message == "Error JDE"){
-								    		Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalRespErrorJDE);
+								    		//Ext.MessageBox.alert(SuppAppMsg.approvalResponse, SuppAppMsg.approvalRespErrorJDE);
+								    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.approvalResponse, msg: SuppAppMsg.approvalRespErrorJDE});
 								    	}else if(res.message == "Succ Update"){
-								    		Ext.Msg.alert(SuppAppMsg.approvalResponse, 
-								    				SuppAppMsg.approvalRespUpdateSupp + " " + o.jsonData.addresNumber);
+								    		/*Ext.MessageBox.alert(SuppAppMsg.approvalResponse, 
+								    				SuppAppMsg.approvalRespUpdateSupp + " " + o.jsonData.addresNumber);*/
+								    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.approvalResponse, msg: SuppAppMsg.approvalRespUpdateSupp + " " + o.jsonData.addresNumber});
 								    	}else if(res.message == "Rejected"){
-								    		Ext.Msg.alert(SuppAppMsg.approvalResponse, 
-								    				SuppAppMsg.approvalRespRejected + " " + o.jsonData.ticketId);
+								    		/*Ext.MessageBox.alert(SuppAppMsg.approvalResponse, 
+								    				SuppAppMsg.approvalRespRejected + " " + o.jsonData.ticketId);*/
+								    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.approvalResponse, msg: SuppAppMsg.approvalRespRejected + " " + o.jsonData.ticketId});
 								    	}
 								    	else if(!res.success){
 								    		//Ext.Msg.alert(SuppAppMsg.approvalResponse, res.message);
 								    		var messageLength = res.message.length;
 								    		var msgWidth = Math.min(Math.max(messageLength * 6, 200), 600);  // Ajusta 6 según el tamaño de fuente
 
-								    		Ext.Msg.show({
+								    		Ext.MessageBox.alert({
 								    		    title: SuppAppMsg.approvalResponse,
 								    		    msg: res.message,
 								    		    buttons: Ext.Msg.OK,
@@ -2783,15 +2787,17 @@
 								    },
 								    failure: function() {
 								    	box.hide();
-								    	Ext.MessageBox.show({
+								    	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: 'Error' , msg: SuppAppMsg.approvalUpdateError});
+								    	/*Ext.MessageBox.show({
 							                title: 'Error',
 							                msg: SuppAppMsg.approvalUpdateError,
 							                buttons: Ext.Msg.OK
-							            });
+							            });*/
 								    }
 								}); 
 							}else{
-		            			Ext.Msg.alert(SuppAppMsg.approvalAlert, SuppAppMsg.plantAccess60 );
+		            			//Ext.MessageBox.alert(SuppAppMsg.approvalAlert, SuppAppMsg.plantAccess60 );
+		            			Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.approvalAlert, msg: SuppAppMsg.plantAccess60});
 		            		}
 						}
 					} ]
@@ -7078,13 +7084,15 @@
 				    					}]
 				    				}],
 				    				buttons: [{
-				    					text: 'Cancelar',
+				    					text: SuppAppMsg.approvalCancel,
+				    					cls: 'buttonStyle',
 				    					handler: function() {
 				    						confirmWindow.close();
 				    						console.log('Usuario canceló el envío');
 				    					}
 				    				}, {
-				    					text: 'Enviar solicitud',
+				    					text: SuppAppMsg.plantAccess4,
+				    					cls: 'buttonStyle',
 				    					handler: function() {
 				    						confirmWindow.close();
 				    						// Usuario confirmó: enviar con forceIncludeMissingWorkers=true
@@ -7105,7 +7113,8 @@
 				    						Ext.Ajax.request({
 				    							url: 'plantAccess/savePlantAccessRequest.action?forceIncludeMissingWorkers=true',
 				    							method: 'POST',
-				    							jsonData: recordForced.data,
+				    							//jsonData: recordForced.data, //DACG
+				    							jsonData: updatedRecordForced,
 				    							success: function(response) {
 				    								var r1 = Ext.decode(response.responseText);
 				    								var res = Ext.decode(r1);
