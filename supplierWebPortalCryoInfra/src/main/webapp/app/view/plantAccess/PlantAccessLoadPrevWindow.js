@@ -1,7 +1,7 @@
 Ext.define('SupplierApp.view.plantAccess.PlantAccessLoadPrevWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.plantaccessloadprevwindow',
-    title: 'Cargar trabajadores desde solicitud previa',
+    title: SuppAppMsg.plantAccess104,
     modal: true,
     width: 650,
     height: 250,
@@ -22,22 +22,22 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessLoadPrevWindow', {
                 items: [
                     { 
                         xtype: 'displayfield',
-                        value: '¿Desea cargar trabajadores desde una solicitud anterior?',
+                        value: SuppAppMsg.plantAccess105,
                         margin: '0 0 15 0',
                         fieldStyle: 'font-weight: bold; font-size: 13px;'
                     },
                     {
                         xtype: 'radiogroup',
                         itemId: 'choiceGroup',
-                        fieldLabel: 'Seleccione una opción',
+                        fieldLabel: SuppAppMsg.plantAccess106,
                         labelAlign: 'left',
                         labelWidth: 150,
                         columns: 2,
                         vertical: false,
                         margin: '0 0 15 0',
                         items: [
-                            { boxLabel: 'Sí', name: 'choice', inputValue: 'yes', margin: '0 20 0 0' },
-                            { boxLabel: 'No', name: 'choice', inputValue: 'no', checked: true }
+                            { boxLabel: SuppAppMsg.plantAccess107, name: 'choice', inputValue: 'yes', margin: '0 20 0 0' },
+                            { boxLabel: SuppAppMsg.plantAccess108, name: 'choice', inputValue: 'no', checked: true }
                         ],
                         listeners: {
                             change: function(radiogroup, newValue) {
@@ -56,14 +56,14 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessLoadPrevWindow', {
                     {
                         xtype: 'combobox',
                         itemId: 'prevRequestsCombo',
-                        fieldLabel: 'Solicitud anterior',
+                        fieldLabel: SuppAppMsg.plantAccess109,
                         labelAlign: 'left',
                         displayField: 'nameRequest',
                         valueField: 'id',
                         queryMode: 'local',
                         editable: false,
                         allowBlank: false,
-                        emptyText: 'Seleccione una solicitud...',
+                        emptyText: SuppAppMsg.plantAccess110,
                         hidden: true,
                         disabled: true,
                         margin: '0 0 10 0',
@@ -88,16 +88,18 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessLoadPrevWindow', {
             }],
             buttons: [
                 { 
-                    text: 'Cancelar', 
+                    text: SuppAppMsg.approvalCancel, 
                     iconCls: 'icon-cancel',
+                    cls: 'buttonStyle',
                     handler: function(btn){ 
                         btn.up('window').close(); 
                     } 
                 },
                 { 
-                    text: 'Continuar', 
+                    text: SuppAppMsg.plantAccess111, 
                     itemId: 'continueBtn',
                     iconCls: 'icon-accept',
+                    cls: 'buttonStyle',
                     handler: function(btn){
                         console.log('Continuar button clicked');
                         var win = btn.up('window');
@@ -114,7 +116,8 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessLoadPrevWindow', {
                         var val = combo.getValue();
                         console.log('Selected request ID:', val);
                         if(!val){
-                            Ext.Msg.alert('Aviso','Por favor, seleccione una solicitud previa de la lista.');
+                            //Ext.Msg.alert(SuppAppMsg.plantAccess112,SuppAppMsg.plantAccess113);
+                            Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.plantAccess112, msg: SuppAppMsg.plantAccess113});
                             return;
                         }
                         

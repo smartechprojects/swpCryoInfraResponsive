@@ -6120,7 +6120,7 @@
 		var me = this;
 		console.log('copyWorkersFromPrevRequest called with:', {sourceRequestId, targetRequestId, replaceExisting});
 		// Mostrar ventana de carga
-		var loadingBox = Ext.MessageBox.wait('Copiando trabajadores y documentos...', 'Procesando');
+		var loadingBox = Ext.MessageBox.wait(SuppAppMsg.plantAccess114, SuppAppMsg.plantAccess115);
 	
 		Ext.Ajax.request({
 			url: 'plantAccess/copyWorkersFromRequest.action',
@@ -6142,14 +6142,17 @@
 						// refrescar grid de trabajadores después de cerrar el mensaje
 						me.refreshRequestWorkersGrid(false);
 					});
+				
 				} else {
-					Ext.Msg.alert('Error', d.message || 'Error al copiar trabajadores.');
+					//Ext.Msg.alert('Error', d.message || 'Error al copiar trabajadores.');
+					Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: 'Error', msg: d.message || SuppAppMsg.plantAccess117});
 				}
 			},
 			failure: function(resp, opts){
 				console.error('AJAX failure:', resp, opts);
 				loadingBox.hide(); // Ocultar ventana de carga
-				Ext.Msg.alert('Error','Error al copiar trabajadores.');
+				//Ext.Msg.alert('Error','Error al copiar trabajadores.');
+				Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: 'Error', msg: SuppAppMsg.plantAccess117});
 			}
 		});
 	},
