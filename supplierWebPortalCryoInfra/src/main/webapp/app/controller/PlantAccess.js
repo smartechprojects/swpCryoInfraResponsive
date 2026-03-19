@@ -2732,7 +2732,9 @@
 
 								var ajaxUrl = 'plantAccess/updateAprov.action';
 								if(forceApproveWithErrors) {
-									ajaxUrl += '?forceApproveWithErrors=true';
+									ajaxUrl += '?forceApproveWithErrors=true&sendRequest=true';
+								}else{
+									ajaxUrl += '?sendRequest=true';
 								}
 
 								Ext.Ajax.request({

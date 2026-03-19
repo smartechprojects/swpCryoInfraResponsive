@@ -1678,7 +1678,8 @@ public class PlantAccessController {
 													@RequestParam String idReques,
 													@RequestParam String paFromDate,
 													@RequestParam String paToDate,
-													@RequestParam(required = false, defaultValue = "false") boolean forceApproveWithErrors
+													@RequestParam(required = false, defaultValue = "false") boolean forceApproveWithErrors,
+													@RequestParam(required = false, defaultValue = "false") boolean sendRequest
 													){
 		
 		try{ 
@@ -1700,8 +1701,9 @@ public class PlantAccessController {
 				
 				if("APROBADO".equals(status)) {
 					// Validar trabajadores contra cédula antes de aprobar
+					PlantAccessRequest paRequestForValidation = plantAccessRequestService.getPlantAccessRequests(obj.getRfc());
 					if(!forceApproveWithErrors) {
-						PlantAccessRequest paRequestForValidation = plantAccessRequestService.getPlantAccessRequests(obj.getRfc());
+						
 						String validationMessage = plantAccessRequestService.validatePlantAccessRequest(paRequestForValidation, false, false);
 						
 						if(validationMessage != null && !validationMessage.trim().isEmpty()) {
@@ -1712,6 +1714,14 @@ public class PlantAccessController {
 							response.put("data", paRequestForValidation);
 							return response;
 						}
+					}
+					
+					if(!sendRequest) {
+						Map<String, Object> response = new HashMap<>();
+						response.put("success", true);
+						response.put("message", "OK");
+						response.put("data", paRequestForValidation);
+						return response;
 					}
 					
 					Users userAprob = usersService.getByUserName(usr);
