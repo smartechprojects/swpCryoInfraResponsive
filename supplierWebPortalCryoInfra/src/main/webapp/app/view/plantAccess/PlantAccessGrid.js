@@ -54,7 +54,7 @@
     	
     	
     	Ext.define('statusCombo', {
-    	    extend: 'Ext.form.field.ComboBox',
+    	    extend: 'Ext.form.ComboBox',
     	    fieldLabel: SuppAppMsg.fiscalTitle22,
     	    store: invStatus,
     	    alias: 'widget.combostatus',

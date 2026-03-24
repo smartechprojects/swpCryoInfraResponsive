@@ -1321,6 +1321,7 @@ Ext.define('SupplierApp.view.plantAccess.PlantAccessWorkerFileGrid' ,{
 			
 			         
 			     ],
+			     autoScroll: true
 			 }
 
             ]

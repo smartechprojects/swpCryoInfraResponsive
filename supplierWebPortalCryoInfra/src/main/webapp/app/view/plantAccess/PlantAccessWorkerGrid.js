@@ -5,6 +5,7 @@
 	frame : false,
 	store: 'PlantAccessWorker',
 	style : 'border: solid #ccc 1px',
+	autoScroll : true,
 	//scroll :  true,
 	viewConfig: {
 	    stripeRows: true,

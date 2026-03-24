@@ -4,7 +4,7 @@
 	border : false,
 	frame : false,
 	style : 'border: solid #fff 1px',
-	scrollable : true,
+	autoScroll : true,
 	layout: {
         type: 'vbox',
         align: 'stretch'
@@ -1004,7 +1004,7 @@
             {
                 xtype: 'container',
                 layout: 'hbox',
-                margin: '0 5 0 0',
+                margin: '0 5 10 0',
                 //margin: '5 10 5 10',
                 defaults:{
                 	labelAlign: 'top',

@@ -4,7 +4,7 @@
 	border : false,
 	frame : false,
 	style : 'border: solid #fff 1px',
-    scrollable : true,
+	autoScroll : true,
     layout: {
         type: 'vbox',
         align: 'stretch'

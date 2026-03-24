@@ -4,7 +4,7 @@
 	border : false,
 	frame : false,
 	style : 'border: solid #ccc 1px',
-	scrollable : true,
+	autoScroll : true,
 	initComponent : function() {
 		
 		this.dockedItems = [{

@@ -742,7 +742,7 @@
     	var recordWorker = grid.store.getAt(rowIndex).data;
     	uuidPlantAccessWorker = recordWorker.datefolioIDcard;
     	
-    	var win = Ext.create('Ext.window.Window', 
+    	var win = new Ext.Window(
 				{
 					title : SuppAppMsg.plantAccess95,
 					layout : 'fit',
@@ -888,7 +888,7 @@
 					}]
 				});
 
-    	me.winLoadInv = Ext.create('Ext.window.Window', {
+    	me.winLoadInv = new Ext.Window({
     		layout : 'fit',
     		title : SuppAppMsg.taxvaultAdditionalInformation,
     		width : 550,
@@ -1148,7 +1148,7 @@
     					}]
     		});
 
-    		this.winLoadInv = Ext.create('Ext.window.Window', {
+    		this.winLoadInv = new Ext.Window({
     			layout : 'fit',
     			title : SuppAppMsg.plantAccess93,
     			width : 450,
@@ -1445,7 +1445,7 @@
 						}]
 				});
 
-		this.winLoadInv = Ext.create('Ext.window.Window', {
+		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
 			width : 450,
@@ -1664,7 +1664,7 @@
 					}]
 		});
 
-		this.winLoadInv = Ext.create('Ext.window.Window', {
+		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
 			width : 450,
@@ -1912,7 +1912,7 @@
 						}]
 				});
 
-		this.winLoadInv = Ext.create('Ext.window.Window', {
+		this.winLoadInv = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess93,
 			//width : 600,
@@ -1938,7 +1938,7 @@
 	
     showRequestFile: function(button) {
     	
-       	var win = Ext.create('Ext.window.Window', 
+       	var win = new Ext.Window(
 				{
 					title : SuppAppMsg.taxvaultUploandDocuments,
 					layout : 'fit',
@@ -2020,7 +2020,7 @@
 		    }
 		}); */
       
-       	var win = Ext.create('Ext.window.Window', 
+       	var win = new Ext.Window(
 				{
 					title : SuppAppMsg.taxvaultUploandDocuments,
 					layout : 'fit',
@@ -2081,7 +2081,7 @@
     
     gridSelectionChange: function(model, record) { 
     	var me = this;
-		me.viewAccessPlant = Ext.create('Ext.window.Window', {
+		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
 			width : 1050,
@@ -2234,7 +2234,7 @@
     	plantAccessRequestId = record.data.id; // Guardar ID de la solicitud
     	
     	var me = this;
-		me.viewAccessPlant = Ext.create('Ext.window.Window', {
+		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			//title : SuppAppMsg.approvalDetailsSupplier ,
 			title : SuppAppMsg.plantAccess47 ,
@@ -2489,7 +2489,7 @@
     				// Hay errores - mostrar confirmación
     				var confirmMessage = res.message.substring(16);
     				
-    				var approveConfirmWindow = Ext.create('Ext.window.Window', {
+    				var approveConfirmWindow = new Ext.Window({
     					title: 'Confirmar Aprobación de Solicitud',
     					modal: true,
     					width: 900,
@@ -2805,7 +2805,7 @@
 					} ]
 				});
 
-					me.winLoadInvFile = Ext.create('Ext.window.Window', {
+					me.winLoadInvFile = new Ext.Window({
 						layout : 'fit',
 						title : SuppAppMsg.approvalAceptSupp,
 						//width : 500,
@@ -3054,7 +3054,7 @@
     						} ]
     					});
 
-    	this.winLoadInv = Ext.create('Ext.window.Window', {
+    	this.winLoadInv = new Ext.Window({
     		layout : 'fit',
     		title : SuppAppMsg.plantAccess96,
     		width : 600,
@@ -5285,7 +5285,7 @@
     	    			    						}]
     	    			    					});
 
-    	    			    	me.winLoadInv = Ext.create('Ext.window.Window', {
+    	    			    	me.winLoadInv = new Ext.Window({
     	    			    		layout : 'fit',
     	    			    		title : SuppAppMsg.purchaseUploadInvoice,
     	    			    		width : 900,
@@ -5303,7 +5303,7 @@
     	    			    	
     	    			    } else if(sup.data.country != null && sup.data.country != "") {
     	    			    	
-    				    		me.winLoadInv = Ext.create('Ext.window.Window', {
+    				    		me.winLoadInv = new Ext.Window({
     					    		layout : 'fit',
     					    		title : SuppAppMsg.purchaseUploadInvoiceForeing,
     					    		width : me.isTransportCB==true?515:1200,
@@ -5467,7 +5467,7 @@
 						} ]
 					});
 
-						me.winLoadInvFile = Ext.create('Ext.window.Window', {
+						me.winLoadInvFile = new Ext.Window({
 							layout : 'fit',
 							title : SuppAppMsg.purchaseUploadDocumentsAditional,
 							width : 600,
@@ -5644,7 +5644,7 @@
 						} ]
 					});
 
-					this.winLoadInv = Ext.create('Ext.window.Window', {
+					this.winLoadInv = new Ext.Window({
 						layout : 'fit',
 						title : SuppAppMsg.purchaseOrdersTitle3,
 						width : 600,
@@ -5687,7 +5687,7 @@
 
     addNewPlantAccessRequest : function(button) {        
     	var me = this;
-		me.viewAccessPlant = Ext.create('Ext.window.Window', {
+		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			title : SuppAppMsg.plantAccess47 ,
 			width : 1050,
@@ -5749,7 +5749,7 @@
         });
         
     	var me = this;
-		me.viewAccessPlant = Ext.create('Ext.window.Window', {
+		me.viewAccessPlant = new Ext.Window({
 			layout : 'fit',
 			//title : SuppAppMsg.approvalDetailsSupplier ,
 			title : SuppAppMsg.plantAccess47 ,
@@ -6140,10 +6140,37 @@
 				console.log('Decoded response:', d);
 				if(d.success){
 					hasAskedForPreviousWorkers = true;
-					Ext.Msg.alert('Éxito','Carga de trabajadores finalizada.', function(){
+					/*Ext.Msg.alert('Éxito','Carga de trabajadores finalizada.', function(){
 						// refrescar grid de trabajadores después de cerrar el mensaje
 						me.refreshRequestWorkersGrid(false);
+					});*/
+					
+					var msg = Ext.Msg.alert('Éxito', 'Carga de trabajadores finalizada.', function () {
+					    // refrescar grid de trabajadores después de cerrar el mensaje
+					    me.refreshRequestWorkersGrid(false);
 					});
+
+					function applyButtonStyle(attempts) {
+					    attempts = attempts || 0;
+					    if (attempts > 20) return;
+
+					    var dialog = msg.dialog || msg; // ExtJS 6: normalmente msg.dialog
+					    var footer = dialog.down('toolbar[dock="bottom"]');
+
+					    if (footer && footer.items && footer.items.length > 0) {
+					        // en alert normalmente solo hay 1 botón (OK)
+					        var okBtn = footer.items.getAt(0);
+
+					        if (okBtn && okBtn.el) {
+					            okBtn.addCls('buttonStyle');
+					            return;
+					        }
+					    }
+
+					    Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+					}
+
+					Ext.defer(applyButtonStyle, 10);
 				
 				} else {
 					//Ext.Msg.alert('Error', d.message || 'Error al copiar trabajadores.');
@@ -6236,7 +6263,8 @@
     		//this.resetPlantAccessWorkerForm();	    	
 	    	//this.refreshRequestWorkersGrid(true);
 		} else {
-    		Ext.MessageBox.show({
+			
+			var msg = Ext.Msg.show({
         	    title: SuppAppMsg.supplierMessage,
         	    msg: validationMessage,
         	    buttons : Ext.MessageBox.YESNO,
@@ -6255,6 +6283,29 @@
     				}
     			}
         	});
+			
+			function applyButtonStyle(attempts) {
+			    attempts = attempts || 0;
+			    if (attempts > 20) return;
+
+			    // En ExtJS 6 el window real suele estar en msg.dialog o msg
+			    var dialog = msg.dialog || msg;
+			    var footer = dialog.down('toolbar[dock="bottom"]');
+
+			    if (!footer) {
+			        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+			        return;
+			    }
+
+			    // En YESNO normalmente son 2 botones en el footer
+			    footer.items.each(function (btn) {
+			        if (btn && btn.addCls) {
+			            btn.addCls('buttonStyle');
+			        }
+			    });
+			}
+
+			Ext.defer(applyButtonStyle, 10);
 		}
 	},
 	
@@ -7021,7 +7072,7 @@
 				    			}
 				    			
 				    			// Mostrar diálogo de confirmación con tabla scrolleable
-				    			var confirmWindow = Ext.create('Ext.window.Window', {
+				    			var confirmWindow = new Ext.Window({
 				    				title: 'Confirmar Envío de Solicitud',
 				    				modal: true,
 				    				width: 900,
@@ -7246,6 +7297,7 @@
         			    			}],
         			    			buttons: [{
         			    				text: 'Aceptar',
+        			    				cls: 'buttonStyle',
         			    				handler: function() {
         			    					this.up('window').close();
         			    				}
@@ -7766,7 +7818,7 @@ documentWorkers = true
     	var supNumber = Ext.getCmp('supNumberFD').getValue() == ''?'':Ext.getCmp('supNumberFD').getValue();
 
     	if(supNumber != ""){
-        	Ext.create('Ext.window.Window', {
+        	new Ext.Window({
         		  width        : 1120,
         		  height       : 465,
         		  title        : 'Complementos de Pago',

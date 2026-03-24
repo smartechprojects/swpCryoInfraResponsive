@@ -4,6 +4,7 @@
 	border : false,
 	frame : false,
 	style : 'border: solid #ccc 1px',
+	autoScroll : true,
 	initComponent : function() {
 	
 		

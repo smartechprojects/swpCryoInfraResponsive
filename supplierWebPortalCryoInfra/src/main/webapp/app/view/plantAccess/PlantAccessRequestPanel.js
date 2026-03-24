@@ -1,5 +1,5 @@
 ﻿Ext.define('SupplierApp.view.plantAccess.PlantAccessRequestPanel', {
-	extend: 'Ext.panel.Panel',
+	extend: 'Ext.Panel',
 	alias : 'widget.plantAccessRequestPanel',
 	border : false,
 	frame : false,
