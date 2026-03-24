@@ -444,7 +444,7 @@
     	var record = grid.store.getAt(rowIndex);
     	var workerId = record.data.id;
 
-    	Ext.MessageBox.show({
+    	var msg = Ext.Msg.show({
             title: SuppAppMsg.plantAccess90,
             msg: SuppAppMsg.plantAccessTempMessage5,
     	    buttons : Ext.MessageBox.YESNO,
@@ -477,6 +477,29 @@
                 }
             }
         });
+    	
+    	function applyButtonStyle(attempts) {
+		    attempts = attempts || 0;
+		    if (attempts > 20) return;
+
+		    // En ExtJS 6 el window real suele estar en msg.dialog o msg
+		    var dialog = msg.dialog || msg;
+		    var footer = dialog.down('toolbar[dock="bottom"]');
+
+		    if (!footer) {
+		        Ext.defer(applyButtonStyle, 50, this, [attempts + 1]);
+		        return;
+		    }
+
+		    // En YESNO normalmente son 2 botones en el footer
+		    footer.items.each(function (btn) {
+		        if (btn && btn.addCls) {
+		            btn.addCls('buttonStyle');
+		        }
+		    });
+		}
+
+		Ext.defer(applyButtonStyle, 10);
     	
     },
     
