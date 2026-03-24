@@ -19,6 +19,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1630,6 +1631,17 @@ public class OutSourcingService {
 	 }
 
 		public int savingODDDCFromPDF(byte[] file, int id) {
+			
+			PDDocument pdDocument = null;
+			try {
+				pdDocument = PDDocument.load(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			 String version = new PDFutils2().detectarVersion(pdDocument);
+		        System.out.println("Versión detectada: " + version);
+			
 			String [] pages = new PDFutils2().getPdfText(file, 5, 0);
 		 	int guardados = 0;
 		 	int cabecero = 0;
@@ -1644,6 +1656,11 @@ public class OutSourcingService {
 		 			String [] data2 = new PDFutils2().getPdfText(file, 2, nopag);
 		 		 	String [] data3 = new PDFutils2().getPdfText(file, 3, nopag);
 		 		 	String [] data4 = new PDFutils2().getPdfText(file, 4, nopag);
+		 		 	
+		 		 	/*System.out.println("data2: " + Arrays.toString(data2));
+		 		 	System.out.println("data3: " + Arrays.toString(data3));
+		 		 	System.out.println("data4: " + Arrays.toString(data4));*/
+		 		 	
 		 		 	if(data2!=null) {
 		 		 		if(data2[2].contains("EXTEMPORÁNEO")) {	    				
 			 		    		if (cabecero == 0) {
@@ -1791,7 +1808,7 @@ public class OutSourcingService {
 
 		 		    	}		
 		 		 	}
-		 		 	
+		 		 if (version.equals("3.6.5")) {
 					if(data3!=null) {
 					 	for (int i=0; i<data3.length; i++){	 	
 					 		if (data3[i].length() >= 15) {
@@ -1803,7 +1820,29 @@ public class OutSourcingService {
 
 					 	}		
 					}	
+		 		 }else {
+		 			if (data3 != null) {
+		 		        for (int i=0; i<data3.length; i++){     
+		 		        	 if (data3[i].length() >= 15) {
+		 		                if ( org.apache.commons.lang3.StringUtils.countMatches(data3[i].substring(0,15), "-") == 4){                
+		 		                    String nss = data3[i].substring(0,15);
+		 		                    String nombreCompleto = data3[i].substring(15).trim();
+		 		                    
+		 		                    // Eliminar cualquier residuo que pueda quedar (números o códigos de 2 caracteres)
+		 		                    nombreCompleto = nombreCompleto.replaceAll("\\s+[A-Z0-9]{2}$", "");
+		 		                    nombreCompleto = nombreCompleto.replaceAll("\\s+\\d+$", "");
+		 		                    
+		 		                    clave.add(nss);
+		 		                    nombre.add(nombreCompleto);
+		 		                    System.out.println("NSS: " + nss + " -> Nombre: " + nombreCompleto);
+		 		                }   
+		 		            }
+		 		        }         
+		 		    }
+		 		 }
 					
+					
+				if (version.equals("3.6.5")) {
 				 	if(data4!=null) {
 				 		for (int i=0; i<data4.length; i++){	 				 			
 				 			if ( data4[i].length() >= 19 ) {			 				
@@ -1839,7 +1878,58 @@ public class OutSourcingService {
 				 			}	
 				 		}		
 				 	}
+				} else {
+					/*if (data4 != null) {
+						for (int i = 0; i < data4.length; i++) {
+							curp.add(data4[i].trim());
+							cUbicacion.add("");
+						}
+					}*/
+					if (data4 != null) {
+					    for (int i = 0; i < data4.length; i++) {
+					        String value = data4[i].trim();
+					        
+					        // Verifica si contiene espacio
+					        if (value.contains(" ")) {
+					            // Divide la cadena en dos partes usando el primer espacio como delimitador
+					            String[] parts = value.split("\\s+", 2);  // Limita a dos partes
+					            
+					            // La primera parte es curp, y la segunda parte es la ubicación
+					            String curpValue = parts[0].replace(" ", ""); // Elimina cualquier espacio adicional en curp
+					            String locationValue = parts.length > 1 ? parts[1] : "";  // Asignamos la ubicación completa
+					            
+					            // Si la longitud de la primera parte (curp) es menor a 18 caracteres
+					            if (curpValue.length() < 18) {
+					                // Concatenamos lo necesario de la segunda parte para completar las 18 posiciones en curp
+					                String remaining = locationValue.length() > (18 - curpValue.length()) ? locationValue.substring(0, 18 - curpValue.length()) : locationValue;
+					                curpValue += remaining;  // Completa curp con el resto
+					                locationValue = locationValue.substring(remaining.length());  // Lo que queda es la ubicación
+					            }
+					            
+					            // Agrega el valor de curp y ubicación a las respectivas listas
+					            curp.add(curpValue.trim());  
+					            cUbicacion.add(locationValue.trim());  // Agrega la ubicación restante
+					        } else {
+					            curp.add(value.trim());  // Si no tiene espacio, agrega el valor tal cual a curp
+					            cUbicacion.add("");  // Agrega el valor vacío de ubicación
+					        }
+					    }
+					}
+				}
 				 	
+				 	/*System.out.println("Claves encontradas: " + clave.size());
+		            System.out.println("Nombres encontrados: " + nombre.size());
+		            System.out.println("CURP encontrados: " + curp.size());
+ 		            for (int z=0; z<clave.size(); z++) {
+		                System.out.println("  NSS: " + clave.get(z));
+		                System.out.println("  Nombre: " + (z < nombre.size() ? nombre.get(z) : "NO HAY NOMBRE"));
+		            if("GOMEZ VILCHIS LARIZA".equals(nombre.get(z))) {
+		            	System.out.println(" Lariza");
+		            }
+		                
+		                System.out.println("  CURPS: " + (z < curp.size() ? curp.get(z) : "NO HAY CURP"));
+		            }*/
+ 		           System.out.println(" ---");
 	 			    for (int z=0; z<clave.size(); z++) {
 		 				CDDDCEmployee eploy = new CDDDCEmployee();
 		 				eploy.setNumSegSoci( clave.get(z) );
