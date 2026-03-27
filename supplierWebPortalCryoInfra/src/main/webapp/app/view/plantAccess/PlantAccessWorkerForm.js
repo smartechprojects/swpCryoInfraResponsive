@@ -543,6 +543,7 @@
 			xtype: 'toolbar',
 			id:'titleUploadFileWorker',
 			name:'titleUploadFileWorker',
+			margin: '10 0 0 0',
 			style: {
 				background: '#CCCCCC'
 			},
