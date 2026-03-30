@@ -73,31 +73,57 @@ Ext.define('SupplierApp.controller.Token', {
     	}
     },
     
-    updateToken: function (button) {
-    	var form = this.getTokenForm().getForm();
-    	var grid = this.getTokenGrid();
-    	if (form.isValid()) { 
-        	record = Ext.create('SupplierApp.model.AccessTokenRegister');
-            values = form.getFieldValues();
-            updatedRecord = populateObj(record, values);
-            if (values.id == 0){
-            	Ext.Msg.alert(SuppAppMsg.usersSaveError, "Error");
-    		} else{
-    			record.set(updatedRecord);
-    			record.save(
-    					{
-    					    callback: function (records, o, success) { 
-    					    	if(success){
-    				        	    grid.store.load();
-    					    	}else{
-    					    	}
-    					    }
-    			});
-        	    form.reset();
-        	    this.enableSave();
-    		}
-    	}
-    },
+    /*updateToken: function (button) {
+	var form = this.getTokenForm().getForm();
+	var grid = this.getTokenGrid();
+	if (form.isValid()) { 
+	    	record = Ext.create('SupplierApp.model.AccessTokenRegister');
+	        values = form.getFieldValues();
+	        updatedRecord = populateObj(record, values);
+	        if (values.id == 0){
+	        	Ext.Msg.alert(SuppAppMsg.usersSaveError, "Error");
+			} else{
+				record.set(updatedRecord);
+				record.save(
+						{
+						    callback: function (records, o, success) { 
+						    	if(success){
+					        	    grid.store.load();
+						    	}else{
+						    	}
+						    }
+				});
+	    	    form.reset();
+	    	    this.enableSave();
+			}
+		}
+	},*/
+	
+	updateToken: function (button) {
+	var form = this.getTokenForm().getForm();
+	var grid = this.getTokenGrid();
+	if (form.isValid()) { 
+		    var record = form.getRecord(); 
+		    var values = form.getFieldValues();
+		    var updatedRecord = populateObj(record, values); 
+		    if (values.id == 0) {
+		        Ext.Msg.alert(SuppAppMsg.usersSaveError, "Error: ID no válido para actualización");
+		    } else {
+		        record.set(updatedRecord); 
+		        record.save({
+		            callback: function (records, o, success) { 
+		                if (success) {
+		                    grid.store.load();
+		                } else {
+		                    Ext.Msg.alert(SuppAppMsg.usersSaveError, "Error al actualizar");
+		                }
+		            }
+		        });
+		        form.reset();
+		        this.enableSave();
+		    }
+		}
+	},
     
     resetTokenForm: function (button) {
     	var form = this.getTokenForm().getForm();
