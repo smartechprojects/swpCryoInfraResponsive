@@ -1943,17 +1943,17 @@ public class MiddlewareService {
 							String docType = "";							
 									
 							switch(document.getDocumentType()) {
-							case "loadRfcDoc" : docType = "CSF";
+							case "loadRfcDoc" : docType = "CONS_SIT_FISC";
 								break;
-							case "loadDomDoc" : docType = "OC";
+							case "loadDomDoc" : docType = "OPN_CUMP";
 								break;
-							case "loadEdoDoc" : docType = "EC";
+							case "loadEdoDoc" : docType = "EDO_CTA";
 								break;
-							case "loadIdentDoc" : docType = "FAC";
+							case "loadIdentDoc" : docType = "FACT";
 								break;
-							case "loadActaConst" : docType = "DB";
+							case "loadActaConst" : docType = "DAT_BANC";
 								break;
-							default : docType = "OTR";
+							default : docType = "OTROS";
 								break;
 							}
 							
@@ -1966,7 +1966,7 @@ public class MiddlewareService {
 							
 							//Obtiene el nombre genérico del archivo
 							String fileExt = FilenameUtils.getExtension(document.getName());
-							String fileName = "PP_" + strDate + "_" + document.getAddressBook() + "_" + docType + "." + fileExt;
+							String fileName = "PorPro_" + strDate + "_" + document.getAddressBook() + "_" + docType + "." + fileExt;
 							
 							//Se obtiene el número consecutivo correspondiente
 							int nextNumber = 1;
@@ -1978,7 +1978,7 @@ public class MiddlewareService {
 							}
 							
 							//Obtiene el nombre definitivo con consecutivo
-							fileName = "PP_" + strDate + "_" + document.getAddressBook() + "_" + docType + "_" + nextNumber + "." + fileExt;
+							fileName = "PorPro_" + strDate + "_" + document.getAddressBook() + "_" + docType + "_" + nextNumber + "." + fileExt;
 							
 							file.setId(document.getId());
     	                	file.setFile64(Base64.getEncoder().encodeToString(document.getContent()));
@@ -2052,7 +2052,7 @@ public class MiddlewareService {
 						try {
 							
 							FileDTO file = new FileDTO();
-							String filePrefix = "PP";
+							String filePrefix = "PorPro";
 							String fisType = "";
 							String serie = "";
 							String folio = "";
@@ -2070,26 +2070,9 @@ public class MiddlewareService {
 								folio = document.getFolio();
 							}
 							
-							//Si la factura no tiene folio, se asignan los últimos 4 caracteres del UUID
-							if("".equals(folio) && document.getUuid() != null && document.getUuid().length() >= 4) {
-								serie = "ZX";
-								folio = document.getUuid().substring(document.getUuid().length() - 4);							
-							}
-
 							vinv = serie + folio;
 							
-							//Si el vinv tiene mas de 25 caracteres, se asignan los últimos 12 caracteres del UUID
-							if(vinv.length() > 25 && document.getUuid() != null && document.getUuid().length() >= 12) {
-								vinv = document.getUuid().substring(document.getUuid().length() - 12).replaceAll("[^a-zA-Z0-9]", "");
-							}
-							
-							
-							//JSC: Si el vinv tiene mas de 25 caracteres, truncar a 25 (Validación por nueva versión de BD en JDE)
-							if(vinv.length() > 25) {
-								vinv = vinv.substring(0, 25);
-							}
-
-							//Validaciones Facturas Foráneas --------------------------------
+							//Validaciones Facturas Foráneas
 							if("FACTURA".equals(fisType) && document.getName().startsWith("FACT_FOR_") && "TEMP".equals(document.getType())) {
 								document.setReplicationMessage("Factura Foránea XML.");
 								document.setReplicationDate(new Date());
@@ -2116,26 +2099,23 @@ public class MiddlewareService {
 								List<FiscalDocumentsConcept> concepts = fiscalDocumentService.getFiscalDocumentsConceptByUUID(document.getUuid());
 								FiscalDocuments fdoc = fiscalDocumentService.getById(Integer.valueOf(concepts.get(0).getBatchID()).intValue());
 								currentAddressBook = document != null ? document.getAddressBook() : "";
-								vinv = fdoc != null ? (fdoc.getSemanaPago().length() > 25 ? fdoc.getSemanaPago().substring(0, 25).toUpperCase()
-										: fdoc.getSemanaPago().toUpperCase()) : "";
+								vinv = fdoc != null ? fdoc.getSemanaPago().toUpperCase() : "";
 							}
 							
 							if("BATCH".equals(fisType)) {
-								filePrefix = "Bat";
+								filePrefix = "Batch";
 								//En este tipo de documento este campo contiene el Número de Batch
 								FiscalDocuments fdoc = fiscalDocumentService.getById(Integer.valueOf(document.getAddressBook()).intValue());
 								currentAddressBook = fdoc != null ? fdoc.getAddressNumber() : "";
-								vinv = fdoc != null ? (fdoc.getSemanaPago().length() > 25 ? fdoc.getSemanaPago().substring(0, 25).toUpperCase()
-										: fdoc.getSemanaPago().toUpperCase()) : "";								
+								vinv = fdoc != null ? fdoc.getSemanaPago().toUpperCase() : "";
 							}
 
 							if("BATCHCOVER".equals(fisType)) {
-								filePrefix = "Car";
+								filePrefix = "BatchCover";
 								//En este tipo de documento este campo contiene el Número de Batch
 								FiscalDocuments fdoc = fiscalDocumentService.getById(Integer.valueOf(document.getAddressBook()).intValue());
 								currentAddressBook = fdoc != null ? fdoc.getAddressNumber() : "";
-								vinv = fdoc != null ? (fdoc.getSemanaPago().length() > 25 ? fdoc.getSemanaPago().substring(0, 25).toUpperCase()
-										: fdoc.getSemanaPago().toUpperCase()) : "";
+								vinv = fdoc != null ? fdoc.getSemanaPago().toUpperCase() : "";
 							}
 							
 							if("".equals(currentAddressBook)) {
@@ -2156,22 +2136,9 @@ public class MiddlewareService {
 							}
 							
 							switch(fisType) {
-							case "FACTURA": fisType = "FAC";
-								break;
 							case "NOTACREDITO": fisType = "NC";
 								break;
-							case "EVIDENCIA": fisType = "EV";
-								break;
-							case "OTROS": fisType = "OTR";
-								break;
-							case "BATCH": fisType = "BAT";
-								break;
-							case "BATCHCOVER": fisType = "CAR";
-								break;
-							default : fisType = "OTR";
-								break;
 							}
-							
 							//Valida que no rebase límite de MB por envío
 							fileAttachedSize += document.getSize();
 							fileAttachedCount += 1;
@@ -2713,6 +2680,56 @@ public class MiddlewareService {
 				
 			} catch (Exception e) {
 				log4j.error("Error al crear la Carátula del Batch: " + batchID);
+				log4j.error("Exception" , e);
+				e.printStackTrace();
+			}
+		}
+		
+		public void reloadBatchCoverDocument(UserDocument doc) {
+			byte[] pdfBytes = null;
+			
+			try {
+				int batch = Integer.valueOf(doc.getAddressBook()).intValue();
+				
+				PDFUtils pdfUtils = new PDFUtils();
+				Supplier supplier = new Supplier();
+				StringBuilder approvalMsg = new StringBuilder();
+				
+				FiscalDocuments fdoc = fiscalDocumentService.getById(batch);
+				List<FiscalDocumentsConcept> fdocConcepts = fiscalDocumentConceptService.searchByIdBatch(doc.getAddressBook());
+				List<ApprovalBatchFreight> approvalBatchList = approvalBatchFreightService.searchByIdBatch(doc.getAddressBook());
+				
+				if(fdocConcepts != null && fdocConcepts.size() > 0) {
+					supplier = supplierService.searchByAddressNumber(fdocConcepts.get(0).getAddressNumber());
+				}
+				
+				if(approvalBatchList == null || approvalBatchList.size() == 0) {
+					approvalMsg.append("");
+				}else {
+					approvalMsg.append("El batch fue aprobado por: ");
+					approvalMsg.append("\n");
+					approvalMsg.append("\n");
+				}			
+				
+				for(ApprovalBatchFreight aprovBatch : approvalBatchList) {
+					
+					if(AppConstants.STATUS_ACCEPT.equals(aprovBatch.getAction())){					
+						Users user =usersService.getByUserName(aprovBatch.getApprover());
+						if(user != null) {
+							approvalMsg.append(user.getName());
+							approvalMsg.append("\n");					
+						}				
+					}				
+				}
+				
+				pdfBytes = pdfUtils.getFilePDFFleightCover(fdoc,supplier,fdocConcepts,approvalMsg.toString(),udcService);
+				
+				
+				doc.setContent(pdfBytes);
+				userDocumentDao.update(doc);
+				
+			} catch (Exception e) {
+				log4j.error("Error al crear la Carátula del Batch: " + doc.getAddressBook());
 				log4j.error("Exception" , e);
 				e.printStackTrace();
 			}
