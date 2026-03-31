@@ -313,8 +313,17 @@ public class PurchaseOrderController {
 																	   @RequestParam String toDate){	
 
 		try{
-			purchaseOrderService.getPurchaseOrderListBySelection(orderNumber, addressNumber, fromDate, toDate);
-			return mapStrOk("OK");  
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String usr = auth.getName();
+			
+			//En Cryo las solicitudes se almacenan y el proceso de réplica viene desde el Middleware.
+			//purchaseOrderService.getPurchaseOrderListBySelection(orderNumber, addressNumber, fromDate, toDate);
+			String message = purchaseOrderService.savePurchaseOrderListBySelection(addressNumber, orderNumber, usr);
+			if(!"".equals(message)) {
+				return mapResponse(message);
+			}
+			
+			return mapStrOk("Success");
 		} catch (Exception e) {
 			log4j.error("Exception" , e);
 			e.printStackTrace();
@@ -958,7 +967,7 @@ public class PurchaseOrderController {
 	
 	public Map<String,Object> mapResponse(String msg){
 		Map<String,Object> modelMap = new HashMap<String,Object>(2);
-		modelMap.put("msg", msg);
+		modelMap.put("message", msg);
 		modelMap.put("success", true);
 		return modelMap;
 	}

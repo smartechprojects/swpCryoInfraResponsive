@@ -30,6 +30,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -60,6 +61,7 @@ import com.eurest.supplier.model.PaymentSupplierDetail;
 import com.eurest.supplier.model.PurchaseOrder;
 import com.eurest.supplier.model.PurchaseOrderDetail;
 import com.eurest.supplier.model.PurchaseOrderPayment;
+import com.eurest.supplier.model.PurchaseOrderRequest;
 import com.eurest.supplier.model.Receipt;
 import com.eurest.supplier.model.ReceiptInvoice;
 import com.eurest.supplier.model.Supplier;
@@ -701,10 +703,59 @@ public class PurchaseOrderService {
 			log4j.error("Exception" , e);
 			e.printStackTrace();
 		}
-		 
-
+	}
+	
+	public String savePurchaseOrderListBySelection(String addressNumber, int orderNumber, String user) {
+		try {
+			
+			Supplier s = supplierService.searchByAddressNumber(addressNumber);
+			if(s == null) {
+				return "Error_1";
+			}
+			
+			List<PurchaseOrderRequest> list = purchaseOrderDao.getPurchaseOrderRequestByQuery(orderNumber, addressNumber, AppConstants.STATUS_PENDING_REPLICATION);
+			if(list != null && !list.isEmpty()) {
+				return "Error_2";
+			} else {
+				PurchaseOrderRequest request = new PurchaseOrderRequest();
+				request.setId(0);
+				request.setAddressNumber(addressNumber);
+				request.setOrderNumber(orderNumber);
+				request.setStatus(AppConstants.STATUS_PENDING_REPLICATION);
+				request.setRecordDate(new Date());
+				request.setUser(user);
+				purchaseOrderDao.savePurchaseOrderRequest(request);
+			}
+			
+		} catch (Exception e) {
+			log4j.error("Exception" , e);
+			e.printStackTrace();
+			return "Error_E";
+		}
+		
+		return "";
 	}
 
+	public PurchaseOrderRequest getOrderRequestById(int id) {
+		return purchaseOrderDao.getOrderRequestById(id);
+	}
+
+	public void savePurchaseOrderRequest(PurchaseOrderRequest o) {
+		purchaseOrderDao.savePurchaseOrderRequest(o);
+	}
+	
+	public void updatePurchaseOrderRequest(PurchaseOrderRequest  o) {
+		purchaseOrderDao.updatePurchaseOrderRequest(o);
+	}
+	
+	public List<PurchaseOrderRequest> getPurchaseOrderRequestByQuery(int orderNumber, String addressNumber, String status) {
+		return purchaseOrderDao.getPurchaseOrderRequestByQuery(orderNumber, addressNumber, status);
+	}
+	
+	public List<PurchaseOrderRequest> getPurchaseOrderRequestByStatus(String status) {
+		return purchaseOrderDao.getPurchaseOrderRequestByStatus(status);
+	}
+	
 	public void getPurchaseOrderList() {
 		jDERestService.getPurchaseOrderList();
 	}

@@ -30,6 +30,7 @@ import com.eurest.supplier.model.ForeignInvoiceTable;
 import com.eurest.supplier.model.PurchaseOrder;
 import com.eurest.supplier.model.PurchaseOrderDetail;
 import com.eurest.supplier.model.PurchaseOrderPayment;
+import com.eurest.supplier.model.PurchaseOrderRequest;
 import com.eurest.supplier.model.Receipt;
 import com.eurest.supplier.model.ReceiptInvoice;
 import com.eurest.supplier.model.UDC;
@@ -56,7 +57,7 @@ public class PurchaseOrderDao {
 		Session session = this.sessionFactory.getCurrentSession();
 		return (PurchaseOrder) session.get(PurchaseOrder.class, id);
 	}
-
+	
 	public Receipt getReceiptById(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		return (Receipt) session.get(Receipt.class, id);
@@ -1320,6 +1321,43 @@ public class PurchaseOrderDao {
 		return ;
 	}
 	
+	public PurchaseOrderRequest getOrderRequestById(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (PurchaseOrderRequest) session.get(PurchaseOrderRequest.class, id);
+	}
 
-
+	public void savePurchaseOrderRequest(PurchaseOrderRequest o) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.saveOrUpdate(o);
+	}
+	
+	public void updatePurchaseOrderRequest(PurchaseOrderRequest  o) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(o);
+		return ;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<PurchaseOrderRequest> getPurchaseOrderRequestByQuery(int orderNumber, String addressNumber, String status) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(PurchaseOrderRequest.class);
+		criteria.add(
+				Restrictions.conjunction()
+				.add(Restrictions.eq("addressNumber", addressNumber))
+				.add(Restrictions.eq("orderNumber", orderNumber))
+				.add(Restrictions.eq("status", status))
+				);
+	    return criteria.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<PurchaseOrderRequest> getPurchaseOrderRequestByStatus(String status) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(PurchaseOrderRequest.class);
+		criteria.add(
+				Restrictions.conjunction()
+				.add(Restrictions.eq("status", status))
+				);
+	    return criteria.list();
+	}
 }

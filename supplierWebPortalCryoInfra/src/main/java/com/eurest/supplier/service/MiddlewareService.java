@@ -60,6 +60,7 @@ import com.eurest.supplier.model.PaymentSupplier;
 import com.eurest.supplier.model.PaymentSupplierDetail;
 import com.eurest.supplier.model.PurchaseOrder;
 import com.eurest.supplier.model.PurchaseOrderDetail;
+import com.eurest.supplier.model.PurchaseOrderRequest;
 import com.eurest.supplier.model.Receipt;
 import com.eurest.supplier.model.Supplier;
 import com.eurest.supplier.model.UDC;
@@ -2259,6 +2260,68 @@ public class MiddlewareService {
 				log4j.error("Exception" , e);
 				e.printStackTrace();
 				return mapError(e.getMessage() + " - updateVoucherDocs");
+			}
+		}
+		
+		public Map<String, Object> getRequestedPO(){		
+			try{
+				//JSAAVEDRA
+				log4j.info("*********** STEP 1: getRequestedPO()");
+				String jsonInString = "";
+				int size = 0;
+				
+				List<PurchaseOrderRequest> requestedPoList = purchaseOrderService.getPurchaseOrderRequestByStatus(AppConstants.STATUS_PENDING_REPLICATION);
+				if (requestedPoList != null && !requestedPoList.isEmpty()) {
+					List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>(); 
+					for(PurchaseOrderRequest r: requestedPoList) {
+						PurchaseOrder po = new PurchaseOrder();
+						po.setAddressNumber(r.getAddressNumber());
+						po.setOrderNumber(r.getOrderNumber());
+						po.setStatus(r.getStatus());
+						poList.add(po);
+					}
+					
+					//Convertir lista a JSON
+					ObjectMapper jsonMapper = new ObjectMapper();
+					jsonInString = jsonMapper.writeValueAsString(poList.toArray());
+					size = poList.size();
+				}
+				return mapOK(jsonInString, size);
+			} catch (Exception e) {
+				log4j.error("Exception" , e);
+				e.printStackTrace();
+				return mapError(e.getMessage() + " - getRequestedPO");				
+			}
+		}
+		
+		public Map<String, Object> setRequestedPO(List<PurchaseOrder> poList) {
+			try{
+				//JSAAVEDRA
+				log4j.info("*********** STEP 3: setRequestedPO()");
+				if(poList != null && !poList.isEmpty()) {
+					for(PurchaseOrder po : poList) {
+						List<PurchaseOrderRequest> requestList = purchaseOrderService.getPurchaseOrderRequestByQuery(po.getOrderNumber(), po.getAddressNumber(), AppConstants.STATUS_PENDING_REPLICATION);
+						if(requestList != null && !requestList.isEmpty()) {
+							for(PurchaseOrderRequest o : requestList) {
+								o.setStatus(AppConstants.STATUS_COMPLETE);
+								o.setReplicationMessage(AppConstants.STATUS_SUCCESS_REPLICATION);
+								o.setReplicationDate(new Date());
+								purchaseOrderService.updatePurchaseOrderRequest(o);
+							}
+							po.setStatus(AppConstants.STATUS_ERROR_REPLICATION);
+						}
+					}
+				}
+				
+				ObjectMapper jsonMapper = new ObjectMapper();
+				String jsonInString = jsonMapper.writeValueAsString(poList.toArray());
+				int size = poList.size();
+				return mapOK(jsonInString, size);
+				
+			} catch (Exception e) {
+				log4j.error("Exception" , e);
+				e.printStackTrace();
+				return mapError(e.getMessage() + " - setRequestedPO");
 			}
 		}
 		

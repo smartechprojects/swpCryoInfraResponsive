@@ -414,6 +414,33 @@ public class MiddlewareController {
 		}
 	}
 
+	@RequestMapping(value ="/middleware/getRequestedPO", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> getRequestedPO(HttpServletRequest request){
+		
+		try{
+			Map<String, Object> response = middlewareService.getRequestedPO();
+			return ResponseEntity.ok().body(response);
+		} catch (Exception e) {
+			log4j.error("Exception" , e);
+			e.printStackTrace();
+			return ResponseEntity.ok().body(mapError(e.getMessage() + " - getRequestedPO"));
+		}
+	}
+	
+	@RequestMapping(value ="/middleware/setRequestedPO", method=RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> setRequestedPO(@RequestBody List<PurchaseOrder> poList){
+		
+		try{
+			Map<String, Object> response = middlewareService.setRequestedPO(poList);
+			return ResponseEntity.ok().body(response);
+		} catch (Exception e) {
+			log4j.error("Exception" , e);
+			e.printStackTrace();
+			return ResponseEntity.ok().body(mapError(e.getMessage() + " - getRequestedPO"));
+		}
+	}
+	
 	@RequestMapping(value ="/middleware/getEnabledPO", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> getEnabledPO(@RequestParam int start,

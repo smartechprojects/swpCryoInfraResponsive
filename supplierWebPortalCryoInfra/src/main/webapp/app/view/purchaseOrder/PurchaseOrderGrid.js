@@ -170,9 +170,7 @@
             renderer: function(value, metaData, record, row, col, store, gridView){
             	var returnValue = '';
             	if(value != null && value != '' && value!= undefined){
-					    		
-					    		returnValue =   Ext.util.Format.date(new Date(value), 'd-m-Y H:i:s');
-					    		
+            		returnValue =   Ext.util.Format.date(new Date(value), 'd-m-Y H:i:s');
             	}
             	return returnValue;
             }
@@ -528,7 +526,7 @@
     			            id: 'poToDate',
     			            itemId: 'poToDate',
     			            name:'poToDate',
-    			            flex:1
+    			            flex:1,
     					},{ 
     						xtype: 'poComboStatus'
     					},{
@@ -602,6 +600,7 @@
     			            cls: 'buttonStyle',
     			            //margin:'2 20 5 10'
     					},
+    					/*
     					{
     		           		xtype:'button',
     			            text: SuppAppMsg.purchaseOrderFTP,
@@ -610,7 +609,7 @@
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
     			            cls: 'buttonStyle',
-    			            //margin:'2 20 5 10'
+    			            margin:'2 20 5 10'
     					},'->'
     					,
     					{
@@ -621,12 +620,11 @@
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     			            cls: 'buttonStyle',
-    			            //margin:'2 20 5 10'
+    			            margin:'2 20 5 10'
     					},{
     						xtype: 'displayfield',
     			            value: SuppAppMsg.replicacion,
-    			            //width : 100,
-    			            flex : 1,
+    			            width : 100,
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     		            	},{
@@ -635,50 +633,48 @@
     			            id: 'fromDate',
     			            maxValue: new Date(),
     			            format: 'd/m/Y',
-    			            //width:140,
-    			            flex : 1,
-    			            //labelWidth:30,
+    			            width:140,
+    			            labelWidth:30,
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
     					},{
     						xtype: 'datefield',
     			            fieldLabel: SuppAppMsg.purchaseOrderHasta,
-    			            //margin:'2 10 5 15',
+    			            margin:'2 10 5 15',
     			            id: 'toDate',
-    			            //width:140,
-    			            flex : 1,
+    			            width:140,			            
     			            maxValue: new Date(),
-    			            //labelWidth:30,
+    			            labelWidth:30,
     			            hidden:true,
     			            //hidden:role == 'ROLE_ADMIN'?false:true,
-    					},{
-    						xtype: 'textfield',
+    					},
+    					*/
+    					'-',{
+    						xtype: 'numberfield',
     			            fieldLabel: SuppAppMsg.purchaseOrderSupplier,
     			            id: 'addressNumber',
-    			            //width:120,
+    			            hideTrigger:'true',
+    			            maxWidth:180,
+    			            labelWidth:60,
     			            flex : 1,
-    			            //labelWidth:50,
     			            //margin:'2 10 5 15',
-    			            hidden:true,
-    			            //hidden:role == 'ROLE_ADMIN'?false:true,
+    			            hidden:role == 'ROLE_ADMIN'?false:true,
     					},{
     						xtype: 'numberfield',
     			            fieldLabel: 'OC',
     			            id: 'orderNumber',
     			            hideTrigger:'true', 
-    			            //width:100,
+    			            maxWidth:140,
+    			            labelWidth:20,
     			            flex : 1,
-    			            //labelWidth:20,
     			            //margin:'2 10 5 15',
-    			            hidden:true,
-    			            //hidden:role == 'ROLE_ADMIN'?false:true,
+    			            hidden:role == 'ROLE_ADMIN'?false:true,
     					},{
     		           		xtype:'button',
     			            text: 'Importar',
     			            iconCls: 'icon-accept',
-    			            action:'poLoadPurchases',
-    			            hidden:true,
-    			            //hidden:role == 'ROLE_ADMIN'?false:true,
+    			            action:'poLoadPurchasesSave',
+    			            hidden:role == 'ROLE_ADMIN'?false:true,
     			            cls: 'buttonStyle',
     			            //margin:'2 10 5 10'
     					}
@@ -927,6 +923,7 @@
 			            cls: 'buttonStyle',
 			            //margin:'2 20 5 10'
 					},
+					/*
 					{
 		           		xtype:'button',
 			            text: SuppAppMsg.purchaseOrderFTP,
@@ -935,8 +932,8 @@
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN' || role == 'ROLE_MANAGER' ?false:true,
 			            cls: 'buttonStyle',
-			            //margin:'2 20 5 10'
-					}
+			            margin:'2 20 5 10'
+					},'->'
 					,
 					{
 		           		xtype:'button',
@@ -946,12 +943,11 @@
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 			            cls: 'buttonStyle',
-			            //margin:'2 20 5 10'
+			            margin:'2 20 5 10'
 					},{
 						xtype: 'displayfield',
 			            value: SuppAppMsg.replicacion,
-			            //width : 100,
-			            flex:1,
+			            width : 100,
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 		            	},{
@@ -960,51 +956,49 @@
 			            id: 'fromDate',
 			            maxValue: new Date(),
 			            format: 'd/m/Y',
-			            //width:140,
-			            //labelWidth:30,
-			            flex:1,
+			            width:140,
+			            labelWidth:30,
 			            hidden:true,
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
 					},{
 						xtype: 'datefield',
 			            fieldLabel: SuppAppMsg.purchaseOrderHasta,
-			            //margin:'2 10 5 15',
+			            margin:'2 10 5 15',
 			            id: 'toDate',
-			            //width:140,			            
+			            width:140,			            
 			            maxValue: new Date(),
-			            //labelWidth:30,
+			            labelWidth:30,
 			            hidden:true,
-			            flex:1			            
 			            //hidden:role == 'ROLE_ADMIN'?false:true,
-					},{
-						xtype: 'textfield',
+					},
+					*/
+					'-',{
+						xtype: 'numberfield',
 			            fieldLabel: SuppAppMsg.purchaseOrderSupplier,
 			            id: 'addressNumber',
-			            //width:120,
-			            //labelWidth:50,
+			            hideTrigger:'true',
+			            maxWidth:180,
+			            labelWidth:60,
 			            //margin:'2 10 5 15',
-			            hidden:true,
-			            flex:1
-			            //hidden:role == 'ROLE_ADMIN'?false:true,
+			            flex:1,
+			            hidden:role == 'ROLE_ADMIN'?false:true,
 					},{
 						xtype: 'numberfield',
 			            fieldLabel: 'OC',
 			            id: 'orderNumber',
 			            hideTrigger:'true', 
-			            //width:100,
-			            //labelWidth:20,
+			            maxWidth:140,
+			            labelWidth:20,
 			            //margin:'2 10 5 15',
-			            hidden:true,
 			            flex:1,
-			            //hidden:role == 'ROLE_ADMIN'?false:true,
+			            hidden:role == 'ROLE_ADMIN'?false:true,
 					},{
 		           		xtype:'button',
 			            text: 'Importar',
 			            iconCls: 'icon-accept',
-			            action:'poLoadPurchases',
-			            hidden:true,
-			            //hidden:role == 'ROLE_ADMIN'?false:true,
-			            flex:1,
+			            action:'poLoadPurchasesSave',
+			            hidden:role == 'ROLE_ADMIN'?false:true,
+			            //flex:1,
 			            cls: 'buttonStyle',
 			            //margin:'2 10 5 10'
 					},{
