@@ -66,17 +66,16 @@
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="email-smtp.us-east-1.amazonaws.com" />
-        <property name="port" value="25" />
-        <property name="username" value="AKIAU2M5UYMADMMHPI54" />  
-        <property name="password" value="BCv1XoVLjVFdB7iyKZNl6LzHaNhMZtDG4R3hh3aIQWsU" />
+        <property name="port" value="587" />
+        <property name="username" value="AKIAU2M5UYMAOG4MJXIL" />  
+        <property name="password" value="BDu2giXax8XAaUqnrCZwH0aHyzyrWZMTeCPnuNtGI9BX" />
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.transport.protocol">smtp</prop>
-                <prop key="mail.smtp.auth">true</prop> 
-                <prop key="mail.smtp.ssl.enable">false</prop>
-                <prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>              
-                <prop key="mail.smtp.starttls.enable">false</prop>
-       			       			
+            	<prop key="mail.smtp.auth">true</prop>
+            	<prop key="mail.smtp.starttls.enable">true</prop>
+            	<prop key="mail.smtp.starttls.required">true</prop>
+            	<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>       			       			
             </props>
         </property>
     </bean>
