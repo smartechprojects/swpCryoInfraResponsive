@@ -120,7 +120,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 					'deliverPurchaseOrderGrid button[action=delPoConfirm]' : {
 						click : this.delPoConfirm
 					},
-					'purchaseOrderGrid button[action=poLoadPurchases]' : {
+					'purchaseOrderGrid button[action=poLoadPurchasesSave]' : {
 						click : this.poLoadList
 					},
 					'purchaseOrderGrid button[action=poLoadFTPInv]' : {
@@ -2496,17 +2496,17 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     poLoadList: function(button) {
     	var grid = this.getPurchaseOrderGrid();
     	var store = grid.getStore();
-    	var fromDate = Ext.getCmp('fromDate').getValue();    	
-    	var toDate = Ext.getCmp('toDate').getValue();
-    	var addressNumber = Ext.getCmp('addressNumber').getValue();
+//    	var fromDate = Ext.getCmp('fromDate').getValue();    	
+//    	var toDate = Ext.getCmp('toDate').getValue();
+    	var addressNumber = Ext.getCmp('addressNumber').getValue() == null?0:Ext.getCmp('addressNumber').getValue();
     	var orderNumber = Ext.getCmp('orderNumber').getValue() == null?0:Ext.getCmp('orderNumber').getValue();
     	
-		if(fromDate != "" && fromDate != null && toDate != "" && toDate != null){
-			fromDate = fromDate.toLocaleDateString("es-MX");
-			toDate = toDate.toLocaleDateString("es-MX");
+//		if(fromDate != "" && fromDate != null && toDate != "" && toDate != null){
+//			fromDate = fromDate.toLocaleDateString("es-MX");
+//			toDate = toDate.toLocaleDateString("es-MX");
 			
-			if((addressNumber == "" || addressNumber == null) && (orderNumber == "" || orderNumber == null || orderNumber ==0) ){
-				Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: "Mensaje", msg: "Debe especificar un proveedor, orden de compra o ambos antes de someter la replicación de órdenes" });
+			if(addressNumber == "" || addressNumber == null || orderNumber ==0 || orderNumber == "" || orderNumber == null || orderNumber ==0 ){
+				Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMessage, msg: SuppAppMsg.purchaseOrdersRequestEmptyData });
 				return false;
 			}
 				
@@ -2517,20 +2517,35 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 				params:{
 					orderNumber:orderNumber,
 					addressNumber:addressNumber,
-					fromDate:fromDate,
-					toDate:toDate
+					fromDate:null, //fromDate,
+					toDate:null //toDate
 				},
 					success : function(response,opts) {
-						Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: "Mensaje", msg: "El proceso de carga se ha iniciado en modo Batch" });
 						box.hide();
+						var resp = Ext.decode(response.responseText);
+						if(resp){
+							var message = resp.message;
+							if(message == "Success"){
+								Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMessage, msg: SuppAppMsg.purchaseOrdersRequestSuccessfullySaved });
+							} else if(message == "Error_E"){
+								Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMessage, msg: SuppAppMsg.purchaseOrdersRequestError });
+							} else if(message == "Error_1"){
+								Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMessage, msg: SuppAppMsg.usersSupplierExistsError });
+							} else if(message == "Error_2"){
+								Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMessage, msg: SuppAppMsg.purchaseOrdersRequestSavedBefore });
+							} else {
+								Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMessage, msg: message });
+							}
+							
+						}
 					},
 					failure : function() {
 						box.hide();
 					}
 				});
-    	}else{
-    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: "Mensaje", msg: "Los campos de fecha son obligatorios" });
-    	}
+//    	}else{
+//    		Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: "Mensaje", msg: "Los campos de fecha son obligatorios" });
+//    	}
     },
     
     poLoadFTPInv: function(button) {
