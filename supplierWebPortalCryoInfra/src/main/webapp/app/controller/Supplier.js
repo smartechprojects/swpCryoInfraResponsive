@@ -434,7 +434,7 @@ Ext.define('SupplierApp.controller.Supplier', {
 							    			record.save({
 							    			    callback: function (records, operation, success) { 
 							    			    	var ticketId = "";
-							    			    	var response = operation.response;
+							    			    	var response = operation._response;
 							    			    	var res = Ext.decode(response.responseText);
 							    			    	if(res.message == 'ERROR_COMPL'){
 								    			    	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad , msg:  SuppAppMsg.supplierErrorCompl});
@@ -619,7 +619,7 @@ Ext.define('SupplierApp.controller.Supplier', {
     			rec.save({
     			    callback: function (records, operation, success) {
     			    	var ticketId = "";
-    			    	var response = operation.response;
+    			    	var response = operation._response;
     			    	var res = Ext.decode(response.responseText);
     			    	if(res.message == 'ERROR_COMPL'){
 	    			    	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierErrorCompl});
@@ -717,7 +717,7 @@ Ext.define('SupplierApp.controller.Supplier', {
 				    			    callback: function (records, operation, success) {
 				    			    	if(records.data != null){
 					    			    	var ticketId = "";
-					    			    	var response = operation.response;
+					    			    	var response = operation._response;
 					    			    	var res = Ext.decode(response.responseText);
 					    			    	if(res.message == 'ERROR_COMPL'){
 						    			    	Ext.MessageBox.alert({ maxWidth: 700, minWidth: 650, title: SuppAppMsg.supplierMsgValidationLoad, msg:  SuppAppMsg.supplierErrorCompl});
