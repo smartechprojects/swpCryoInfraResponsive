@@ -8,7 +8,7 @@ Ext.define('SupplierApp.model.Udc', {
 	        {name: 'strValue2'},
 	        {name: 'intValue',type:'int'},
 	        {name: 'booleanValue',type:'boolean'},
-	        {name: 'dateValue'},
+	        {name: 'dateValue', type: 'date', dateFormat: 'time'},
 	        {name: 'systemRef'},
 	        {name: 'keyRef'},
 	        {name: 'createdBy'},

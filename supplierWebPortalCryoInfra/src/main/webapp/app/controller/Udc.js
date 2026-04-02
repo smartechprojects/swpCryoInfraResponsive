@@ -67,8 +67,27 @@ Ext.define('SupplierApp.controller.Udc', {
     gridSelectionChange: function(model, records) {
     	
         if (records[0]) {
+			var selectedRecord = records[0];
         	var form = this.getUdcForm().getForm();
-        	form.loadRecord(records[0]);
+	        form.loadRecord(selectedRecord);
+			var dateField = form.findField('dateValue');
+			if (dateField) {
+				var selectedDate = selectedRecord.get('dateValue');
+				if (!selectedDate && selectedRecord.raw) {
+					selectedDate = selectedRecord.raw.dateValue;
+				}
+
+				if (!Ext.isDate(selectedDate) && (Ext.isNumber(selectedDate) || Ext.isString(selectedDate))) {
+					var parsedDate = parseInt(selectedDate, 10);
+					selectedDate = isNaN(parsedDate) ? null : new Date(parsedDate);
+				}
+
+				if (Ext.isDate(selectedDate) && !isNaN(selectedDate.getTime())) {
+					dateField.setValue(selectedDate);
+				} else {
+					dateField.setValue(null);
+				}
+			}
             this.enableUpdate();
         }
     },
@@ -82,7 +101,7 @@ Ext.define('SupplierApp.controller.Udc', {
             values = form.getFieldValues();
 			var dateField = form.findField('dateValue');
 			if (dateField) {
-				values.dateValue = dateField.getValue();
+				values.dateValue = me.normalizeDateForServer(dateField.getValue());
 			}
             updatedRecord = populateObj(record, values);
             if (values.id > 0){
@@ -151,7 +170,7 @@ Ext.define('SupplierApp.controller.Udc', {
 		    }
 		    var dateField = form.findField('dateValue');
 		    if (dateField) {
-		    	values.dateValue = dateField.getValue();
+		    	values.dateValue = me.normalizeDateForServer(dateField.getValue());
 		    }
     	    var updatedId = parseInt(values.id, 10);
 
@@ -274,5 +293,18 @@ Ext.define('SupplierApp.controller.Udc', {
 	},
 	
 	initController: function(){
+	},
+
+	normalizeDateForServer: function(dateValue){
+		if (!Ext.isDate(dateValue)) {
+			return null;
+		}
+
+		return new Date(
+			dateValue.getFullYear(),
+			dateValue.getMonth(),
+			dateValue.getDate(),
+			12, 0, 0, 0
+		).getTime();
 	}
 });

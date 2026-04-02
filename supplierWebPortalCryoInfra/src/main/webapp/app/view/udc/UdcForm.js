@@ -253,7 +253,7 @@ Ext.define('SupplierApp.view.udc.UdcForm' ,{
 					id: 'dateValue',
 					maxWidth: 150,
 					flex: 1,
-					dateFormat: 'd-m-Y',
+					format: 'd-m-Y',
 					margin: '0 15 0 0',
 					//dateFormat: 'Y-M-d',
 				},
