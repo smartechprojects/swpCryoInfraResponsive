@@ -110,7 +110,13 @@ Ext.define('SupplierApp.controller.Udc', {
     			me.getUdcStore().add(updatedRecord);
         	    me.getUdcStore().sync();
         	    me.getUdcStore().reload();
-        	    Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.udcMsg1);
+        	    //Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.udcMsg1);
+        	    Ext.MessageBox.alert({ 
+           		   width: Ext.Element.getViewportWidth() * 0.35,   
+ 				            maxWidth: 500,                               
+ 				            height: Ext.Element.getViewportHeight() * 0.2,
+ 				            maxHeight: 100,
+           		   title: SuppAppMsg.approvalResponse, msg: SuppAppMsg.udcMsg1});
         	    form.reset();
     		}
     	}

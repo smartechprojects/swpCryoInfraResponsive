@@ -3496,7 +3496,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	
     },
     loadComplFileMassive : function(grid, record) {
-    	
+    	debugger
         var me = this;    	
     	var orderArray = [];
     	var invoiceArray = [];
@@ -3545,6 +3545,9 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 									margin:'30 0 10 20',
 									anchor : '90%',
 									buttonText : SuppAppMsg.suppliersSearch,
+									buttonConfig: {
+										cls: 'buttonStyle'
+								    },
 									listeners: {
 								        change: function(field, value) {
 								            var allowedExtensions = /(\.zip)$/i;
@@ -3552,13 +3555,25 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 								            var file = field.fileInputEl.dom.files[0];
 
 								            if (!allowedExtensions.test(value)) {
-								                Ext.Msg.alert('Error', 'Solo se permiten archivos zip.');
+								                //Ext.Msg.alert('Error', 'Solo se permiten archivos zip.');
+								                Ext.MessageBox.alert({ 
+								            		   width: Ext.Element.getViewportWidth() * 0.35,   
+								  				            maxWidth: 500,                               
+								  				            height: Ext.Element.getViewportHeight() * 0.2,
+								  				            maxHeight: 100,
+								            		   title: 'Error', msg: 'Solo se permiten archivos zip.'});
 								                field.reset();
 								                return;
 								            }
 
 								            if (file && file.size > fileSizeLimit) {
-								                Ext.Msg.alert('Error', 'El archivo debe ser menor de 25 MB.');
+								                //Ext.Msg.alert('Error', 'El archivo debe ser menor de 25 MB.');
+								            	Ext.MessageBox.alert({ 
+								            		   width: Ext.Element.getViewportWidth() * 0.35,   
+								  				            maxWidth: 500,                               
+								  				            height: Ext.Element.getViewportHeight() * 0.2,
+								  				            maxHeight: 100,
+								            		   title: 'Error', msg: 'El archivo debe ser menor de 25 MB.'});
 								                field.reset();
 								                return;
 								            }
@@ -3579,6 +3594,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 						buttons : [ {
 							text : SuppAppMsg.supplierLoad,
 							margin:'10 0 0 0',
+							cls: 'buttonStyle',
 							handler : function() {
 								var form = this.up('form').getForm();
 								if (form.isValid()) {
@@ -3586,11 +3602,12 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 												url : 'uploadComplPagoMassive.action',
 												waitMsg : SuppAppMsg.supplierLoadFile,
 												success : function(fp, o) {
-													
+													debugger
 													// Crear una tabla HTML con los datos del arreglo y aplicar estilos de "striped"
 													var tableHtml = '<table style="font-size: small; width: 1000px; border-collapse: collapse; border: 1px solid #ccc;">'; // Aplica el estilo para reducir el tamaño de letra y colapsar bordes
 													tableHtml += '<tr><th style="background-color: #f2f2f2; border: 1px solid #ccc;">Archivo</th><th style="background-color: #f2f2f2; border: 1px solid #ccc;">Mensaje</th></tr>'; // Establece el color de fondo para las cabeceras y añade borde
 													for (var i = 0; i < o.result.detail.length; i++) {
+														debugger
 													    var item = o.result.detail[i];
 													    var bgColor = i % 2 === 0 ? '#ffffff' : '#ccc'; // Alterna los colores de fondo de las filas
 													    tableHtml += '<tr style="background-color: ' + bgColor + '; border: 1px solid #ccc;">'; // Aplica el color de fondo alternativo a cada fila y añade borde
@@ -3608,10 +3625,10 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 													    //minWidth: 1150,
 													    //minHeight: 460,
 													    //maxHeight: 460,
-													    width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
-											            maxWidth: 420,                                // 👈 ancho mínimo
-											            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
-											            maxHeight: 150,
+													    width: Ext.Element.getViewportWidth() * 0.65,   
+											            maxWidth: 1150,                             
+											            height: Ext.Element.getViewportHeight() * 0.65, 
+											            maxHeight: 950,
 													    title: SuppAppMsg.supplierMsgValidationLoad,
 													    msg: 'Archivo procesado:<br><br>' + containerHtml
 													});
