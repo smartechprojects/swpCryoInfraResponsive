@@ -80,6 +80,10 @@ Ext.define('SupplierApp.controller.Udc', {
     		
         	var record = Ext.create('SupplierApp.model.Udc');
             values = form.getFieldValues();
+			var dateField = form.findField('dateValue');
+			if (dateField) {
+				values.dateValue = dateField.getValue();
+			}
             updatedRecord = populateObj(record, values);
             if (values.id > 0){
             	Ext.Msg.alert(SuppAppMsg.usersSaveError, "Error");
@@ -133,14 +137,22 @@ Ext.define('SupplierApp.controller.Udc', {
 		}
     },*/
      
-     updateUdc: function (button) {
+     updateUdc: function (button) {  	 
     	    var me    = this;
     	    var form  = this.getUdcForm().getForm();
     	    var store = this.getUdcGrid().getStore(); 
 
     	    if (!form.isValid()) return;
 
-    	    var values    = form.getValues();
+		    var values    = form.getFieldValues();
+		    var booleanField = form.findField('booleanValue');
+		    if (booleanField) {
+		        values.booleanValue = !!booleanField.getValue();
+		    }
+		    var dateField = form.findField('dateValue');
+		    if (dateField) {
+		    	values.dateValue = dateField.getValue();
+		    }
     	    var updatedId = parseInt(values.id, 10);
 
     	    if (!updatedId || updatedId <= 0) {
@@ -152,7 +164,13 @@ Ext.define('SupplierApp.controller.Udc', {
     	    var record = store.findRecord('id', updatedId, 0, false, false, true) || form.getRecord();
 
     	    if (!record) {
-    	        Ext.Msg.alert(SuppAppMsg.udcMsgError1, "No se encontró el registro en el store del grid.");
+    	        //Ext.Msg.alert(SuppAppMsg.udcMsgError1, "No se encontró el registro en el store del grid.");
+    	        Ext.MessageBox.alert({ 
+          		   width: Ext.Element.getViewportWidth() * 0.35,   
+				            maxWidth: 500,                               
+				            height: Ext.Element.getViewportHeight() * 0.2,
+				            maxHeight: 100,
+          		   title: SuppAppMsg.udcMsgError1, msg:   "No se encontró el registro en el store del grid."});
     	        return;
     	    }
 
@@ -160,7 +178,14 @@ Ext.define('SupplierApp.controller.Udc', {
 
     	    store.sync({
     	        success: function () {
-    	            Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.udcMsg1);
+    	          //  Ext.Msg.alert(SuppAppMsg.approvalResponse, SuppAppMsg.udcMsg1);
+    	        	
+    	        	Ext.MessageBox.alert({ 
+             		   width: Ext.Element.getViewportWidth() * 0.35,   
+				            maxWidth: 500,                               
+				            height: Ext.Element.getViewportHeight() * 0.2,
+				            maxHeight: 100,
+             		   title: SuppAppMsg.approvalResponse, msg:   SuppAppMsg.udcMsg1});
 
     	            var searchField = me.getUdcForm().down('#searchUdc');
     	            var searchValue = searchField ? searchField.getValue() : '';
@@ -195,7 +220,13 @@ Ext.define('SupplierApp.controller.Udc', {
     	                    errorMsg = op.error.statusText;
     	                }
     	            }
-    	            Ext.Msg.alert(SuppAppMsg.udcMsgError3, errorMsg);
+    	            //Ext.Msg.alert(SuppAppMsg.udcMsgError3, errorMsg);
+    	            Ext.MessageBox.alert({ 
+              		   width: Ext.Element.getViewportWidth() * 0.35,   
+ 				            maxWidth: 500,                               
+ 				            height: Ext.Element.getViewportHeight() * 0.2,
+ 				            maxHeight: 100,
+              		   title: SuppAppMsg.udcMsgError3, msg:   errorMsg});
     	        }
     	    });
     	},
