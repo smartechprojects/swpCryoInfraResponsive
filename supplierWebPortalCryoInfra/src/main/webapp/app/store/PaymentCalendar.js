@@ -12,6 +12,7 @@ Ext.define('SupplierApp.store.PaymentCalendar', {
         reader: {
             type: 'json',
             rootProperty: 'data',
+            totalProperty: 'total',
             successProperty: 'success'
         }
     }

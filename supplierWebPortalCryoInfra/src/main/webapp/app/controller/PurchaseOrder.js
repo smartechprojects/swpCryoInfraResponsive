@@ -4394,7 +4394,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
             maxWidth: 385,
             height: Ext.Element.getViewportHeight() * 0.45,
             maxHeight: 500,*/
-        	width: 385,
+        	width: 485,
         	height: 500,
             title: SuppAppMsg.purchasePaymentCalendar,
             border: false,
@@ -4405,7 +4405,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
             },
             scrollable: false,
             closeAction: 'destroy',
-            resizable: true,
+            resizable: false,
             minimizable: false,
             maximizable: false,
             plain: true,
