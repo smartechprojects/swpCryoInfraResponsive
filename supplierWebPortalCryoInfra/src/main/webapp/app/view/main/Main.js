@@ -625,7 +625,7 @@ Ext.define('SupplierApp.view.main.Main', {
                                     }
                                 },
                             	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:178px;',
-                            },
+                            }/*,
                         	{ 
                             	text: SuppAppMsg.tabToken ,
                             	iconCls: 'x-fa fa-user-plus',
@@ -658,7 +658,7 @@ Ext.define('SupplierApp.view.main.Main', {
                                     }
                                 },
                             	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:178px;',
-                            },
+                            }*/,
                             { 
                             	text: SuppAppMsg.paymentsSuppliers ,
                             	iconCls: 'x-fa fa-money',
