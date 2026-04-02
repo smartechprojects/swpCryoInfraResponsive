@@ -71,6 +71,7 @@ Ext.define('SupplierApp.view.purchaseOrder.SelInvGrid' ,{
                      name : 'acceptSelInv',
                      itemId : 'acceptSelInv',
                      scale: 'small',
+                     cls: 'buttonStyle',
                      handler: function(grid, rowIndex, colIndex) {
                         this.fireEvent('buttonclick', grid, record);
                      }

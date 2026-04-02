@@ -3366,8 +3366,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	this.winLoadInv.show();
     },
     
-    loadComplFile : function(grid, record) {
-    	
+    loadComplFile : function(grid, record) {   	
         var me = this;    	
     	var orderArray = [];
     	var invoiceArray = [];
@@ -3415,7 +3414,10 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 									allowBlank : false,
 									margin:'30 0 10 20',
 									anchor : '90%',
-									buttonText : SuppAppMsg.suppliersSearch
+									buttonText : SuppAppMsg.suppliersSearch,
+									buttonConfig: {
+										cls: 'buttonStyle'
+								    }
 								},{
 									xtype : 'filefield',
 									name : 'fileTwo',
@@ -3425,19 +3427,23 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 									allowBlank : false,
 									margin:'20 0 70 20',
 									anchor : '90%',
-									buttonText : SuppAppMsg.suppliersSearch
+									buttonText : SuppAppMsg.suppliersSearch,
+									buttonConfig: {
+										cls: 'buttonStyle'
+								    }
 								} ],
 
 						buttons : [ {
 							text : SuppAppMsg.supplierLoad,
 							margin:'10 0 0 0',
-							handler : function() {
-								var form = this.up('form').getForm();
+							cls: 'buttonStyle',
+							handler : function() {								
+								var form = this.up('form').getForm();							
 								if (form.isValid()) {
 									form.submit({
 												url : 'uploadComplPago.action',
 												waitMsg : SuppAppMsg.supplierLoadFile,
-												success : function(fp, o) {
+												success : function(fp, o) {													
 													Ext.MessageBox.alert({ 
 														//maxWidth: 700, minWidth: 650, 
 										        		width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
@@ -3448,7 +3454,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 													storeAccept.loadData([],false);
 													storeSelect.load();
 												},       // If you don't pass success:true, it will always go here
-										        failure: function(fp, o) {
+										        failure: function(fp, o) {										        	
 										        	var res = o.response.responseText;
 										        	var result = Ext.decode(res);
 										        	Ext.MessageBox.alert({ 
@@ -3473,7 +3479,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
 		        		width: Ext.Element.getViewportWidth() * 0.35,   // 👈 40% de pantalla
 			            maxWidth: 420,                                // 👈 ancho mínimo
 			            height: Ext.Element.getViewportHeight() * 0.35, // 👈 40% de alto
-			            maxHeight: 150,
+			            maxHeight: 250,
 						modal : true,
 						closeAction : 'destroy',
 						resizable : false,
