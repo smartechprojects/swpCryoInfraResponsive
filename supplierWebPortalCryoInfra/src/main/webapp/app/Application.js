@@ -24,25 +24,51 @@ Ext.define('SupplierApp.Application', {
 		}
 		
 		var me = this;
-		 if (Ext.get('page-loader')) {
-			    Ext.get('page-loader').hide();
-		 }
-		
-		SupplierApp.widgets.SessionMonitor.start();
-		
+		var startupCompleted = false;
+
+		var hideStartupLoaders = function() {
+			if (Ext.get('page-loader')) {
+				Ext.get('page-loader').hide();
+			}
+			if (Ext.get('loading')) {
+				Ext.get('loading').hide();
+			}
+			if (Ext.get('loading-mask')) {
+				Ext.get('loading-mask').hide();
+			}
+		};
+
+		var completeStartup = function(localizationData) {
+			if (startupCompleted) {
+				return;
+			}
+			startupCompleted = true;
+
+			SuppAppMsg = localizationData || {};
+			me.setMainView('SupplierApp.view.main.Main');
+			SupplierApp.widgets.SessionMonitor.start();
+			Ext.defer(hideStartupLoaders, 100);
+		};
+
 		Ext.Ajax.request({
-		    url: 'getLocalization.action',
-		    method: 'GET',
-		    params: {
-		    	lang : lang
-	        },
-		    success: function(fp, o) {
-		    	var resp = Ext.decode(fp.responseText, true);
-		    	SuppAppMsg = resp.data;	 
-		    	var app = me.getApplication();
-		    	app.setMainView('SupplierApp.view.main.Main');
-		    }
-		}); 
+			url: 'getLocalization.action',
+			method: 'GET',
+			timeout: 30000,
+			params: {
+				lang : lang
+			},
+			success: function(fp) {
+				var resp = Ext.decode(fp.responseText, true);
+				if (resp && resp.success && resp.data) {
+					completeStartup(resp.data);
+					return;
+				}
+				completeStartup({});
+			},
+			failure: function() {
+				completeStartup({});
+			}
+		});
 		
 		
     },

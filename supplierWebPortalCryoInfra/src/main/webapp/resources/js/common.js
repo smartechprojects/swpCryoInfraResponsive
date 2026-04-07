@@ -1,28 +1,40 @@
 
- 
-Ext.Ajax.on('requestcomplete', function (conn, response, options) {
-	try{
-        eval( "(" + response.responseText + ')' );
-    }catch(e){
-    	var loginIdent = "loginSupplier";
-    	var str =response.responseText.trim()
-        if(str.includes(loginIdent)){
-        	Ext.Msg.show({
-        		   title:'Aviso',
-        		   msg: 'Su sesión ha expirado. Será dirigido a la pagina de inicio para que inicie una nueva sesión.',
-        		   buttons: Ext.Msg.YES,
-        		   buttonText: {
-                       yes: 'Enterado',
-                   },
-        		   fn: function (buttonValue, inputText, showConfig) {
-        			   location.href = "j_spring_security_logout";
-        		   },
-        		   animEl: 'elId'
-        		});
-        	
-        }
-    }
-   
+
+var sessionExpiredMessageVisible = false;
+
+Ext.Ajax.on('requestcomplete', function (conn, response) {
+	var rawResponse = (response && typeof response.responseText === 'string')
+		? response.responseText
+		: '';
+
+	if (!rawResponse) {
+		return;
+	}
+
+	var decoded = Ext.decode(rawResponse, true);
+	if (decoded) {
+		return;
+	}
+
+	var normalized = rawResponse.trim().toLowerCase();
+	var hasLoginMarkup = normalized.indexOf('loginsupplier') !== -1
+		|| normalized.indexOf('j_spring_security_check') !== -1;
+
+	if (hasLoginMarkup && !sessionExpiredMessageVisible) {
+		sessionExpiredMessageVisible = true;
+		Ext.Msg.show({
+			title:'Aviso',
+			msg: 'Su sesión ha expirado. Será dirigido a la pagina de inicio para que inicie una nueva sesión.',
+			buttons: Ext.Msg.YES,
+			buttonText: {
+				yes: 'Enterado',
+			},
+			fn: function () {
+				location.href = "j_spring_security_logout";
+			},
+			animEl: 'elId'
+		});
+	}
 });
 
 Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
@@ -100,6 +112,12 @@ var udcEnabledFilter = new Ext.util.Filter({
 		return rec.get('booleanValue');
 	}
 });
+
+var autoLoadUDCStoreCache = {};
+
+function getUDCStoreCacheKey(udcSystem, udcKey, systemRef, keyRef) {
+	return [udcSystem || '', udcKey || '', systemRef || '', keyRef || ''].join('|');
+}
 
 
 var keyStr = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv"
@@ -203,7 +221,14 @@ function getUDCStore(udcSystem, udcKey, systemRef, keyRef) {
 };
 
 function getAutoLoadUDCStore(udcSystem, udcKey, systemRef, keyRef) {
-	return new Ext.data.Store({
+	var cacheKey = getUDCStoreCacheKey(udcSystem, udcKey, systemRef, keyRef);
+	var cachedStore = autoLoadUDCStoreCache[cacheKey];
+
+	if (cachedStore && !cachedStore.destroyed && !cachedStore.isDestroyed) {
+		return cachedStore;
+	}
+
+	var store = new Ext.data.Store({
 		fields : [ 'id', 'udcKey', 'strValue1', 'systemRef', 'keyRef', 'strValue2', 'booleanValue' ],
 		autoLoad : true,
 		proxy : {
@@ -223,6 +248,72 @@ function getAutoLoadUDCStore(udcSystem, udcKey, systemRef, keyRef) {
 			}
 		}
 	});
+
+	autoLoadUDCStoreCache[cacheKey] = store;
+	store.on('destroy', function() {
+		delete autoLoadUDCStoreCache[cacheKey];
+	});
+
+	return store;
+};
+
+function getLazyAutoLoadUDCStore(udcSystem, udcKey, systemRef, keyRef) {
+	var cacheKey = 'lazy|' + getUDCStoreCacheKey(udcSystem, udcKey, systemRef, keyRef);
+	var cachedStore = autoLoadUDCStoreCache[cacheKey];
+
+	if (cachedStore && !cachedStore.destroyed && !cachedStore.isDestroyed) {
+		return cachedStore;
+	}
+
+	var store = new Ext.data.Store({
+		fields : [ 'id', 'udcKey', 'strValue1', 'systemRef', 'keyRef', 'strValue2', 'booleanValue' ],
+		autoLoad : false,
+		proxy : {
+			type : 'ajax',
+			url : 'public/searchSystemAndKey.action',
+			extraParams : {
+				query:'',
+				udcSystem : udcSystem,
+				udcKey : udcKey,
+				systemRef : systemRef,
+				keyRef : keyRef
+			},
+			reader : {
+				rootProperty : 'data',
+				totalProperty : 'total',
+				type : 'json'
+			}
+		}
+	});
+
+	autoLoadUDCStoreCache[cacheKey] = store;
+	store.on('destroy', function() {
+		delete autoLoadUDCStoreCache[cacheKey];
+	});
+
+	return store;
+};
+
+function ensureLazyUDCStoreLoaded(combo) {
+	if (!combo || !combo.getStore) {
+		return;
+	}
+
+	var store = combo.getStore();
+	if (!store || store.isLoading() || store.getCount() > 0) {
+		return;
+	}
+
+	store.load();
+}
+
+var udcLazyLoadListeners = {
+	focus: function(combo) {
+		ensureLazyUDCStoreLoaded(combo);
+	},
+	expand: function(combo) {
+		ensureLazyUDCStoreLoaded(combo);
+	}
 };
 
 function getAutoLoadUDCStoreWithFilterStrValue2(udcSystem, filterBy) {
@@ -972,7 +1063,18 @@ var GridUtils = {
 	     * @param {boolean} isRefresh - Indica si es un refresh o resize
 	     */
 	    adjustGridLayout: function(grid, isRefresh) {
-	        if (!grid || !grid.isXType('gridpanel')) return;
+	        if (!grid || grid.destroyed || grid.isDestroyed || typeof grid.isXType !== 'function' || !grid.isXType('gridpanel')) {
+	        	return;
+	        }
+
+	        if (!grid.rendered || !grid.getEl || !grid.getEl()) {
+	        	Ext.defer(function() {
+	        		if (grid && !grid.destroyed && !grid.isDestroyed) {
+	        			GridUtils.adjustGridLayout(grid, isRefresh);
+	        		}
+	        	}, 200);
+	        	return;
+	        }
 	        
 	        // console.log('=== adjustGridLayout ===');
 	        // console.log('Grid:', grid.id || grid.itemId);
@@ -1001,15 +1103,37 @@ var GridUtils = {
 	     */
 	    adjustColumns: function(grid) {
 	        // console.log('=== adjustColumns (100% GARANTIZADO) ===');
-	        
-	        var gridWidth = grid.getWidth();
+	        if (!grid || grid.destroyed || grid.isDestroyed || !grid.rendered || !grid.getEl || !grid.getEl()) {
+	        	return;
+	        }
+
+	        var gridWidth = 0;
+	        if (typeof grid.getWidth === 'function') {
+	        	gridWidth = grid.getWidth() || 0;
+	        }
+	        if (!gridWidth && grid.getEl()) {
+	        	gridWidth = grid.getEl().getWidth() || 0;
+	        }
+	        if (!gridWidth || gridWidth <= 0) {
+	        	return;
+	        }
+
+	        var gridColumns = grid.columns || [];
+	        if (!gridColumns.length) {
+	        	return;
+	        }
+
 	        var visibleCount = 0;
 	        
 	        // 1. CONTAR COLUMNAS VISIBLES
 	        // Iteramos sobre todas las columnas para contar cuántas están visibles
-	        Ext.each(grid.columns, function(col) {
+	        Ext.each(gridColumns, function(col) {
 	            if (!col.hidden) visibleCount++;
 	        });
+
+	        if (visibleCount === 0) {
+	        	return;
+	        }
 	        
 	        // console.log('Grid ancho:', gridWidth, 'px, Columnas visibles:', visibleCount);
 	        
@@ -1017,7 +1141,7 @@ var GridUtils = {
 	        var columnData = [];
 	        var totalCurrentWidth = 0;
 	        
-	        Ext.each(grid.columns, function(col, index) {
+	        Ext.each(gridColumns, function(col, index) {
 	            if (col.hidden) return;
 	            
 	            var headerText = col.text || '';
@@ -1124,7 +1248,7 @@ var GridUtils = {
 	        
 	        // 9. VERIFICACIÓN FINAL Y REPORTE
 	        var finalTotal = 0;
-	        Ext.each(grid.columns, function(col) {
+	        Ext.each(gridColumns, function(col) {
 	            if (!col.hidden) finalTotal += col.getWidth();
 	        });
 	        
@@ -1136,7 +1260,9 @@ var GridUtils = {
 	        // console.log('   % ocupación:', ((finalTotal / gridWidth) * 100).toFixed(1) + '%');
 	        
 	        // Forzar actualización del layout para aplicar cambios
-	        grid.updateLayout();
+	        if (!grid.destroyed && !grid.isDestroyed) {
+	        	grid.updateLayout();
+	        }
 	        // console.log('✅ adjustColumns completado');
 	    },
 

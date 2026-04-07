@@ -2,7 +2,7 @@ Ext.define('SupplierApp.store.PaymentCalendar', {
     extend: 'Ext.data.Store',
     model: 'SupplierApp.model.PaymentCalendar',
     alias:'store.paymentcalendar',
-    autoLoad: true,
+    autoLoad: false,
     pageSize: 12,
     proxy: {
         type: 'ajax',

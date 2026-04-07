@@ -2053,7 +2053,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('CATEGORYCODE01', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CATEGORYCODE01', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2073,7 +2074,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('CATEGORYCODE20', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CATEGORYCODE20', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2093,7 +2095,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                queryMode: 'local',
 				                hidden:true,
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('CATEGORYCODE23', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CATEGORYCODE23', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2113,7 +2116,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('CATEGORYCODE24', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CATEGORYCODE24', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2133,7 +2137,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                margin:'10 0 0 10',
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('INDUSTRYCLASS', '', '', ''),
+								store : getLazyAutoLoadUDCStore('INDUSTRYCLASS', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2153,7 +2158,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                margin:'10 0 0 10',
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('GLCLASS', '', '', ''),
+								store : getLazyAutoLoadUDCStore('GLCLASS', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2173,7 +2179,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                margin:'10 0 0 10',
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('PAYMETH', '', '', ''),
+								store : getLazyAutoLoadUDCStore('PAYMETH', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2193,7 +2200,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('REQUISITOSFISCALES', '', '', ''),
+								store : getLazyAutoLoadUDCStore('REQUISITOSFISCALES', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2213,7 +2221,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                queryMode: 'local',
 				                hidden : true,
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('PMTTRM', '', '', ''),
+								store : getLazyAutoLoadUDCStore('PMTTRM', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,
@@ -2241,7 +2250,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 					                minChars: 1,
 					                queryMode: 'local',
 					                //forceSelection: true,
-									store : getAutoLoadUDCStore('IDENTIFICATIONTYPE', '', '', ''),
+									store : getLazyAutoLoadUDCStore('IDENTIFICATIONTYPE', '', '', ''),
+									listeners : udcLazyLoadListeners,
 					                displayField: 'strValue1',
 					                valueField: 'udcKey',
 					                //width : 250,
@@ -2407,7 +2417,7 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                //forceSelection: true,
 								xtype: 'combobox',
 								editable: false,
-								store : getAutoLoadUDCStore('CURRENCYVALIDATION', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CURRENCYVALIDATION', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 350,
@@ -2415,6 +2425,12 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                allowBlank:true,
 				                colspan:3,
 								listeners: {
+									expand: function(combo) {
+										ensureLazyUDCStoreLoaded(combo);
+									},
+									focus: function(combo) {
+										ensureLazyUDCStoreLoaded(combo);
+									},
 							    	select: function (comboBox, records, eOpts) {
 							    		//Ext.getCmp('checkingOrSavingAccount').setValue('0');
 							    		var contrib = records[0].data.udcKey; 
@@ -2486,13 +2502,19 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('CURRENCY', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CURRENCY', '', '', ''),
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 450,
 				                flex:1,
 								colspan:3,
-							    listeners: {
+								listeners: {
+									expand: function(combo) {
+										ensureLazyUDCStoreLoaded(combo);
+									},
+									focus: function(combo) {
+										ensureLazyUDCStoreLoaded(combo);
+									},
 							    	select: function (comboBox, records, eOpts) {
 							    		var country = Ext.getCmp('country').getValue();
 							    		var currencyCode = records[0].data.udcKey;
@@ -2609,7 +2631,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('CONTROLDIGIT', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CONTROLDIGIT', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 450,
@@ -2655,7 +2678,8 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 				                minChars: 1,
 				                queryMode: 'local',
 				                //forceSelection: true,
-								store : getAutoLoadUDCStore('CHECKORSAVEACCOUNT', '', '', ''),
+								store : getLazyAutoLoadUDCStore('CHECKORSAVEACCOUNT', '', '', ''),
+								listeners : udcLazyLoadListeners,
 				                displayField: 'strValue1',
 				                valueField: 'udcKey',
 				                //width : 400,

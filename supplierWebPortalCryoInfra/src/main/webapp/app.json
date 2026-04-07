@@ -41,6 +41,10 @@
 
         },
         {
+            "path": "resources/js/common.js",
+            "bundle": true
+        },
+        {
             "path": "app.js",
             "bundle": true
         }
@@ -62,7 +66,7 @@
     "production": {
         "output": {
             "appCache": {
-                "enable": true,
+                "enable": false,
                 "path": "cache.appcache"
             }
         },
@@ -70,7 +74,8 @@
             "cache": "${build.timestamp}"
         },
         "cache": {
-            "enable": true
+            "enable": false,
+            "deltas": false
         },
         "compressor": {
             "type": "yui"

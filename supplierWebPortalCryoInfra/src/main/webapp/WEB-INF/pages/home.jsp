@@ -17,8 +17,31 @@
 
 	<link rel="stylesheet" type="text/css" href="${url}/resources/css/SupplierApp-all.css">
 	<link rel="stylesheet" type="text/css" href="${url}/resources/css/app.css">    
-    <script type="text/javascript" charset="utf-8" src="${url}/ext/build/ext-all.js"></script>
-	<script type="text/javascript" charset="utf-8" src="${url}/resources/js/common.js"></script>
+	<script>
+		(function loadCommonJsWhenExtIsReady(retryCount) {
+			if (window.__supplierCommonLoaded) {
+				return;
+			}
+
+			if (window.Ext && Ext.Ajax) {
+				var script = document.createElement('script');
+				script.type = 'text/javascript';
+				script.charset = 'utf-8';
+				script.src = '${url}/resources/js/common.js';
+				script.onload = function() {
+					window.__supplierCommonLoaded = true;
+				};
+				document.head.appendChild(script);
+				return;
+			}
+
+			if (retryCount < 120) {
+				setTimeout(function() {
+					loadCommonJsWhenExtIsReady(retryCount + 1);
+				}, 100);
+			}
+		})(0);
+	</script>
 	
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
@@ -62,24 +85,39 @@
 	var correo = "";
 	
 	var serverDate = '<%= serverDate %>'; 
-	
-	Ext.Ajax.request({
-	    url: 'supplier/getByAddressNumber.action',
-	    method: 'POST',
-	    params: {
-	    	addressNumber : addressNumber
-        },
-	    success: function(fp, o) {
-	    	var res = Ext.decode(fp.responseText);
-	    		    	
-        	supplierProfile = Ext.create('SupplierApp.model.Supplier',res.data);
-	    	       	        	
-        	numeroUsuario = supplierProfile.data.addresNumber;
-        	telefono = supplierProfile.data.telefonoDF;
-        	correo = supplierProfile.data.emailSupplier;
-	    	
-	    }
-	}); 
+
+	(function waitAndLoadSupplierProfile(retry) {
+		if (window.Ext && Ext.Ajax && typeof Ext.Ajax.request === 'function' && typeof Ext.onReady === 'function') {
+			Ext.onReady(function() {
+				Ext.Ajax.request({
+					url: 'supplier/getByAddressNumber.action',
+					method: 'POST',
+					params: {
+						addressNumber : addressNumber
+					},
+					success: function(fp) {
+						var res = Ext.decode(fp.responseText, true);
+						if (!res || !res.data) {
+							return;
+						}
+
+						supplierProfile = Ext.create('SupplierApp.model.Supplier', res.data);
+
+						numeroUsuario = supplierProfile.data.addresNumber;
+						telefono = supplierProfile.data.telefonoDF;
+						correo = supplierProfile.data.emailSupplier;
+					}
+				});
+			});
+			return;
+		}
+
+		if (retry < 40) {
+			setTimeout(function() {
+				waitAndLoadSupplierProfile(retry + 1);
+			}, 250);
+		}
+	})(0);
 	 
 </script>
 

@@ -4406,6 +4406,9 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
         var store = grid.getStore();
         var view = grid.getView();
 
+		store.currentPage = 1;
+		store.loadPage(1);
+
         new Ext.Window({
             /*width: Ext.Element.getViewportWidth() * 0.40,
             maxWidth: 385,
