@@ -212,12 +212,13 @@ public class FiscalDocumentDao {
 						" uuidNotaCredito, " +
 						" uuidPago, " +
 						" case when currentApprover like '%" + userName + "%' then 1 else 0 end as approverOrder, " + //Campo para ordenar
-						" case when status = 'PENDIENTE' then 1 " +
-						" when status = 'APROBADO'		then 2 " +
-						" when status = 'PAGADO'		then 3 " +
-						" when status = 'COMPLEMENTO'		then 4 " +
-						" when status = 'RECHAZADO'	then 5 " +
-						" when status = 'CANCELADO'		then 6 else 7 end as statusOrder " + //Campo para ordenar
+						" case when status = 'PENDIENTE' and currentApprover like '" + userName + "%'  then 1 " +
+						" when status = 'PENDIENTE' and currentApprover not like '" + userName + "%'  then 2 " +
+						" when status = 'APROBADO'		then 3 " +
+						" when status = 'PAGADO'		then 4 " +
+						" when status = 'COMPLEMENTO'		then 5 " +
+						" when status = 'RECHAZADO'	then 6 " +
+						" when status = 'CANCELADO'		then 7 else 8 end as statusOrder " + //Campo para ordenar
 						" from fiscaldocuments " +
 						" where orderType <> 'FLETE' " +
 						  sqlFilter +
