@@ -16,9 +16,8 @@ Ext.define('SupplierApp.view.receipt.ReceiptPanel' ,{
             	width: '100%'
             },{
            	 xtype: 'receiptGrid',
-           	 //height:380
-           	lex: 0,
-        	width: '100%'
+            	flex: 1,
+            	width: '100%'
             }]
         });
         this.callParent(arguments);
