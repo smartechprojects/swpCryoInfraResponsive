@@ -212,8 +212,8 @@ public class FiscalDocumentDao {
 						" uuidNotaCredito, " +
 						" uuidPago, " +
 						" case when currentApprover like '%" + userName + "%' then 1 else 0 end as approverOrder, " + //Campo para ordenar
-						" case when status = 'PENDIENTE' and currentApprover like '" + userName + "%'  then 1 " +
-						" when status = 'PENDIENTE' and currentApprover not like '" + userName + "%'  then 2 " +
+						" case when status = 'PENDIENTE' and currentApprover like '%" + userName + "%'  then 1 " +
+						" when status = 'PENDIENTE' and currentApprover not like '%" + userName + "%'  then 2 " +
 						" when status = 'APROBADO'		then 3 " +
 						" when status = 'PAGADO'		then 4 " +
 						" when status = 'COMPLEMENTO'		then 5 " +
