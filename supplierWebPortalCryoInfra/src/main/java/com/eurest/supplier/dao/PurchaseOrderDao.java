@@ -908,10 +908,15 @@ public class PurchaseOrderDao {
 
 	@SuppressWarnings("unchecked")
 	public List<PurchaseOrder> getOpenOrderPO(int start, int limit) {
+		Calendar calendarExec= Calendar.getInstance();
+		calendarExec.add(Calendar.DATE, -365);
+		Date initDate = calendarExec.getTime();
+		
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(PurchaseOrder.class);
 		criteria.add(
 				Restrictions.conjunction()
+				.add(Restrictions.gt("portalRecordDate", initDate))
 				.add(Restrictions.eq("orderStauts", AppConstants.STATUS_OC_RECEIVED))
 				);
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);		
@@ -922,10 +927,15 @@ public class PurchaseOrderDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Receipt> getOpenOrderReceipts(int start, int limit) {
+		Calendar calendarExec= Calendar.getInstance();
+		calendarExec.add(Calendar.DATE, -365);
+		Date initDate = calendarExec.getTime();
+		
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Receipt.class);
 		criteria.add(
 				Restrictions.conjunction()
+				.add(Restrictions.gt("receiptDate", initDate))
 				.add(Restrictions.ne("status", AppConstants.STATUS_OC_CANCEL))
 				);
 		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);		
