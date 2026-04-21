@@ -1013,11 +1013,15 @@ public class PlantAccessController {
 				if(new CedulaDeCuotasAlIMSS().ValidDoc(file.getFile().getBytes())) {
 					
 					int idRES=fileStoreService.saveAndReturnId(fileToSave);
-					int res=outSourcingService.savingODDDCFromPDF(fileToSave.getContent(),idRES);
-					if(res==0) {
-						return mapError("Error No se encontro CÉDULA DE DETERMINACIÓN DE CUOTAS para lista nominal en el archivo");
-					}else {
-						
+					try {
+						int res=outSourcingService.savingODDDCFromPDF(fileToSave.getContent(),idRES);
+						if(res==0) {
+							return mapError("Error No se encontro CÉDULA DE DETERMINACIÓN DE CUOTAS para lista nominal en el archivo");
+						}
+					} catch (Exception e) {
+						log4j.error("Error procesando SUA PDF", e);
+						//return mapError("Error al procesar el archivo SUA: " + e.getMessage());
+						return mapOK(fileToSave);
 					}
 				}else {
 					return mapError("Documento SUA INVALIDO.");

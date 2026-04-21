@@ -1834,7 +1834,7 @@ public class OutSourcingService {
 		 		                    
 		 		                    clave.add(nss);
 		 		                    nombre.add(nombreCompleto);
-		 		                    System.out.println("NSS: " + nss + " -> Nombre: " + nombreCompleto);
+		 		                    //System.out.println("NSS: " + nss + " -> Nombre: " + nombreCompleto);
 		 		                }   
 		 		            }
 		 		        }         
@@ -1917,19 +1917,15 @@ public class OutSourcingService {
 					}
 				}
 				 	
-				 	/*System.out.println("Claves encontradas: " + clave.size());
-		            System.out.println("Nombres encontrados: " + nombre.size());
-		            System.out.println("CURP encontrados: " + curp.size());
- 		            for (int z=0; z<clave.size(); z++) {
+				// 	System.out.println("Claves encontradas: " + clave.size());
+		        //    System.out.println("Nombres encontrados: " + nombre.size());
+		        //    System.out.println("CURP encontrados: " + curp.size());
+ 		            /*for (int z=0; z<clave.size(); z++) {
 		                System.out.println("  NSS: " + clave.get(z));
 		                System.out.println("  Nombre: " + (z < nombre.size() ? nombre.get(z) : "NO HAY NOMBRE"));
-		            if("GOMEZ VILCHIS LARIZA".equals(nombre.get(z))) {
-		            	System.out.println(" Lariza");
-		            }
-		                
 		                System.out.println("  CURPS: " + (z < curp.size() ? curp.get(z) : "NO HAY CURP"));
 		            }*/
- 		           System.out.println(" ---");
+ 		     ///      System.out.println(" ---");
 	 			    for (int z=0; z<clave.size(); z++) {
 		 				CDDDCEmployee eploy = new CDDDCEmployee();
 		 				eploy.setNumSegSoci( clave.get(z) );

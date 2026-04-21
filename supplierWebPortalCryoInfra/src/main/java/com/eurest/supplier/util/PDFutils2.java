@@ -109,7 +109,7 @@ public class PDFutils2 {
 	}
 	
 	public String[] getPdfText(byte[] input, int area, int pages){
-		System.out.println("getPdfText area: " + area + " pages: " + pages);
+		//System.out.println("getPdfText area: " + area + " pages: " + pages);
 	PDDocument pdDocument = null;
 	try {
 	    pdDocument = PDDocument.load(input);		   
@@ -118,7 +118,7 @@ public class PDFutils2 {
 	    
 	    // Detectar versión (solo para saber si agregar región extra)
         String version = detectarVersion(pdDocument);
-        System.out.println("Versión detectada: " + version);
+        //System.out.println("Versión detectada: " + version);
         
         if (version.equals("3.6.5")) {
 	    
@@ -173,24 +173,24 @@ public class PDFutils2 {
 	    derechoCText = stripper.getTextForRegion("derechoC");
 	    
 	    if( area == 6 ) {
-	    	log4j.info(cabeceroText);
+	    	//log4j.info(cabeceroText);
 	    	String [] batch = cabeceroText.split("\n");
 	    	return batch;
 	    } 
 	    		    
 	    if((cabeceroText.contains("SISTEMA ÚNICO DE AUTODETERMINACIÓN")) && area == 2 ) {
-	    	log4j.info(cabeceroText);
+	    	//log4j.info(cabeceroText);
 	    	String [] batch = cabeceroText.split("\n");
 	    	return batch;
 	    } 
 	    
 	    if( area == 3 ) {
-	    	log4j.info(izquierdaText);
+	    	//log4j.info(izquierdaText);
 	    	String [] batch = izquierdaText.split("\n");
 	    	return batch;
 	    }		    
 	    if( area == 4 ) {
-	    	log4j.info(derechoCText);
+	    	//log4j.info(derechoCText);
 	    	String [] batch = derechoCText.split("\n");
 	    	return batch;
 	    }   
@@ -216,7 +216,7 @@ public class PDFutils2 {
                         validas.add(x);
                     }
                 }
-                System.out.println("Páginas válidas 3.7.0: " + validas);
+              //  System.out.println("Páginas válidas 3.7.0: " + validas);
                 String[] batch = new String[validas.size()];
                 for (int i = 0; i < validas.size(); i++) {
                     batch[i] = String.valueOf(validas.get(i));
@@ -241,7 +241,7 @@ public class PDFutils2 {
             String derechoCText = stripper.getTextForRegion("derechoC");
             
             if (area == 2) {
-                log4j.info(cabeceroText);
+                //log4j.info(cabeceroText);
                 String[] batch = cabeceroText.split("\n");
                 return batch;
             }
@@ -285,7 +285,10 @@ public class PDFutils2 {
                                     empleadosUnificados.append(linea).append("\n");
                                 }
                             } else {
-                                empleadosUnificados.append(linea).append("\n");
+                                // No es CURP completo - puede ser RFC sin homoclave (ej: BEAS-711111-)
+                                // Remover el RFC del final antes de usarlo como nombre
+                                String lineaLimpiada = linea.replaceAll("\\s+[A-Z]{4}-\\d{6}-\\s*$", "").trim();
+                                empleadosUnificados.append(lineaLimpiada).append("\n");
                             }
                         }
                     }
@@ -326,7 +329,7 @@ public class PDFutils2 {
                 }
                 
                 String textoFinal = empleadosUnificados.toString();
-                log4j.info(textoFinal);
+               // log4j.info(textoFinal);
                 String[] batch = textoFinal.split("\n");
                 
                 // Filtrar líneas vacías
@@ -341,7 +344,7 @@ public class PDFutils2 {
             }
             
             if (area == 4) {
-                System.out.println("=== DEBUG area=4 ===");
+                //System.out.println("=== DEBUG area=4 ===");
                 
                 List<String> listaLineas = new ArrayList<String>();
                 
@@ -354,11 +357,12 @@ public class PDFutils2 {
                     boolean primerEmpleadoEncontrado = false;
                     for (String linea : lineas) {
                         if (primerEmpleadoEncontrado) break;
-                        
+                                                
                         // Buscar una línea que contenga NSS (formato con guiones)
                         if (linea.contains("-") && org.apache.commons.lang3.StringUtils.countMatches(linea, "-") >= 4) {
-                            // Buscar el inicio del CURP: 4 letras mayúsculas seguidas de 6 dígitos
-                            java.util.regex.Pattern inicioCurpPattern = java.util.regex.Pattern.compile("[A-Z]{4}\\d{6}");
+                            // Buscar el inicio del CURP/RFC: 4 letras mayúsculas, opcionalmente un guión, seguidas de 6 dígitos
+                        	//java.util.regex.Pattern inicioCurpPattern = java.util.regex.Pattern.compile("[A-Z]{4}\\d{6}");
+                            java.util.regex.Pattern inicioCurpPattern = java.util.regex.Pattern.compile("[A-Z]{4}-?\\d{6}");
                             java.util.regex.Matcher inicioMatcher = inicioCurpPattern.matcher(linea);
                             
                             if (inicioMatcher.find()) {
@@ -380,9 +384,14 @@ public class PDFutils2 {
                                         ubicacion = "";
                                     }
                                     String lineaCompleta = curpCompleto + (ubicacion.isEmpty() ? "" : " " + ubicacion);
-                                    System.out.println("CURP en cabecero (primer empleado): [" + lineaCompleta + "]");
+                    //                System.out.println("CURP en cabecero (primer empleado): [" + lineaCompleta + "]");
                                     listaLineas.add(lineaCompleta);
                                     primerEmpleadoEncontrado = true;
+                                }else {
+                                	if(curpCompleto.contains("-")) {
+                                		listaLineas.add(curpCompleto);
+                                        primerEmpleadoEncontrado = true;
+                                	}
                                 }
                             }
                         }
@@ -403,6 +412,10 @@ public class PDFutils2 {
                             int startIdx = inicioMatcher.start();
                             // Tomar los siguientes 18 caracteres, pero pueden tener espacios
                             String posibleCurp = linea.substring(startIdx);
+                            
+                            //Valida que no tenga guion
+                            if(!posibleCurp.contains("-")) {
+                            
                             // Eliminar espacios
                             String curpLimpio = posibleCurp.replaceAll("\\s", "").substring(0, 18);
                             
@@ -417,20 +430,24 @@ public class PDFutils2 {
                                 resto = "";
                             }
                             String lineaCompleta = curpLimpio + (resto.isEmpty() ? "" : " " + resto);
-                            System.out.println("Línea completa en derechoCText: [" + lineaCompleta + "]");
+                      //      System.out.println("Línea completa en derechoCText: [" + lineaCompleta + "]");
                             listaLineas.add(lineaCompleta);
+                        }else {
+                        	// RFC con guiones: quitar dígitos sueltos al final (campo "Lic.", ej: FALD-781111-3)
+                        	listaLineas.add(posibleCurp.trim().replaceAll("\\s*\\d+$", ""));
                         }
+                      }
                     }
                 }
                 
-                System.out.println("Líneas encontradas en área 4: " + listaLineas.size());
+                //System.out.println("Líneas encontradas en área 4: " + listaLineas.size());
                 
                 StringBuilder resultado = new StringBuilder();
                 for (String l : listaLineas) {
                     resultado.append(l).append("\n");
                 }
                 
-                log4j.info("Líneas encontradas: " + resultado.toString());
+                //log4j.info("Líneas encontradas: " + resultado.toString());
                 String[] batch = resultado.toString().split("\n");
                 List<String> listaFinal = new ArrayList<String>();
                 for (String s : batch) {
@@ -472,8 +489,6 @@ public class PDFutils2 {
 			        PDPage page = pdDocument.getPage(0);
 			        stripper.extractRegions(page);
 			        String versionText = stripper.getTextForRegion("versionArea");
-			        
-			        System.out.println("Version text: [" + versionText + "]");
 			        
 			        if (versionText != null && versionText.contains("V 3.7.0")) {
 			            return "3.7.0";
