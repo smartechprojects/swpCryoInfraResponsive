@@ -211,5 +211,20 @@ public class PlantAccessWorker {
 	public void setEmployeeRfc(String employeeRfc) {
 		this.employeeRfc = employeeRfc;
 	}
+	@Override
+	public String toString() {
+		return "PlantAccessWorker [id=" + id + ", fechaRegistro=" + fechaRegistro + ", membershipIMSS=" + membershipIMSS
+				+ ", datefolioIDcard=" + datefolioIDcard + ", dateInduction=" + dateInduction + ", employeeName="
+				+ employeeName + ", employeeLastName=" + employeeLastName + ", employeeSecondLastName="
+				+ employeeSecondLastName + ", cardNumber=" + cardNumber + ", requestNumber=" + requestNumber
+				+ ", activities=" + activities + ", listDocuments=" + listDocuments + ", allDocuments=" + allDocuments
+				+ ", docsActivity1=" + docsActivity1 + ", docsActivity2=" + docsActivity2 + ", docsActivity3="
+				+ docsActivity3 + ", docsActivity4=" + docsActivity4 + ", docsActivity5=" + docsActivity5
+				+ ", docsActivity6=" + docsActivity6 + ", docsActivity7=" + docsActivity7 + ", employeeOrdenes="
+				+ employeeOrdenes + ", employeePuesto=" + employeePuesto + ", employeeCurp=" + employeeCurp
+				+ ", employeeRfc=" + employeeRfc + ", tempId=" + tempId + "]";
+	}
+	
+	
 	
 }

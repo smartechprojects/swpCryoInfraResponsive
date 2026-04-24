@@ -103,6 +103,12 @@ public class FileStore {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
+	@Override
+	public String toString() {
+		return "FileStore [id=" + id + ", dateUpload=" + dateUpload + ", originName=" + originName + ", namefile="
+				+ namefile + ", fileType=" + fileType + ", documentType=" + documentType + ", numRefer=" + numRefer
+				+ ", status=" + status + ", uuid=" + uuid + "]";
+	}
 	
 	
 }

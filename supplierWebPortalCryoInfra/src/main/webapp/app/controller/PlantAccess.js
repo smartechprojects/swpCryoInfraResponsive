@@ -6897,18 +6897,14 @@
 			    		return true;
 			    	}
 				} else {
-		    		var r1 = Ext.decode(o.response.responseText);
-			    	var res = Ext.decode(r1);
-
-			    	if(res.message != ''){
-			    		box.hide();
+		    		box.hide();
+		    		var res = Ext.decode(o._response.responseText);
+			    	if(res && res.message && res.message != ''){
 			    		Ext.MessageBox.show({
 	    	        	    title: SuppAppMsg.plantAccess89,
 	    	        	    msg: res.message
 	    	        	});
-			    		return false;
 			    	}
-					box.hide();
 				}
 			}
 		});

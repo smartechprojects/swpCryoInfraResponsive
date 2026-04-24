@@ -54,6 +54,7 @@ import com.eurest.supplier.model.Users;
 import com.eurest.supplier.pdfDocumentReader.CedulaDeCuotasAlIMSS;
 import com.eurest.supplier.service.ApprovalBatchFreightService;
 import com.eurest.supplier.service.BatchJournalService;
+import com.eurest.supplier.service.DataAuditService;
 import com.eurest.supplier.service.DocumentsService;
 import com.eurest.supplier.service.EmailService;
 import com.eurest.supplier.service.EmailServiceAsync;
@@ -130,6 +131,9 @@ public class PlantAccessController {
 	@Autowired
 	private OutSourcingService outSourcingService;
 	
+	@Autowired
+	DataAuditService dataAuditService;
+	
 	Logger log4j = LogManager.getLogger(PlantAccessController.class);
 	
 	@RequestMapping(value ="/plantAccess/view.action")
@@ -174,18 +178,22 @@ public class PlantAccessController {
 	@RequestMapping(value ="/plantAccess/plantAccessPDF.action", method = RequestMethod.GET)
 	public void plantAccessPDF(HttpServletResponse response, 
 			@RequestParam String uuid) throws IOException {
-		
+		try {
 		PDFUtils pdfUtils = new PDFUtils();
 		PlantAccessRequest paRequest = plantAccessRequestService.getPlantAccessRequests(uuid);
+		if(paRequest == null) {
+			log4j.warn("[plantAccessPDF] No se encontró solicitud con uuid=" + uuid);
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Solicitud no encontrada");
+			return;
+		}
 		List<PlantAccessWorker> workers = plantAccessWorkerService.searchWorkersPlantAccessByIdRequest(String.valueOf(paRequest.getId()));
 		
 		Users u = usersService.getByUserName(paRequest.getAprovUser());
 		if(u != null) paRequest.setAprovUser(u.getName());
-		
-		//TaxVaultDocument fdoc = taxVaultDocumentService.getById(id);
-		
+				
 		byte[] pdfBytes = pdfUtils.getPlantAccessPDF(paRequest,workers);
-	 if(pdfBytes.length>0) {
+	 
+		if(pdfBytes.length>0) {
 		
 		String fileName = "R-AD-02-03-05_"+paRequest.getRfc()+".pdf";
 		String contentType = "application/pdf";
@@ -200,6 +208,10 @@ public class PlantAccessController {
 	    }
 	    is.close();
 	 }
+		} catch (Exception e) {
+			log4j.error("[plantAccessPDF] Error generando PDF | uuid=" + uuid, e);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+		}
 	}
 	
 	@RequestMapping(value ="/plantAccess/updateListDocumentsWorker.action", method = RequestMethod.POST)
@@ -213,13 +225,18 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//PlantAccessRequest paRequest = null;
 		//int total = 0;
 	    try {
 	      PlantAccessWorker worker = plantAccessWorkerService.getById(Integer.valueOf(id));
 	      worker.setListDocuments(documents);
 	      plantAccessWorkerService.update(worker);
+	      PlantAccessRequest plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(worker.getRequestNumber()));
+	      dataAuditService.saveDataAudit("UpdateListDocumentsWorker", plantAccessRequest != null ? plantAccessRequest.getAddressNumberPA() : "N/A", new Date(), request.getRemoteAddr(),
+	              auth.getName(), "Documents list updated - WorkerID: " + id + " - documents: " + documents, "updateListDocumentsWorker",
+	              worker.toString(), null, null, null,
+	              null, null, AppConstants.PLANTACCESS_MODULE);
 	      
 	      return mapStrOk("Succ");
 	      //return mapOK(paRequest);
@@ -244,7 +261,7 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		//PlantAccessRequest paRequest = null;
 		//int total = 0;
 	    try {
@@ -301,6 +318,12 @@ public class PlantAccessController {
 			}
 		      worker.setListDocuments(documen);
 		      plantAccessWorkerService.update(worker);
+		      
+		      PlantAccessRequest plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(worker.getRequestNumber()));
+		      dataAuditService.saveDataAudit("UpdateCheckBoxWorker", plantAccessRequest != null ? plantAccessRequest.getAddressNumberPA() : "N/A", new Date(), request.getRemoteAddr(),
+                      auth.getName(), "Checkbox updated - WorkerID: " + idWorker + " - checkbox: " + idCheckbox + " - selected: " + selected, "updateCheckBoxWorker",
+                      worker.toString(), null, null, null,
+                      null, null, AppConstants.PLANTACCESS_MODULE);
 		      
 		      return mapOKFS(list, list.size());
 		    } catch (Exception e) {
@@ -360,8 +383,13 @@ public class PlantAccessController {
 	@RequestMapping(value ="/plantAccess/openDocumentPlantAccess.action", method = RequestMethod.GET)
     public void openDocumentPlantAccess(HttpServletResponse response, 
     			             @RequestParam int id) throws IOException {
-     
+     	try {
 		FileStore doc = fileStoreService.getById(id);
+		if(doc == null) {
+			log4j.warn("[openDocumentPlantAccess] Documento no encontrado con id=" + id);
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Documento no encontrado");
+			return;
+		}
 		String fileName = doc.getOriginName();
 		String contentType = doc.getFileType();
 		byte[] content = doc.getContent();
@@ -384,6 +412,10 @@ public class PlantAccessController {
             response.getOutputStream().write(bytes, 0, bytesRead);
         }
         is.close();
+     	} catch (Exception e) {
+			log4j.error("[openDocumentPlantAccess] Error abriendo documento | id=" + id, e);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+		}
     }
 	
 	@RequestMapping(value ="/plantAccess/searchWorkersPlantAccessByIdRequest.action", method = RequestMethod.POST)
@@ -460,112 +492,12 @@ public class PlantAccessController {
 				return mapError("Parámetros inválidos.");
 			}
 
-			// Si se solicita reemplazar, eliminar trabajadores existentes y sus archivos
-			if(replaceExisting) {
-				log4j.info("[copyWorkersFromRequest] replaceExisting=true -> eliminando trabajadores existentes en solicitud destino: " + targetRequestId);
-				List<PlantAccessWorker> existing = plantAccessWorkerService.searchWorkersPlantAccessByIdRequest(targetRequestId);
-				if(existing != null) {
-					log4j.info("[copyWorkersFromRequest] Trabajadores existentes a eliminar: " + existing.size());
-					for(PlantAccessWorker w : existing) {
-						log4j.info("[copyWorkersFromRequest] Eliminando trabajador id=" + w.getId()
-								+ " | nombre=" + w.getEmployeeName() + " " + w.getEmployeeLastName()
-								+ " | CURP=" + w.getEmployeeCurp());
-						// borrar archivos asociados
-						List<FileStore> files = fileStoreService.getFilesPlantAccessWorker(targetRequestId, w.getId(), false);
-						if(files != null) {
-							log4j.info("[copyWorkersFromRequest] Eliminando " + files.size() + " archivo(s) del trabajador id=" + w.getId());
-							for(FileStore f : files) {
-								log4j.info("[copyWorkersFromRequest]   - Eliminando archivo id=" + f.getId() + " | tipo=" + f.getDocumentType() + " | nombre=" + f.getOriginName());
-								fileStoreService.deleteFilesPlantAccess(f);
-							}
-						} else {
-							log4j.info("[copyWorkersFromRequest] Trabajador id=" + w.getId() + " no tiene archivos asociados.");
-						}
-						plantAccessWorkerService.deleteWorkerPlantAccess(w);
-						log4j.info("[copyWorkersFromRequest] Trabajador id=" + w.getId() + " eliminado OK.");
-					}
-				} else {
-					log4j.info("[copyWorkersFromRequest] No hay trabajadores existentes en solicitud destino: " + targetRequestId);
-				}
+			if(sourceRequestId.trim().equals(targetRequestId.trim())) {
+				log4j.warn("[copyWorkersFromRequest] sourceRequestId == targetRequestId (" + sourceRequestId + ") - operación cancelada para evitar pérdida de datos.");
+				return mapError("La solicitud origen y destino no pueden ser la misma.");
 			}
 
-			// Leer trabajadores de origen
-			log4j.info("[copyWorkersFromRequest] Leyendo trabajadores de solicitud origen: " + sourceRequestId);
-			List<PlantAccessWorker> sourceWorkers = plantAccessWorkerService.searchWorkersPlantAccessByIdRequest(sourceRequestId);
-			log4j.info("[copyWorkersFromRequest] Trabajadores encontrados en origen: " + (sourceWorkers != null ? sourceWorkers.size() : 0));
-
-			List<PlantAccessWorker> newWorkers = new java.util.ArrayList<>();
-			if(sourceWorkers != null) {
-				int workerIndex = 1;
-				for(PlantAccessWorker sw : sourceWorkers) {
-					log4j.info("[copyWorkersFromRequest] --- Procesando trabajador " + workerIndex + "/" + sourceWorkers.size()
-							+ " | id origen=" + sw.getId()
-							+ " | nombre=" + sw.getEmployeeName() + " " + sw.getEmployeeLastName()
-							+ " | CURP=" + sw.getEmployeeCurp()
-							+ " | RFC=" + sw.getEmployeeRfc());
-
-					PlantAccessWorker nw = new PlantAccessWorker();
-					// copiar campos relevantes
-					nw.setActivities(sw.getActivities());
-					nw.setAllDocuments(sw.isAllDocuments());
-					nw.setCardNumber(sw.getCardNumber());
-					nw.setDatefolioIDcard(sw.getDatefolioIDcard());
-					nw.setDateInduction(sw.getDateInduction());
-					nw.setEmployeeCurp(sw.getEmployeeCurp());
-					nw.setEmployeeLastName(sw.getEmployeeLastName());
-					nw.setEmployeeSecondLastName(sw.getEmployeeSecondLastName());
-					nw.setEmployeeName(sw.getEmployeeName());
-					nw.setEmployeeOrdenes(sw.getEmployeeOrdenes());
-					nw.setEmployeePuesto(sw.getEmployeePuesto());
-					nw.setEmployeeRfc(sw.getEmployeeRfc());
-					nw.setFechaRegistro(new Date());
-					nw.setListDocuments(sw.getListDocuments());
-					nw.setMembershipIMSS(sw.getMembershipIMSS());
-					nw.setDocsActivity1(sw.isDocsActivity1());
-					nw.setDocsActivity2(sw.isDocsActivity2());
-					nw.setDocsActivity3(sw.isDocsActivity3());
-					nw.setDocsActivity4(sw.isDocsActivity4());
-					nw.setDocsActivity5(sw.isDocsActivity5());
-					nw.setDocsActivity6(sw.isDocsActivity6());
-					nw.setDocsActivity7(sw.isDocsActivity7());
-					nw.setRequestNumber(targetRequestId);
-
-					// guardar nuevo trabajador
-					plantAccessWorkerService.save(nw);
-					log4j.info("[copyWorkersFromRequest] Trabajador guardado en destino con id=" + nw.getId()
-							+ " | requestNumber=" + targetRequestId);
-
-					// copiar archivos asociados al trabajador
-					List<FileStore> files = fileStoreService.getFilesPlantAccessWorker(sourceRequestId, sw.getId(), true);
-					int filesCopied = 0;
-					if(files != null) {
-						log4j.info("[copyWorkersFromRequest] Copiando " + files.size() + " archivo(s) del trabajador origen id=" + sw.getId() + " al nuevo id=" + nw.getId());
-						for(FileStore f : files) {
-							log4j.info("[copyWorkersFromRequest]   - Copiando archivo | tipo=" + f.getDocumentType() + " | nombre=" + f.getOriginName() + " | fileType=" + f.getFileType());
-							FileStore copy = new FileStore();
-							copy.setContent(f.getContent());
-							copy.setFileType(f.getFileType());
-							copy.setOriginName(f.getOriginName());
-							copy.setDocumentType(f.getDocumentType());
-							copy.setStatus(f.getStatus());
-							copy.setNumRefer(nw.getId());
-							copy.setNamefile(String.valueOf(nw.getId()));
-							copy.setUuid(targetRequestId);
-							fileStoreService.save(copy);
-							filesCopied++;
-							log4j.info("[copyWorkersFromRequest]   - Archivo copiado OK con nuevo id=" + copy.getId());
-						}
-					} else {
-						log4j.info("[copyWorkersFromRequest] Trabajador origen id=" + sw.getId() + " no tiene archivos para copiar.");
-					}
-					log4j.info("[copyWorkersFromRequest] Trabajador " + workerIndex + " completado | archivos copiados: " + filesCopied);
-					newWorkers.add(nw);
-					workerIndex++;
-				}
-			}
-
-			log4j.info("[copyWorkersFromRequest] FIN OK - total trabajadores copiados: " + newWorkers.size()
-					+ " | source=" + sourceRequestId + " -> target=" + targetRequestId);
+			List<PlantAccessWorker> newWorkers = plantAccessWorkerService.copyWorkersTransactional(sourceRequestId, targetRequestId, replaceExisting);
 			return mapOKW(newWorkers, newWorkers.size());
 		} catch (Exception e) {
 			log4j.error("[copyWorkersFromRequest] ERROR inesperado - source=" + sourceRequestId + " target=" + targetRequestId, e);
@@ -575,14 +507,23 @@ public class PlantAccessController {
 	}
 	@RequestMapping(value ="/plantAccess/deleteWorkerPlantAccessById.action")
 	public @ResponseBody Map<String, Object> deleteWorkerPlantAccessById(@RequestParam String workerId){
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String usr = auth.getName();  
+		PlantAccessRequest plantAccessRequest = null;
+		PlantAccessWorker plantAccessWorker = null;
 		try{
-			if(!org.apache.commons.lang.StringUtils.isBlank(workerId)) {
-				PlantAccessWorker plantAccessWorker = plantAccessWorkerService.getById(Integer.valueOf(workerId));
+			if(!org.apache.commons.lang.StringUtils.isBlank(workerId)) {				
+				plantAccessWorker = plantAccessWorkerService.getById(Integer.valueOf(workerId));
+				plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(plantAccessWorker.getRequestNumber()));
 				if(plantAccessWorker != null) {
 					plantAccessWorkerService.deleteWorkerPlantAccess(plantAccessWorker);
 				}
 			}			
+			dataAuditService.saveDataAudit("DeleteWorkerPlantAccessById",plantAccessRequest.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+					 usr, "Delete worker successfully - ID: " + workerId + " - RequestNumber: " + plantAccessWorker.getRequestNumber(), "deleteWorkerPlantAccessById", 
+					 plantAccessWorker.toString(),null, null, null, 
+					 null, null, AppConstants.PLANTACCESS_MODULE);
 	        return mapStrOk("Success");
 		} catch (Exception e) {
 			log4j.error("Exception" , e);
@@ -594,13 +535,20 @@ public class PlantAccessController {
 	@SuppressWarnings("unused")
 	@RequestMapping(value ="/plantAccess/deleteWorkerPlantAccess.action")
 	public @ResponseBody Map<String, Object> deleteWorkerPlantAccess(@RequestBody PlantAccessWorker worker,@RequestParam String uuid){
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String usr = auth.getName();  
 		try{
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			String usr = auth.getName();
 			String msg = "Succ";
 			
+			PlantAccessRequest plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(worker.getRequestNumber()));
+			
 			plantAccessWorkerService.deleteWorkerPlantAccess(worker);
+			
+			dataAuditService.saveDataAudit("DeleteWorkerPlantAccess",plantAccessRequest.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+					 usr, "Delete worker successfully - ID: " + worker.getId() + " - RequestNumber: " + worker.getRequestNumber(), "deleteWorkerPlantAccess", 
+					 worker.toString(),null, null, null, 
+					 null, null, AppConstants.PLANTACCESS_MODULE);
 			
 			List<PlantAccessWorker> list = plantAccessWorkerService.searchWorkersPlantAccessByIdRequest(uuid);
 			int total = 0;
@@ -620,7 +568,11 @@ public class PlantAccessController {
 	
 	@RequestMapping(value ="/plantAccess/deleteWorkerFilePlantAccessById.action")
 	public @ResponseBody Map<String, Object> deleteWorkerFilePlantAccessById(@RequestParam String documentId){
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String usr = auth.getName();  
+		PlantAccessWorker plantAccessWorker = null ;
+		PlantAccessRequest plantAccessRequest = null;
 		try{
 			if(!org.apache.commons.lang.StringUtils.isBlank(documentId)) {
 				FileStore file = fileStoreService.getById(Integer.valueOf(documentId).intValue());
@@ -630,14 +582,21 @@ public class PlantAccessController {
 						fileStoreService.deleteFilesPlantAccess(file);
 						
 						//Actualiza información del trabajador
-						PlantAccessWorker plantAccessWorker = plantAccessWorkerService.getById(file.getNumRefer());
+						plantAccessWorker = plantAccessWorkerService.getById(file.getNumRefer());
+						plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(plantAccessWorker.getRequestNumber()));
 						if(plantAccessWorker != null && plantAccessWorker.getListDocuments() != null) {
 							plantAccessWorkerService.updatePlantAccessWorkerDocuments(plantAccessWorker);						    
 						    plantAccessWorkerService.update(plantAccessWorker);
 						}
+						
+					    dataAuditService.saveDataAudit("DeleteWorkerFilePlantAccessById",plantAccessRequest.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+								 usr, "Delete worker file successfully - ID: " + plantAccessWorker.getId(), "deleteWorkerFilePlantAccessById", 
+								 plantAccessWorker.toString(),null, null, null, 
+								 null, null, AppConstants.PLANTACCESS_MODULE);
 					}
 				}
 			}
+			
 
 			return mapStrOk("Success");
 		} catch (Exception e) {
@@ -652,17 +611,33 @@ public class PlantAccessController {
 	public @ResponseBody Map<String, Object> deleteFilesPlantAccess(@RequestBody FileStore file,@RequestParam String uuid){
 		
 		try{
+			HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+			Date currentDate = new Date();
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			String usr = auth.getName();
 			String msg = "Succ";
-			
+			PlantAccessWorker worker = null;
+			PlantAccessRequest plantAccessRequest  = null;
 			if(file.getDocumentType().contains("WORKER")) {
-				PlantAccessWorker worker = plantAccessWorkerService.getById(file.getNumRefer());
+				worker = plantAccessWorkerService.getById(file.getNumRefer());
 			    worker.setListDocuments(worker.getListDocuments().replace(file.getDocumentType(), ""));
 			    plantAccessWorkerService.update(worker);
+			    plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(worker.getRequestNumber()));
+			}else {
+				plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(file.getUuid()));
 			}
 			
 			fileStoreService.deleteFilesPlantAccess(file);
+			
+			String msgAudit = worker != null 
+				    ? "Delete file successfully - WorkerID: " + worker.getId() + " - Type: " + file.getDocumentType()
+				    : "Delete file successfully - RequestID: " + (plantAccessRequest != null ? plantAccessRequest.getId() : "?") + " - Type: " + file.getDocumentType();
+						
+			dataAuditService.saveDataAudit("DeleteFilesPlantAccess",plantAccessRequest.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+					 usr, msgAudit, "deleteFilesPlantAccess", 
+					 worker != null ? worker.toString() : file.toString(),null, null, null, 
+					 null, null, AppConstants.PLANTACCESS_MODULE);
+			
 			List<FileStore> list = fileStoreService.getFilesPlantAccess(uuid,false);
 			int total = 0;
 		      
@@ -987,18 +962,21 @@ public class PlantAccessController {
 	@RequestMapping(value ="/plantAccess/uploadFileRequestNew.action", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> uploadFileRequestNew(FileUploadBean file, BindingResult result, String documentType, String idRequest, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String usr = auth.getName();  
 		
-		FileStore fileToSave=new FileStore();		
+		FileStore fileToSave = new FileStore();
 		if(file.getFile().getSize() <= 10000000) {
 			List<FileStore> list = fileStoreService.getFilesPlantAccess(idRequest,false);
 			String docType = "REQUEST_"+documentType;
 			for (FileStore d : list) {
-	    	      if(docType.equals(d.getDocumentType())) {
-	    	    	  this.fileStoreService.deleteFilesPlantAccess(d);  
-	    	      }
-	    	    }
+				if(docType.equals(d.getDocumentType())) {
+					this.fileStoreService.deleteFilesPlantAccess(d);
+				}
+			}
 			
-				fileToSave.setDateUpload(new Date());
+			fileToSave.setDateUpload(new Date());
 			fileToSave.setContent(file.getFile().getBytes());
 			fileToSave.setFileType(file.getFile().getContentType());
 			fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
@@ -1033,7 +1011,14 @@ public class PlantAccessController {
 			
 			fileToSave.setContent(null);
 			
-		
+			PlantAccessRequest plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(idRequest));
+			
+			dataAuditService.saveDataAudit("UploadFileRequest",plantAccessRequest.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+					 usr, "Saved file successfully - ID: " + plantAccessRequest.getId() + " - documentType: " + fileToSave.getDocumentType() + " - IdDocument: " + fileToSave.getId(), "uploadFileRequestNew", 
+					 fileToSave.toString(),null, null, null, 
+					 null, null, AppConstants.PLANTACCESS_MODULE);
+			
+			log4j.info("Saved file successfully - ID: " + plantAccessRequest.getId() + " - documentType: " + fileToSave.getDocumentType() + " - IdDocument: " + fileToSave.getId());
 			
 			
 		} else {
@@ -1041,41 +1026,53 @@ public class PlantAccessController {
 		}
 		return mapOK(fileToSave);
 	}
-	
 	@RequestMapping(value ="/plantAccess/uploadFileWorkerNew.action", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> uploadFileWorkerNew(FileUploadBean file, BindingResult result, String documentType,String idRequest, String idworker, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    HttpServletRequest requestHTTP = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+	    String usr = auth.getName();
+		FileStore fileToSave = new FileStore();
+		try {
+			if(file.getFile().getSize() <= 10000000) {
+				List<FileStore> list = fileStoreService.getFilesPlantAccess(idRequest,false);
+				String docType = "WORKER_"+documentType;
+				if(list != null) {
+					for (FileStore d : list) {
+						if(d.getNumRefer() == Integer.valueOf(idworker).intValue()
+								&& docType.equals(d.getDocumentType())) {
+							this.fileStoreService.deleteFilesPlantAccess(d);
+						}
+					}
+				}
+				
+				fileToSave.setDateUpload(new Date());
+				fileToSave.setContent(file.getFile().getBytes());
+				fileToSave.setFileType(file.getFile().getContentType());
+				fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
+				fileToSave.setDocumentType("WORKER_"+documentType);
+				fileToSave.setStatus("PENDING");
+				fileToSave.setNumRefer(Integer.valueOf(idworker).intValue());
+				fileToSave.setNamefile(idworker);
+				fileToSave.setUuid(idRequest);
+				
+				fileStoreService.save(fileToSave);
+				fileToSave.setContent(new byte[] {});
+			} else {
+				return mapError("El documento cargado supera los 10 MB.");
+			}
+		} catch (Exception e) {
+			log4j.error("[uploadFileWorkerNew] Error al subir archivo del trabajador | idRequest=" + idRequest + " | idworker=" + idworker, e);
+			return mapError(e.getMessage());
+		}
 		
-		FileStore fileToSave=new FileStore();
+		PlantAccessRequest paForAudit = plantAccessRequestService.getById(Integer.parseInt(idRequest));
 		
-		if(file.getFile().getSize() <= 10000000) {
-			List<FileStore> list = fileStoreService.getFilesPlantAccess(idRequest,false);
-			String docType = "WORKER_"+documentType;
-			for (FileStore d : list) {
-	    	      if(d.getNumRefer() == Integer.valueOf(idworker).intValue() 
-	    	    		  && docType.equals(d.getDocumentType())) {
-	    	    	  this.fileStoreService.deleteFilesPlantAccess(d);  
-	    	      }
-	    	    }
-			
-			fileToSave.setDateUpload(new Date());
-			fileToSave.setContent(file.getFile().getBytes());
-			fileToSave.setFileType(file.getFile().getContentType());
-			fileToSave.setOriginName(StringUtils.takeOffSpecialChars(file.getFile().getOriginalFilename()));
-			fileToSave.setDocumentType("WORKER_"+documentType);
-			fileToSave.setStatus("PENDING");
-			fileToSave.setNumRefer(Integer.valueOf(idworker).intValue());
-			fileToSave.setNamefile(idworker);
-			fileToSave.setUuid(idRequest);
-			
-			fileStoreService.save(fileToSave);
-			fileToSave.setContent(new byte[] {});
-		} else {
-			mapError("El documento cargado supera los 10 MB.");
-		}		
+		dataAuditService.saveDataAudit("UploadFileWorker", paForAudit.getAddressNumberPA(), new Date(), requestHTTP.getRemoteAddr(),
+	            usr, "Saved worker file successfully - idWorker: " + idworker + " - documentType: " + fileToSave.getDocumentType() + " - IdDocument: " + fileToSave.getId(), "uploadFileWorkerNew",
+	            fileToSave.toString(), null, null, null,
+	            null, null, AppConstants.PLANTACCESS_MODULE);
 		return mapOK(fileToSave);
-	
-
 	}
 	
 	@RequestMapping(value ="/plantAccess/uploadFileRequest.action", method = RequestMethod.POST)
@@ -1086,7 +1083,7 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		int uuid= (Integer) request.getSession().getAttribute("accessPlantUUID");
 		try {
 			uuid=uuid==0?Integer.parseInt(uuidRequest):uuid;
@@ -1122,7 +1119,13 @@ public class PlantAccessController {
 			fileToSave.setContent(null);
 		}
 		
+		PlantAccessRequest paForAudit = plantAccessRequestService.getById(uuid);
 		
+		dataAuditService.saveDataAudit("UploadFileRequest", paForAudit.getAddressNumberPA(),
+			    new Date(), request.getRemoteAddr(),
+			    auth.getName(), "Request file uploaded - uuid: " + uuid + " - documentType: REQUEST_" + addRequestDocumentType + " - fileId: " + fileToSave.getId(),
+			    "uploadFileRequest", fileToSave.toString(),
+			    null, null, null, null, null, AppConstants.PLANTACCESS_MODULE);
 		
 		return mapOK(fileToSave);
 	
@@ -1137,7 +1140,7 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String uuid="";
 				try {
 					uuid=(String) request.getSession().getAttribute("accessPlantUUID");
@@ -1177,6 +1180,14 @@ public class PlantAccessController {
 			fileToSave.setContent(new byte[] {});
 		}
 		
+		PlantAccessRequest paForAudit = plantAccessRequestService.getById(idworker);
+		
+		dataAuditService.saveDataAudit("UploadFileWorker", paForAudit.getAddressNumberPA(),
+			    new Date(), request.getRemoteAddr(),
+			    auth.getName(), "Worker file uploaded - idworker: " + idworker + " - documentType: WORKER_" + addRequestDocumentType + " - fileId: " + fileToSave.getId(),
+			    "uploadFileWorker", fileToSave.toString(),
+			    null, null, null, null, null, AppConstants.PLANTACCESS_MODULE);
+		
 		return mapOK(fileToSave);
 	
 
@@ -1201,7 +1212,7 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication authW = SecurityContextHolder.getContext().getAuthentication();
 		int  uuid=0;
 		int idWorker=0;
 		try {
@@ -1245,6 +1256,14 @@ public class PlantAccessController {
 		trabajador.setEmployeeOrdenes(employeeOrdenes);
 		
 		plantAccessWorkerService.save(trabajador);
+		
+		PlantAccessRequest paForAudit = plantAccessRequestService.getById(Integer.valueOf(trabajador.getRequestNumber()));
+		
+		dataAuditService.saveDataAudit("UploadWorker", paForAudit.getAddressNumberPA(),
+			    new Date(), request.getRemoteAddr(),
+			    authW.getName(), "New worker created (legacy) - ID: " + trabajador.getId() + " - uuid: " + uuid,
+			    "uploadWorker", trabajador.toString(),
+			    null, null, null, null, null, AppConstants.PLANTACCESS_MODULE);
 			
 		}else {
 			trabajador.setRequestNumber(uuid+"");
@@ -1258,6 +1277,14 @@ public class PlantAccessController {
 			trabajador.setEmployeeOrdenes(employeeOrdenes);
 			
 			plantAccessWorkerService.update(trabajador);
+			
+			PlantAccessRequest paForAudit = plantAccessRequestService.getById(Integer.valueOf(trabajador.getRequestNumber()));
+			
+			dataAuditService.saveDataAudit("UploadWorker", paForAudit.getAddressNumberPA(),
+				    new Date(), request.getRemoteAddr(),
+				    authW.getName(), "Worker updated (legacy) - ID: " + trabajador.getId() + " - uuid: " + uuid,
+				    "uploadWorker", trabajador.toString(),
+				    null, null, null, null, null, AppConstants.PLANTACCESS_MODULE);
 		}
 		
 		
@@ -1275,6 +1302,10 @@ public class PlantAccessController {
 		PlantAccessWorker plantAccessWorker = null;
 		SimpleDateFormat sdfOld = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdfNew = new SimpleDateFormat("dd-MM-yyyy");
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+ 		HttpServletRequest requestHTTP = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String usr = auth.getName();
 		
 		try{
 			//Genera lista de actividades
@@ -1321,6 +1352,14 @@ public class PlantAccessController {
 				worker.setTempId(String.valueOf(worker.getId()));
 				plantAccessWorker = worker;
 				
+				PlantAccessRequest paReq = plantAccessRequestService.getById(Integer.valueOf(worker.getRequestNumber()));
+				
+				dataAuditService.saveDataAudit("SavePlantAccessWorker",
+					    paReq != null ? paReq.getAddressNumberPA() : "N/A", new Date(), requestHTTP.getRemoteAddr(),
+					    usr, "New worker created - ID: " + worker.getId() + " - requestNumber: " + worker.getRequestNumber(),
+					    "savePlantAccessWorker", worker.toString(),
+					    null, null, null, null, null, AppConstants.PLANTACCESS_MODULE);
+				
 			} else {			
 				
 				//Actualización
@@ -1364,6 +1403,13 @@ public class PlantAccessController {
 					
 					plantAccessWorkerService.updatePlantAccessWorkerDocuments(plantAccessWorker);
 					plantAccessWorkerService.update(plantAccessWorker);
+					
+					PlantAccessRequest plantAccessRequest = plantAccessRequestService.getById(Integer.valueOf(plantAccessWorker.getRequestNumber()));					    
+					   
+					dataAuditService.saveDataAudit("SavePlantAccessWorker",plantAccessRequest.getAddressNumberPA(), new Date(), requestHTTP.getRemoteAddr(),
+								 usr, "Saved worker successfully - ID: " + plantAccessWorker.getId(), "savePlantAccessWorker", 
+								 plantAccessWorker.toString(),null, null, null, 
+								 null, null, AppConstants.PLANTACCESS_MODULE);
 										
 				}
 			}
@@ -1374,9 +1420,9 @@ public class PlantAccessController {
 			return json.toString();
 		    
 		} catch (Exception e) {
-			log4j.error("Exception" , e);
+			log4j.error("[savePlantAccessWorker] Error al guardar trabajador", e);
 			e.printStackTrace();
-			json.put("success", true);
+			json.put("success", false);
             json.put("message", e.getMessage());
             json.put("data", worker);
 			return json.toString();
@@ -1418,6 +1464,13 @@ public class PlantAccessController {
 				plantAccessRequestService.updatet(request);
 				plantAccessRequest = request;
 				
+				dataAuditService.saveDataAudit("SavePlantAccessRequest", request.getAddressNumberPA(), new Date(), requestHTTP.getRemoteAddr(),
+	                    usr, "New request created - ID: " + request.getId() + " - Status: GUARDADO", "savePlantAccessRequest",
+	                    request.toString(), null, null, null,
+	                    null, null, AppConstants.PLANTACCESS_MODULE);
+	            
+	            log4j.info("New request created - ID: " + request.getId());
+				
 			} else {
 				
 				//Actualización
@@ -1441,16 +1494,7 @@ public class PlantAccessController {
 					plantAccessRequest.setFechafirmGui(request.getFechafirmGui());
 					plantAccessRequest.setSubcontractService(request.isSubcontractService());
 					plantAccessRequest.setSubContractedCompany(request.getSubContractedCompany());
-					plantAccessRequest.setSubContractedCompanyRFC(request.getSubContractedCompanyRFC());
-					
-//					plantAccessRequest.setAddressNumberPA(request.getAddressNumberPA());
-//					plantAccessRequest.setAprovUser(request.getAprovUser());
-//					plantAccessRequest.setHighRiskActivities(request.getHighRiskActivities());
-//					plantAccessRequest.setFechaAprobacion(request.getFechaAprobacion());
-//					plantAccessRequest.setFechaFin(request.getFechaFin());
-//					plantAccessRequest.setFechaInicio(request.getFechaInicio());
-//					plantAccessRequest.setFechaSolicitudStr(request.getFechaSolicitudStr());
-//					plantAccessRequest.setRazonSocial(request.getRazonSocial());					
+					plantAccessRequest.setSubContractedCompanyRFC(request.getSubContractedCompanyRFC());						
 					
 					String heavyEquipment = "0" +
 					(plantAccessRequest.isHeavyEquipment() ? ",HEAVYEQUIPMENT" : "");
@@ -1476,12 +1520,27 @@ public class PlantAccessController {
 							json.put("success", true);
 				            json.put("message", message);
 				            json.put("data", plantAccessRequest); //Se envía objeto modificado con invalidWorkerIds
+				            
+				            dataAuditService.saveDataAudit("SavePlantAccessRequest",plantAccessRequest.getAddressNumberPA(), new Date(), requestHTTP.getRemoteAddr(),
+									 usr, "Validation failed on send - ID: " + plantAccessRequest.getId() + " - isSendRequest:" + isSendRequest + " - message: " + message, "savePlantAccessRequest", 
+									 plantAccessRequest.toString(),null, null, null, 
+									 null, null, AppConstants.PLANTACCESS_MODULE);
+				            
+				            log4j.info("Request successfully saved - ID: " + plantAccessRequest.getId() + " - isSendRequest:" + isSendRequest);
+				            
 				            return json.toString();
 						}
 					}
 					
 					//Guardar Solicitud
-					plantAccessRequestService.updatet(plantAccessRequest);					
+					plantAccessRequestService.updatet(plantAccessRequest);			
+					
+					 dataAuditService.saveDataAudit("SavePlantAccessRequest",plantAccessRequest.getAddressNumberPA(), new Date(), requestHTTP.getRemoteAddr(),
+					 usr, "Request successfully saved - ID: " + plantAccessRequest.getId() + " - isSendRequest:" + isSendRequest, "savePlantAccessRequest", 
+					 plantAccessRequest.toString(),null, null, null, 
+					 null, null, AppConstants.PLANTACCESS_MODULE);
+					 
+					 log4j.info("Request successfully saved - ID: " + plantAccessRequest.getId() + " - isSendRequest:" + isSendRequest);
 				}
 			}
 
@@ -1499,9 +1558,9 @@ public class PlantAccessController {
 			}
 		    
 		} catch (Exception e) {
-			log4j.error("Exception" , e);
+			log4j.error("[savePlantAccessRequest] Error al guardar solicitud", e);
 			e.printStackTrace();
-			json.put("success", true);
+			json.put("success", false);
             json.put("message", "Ocurrió un error al enviar la solicitud de Acceso a Planta.");
             json.put("data", request);
 			return json.toString();
@@ -1529,7 +1588,8 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String usr = auth.getName();
 		PlantAccessRequest solicituddto= new PlantAccessRequest();
 		int uuid=0;
 		try {
@@ -1602,9 +1662,6 @@ public class PlantAccessController {
 		}
 		
 		
-		
-		
-		
 		String currentApprover ="";
 		String emailApprover = "";
 		List<UDC> approverUDCList = udcService.advaceSearch("APPROVERPONP", "", plantRequest,"");
@@ -1642,7 +1699,7 @@ public class PlantAccessController {
 			
 			solicituddto.setStatus(status);
 			solicituddto.setAprovUser(currentApprover.toUpperCase());
-			solicitud.setAprovUserDef(currentApprover.toUpperCase());
+			solicituddto.setAprovUserDef(currentApprover.toUpperCase());
 
 			solicituddto.setNameRequest(nameRequest);
 			solicituddto.setOrdenNumber(ordenNumber);
@@ -1669,6 +1726,12 @@ public class PlantAccessController {
 		      emailThreadSup.start();
 		}
 		
+		 PlantAccessRequest auditObj = solicitud != null ? solicitud : solicituddto;
+	        dataAuditService.saveDataAudit("UploadPlantAccesRequest", auditObj.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+	                usr, "Request sent to approval - ID: " + auditObj.getId() + " - Status: " + auditObj.getStatus(), "uploadPlantAccesRequest",
+	                auditObj.toString(), null, null, null,
+	                null, null, AppConstants.PLANTACCESS_MODULE);
+		
 		return mapOK(solicituddto);
 	
 
@@ -1688,6 +1751,7 @@ public class PlantAccessController {
 		
 		try{ 
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 			String usr = auth.getName();
 			String msg = "";
 			if(obj.getId() != 0) {				
@@ -1705,7 +1769,7 @@ public class PlantAccessController {
 				
 				if("APROBADO".equals(status)) {
 					// Validar trabajadores contra cédula antes de aprobar
-					PlantAccessRequest paRequestForValidation = plantAccessRequestService.getPlantAccessRequests(obj.getRfc());
+					PlantAccessRequest paRequestForValidation = obj;
 					if(!forceApproveWithErrors) {
 						
 						String validationMessage = plantAccessRequestService.validatePlantAccessRequest(paRequestForValidation, false, false);
@@ -1730,11 +1794,14 @@ public class PlantAccessController {
 					
 					Users userAprob = usersService.getByUserName(usr);
 					PDFUtils pdfUtils = new PDFUtils();
-					PlantAccessRequest paRequest = plantAccessRequestService.getPlantAccessRequests(obj.getRfc());
+					PlantAccessRequest paRequest = plantAccessRequestService.getById(obj.getId());
 					List<PlantAccessWorker> workers = plantAccessWorkerService.searchWorkersPlantAccessByIdRequest(String.valueOf(paRequest.getId()));
-					paRequest.setFechaInicio(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").parse(paFromDate));
-					paRequest.setFechaFin(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").parse(paToDate));
-					paRequest.setFechaAprobacion(new Date());
+					Date fechaAprobacion = new Date();
+					Date fechaInicio = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").parse(paFromDate);
+					Date fechaFin = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").parse(paToDate);
+					paRequest.setFechaInicio(fechaInicio);
+					paRequest.setFechaFin(fechaFin);
+					paRequest.setFechaAprobacion(fechaAprobacion);
 					paRequest.setNombreAprobador(userAprob.getName());
 					
 					Users u = usersService.getByUserName(usr);
@@ -1743,19 +1810,20 @@ public class PlantAccessController {
 					byte[] pdfBytes = pdfUtils.getPlantAccessPDF(paRequest,workers);
 					try {
 						//Envio al servicio de cryo
-						 String res=  plantAccessRequestService.sendPlantAcceseRequestCryo(paRequest, workers,userAprob.getName());
-						 if(res==null||!res.equals("ok")) {
-							 return mapError("ocurrio un error al enlace del servicio, contacte al administrador, Error:(serv01) "+res);
-						 }
-						 	obj.setFechaInicio(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").parse(paFromDate));
-							obj.setFechaFin(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss").parse(paToDate));
-							obj.setFechaAprobacion(new Date());
-							obj.setNombreAprobador(userAprob.getName());
-							obj.setAprovUser(u.getUserName());
-						   
+						String res = plantAccessRequestService.sendPlantAcceseRequestCryo(paRequest, workers, userAprob.getName());
+						if(res == null || !res.equals("ok")) {
+							return mapError("ocurrio un error al enlace del servicio, contacte al administrador, Error:(serv01) " + res);
+						}
 					} catch (Exception e) {
-						e.printStackTrace();
+						log4j.error("Excepción al llamar servicio CryoInfra", e);
+						return mapError("ocurrio un error al enlace del servicio, contacte al administrador, Error:(serv01-ex) " + e.getMessage());
 					}
+
+					obj.setFechaInicio(fechaInicio);
+					obj.setFechaFin(fechaFin);
+					obj.setFechaAprobacion(fechaAprobacion);
+					obj.setNombreAprobador(userAprob.getName());
+					obj.setAprovUser(u.getUserName());
 				   
 					try {
 						//Envio al servicio de cryo
@@ -1776,14 +1844,18 @@ public class PlantAccessController {
 				      emailAsyncSup.setMailSender(this.mailSenderObj);
 				      Thread emailThreadSup = new Thread(emailAsyncSup);
 				      emailThreadSup.start();
+				      
 				}
 				obj.setStatus(status);
 				obj.setFechaSolicitudStr(note);
 				msg=plantAccessRequestService.updatet(obj);
 				
+				dataAuditService.saveDataAudit("ApprovalPlantAccessRequest",obj.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+						 usr, ("APROBADO".equals(status) ? "Approval" : "Rejected") + " successfully saved - ID: " + obj.getId() + " - Status: " + status, "update", 
+						 obj.toString(),null, null, null, 
+						 null, "APROBADO".equals(status) ? AppConstants.STATUS_ACCEPT : AppConstants.STATUS_REJECT, AppConstants.PLANTACCESS_MODULE);
 				
-				
-				
+				 log4j.info(("APROBADO".equals(status) ? "Approval" : "Rejected") + " successfully saved - ID: " + obj.getId());		
 				
 				if("".equals(msg)) {
 					return mapStrOk("Surgió un error en la actualización.");	
@@ -1841,7 +1913,8 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String usr = auth.getName();
 		PlantAccessRequest solicituddto= new PlantAccessRequest();
 		
 		int id=0;
@@ -1931,7 +2004,11 @@ public class PlantAccessController {
 //		      Thread emailThreadSup = new Thread(emailAsyncSup);
 //		      emailThreadSup.start();
 //		}
-		
+		 PlantAccessRequest auditObj = solicitud != null ? solicitud : solicituddto;
+	        dataAuditService.saveDataAudit("UploadPlantAccesRequestHeader", auditObj.getAddressNumberPA(), new Date(), request.getRemoteAddr(),
+	                usr, "Request header saved - ID: " + auditObj.getId() + " - Status: GUARDADO", "uploadPlantAccesRequestHeader",
+	                auditObj.toString(), null, null, null,
+	                null, null, AppConstants.PLANTACCESS_MODULE);
 		return mapOK(solicituddto);
 	
 
@@ -1947,7 +2024,7 @@ public class PlantAccessController {
 		response.setCharacterEncoding("UTF-8");
 		 
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		
+		Authentication authV = SecurityContextHolder.getContext().getAuthentication();
 		//PlantAccessRequest paRequest = null;
 		//int total = 0;
 	    try {
@@ -1995,6 +2072,14 @@ public class PlantAccessController {
 						}
 					      trabajador.setListDocuments(documen);
 					      plantAccessWorkerService.update(trabajador);
+					      
+					      PlantAccessRequest paReq = plantAccessRequestService.getById(Integer.valueOf(trabajador.getRequestNumber()));
+					      
+					      dataAuditService.saveDataAudit("VerifyWorkerFiles", paReq.getAddressNumberPA(),
+					    		    new Date(), request.getRemoteAddr(),
+					    		    authV.getName(), "Worker documents list auto-corrected - idWorker: " + idWorker + " - documents: " + documen,
+					    		    "verifyWorkerFiles", trabajador.toString(),
+					    		    null, null, null, null, null, AppConstants.PLANTACCESS_MODULE);
 					      
 			        	 if(suma!=list.size()) {
 			        		 return mapError("El trabajador tiene documentos faltantes");

@@ -259,5 +259,23 @@ public class PlantAccessRequest {
 	public void setInvalidWorkerIds(String invalidWorkerIds) {
 		this.invalidWorkerIds = invalidWorkerIds;
 	}
+	@Override
+	public String toString() {
+		return "PlantAccessRequest [id=" + id + ", fechaSolicitud=" + fechaSolicitud + ", fechaAprobacion="
+				+ fechaAprobacion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", rfc=" + rfc
+				+ ", status=" + status + ", nameRequest=" + nameRequest + ", ordenNumber=" + ordenNumber
+				+ ", contractorCompany=" + contractorCompany + ", contractorRepresentative=" + contractorRepresentative
+				+ ", descriptionUbication=" + descriptionUbication + ", aprovUser=" + aprovUser + ", aprovUserDef="
+				+ aprovUserDef + ", highRiskActivities=" + highRiskActivities + ", fechaSolicitudStr="
+				+ fechaSolicitudStr + ", addressNumberPA=" + addressNumberPA + ", plantRequest=" + plantRequest
+				+ ", heavyEquipment=" + heavyEquipment + ", userRequest=" + userRequest + ", razonSocial=" + razonSocial
+				+ ", sinOrden=" + sinOrden + ", contactEmergency=" + contactEmergency + ", employerRegistration="
+				+ employerRegistration + ", fechafirmGui=" + fechafirmGui + ", nombreAprobador=" + nombreAprobador
+				+ ", subcontractService=" + subcontractService + ", subContractedCompany=" + subContractedCompany
+				+ ", subContractedCompanyRFC=" + subContractedCompanyRFC + ", invalidWorkerIds=" + invalidWorkerIds
+				+ "]";
+	}
+	
+	
 	
 }

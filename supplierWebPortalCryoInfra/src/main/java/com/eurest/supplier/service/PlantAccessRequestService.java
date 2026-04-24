@@ -589,13 +589,13 @@ public class PlantAccessRequestService {
 	        // Manejo de la respuesta
 	        if (response.isSuccessful()) {
 	             responseBody = response.body().string();
+	            log4j.info("Respuesta de envío de solicitud de acceso a planta: " + responseBody);
+	            System.out.println("Respuesta de envío de solicitud de acceso a planta: " + responseBody);
 	            if(responseBody.equals("Registro guardado correctamente")) {
 	            	return "ok";
 	            }else {
-	            	log4j.error("Error en la respuesta: " + response.code() + " - " + response.body().string());
+	            	log4j.error("Error en la respuesta: " + response.code() + " - " + responseBody);
 	            }
-	            log4j.info("Respuesta de envío de solicitud de acceso a planta: " + responseBody);
-	            System.out.println("Respuesta de envío de solicitud de acceso a planta: " + responseBody);
 	        } else {
 	        	responseBody = response.body().string();
 	            log4j.error("Error en la respuesta: " + response.code() + " - " + responseBody);

@@ -668,6 +668,7 @@ public final class AppConstants {
     public static final String APPROVAL_MODULE = "APPROVAL";
     public static final String APPROVALSEARCH_MODULE = "APPROVALSEARCH";
     public static final String TAXVAULT_MODULE = "TAXVAULT";
+    public static final String PLANTACCESS_MODULE = "PLANTACCESS";
 
 	public static final String STATUS_JDE_PENDI_FLETES = "R";
 	public static final String STATUS_JDE_APROV_FLETES = "Y";
