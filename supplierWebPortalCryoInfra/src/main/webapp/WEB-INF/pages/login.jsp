@@ -372,7 +372,7 @@
                 
                 <br/>	         
                 <br/>	
-                <a href="resources/Manual Proveedores RESPONSIVO_v1.pdf" download>
+                <a href="resources/Manual Proveedores RESPONSIVO_v2.pdf" download>
                     <p style="font-size:13px" class="downloadDocSupp">Descargar manual de proveedores</p>
                 </a> 
                 
