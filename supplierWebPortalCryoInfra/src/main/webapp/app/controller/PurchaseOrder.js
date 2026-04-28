@@ -2185,7 +2185,7 @@ Ext.define('SupplierApp.controller.PurchaseOrder', {
     	var poComStatus = Ext.getCmp('poComboStatus').getValue();
     	var comboStatus = status[poComStatus];
     	
-    	grid.headerCt.items.getAt(0).hide();
+    	//grid.headerCt.items.getAt(0).hide();
     	
     	if (poFromDate && poToDate && poToDate < poFromDate) {
     		Ext.MessageBox.alert({ maxWidth: 250, minWidth: 350, title: window.navigator.language.startsWith("es", 0) ? 'Fechas inválidas' : 'Invalid dates'
