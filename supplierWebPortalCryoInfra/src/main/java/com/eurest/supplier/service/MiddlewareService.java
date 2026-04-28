@@ -2330,7 +2330,6 @@ public class MiddlewareService {
 							portalPO.setOrderStauts(AppConstants.STATUS_OC_CANCEL);
 							purchaseOrderService.updateOrders(portalPO);
 							
-							/*
 							try {
 								//Notificación Proveedor
 								Supplier s = supplierService.searchByAddressNumber(portalPO.getAddressNumber());
@@ -2380,8 +2379,7 @@ public class MiddlewareService {
 								}
 							} catch (Exception e) {
 								log4j.error("Exception" , e);
-							}
-							*/					
+							}					
 						}
 					}
 					
@@ -2440,7 +2438,7 @@ public class MiddlewareService {
 										f.setStatus(AppConstants.STATUS_CANCEL);
 										f.setApprovalStatus(AppConstants.STATUS_CANCEL);
 										fiscalDocumentService.updateDocument(f);
-										/*
+										
 										try {
 											//Notificación Planta
 											if(f.getUuidFactura() != null && !"".equals(f.getUuidFactura().trim())
@@ -2472,7 +2470,6 @@ public class MiddlewareService {
 										} catch (Exception e) {	
 											log4j.error("Exception" , e);
 										}
-										*/
 
 									}
 								}
@@ -2492,7 +2489,7 @@ public class MiddlewareService {
 								String receiptString = r.getAddressNumber().trim() + "_" + r.getOrderNumber() + "_" + r.getOrderType() + "_" + r.getDocumentNumber();
 								if(!receiptSentList.contains(receiptString)) {
 									receiptSentList.add(receiptString);
-									/*
+									
 									//Notificación Proveedor
 									Supplier s = supplierService.searchByAddressNumber(r.getAddressNumber());
 									if(s!=null) {
@@ -2542,7 +2539,6 @@ public class MiddlewareService {
 											}
 										}
 									}
-									*/
 								}
 							}
 						}
