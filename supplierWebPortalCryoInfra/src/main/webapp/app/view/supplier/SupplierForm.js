@@ -3177,14 +3177,14 @@ Ext.define('SupplierApp.view.supplier.SupplierForm', {
 									cls: 'buttonStyle',
 									//hidden:role=='ANONYMOUS'
 									//	||role == 'ROLE_SUPPLIER'?true:false,
-									//hidden:true,
-									hidden:	role=='ROLE_ADMIN'
+									hidden:true,
+									/*hidden:	role=='ROLE_ADMIN'
 											||role=='ROLE_CXP'
 											||(role == 'ROLE_SUPPLIER' && isMainSupplierUser) //Solo el proveedor puede modificar su información
 											||role == 'ROLE_TREASURY'
 											||role == 'ROLE_ACCOUNTING'
 											||role == 'ROLE_TAX'
-											||role == 'ROLE_PURCHASE'?false:true,
+											||role == 'ROLE_PURCHASE'?false:true,*/
 									/*hidden : role=='ROLE_ADMIN'
 											||role=='ROLE_CXP'
 											||role == 'ROLE_PURCHASE'?false:true,*/
