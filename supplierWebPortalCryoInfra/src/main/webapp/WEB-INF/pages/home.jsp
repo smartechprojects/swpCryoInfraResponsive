@@ -15,6 +15,7 @@
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
     <script id="microloader" data-app="04cb71bd-d946-4506-8c66-f4d8d90cb33c" type="text/javascript" src="bootstrap.js"></script>
 
+	<link rel="stylesheet" type="text/css" href="${url}/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${url}/resources/css/SupplierApp-all.css">
 	<link rel="stylesheet" type="text/css" href="${url}/resources/css/app.css">    
 	<script>
@@ -79,6 +80,7 @@
 	var isSupplier = '<c:out value="${isSupplier}" default="false"/>'.toLowerCase() === 'true';//Booleano
 	var isSubUser = '<c:out value="${isSubUser}" default="false"/>'.toLowerCase() === 'true';//Booleano
 	var isMainSupplierUser = '<c:out value="${isMainSupplierUser}" default="false"/>'.toLowerCase() === 'true';//Booleano
+	var isSystemAdmin = '<c:out value="${isSystemAdmin}" default="false"/>'.toLowerCase() === 'true';//Booleano
 	
 	var numeroUsuario = "";
 	var telefono = "";	

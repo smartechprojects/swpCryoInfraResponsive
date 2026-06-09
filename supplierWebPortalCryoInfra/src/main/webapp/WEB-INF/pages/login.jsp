@@ -8,6 +8,7 @@
     
     <!-- The line below must be kept intact for Sencha Cmd to build your application -->
 
+    <link rel="stylesheet" type="text/css" href="${url}/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="${url}/resources/css/SupplierApp-all.css">
     <link rel="stylesheet" type="text/css" href="${url}/resources/css/app.css">    
     <script type="text/javascript" charset="utf-8" src="${url}/ext/build/ext-all.js"></script>

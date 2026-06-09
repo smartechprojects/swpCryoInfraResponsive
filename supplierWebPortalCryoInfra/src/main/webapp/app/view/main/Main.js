@@ -248,6 +248,13 @@ Ext.define('SupplierApp.view.main.Main', {
         },
         tabchange: function (tabPanel, tab) {
         	
+        	if(tab.id == 'dashboardViewPanelTab' || tab.itemId == 'dashboardViewPanelTab') {
+        		var viewPanel = tab.down('dashboardViewPanel');
+        		if(viewPanel && viewPanel.loadDashboard) {
+        			viewPanel.loadDashboard();
+        		}
+        	}
+        	
         	if(tab.id == 'tabSuppliersId') tabChgn = 'suppliers';
         	
         	if(tab.id == 'tabUsersId'){//Carga valores de combos
@@ -292,8 +299,13 @@ Ext.define('SupplierApp.view.main.Main', {
         'SupplierApp.controller.FiscalDocuments',
         'SupplierApp.controller.PurchaseOrder',
         'SupplierApp.controller.PlantAccess',
-         'SupplierApp.controller.Token',/*,
-        'SupplierApp.controller.NonComplianceSupplier',
+        'SupplierApp.controller.Token',
+        'SupplierApp.view.report.ReportAdminPanel',
+        'SupplierApp.view.dashboard.DashboardAdminPanel',
+        'SupplierApp.view.report.ReportViewPanel',
+        'SupplierApp.view.dashboard.DashboardViewPanel'        
+        
+        /*'SupplierApp.controller.NonComplianceSupplier',
         'SupplierApp.controller.OutSourcing',
         'SupplierApp.controller.CodigosSAT',
         'SupplierApp.controller.PurchaseOrder',
@@ -962,6 +974,64 @@ Ext.define('SupplierApp.view.main.Main', {
                 }
             }
         }
+    },,{
+        xtype: 'panel',
+        layout: 'fit',
+        itemId: 'reportAdminPanelTab',
+        id: 'reportAdminPanelTab',
+        title: 'Admin Reportes',
+        iconCls: 'x-fa fa-sliders',
+        hidden: true,
+        items: [
+            {
+                xtype: 'reportAdminPanel'
+            }
+        ]
+    },{
+        xtype: 'panel',
+        layout: 'fit',
+        itemId: 'dashboardAdminPanelTab',
+        id: 'dashboardAdminPanelTab',
+        title: 'Admin Dashboards',
+        iconCls: 'x-fa fa-cogs',
+        hidden: true,
+        items: [
+            {
+                xtype: 'dashboardAdminPanel'
+            }
+        ]
+    },{
+        xtype: 'panel',
+        layout: 'fit',
+        itemId: 'dashboardViewPanelTab',
+        id: 'dashboardViewPanelMenu',
+        title: '',
+        iconCls: 'x-fa fa-tachometer',
+        hidden: true,
+        items: [
+            {
+                xtype: 'dashboardViewPanel',
+                id:'tabDashboardViewPanelId',
+                title: '',
+                titleAlign: 'center'	
+            }
+        ]
+    },{
+        xtype: 'panel',
+        layout: 'fit',
+        itemId: 'reportViewPanelTab',
+        id: 'reportViewPanelMenu',
+        title: '',
+        iconCls: 'x-fa fa-bar-chart',
+        hidden: true,
+        items: [
+            {
+                xtype: 'reportViewPanel',
+                id:'tabreportViewPanelId',
+                title: '',
+                titleAlign: 'center'
+            }
+        ]
     },
     {
         title: 'Configuración',
@@ -978,6 +1048,8 @@ Ext.define('SupplierApp.view.main.Main', {
                     var users = tabs.child('#usersPanelTab');
                     var udc = tabs.child('#udcPanelTab');
                     var company = tabs.child('#companyPanelTab');
+                    var reportAdmin = tabs.child('#reportAdminPanelTab');
+                    var dashboardAdmin = tabs.child('#dashboardAdminPanelTab');
                     var xy = this.getXY();
                     xy[1]=xy[1] + 50;
                     var menu = Ext.create('Ext.menu.Menu', {
@@ -1015,6 +1087,28 @@ Ext.define('SupplierApp.view.main.Main', {
                                 listeners: {
                                     click: function(){
                                     	 tabs.setActiveTab(company);
+                                    }
+                                }
+                            },
+                            { 
+                            	text: SuppAppMsg.tabReports,
+                            	iconCls: 'x-fa fa-sliders',
+                            	hidden:role=='ROLE_ADMIN' && isSystemAdmin ?false:true,
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(reportAdmin);
+                                    }
+                                }
+                            },
+                            { 
+                            	text: SuppAppMsg.tabDashboards,
+                            	iconCls: 'x-fa fa-cogs',
+                            	hidden:role=='ROLE_ADMIN' && isSystemAdmin ?false:true,
+                            	style: 'margin-left:40px;background-color: #00306E;padding:2px;width:102px;',
+                                listeners: {
+                                    click: function(){
+                                    	 tabs.setActiveTab(dashboardAdmin);
                                     }
                                 }
                             }

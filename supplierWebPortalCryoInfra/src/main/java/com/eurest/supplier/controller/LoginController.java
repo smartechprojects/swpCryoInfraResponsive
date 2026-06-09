@@ -101,6 +101,7 @@ public class LoginController {
 			model.addAttribute("isSupplier", e.isSupplier());
 			model.addAttribute("isSubUser", e.isSubUser());
 			model.addAttribute("isMainSupplierUser", e.isMainSupplierUser());
+			model.addAttribute("isSystemAdmin", e.isSystemAdmin());
 
 			if(!e.isLogged()) {
 				return "changePassword";
@@ -155,7 +156,9 @@ public class LoginController {
 		}
 		
 		UDC udc = udcService.searchBySystemAndKey(AppConstants.WELCOME_FIELD, AppConstants.MESSAGE_FIELD);
-		model.addAttribute("welcomeMessage", udc.getStrValue1() + " " + udc.getStrValue2());
+		if(udc != null) {
+			model.addAttribute("welcomeMessage", udc.getStrValue1() + " " + udc.getStrValue2());
+		}		
 		
 		UDC udcEoYStart = udcService.searchBySystemAndKey("ENDOFYEAR", "START");
 		UDC udcEoYEnd = udcService.searchBySystemAndKey("ENDOFYEAR", "END");
@@ -212,7 +215,9 @@ public class LoginController {
 		model.addAttribute("multipleRfc", "empty");
 		
 		UDC udc = udcService.searchBySystemAndKey(AppConstants.WELCOME_FIELD, AppConstants.MESSAGE_FIELD);
-		model.addAttribute("welcomeMessage", udc.getStrValue1());
+		if(udc != null) {
+			model.addAttribute("welcomeMessage", udc.getStrValue1());
+		}		
 		return "home";
 
 	}

@@ -19,6 +19,9 @@ Ext.define('SupplierApp.view.main.MainController', {
         Ext.getCmp('plantAccessPanelMenu').setTitle( SuppAppMsg.tabplantaccess);
         Ext.getCmp('tabSupplierProfileId').setTitle( SuppAppMsg.tabInfoSupplier);
         
+        Ext.getCmp('dashboardViewPanelMenu').setTitle( SuppAppMsg.tabDashboards);
+        Ext.getCmp('reportViewPanelMenu').setTitle( SuppAppMsg.tabReports);
+        
         Ext.getCmp('tabTokenId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;line-height:1.4;"">' + SuppAppMsg.tabToken + '</span>');
         Ext.getCmp('tabSuppliersId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;line-height:1.4;">' + SuppAppMsg.tabProveedores + '</span>');
         Ext.getCmp('tabApprovalPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;line-height:1.4;">' + SuppAppMsg.tabApproval + '</span>');
@@ -34,6 +37,9 @@ Ext.define('SupplierApp.view.main.MainController', {
         Ext.getCmp('tabUsersId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;line-height:1.4;">' + SuppAppMsg.tabUsers + '</span>');
         Ext.getCmp('tabCompanyId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;line-height:1.4;">' + SuppAppMsg.companys + '</span>');
         
+        
+        Ext.getCmp('tabDashboardViewPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;line-height:1.4;">' + SuppAppMsg.tabDashboards + '</span>');
+        Ext.getCmp('tabreportViewPanelId').setTitle('<span style="font-size:1.2em;color:#636D73;font-weight:bold;line-height:1.4;">' + SuppAppMsg.tabReports + '</span>');
         
          /*
         Ext.getCmp('tabnonComplianceSupplierPanelId').setTitle( SuppAppMsg.tabNonComplianceSupplier);

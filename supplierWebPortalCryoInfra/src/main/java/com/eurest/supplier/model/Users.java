@@ -59,6 +59,9 @@ public class Users {
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private boolean mainSupplierUser = false;
     
+    @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
+    private boolean isSystemAdmin = false;
+    
     private int batchnumber;
     private int linenumber;
     
@@ -227,13 +230,24 @@ public class Users {
 		this.bacthDate = bacthDate;
 	}
 
+	public boolean isSystemAdmin() {
+		return isSystemAdmin;
+	}
+
+	public void setSystemAdmin(boolean isSystemAdmin) {
+		this.isSystemAdmin = isSystemAdmin;
+	}
+
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", name=" + name + ", userName=" + userName + ", password=" + password + ", email="
 				+ email + ", addressNumber=" + addressNumber + ", userRole=" + userRole + ", role=" + role
 				+ ", userType=" + userType + ", enabled=" + enabled + ", logged=" + logged + ", agreementAccept="
 				+ agreementAccept + ", notes=" + notes + ", exepAccesRule=" + exepAccesRule + ", supplier=" + supplier
-				+ ", subUser=" + subUser + ", mainSupplierUser=" + mainSupplierUser + "]";
+				+ ", subUser=" + subUser + ", mainSupplierUser=" + mainSupplierUser + ", isSystemAdmin=" + isSystemAdmin
+				+ ", batchnumber=" + batchnumber + ", linenumber=" + linenumber + ", bacthDate=" + bacthDate + "]";
 	}
+
+
 	
 }
