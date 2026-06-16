@@ -1007,7 +1007,7 @@ Ext.define('SupplierApp.view.main.Main', {
         id: 'dashboardViewPanelMenu',
         title: '',
         iconCls: 'x-fa fa-tachometer',
-        hidden: true,
+        hidden:role=='ROLE_ADMIN' && isSystemAdmin ?false:true,
         items: [
             {
                 xtype: 'dashboardViewPanel',
@@ -1023,7 +1023,7 @@ Ext.define('SupplierApp.view.main.Main', {
         id: 'reportViewPanelMenu',
         title: '',
         iconCls: 'x-fa fa-bar-chart',
-        hidden: true,
+        hidden:role=='ROLE_ADMIN' && isSystemAdmin ?false:true,
         items: [
             {
                 xtype: 'reportViewPanel',
