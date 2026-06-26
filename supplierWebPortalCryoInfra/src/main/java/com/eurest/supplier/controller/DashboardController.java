@@ -362,6 +362,7 @@ public class DashboardController {
                         kpiRes.put("subtext", subtext);
                         kpiRes.put("icon", kpi.getIconName());
                         kpiRes.put("color", kpi.getColor() != null ? kpi.getColor() : "#00306E");
+                        kpiRes.put("textColor", kpi.getTextColor() != null ? kpi.getTextColor() : "#ffffff");
                         
                         kpiMap.put(kpi.getId(), kpiRes);
                     }

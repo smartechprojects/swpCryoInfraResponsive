@@ -438,8 +438,13 @@ public class JasperReportService {
             
             // Alternar color de fila (zebra)
             String colType = columnTypes.get(i);
+            String colLabel = columnLabels.get(i);
+            boolean isIdent = isIdentifierColumn(colLabel);
+            
             if (colDataAlign != null) {
                 textField.setHorizontalTextAlign(colDataAlign);
+            } else if (isIdent) {
+                textField.setHorizontalTextAlign(HorizontalTextAlignEnum.LEFT);
             } else if (colType.contains("Int") || colType.contains("Long") || colType.contains("Integer") || colType.contains("Double") || colType.contains("Float") || colType.contains("Decimal") || colType.contains("BigDecimal")) {
                 textField.setHorizontalTextAlign(HorizontalTextAlignEnum.RIGHT);
             } else if (colType.contains("Date") || colType.contains("Time") || colType.contains("Timestamp")) {
@@ -448,7 +453,9 @@ public class JasperReportService {
                 textField.setHorizontalTextAlign(HorizontalTextAlignEnum.LEFT);
             }
             
-            if (colType.contains("Double") || colType.contains("Float") || colType.contains("Decimal") || colType.contains("BigDecimal")) {
+            if (isIdent) {
+                // Sin formato numérico
+            } else if (colType.contains("Double") || colType.contains("Float") || colType.contains("Decimal") || colType.contains("BigDecimal")) {
                 textField.setPattern("#,##0.00");
             } else if (colType.contains("Int") || colType.contains("Long") || colType.contains("Integer")) {
                 textField.setPattern("#,##0");
@@ -665,5 +672,21 @@ public class JasperReportService {
         } else {
             return JasperExportManager.exportReportToPdf(jasperPrint);
         }
+    }
+
+    private boolean isIdentifierColumn(String colLabel) {
+        if (colLabel == null) return false;
+        String upperLabel = colLabel.toUpperCase();
+        if (upperLabel.contains("NUMBER") || upperLabel.contains("NUMERO") || upperLabel.contains("NUMER") || 
+            upperLabel.equals("NUM") || upperLabel.endsWith("_NUM") || upperLabel.startsWith("NUM_") ||
+            upperLabel.equals("ID") || upperLabel.endsWith("ID") || upperLabel.contains("_ID") || upperLabel.contains("ID_") ||
+            upperLabel.contains("FOLIO") || upperLabel.contains("CODE") || upperLabel.contains("CODIGO") || upperLabel.contains("CÓDIGO") ||
+            upperLabel.equals("YEAR") || upperLabel.equals("ANIO") || upperLabel.equals("AÑO") || upperLabel.endsWith("_YEAR") || upperLabel.endsWith("_ANIO") || upperLabel.endsWith("_AÑO") ||
+            upperLabel.equals("MES") || upperLabel.equals("MONTH") || upperLabel.endsWith("_MES") || upperLabel.endsWith("_MONTH") ||
+            upperLabel.contains("TELEFONO") || upperLabel.contains("TELEFÓN") || upperLabel.contains("PHONE") ||
+            upperLabel.equals("ZIP") || upperLabel.contains("POSTAL")) {
+            return true;
+        }
+        return false;
     }
 }

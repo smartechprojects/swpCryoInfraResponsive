@@ -28,7 +28,7 @@ Ext.define('SupplierApp.view.dashboard.DashboardAdminPanel', {
         // Modelos Locales
         Ext.define('AdminKpiModel', {
             extend: 'Ext.data.Model',
-            fields: ['id', 'name', 'description', 'sqlQuery', 'kpiType', 'iconName', 'subtextTemplate', 'sortOrder', 'isActive', 'role', 'color']
+            fields: ['id', 'name', 'description', 'sqlQuery', 'kpiType', 'iconName', 'subtextTemplate', 'sortOrder', 'isActive', 'role', 'color', 'textColor']
         });
 
         Ext.define('AdminChartModel', {
@@ -124,6 +124,7 @@ Ext.define('SupplierApp.view.dashboard.DashboardAdminPanel', {
                                 var r = Ext.decode(resp.responseText, true);
                                 if (r && r.success) {
                                     var color = vals.color || '#00306E';
+                                    var textColor = vals.textColor || '#ffffff';
                                     var icon = vals.iconName || 'fa-info-circle';
                                     
                                     // Función local para aclarar el color (gradiente)
@@ -163,14 +164,15 @@ Ext.define('SupplierApp.view.dashboard.DashboardAdminPanel', {
                                                 bodyStyle: {
                                                     background: 'transparent',
                                                     display: 'flex',
-                                                    alignItems: 'center'
+                                                    alignItems: 'center',
+                                                    color: textColor + ' !important'
                                                 },
-                                                html: '<div style="display:flex; align-items:center; width:100%; color:#fff; font-family:Poppins-Regular, sans-serif; padding:10px;">' +
-                                                      '  <div style="font-size:32px; margin-right:15px; opacity:0.8;"><i class="fa ' + icon + '"></i></div>' +
-                                                      '  <div style="flex:1;">' +
-                                                      '    <div style="font-size:11px; font-weight:300; opacity:0.9; text-transform:uppercase; letter-spacing:1px;">' + (vals.name || 'KPI') + '</div>' +
-                                                      '    <div style="font-size:24px; font-weight:700; margin:2px 0;">' + r.value + '</div>' +
-                                                      '    <div style="font-size:10px; opacity:0.8; font-weight:300;">' + r.subtext + '</div>' +
+                                                html: '<div style="display:flex; align-items:center; width:100%; color:' + textColor + ' !important; font-family:Poppins-Regular, sans-serif; padding:10px;">' +
+                                                      '  <div style="font-size:32px; margin-right:15px; opacity:0.8; color:' + textColor + ' !important;"><i class="fa ' + icon + '"></i></div>' +
+                                                      '  <div style="flex:1; color:' + textColor + ' !important;">' +
+                                                      '    <div style="font-size:11px; font-weight:300; opacity:0.9; text-transform:uppercase; letter-spacing:1px; color:' + textColor + ' !important;">' + (vals.name || 'KPI') + '</div>' +
+                                                      '    <div style="font-size:24px; font-weight:700; margin:2px 0; color:' + textColor + ' !important;">' + r.value + '</div>' +
+                                                      '    <div style="font-size:10px; opacity:0.8; font-weight:300; color:' + textColor + ' !important;">' + r.subtext + '</div>' +
                                                       '  </div>' +
                                                       '</div>'
                                             }
@@ -352,6 +354,52 @@ Ext.define('SupplierApp.view.dashboard.DashboardAdminPanel', {
                             listeners: {
                                 change: function(picker, newVal) {
                                     var textfield = picker.up('fieldcontainer').down('#colorTextField');
+                                    if (textfield.getValue() !== newVal) {
+                                        textfield.setValue(newVal);
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'fieldcontainer',
+                    fieldLabel: 'Color de Texto (HEX)',
+                    layout: 'hbox',
+                    defaults: { margin: '0 10 0 0' },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            name: 'textColor',
+                            itemId: 'textColorTextField',
+                            flex: 1,
+                            value: '#ffffff',
+                            emptyText: 'e.g. #ffffff',
+                            regex: /^#[0-9A-F]{6}$/i,
+                            regexText: 'Formato HEX inválido (debe comenzar con # seguido de 6 caracteres hexadecimales)',
+                            listeners: {
+                                change: function(field, newVal) {
+                                    var picker = field.up('fieldcontainer').down('#textColorPickerField');
+                                    if (newVal && /^#[0-9A-F]{6}$/i.test(newVal)) {
+                                        picker.setValue(newVal);
+                                    } else if (!newVal) {
+                                        picker.setValue('#ffffff');
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            inputType: 'color',
+                            itemId: 'textColorPickerField',
+                            value: '#ffffff',
+                            width: 50,
+                            height: 32,
+                            submitValue: false,
+                            style: 'padding: 0; border: none; cursor: pointer; background: transparent;',
+                            listeners: {
+                                change: function(picker, newVal) {
+                                    var textfield = picker.up('fieldcontainer').down('#textColorTextField');
                                     if (textfield.getValue() !== newVal) {
                                         textfield.setValue(newVal);
                                     }

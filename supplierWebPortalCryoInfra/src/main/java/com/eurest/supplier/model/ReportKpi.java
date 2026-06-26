@@ -47,6 +47,9 @@ public class ReportKpi {
     @Column(name = "COLOR", length = 50)
     private String color;
 
+    @Column(name = "TEXT_COLOR", length = 50)
+    private String textColor;
+
     public ReportKpi() {
     }
 
@@ -144,5 +147,13 @@ public class ReportKpi {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(String textColor) {
+        this.textColor = textColor;
     }
 }

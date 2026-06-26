@@ -217,6 +217,7 @@ public class AdminDashboardController {
                 existing.setIsActive(details.getIsActive());
                 existing.setRole(details.getRole());
                 existing.setColor(details.getColor());
+                existing.setTextColor(details.getTextColor());
                 kpiToSave = existing;
             } else {
                 kpiToSave = details;

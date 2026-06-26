@@ -617,7 +617,9 @@ public class UserReportController {
 
                             // Predecir el tipo de dato
                             String formatType = "TEXT";
-                            if (colType == java.sql.Types.DECIMAL || colType == java.sql.Types.DOUBLE || colType == java.sql.Types.REAL || colType == java.sql.Types.FLOAT) {
+                            if (isIdentifierColumn(colLabel)) {
+                                formatType = "TEXT";
+                            } else if (colType == java.sql.Types.DECIMAL || colType == java.sql.Types.DOUBLE || colType == java.sql.Types.REAL || colType == java.sql.Types.FLOAT) {
                                 String upperLabel = colLabel.toUpperCase();
                                 if (upperLabel.contains("MONTO") || upperLabel.contains("TOTAL") || upperLabel.contains("IMPORTE") || upperLabel.contains("PAGO") || upperLabel.contains("IVA") || upperLabel.contains("SUBTOTAL")) {
                                     formatType = "CURRENCY";
@@ -666,5 +668,21 @@ public class UserReportController {
         }
 
         return response;
+    }
+
+    private boolean isIdentifierColumn(String colLabel) {
+        if (colLabel == null) return false;
+        String upperLabel = colLabel.toUpperCase();
+        if (upperLabel.contains("NUMBER") || upperLabel.contains("NUMERO") || upperLabel.contains("NUMER") || 
+            upperLabel.equals("NUM") || upperLabel.endsWith("_NUM") || upperLabel.startsWith("NUM_") ||
+            upperLabel.equals("ID") || upperLabel.endsWith("ID") || upperLabel.contains("_ID") || upperLabel.contains("ID_") ||
+            upperLabel.contains("FOLIO") || upperLabel.contains("CODE") || upperLabel.contains("CODIGO") || upperLabel.contains("CÓDIGO") ||
+            upperLabel.equals("YEAR") || upperLabel.equals("ANIO") || upperLabel.equals("AÑO") || upperLabel.endsWith("_YEAR") || upperLabel.endsWith("_ANIO") || upperLabel.endsWith("_AÑO") ||
+            upperLabel.equals("MES") || upperLabel.equals("MONTH") || upperLabel.endsWith("_MES") || upperLabel.endsWith("_MONTH") ||
+            upperLabel.contains("TELEFONO") || upperLabel.contains("TELEFÓN") || upperLabel.contains("PHONE") ||
+            upperLabel.equals("ZIP") || upperLabel.contains("POSTAL")) {
+            return true;
+        }
+        return false;
     }
 }

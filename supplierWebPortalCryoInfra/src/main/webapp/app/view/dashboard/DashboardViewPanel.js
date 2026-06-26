@@ -215,6 +215,7 @@ Ext.define('SupplierApp.view.dashboard.DashboardViewPanel', {
         
         // Obtener el color guardado o el valor por defecto
         var color = kpi.color || '#00306E';
+        var textColor = kpi.textColor || '#ffffff';
         
         // Generar gradiente dinámico en base al color elegido
         var bgGradient = 'linear-gradient(135deg, ' + color + ' 0%, ' + me.lightenColor(color, 20) + ' 100%)';
@@ -232,14 +233,15 @@ Ext.define('SupplierApp.view.dashboard.DashboardViewPanel', {
             bodyStyle: {
                 background: 'transparent',
                 display: 'flex',
-                alignItems: 'center'
+                alignItems: 'center',
+                color: textColor + ' !important'
             },
-            html: '<div style="display:flex; align-items:center; width:100%; color:#fff; font-family:Poppins-Regular, sans-serif;">' +
-                  '  <div style="font-size:32px; margin-right:15px; opacity:0.8;"><i class="fa ' + icon + '"></i></div>' +
-                  '  <div style="flex:1;">' +
-                  '    <div style="font-size:11px; font-weight:300; opacity:0.9; text-transform:uppercase; letter-spacing:1px;">' + kpi.name + '</div>' +
-                  '    <div style="font-size:24px; font-weight:700; margin:2px 0;">' + kpi.value + '</div>' +
-                  '    <div style="font-size:10px; opacity:0.8; font-weight:300;">' + kpi.subtext + '</div>' +
+            html: '<div style="display:flex; align-items:center; width:100%; color:' + textColor + ' !important; font-family:Poppins-Regular, sans-serif;">' +
+                  '  <div style="font-size:32px; margin-right:15px; opacity:0.8; color:' + textColor + ' !important;"><i class="fa ' + icon + '"></i></div>' +
+                  '  <div style="flex:1; color:' + textColor + ' !important;">' +
+                  '    <div style="font-size:11px; font-weight:300; opacity:0.9; text-transform:uppercase; letter-spacing:1px; color:' + textColor + ' !important;">' + kpi.name + '</div>' +
+                  '    <div style="font-size:24px; font-weight:700; margin:2px 0; color:' + textColor + ' !important;">' + kpi.value + '</div>' +
+                  '    <div style="font-size:10px; opacity:0.8; font-weight:300; color:' + textColor + ' !important;">' + kpi.subtext + '</div>' +
                   '  </div>' +
                   '</div>'
         });

@@ -262,6 +262,9 @@ public class AdminReportController {
         if (sql.endsWith(";")) {
             sql = sql.substring(0, sql.length() - 1).trim();
         }
+        // Procesar parámetros de Jasper ($P{...}) a NULL para validar la sintaxis sin errores en base de datos
+        sql = sql.replaceAll("\\$P\\{[a-zA-Z0-9_]+\\}", "NULL");
+
         // Procesar comodines de proveedor/rol y esquema para evitar errores de sintaxis al validar
         sql = sql.replace("{schema}.", "").replace("{schema}", "");
         sql = sql.replace("'{addressNumber}'", "'0'")
